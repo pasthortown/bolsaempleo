@@ -23,6 +23,16 @@
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
+        <a [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']" class="mr-3 ml-3 pretty-button">
+          <i class="fa fa-fw fa-user"></i>&nbsp;Talento Humano
+        </a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']" class="mr-3 ml-3 pretty-button">
+          <i class="fa fa-fw fa-user"></i>&nbsp;Oferta Laboral
+        </a>
+      </li>
+      <li class="nav-item">
         <a [routerLink]="['/login']" [routerLinkActive]="['router-link-active']" class="mr-3 ml-3 pretty-button">
           <i class="fa fa-fw fa-user"></i>&nbsp;Iniciar Sesión
         </a>

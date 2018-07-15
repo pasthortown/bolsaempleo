@@ -1,36 +1,18 @@
 <div class="top-banner-div" style="background-image: url(assets/img/welcome-bg.png);">
   <h1 class="col-12 text-left" style="color:white; font-size: 70px; font-weight: 700;">BOLSA DE EMPLEO</h1>
 </div>
-<div class="container">
-  <div class="row">
-    <div class="col-12 mt-4">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <button class="btn btn-success" type="button">
-            <span class="fa fa-filter"></span>&nbsp;Filtrar
-          </button>
-          </div>
-          <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
-          <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <span class="fa fa-search"></span>&nbsp;Buscar
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<app-filtro></app-filtro>
 <div class="col-12 mt-4">
   <div class="row">
     <div class="col-1"></div>
     <div class="col-5 text-right">
-      <img class="col-9" src="assets/img/BSCA EMPLEO.png">
+      <img class="col-9" src="assets/img/CONTRATANDO.png">
     </div>
     <div class="col-5">
       <div class="col-9">
         <h1 style="color: #5b32b4;font-size: 48px;">Institutos Técnicos y Tecnológicos</h1>
         <p class="text-justify">
-          La formación técnica y tecnológica superior en la actualidad posee una enseñanza del 50% académico y el otro 50% es práctico, este proceso de aprendizaje es necesario para concebir el perfil adecuado para los nuevos profesionales que se forman en los Institutos Superiores Tecnológicos y que requiere el Ecuador.
+          Las instituciones públicas y/o privadas demandan profesionales con excelencia académica, valores humanísticos, morales y éticos, basados en una formación de calidad y calidez acordes al Plan nacional del Buen Vivir.
         </p>
       </div>
     </div>
@@ -90,3 +72,10 @@
 <div class="col-12 mt-4">
   <h1 class="col-12- text-center" style="color: #5b32b4; font-size: 72px; font-weight: 700;">YaviracTec</h1>
 </div>
+<button type="button" class="btn btn-success" (click)="open(content)">
+  <span class="fa fa-edit"></span>&nbsp;Modal
+</button>
+<ng-template #content let-c="close" let-d="dismiss">
+  <app-datos-postulante></app-datos-postulante>
+</ng-template>
+

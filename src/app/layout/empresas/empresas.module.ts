@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { FiltroComponent } from './filtro/filtro.component';
+import { DatosPostulanteComponent } from './datos-postulante/datos-postulante.component';
 
 @NgModule({
   imports: [
@@ -12,6 +14,6 @@ import { FormsModule } from '@angular/forms';
     NgbModule,
     EmpresasRoutingModule
   ],
-  declarations: [EmpresasComponent]
+  declarations: [EmpresasComponent, FiltroComponent, DatosPostulanteComponent]
 })
 export class EmpresasModule { }

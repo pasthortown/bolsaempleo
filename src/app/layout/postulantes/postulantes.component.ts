@@ -8,10 +8,19 @@ import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PostulantesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
 
   }
 
+  open(content) {
+    this.modalService.open(content)
+    .result
+    .then((resultAceptar => {
+
+    }), (resultCancel => {
+
+    }));
+  }
 }
