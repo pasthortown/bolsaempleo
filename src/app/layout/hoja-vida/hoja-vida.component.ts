@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hoja-vida.component.css']
 })
 export class HojaVidaComponent implements OnInit {
+  fecha: Date;
 
   constructor(private modalService: NgbModal) { }
 
@@ -14,6 +15,7 @@ export class HojaVidaComponent implements OnInit {
   }
 
   open(content) {
+    console.log(this.fecha);
     this.modalService.open(content)
     .result
     .then((resultAceptar => {

@@ -4,7 +4,25 @@
 <button type="button" class="btn btn-success" (click)="open(content)">
   <span class="fa fa-edit"></span>&nbsp;Modal
 </button>
-
+<ngb-tabset>
+  <ngb-tab title="1. Origen" id="tab1">
+    <ng-template ngbTabContent>
+      hola
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="2. Origen" id="tab2">
+    <ng-template ngbTabContent>
+      <div class="input-group datepicker-input">
+          <input class="form-control" placeholder="yyyy-mm-dd"
+              name="dp" [(ngModel)]="fecha" ngbDatepicker #d="ngbDatepicker">
+          <button class="input-group-addon" (click)="d.toggle()" type="button">
+              <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+              <span class="fa fa-calendar"></span>
+          </button>
+      </div>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     titulo
