@@ -28,25 +28,36 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']" class="mr-3 ml-3 pretty-button">
-          <i class="fa fa-fw fa-user"></i>&nbsp;Talento Humano
+      <li class="nav-item dropdown pretty-button" ngbDropdown>
+        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
+          <i class="fa fa-fw fa-user"></i>&nbsp;Buscador
         </a>
+        <div ngbDropdownMenu >
+          <a class="dropdown-item" [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Talento Humano
+          </a>
+          <a class="dropdown-item" [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Ofertas Laborales
+          </a>
+        </div>
       </li>
-      <li class="nav-item">
-        <a [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']" class="mr-3 ml-3 pretty-button">
-          <i class="fa fa-fw fa-user"></i>&nbsp;Oferta Laboral
-        </a>
-      </li>
-      <li class="nav-item">
-        <a [routerLink]="['/login']" [routerLinkActive]="['router-link-active']" class="mr-3 ml-3 pretty-button">
+      <li>
+        <a class="nav-link pretty-button" [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-user"></i>&nbsp;Iniciar Sesión
         </a>
       </li>
-      <li class="nav-item">
-        <a [routerLink]="['/']" [routerLinkActive]="['router-link-active']" class="mr-3 ml-3 pretty-button">
-          <i class="fa fa-fw fa-edit"></i>&nbsp;Registro
+      <li class="nav-item dropdown pretty-button" ngbDropdown>
+        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
+          <i class="fa fa-fw fa-user"></i>&nbsp;Registrarse
         </a>
+        <div ngbDropdownMenu >
+          <a class="dropdown-item" (click)="cerrarSesion()">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Personas
+          </a>
+          <a class="dropdown-item" (click)="cerrarSesion()">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Empresas
+          </a>
+        </div>
       </li>
     </ul>
   </div>
