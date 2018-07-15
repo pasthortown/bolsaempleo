@@ -1,3 +1,18 @@
 <p>
   hoja-vida works!
 </p>
+<button type="button" class="btn btn-success" (click)="open(content)">
+  <span class="fa fa-edit"></span>&nbsp;Modal
+</button>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    titulo
+  </div>
+  <div class="modal-body">
+    cuerpo
+  </div>
+  <div class="modal-footer">
+    pie
+  </div>
+</ng-template>

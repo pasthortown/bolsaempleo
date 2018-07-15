@@ -13,17 +13,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostulanteComponent } from './components/sidebars/postulante/postulante.component';
 import { EmpresaComponent } from './components/sidebars/empresa/empresa.component';
 import { CommonModule } from '@angular/common';
-import { DatosPostulanteComponent } from './components/modals/datos-postulante/datos-postulante.component';
-import { DatosEmpresaComponent } from './components/modals/datos-empresa/datos-empresa.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     PostulanteComponent,
-    EmpresaComponent,
-    DatosPostulanteComponent,
-    DatosEmpresaComponent
+    EmpresaComponent
   ],
   imports: [
     BrowserModule,
