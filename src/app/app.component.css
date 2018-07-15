@@ -1,0 +1,10 @@
+.main-container {
+  -ms-overflow-x: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: absolute;
+  top: 115px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}

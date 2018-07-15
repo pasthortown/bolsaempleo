@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg fixed-top headerSecction">
+  <div class="navbar-brand">
+    <img src="assets/img/institutos.png" height="90px"/>
+  </div>
+  <div class="navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item dropdown" ngbDropdown>
+        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
+          <i><img src="{{fotoPerfil}}" class="rounded-circle" style="width: 70px; height: 70px;"></i>&nbsp;Luis Alfonso Salazar Vaca<b class="caret"></b>
+        </a>
+        <div ngbDropdownMenu >
+          <a class="dropdown-item" (click)="cerrarSesion()">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Postulaciones
+          </a>
+          <a class="dropdown-item" (click)="cerrarSesion()">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Hoja de Vida
+          </a>
+          <a class="dropdown-item" (click)="cerrarSesion()">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
+          </a>
+        </div>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a [routerLink]="['/login']" [routerLinkActive]="['router-link-active']" class="mr-3 ml-3 pretty-button">
+          <i class="fa fa-fw fa-user"></i>&nbsp;Iniciar Sesión
+        </a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="['/']" [routerLinkActive]="['router-link-active']" class="mr-3 ml-3 pretty-button">
+          <i class="fa fa-fw fa-edit"></i>&nbsp;Registro
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

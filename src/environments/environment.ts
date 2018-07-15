@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyDnrLKnS8xRtOIcbw8qK9I_HR9E9uEmy30',
+    authDomain: 'bolsaempleo-104d4.firebaseapp.com',
+    databaseURL: 'https://bolsaempleo-104d4.firebaseio.com',
+    projectId: 'bolsaempleo-104d4',
+    storageBucket: '',
+    messagingSenderId: '823621543685'
+  }
 };
 
 /*

@@ -1,0 +1,26 @@
+.headerSecction {
+  background-color: #5b32b4;
+}
+
+.pretty-button {
+  color: #fff;
+  font-weight: 500;
+  display: inline-block;
+  border: 2px solid #a883e9;
+  height: 50px;
+  text-decoration: none;
+  margin-right: 10px;
+  min-width: 178px;
+  line-height: 46px;
+  text-align: center;
+  border-radius: 24px 24px 24px 0px;
+}
+
+.pretty-button:hover {
+  background: #fb397d;
+  color: #fff;
+  border-color: transparent;
+  -webkit-transition-duration: 500ms;
+  -o-transition-duration: 500ms;
+  transition-duration: 500ms;
+}
