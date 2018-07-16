@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyDnrLKnS8xRtOIcbw8qK9I_HR9E9uEmy30',
-    authDomain: 'bolsaempleo-104d4.firebaseapp.com',
-    databaseURL: 'https://bolsaempleo-104d4.firebaseio.com',
-    projectId: 'bolsaempleo-104d4',
-    storageBucket: '',
-    messagingSenderId: '823621543685'
+    apiKey: 'AIzaSyCiLqm1GxfjynvNY_mO-Xs2OH0Oztdixv8',
+    authDomain: 'bolsaempleo-e5910.firebaseapp.com',
+    databaseURL: 'https://bolsaempleo-e5910.firebaseio.com',
+    projectId: 'bolsaempleo-e5910',
+    storageBucket: 'bolsaempleo-e5910.appspot.com',
+    messagingSenderId: '252149667972'
   }
 };
 

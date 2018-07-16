@@ -10,16 +10,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PostulanteComponent } from './components/sidebars/postulante/postulante.component';
-import { EmpresaComponent } from './components/sidebars/empresa/empresa.component';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    PostulanteComponent,
-    EmpresaComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
