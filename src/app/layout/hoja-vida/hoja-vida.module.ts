@@ -11,6 +11,7 @@ import { IdiomasComponent } from './idiomas/idiomas.component';
 import { ExperienciaProfesionalComponent } from './experiencia-profesional/experiencia-profesional.component';
 import { FortalezasComponent } from './fortalezas/fortalezas.component';
 import { ReferenciasPersonalesComponent } from './referencias-personales/referencias-personales.component';
+import { PdfComponent } from './pdf/pdf.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { ReferenciasPersonalesComponent } from './referencias-personales/referen
     NgbModule,
     FormsModule
   ],
-  declarations: [HojaVidaComponent, DatosPersonalesComponent, EstudiosRealizadosComponent, CapacitacionCursosComponent, IdiomasComponent, ExperienciaProfesionalComponent, FortalezasComponent, ReferenciasPersonalesComponent]
+  declarations: [HojaVidaComponent, DatosPersonalesComponent, EstudiosRealizadosComponent, CapacitacionCursosComponent, IdiomasComponent, ExperienciaProfesionalComponent, FortalezasComponent, ReferenciasPersonalesComponent, PdfComponent]
 })
 export class HojaVidaModule { }
