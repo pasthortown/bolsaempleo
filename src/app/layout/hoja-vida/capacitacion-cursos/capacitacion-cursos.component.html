@@ -1,0 +1,124 @@
+<div class="col-12 mt-2">
+    <div class="row">
+      <div class="col-12 card">
+        <div class="row">
+          <h4 class="col-12 text-center">Capacitación</h4>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <div class="form-group">
+              <label for="nivel">Tipo de Evento</label>
+              <select class="form-control" id="nivel" name="nivel">
+                <option value="" selected>Seleccione...</option>
+                <option value="Conferencia">Conferencia</option>
+                <option value="Congreso">Congreso</option>
+                <option value="Jornada">Jornada</option>
+                <option value="Panel">Panel</option>
+                <option value="Pasantía">Pasantía</option>
+                <option value="Seminario">Seminario</option>
+                <option value="Taller">Taller</option>
+                <option value="Vista de Observación">Vista de Observación</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-9">
+            <div class="form-group">
+              <label for="institucion">Institución</label>
+              <input type="text" class="form-control" id="institucion" placeholder="Institución">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="nombreEvento">Nombre del Evento</label>
+              <input type="text" class="form-control" id="nombreEvento" placeholder="Nombre del Evento">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <div class="form-group">
+              <label for="fechaRegistro">Fecha de Inicio</label>
+              <div class="input-group datepicker-input">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                <button class="input-group-addon" (click)="d.toggle()" type="button">
+                  <span class="fa fa-calendar"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <label for="fechaRegistro">Fecha de Finalización</label>
+              <div class="input-group datepicker-input">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                <button class="input-group-addon" (click)="d.toggle()" type="button">
+                  <span class="fa fa-calendar"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <label for="horas">Horas</label>
+              <input type="number" class="form-control" id="horas" placeholder="Horas">
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <label for="nivel">Tipo de Certificado</label>
+              <select class="form-control" id="nivel" name="nivel">
+                <option value="" selected>Seleccione...</option>
+                <option value="Aprobación">Aprobación</option>
+                <option value="Asistencia">Asistencia</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-12 text-center">
+            <button class="btn btn-primary" (click)="aceptar()"><span class="fa fa-plus-circle"></span>&nbsp;Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 card mt-3">
+        <div class="row">
+          <div class="col-12">
+            <h4 class="col-12 text-center">Capacitaciones y Cursos</h4>
+          </div>
+          <div class="col-12">
+            <table class="table table-sm table-hover">
+              <thead>
+                <th>Institución</th>
+                <th>Tipo de Evento</th>
+                <th>Nombre del Evento</th>
+                <th>Tipo de Certificado</th>
+                <th>Desde</th>
+                <th>Hasta</th>
+                <th>Horas</th>
+                <th>Opciones</th>
+              </thead>
+              <tbody>
+                <tr >
+                  <td>Institución</td>
+                  <td>Tipo de Evento</td>
+                  <td>Nombre del Evento</td>
+                  <td>Tipo de Certificado</td>
+                  <td>Desde</td>
+                  <td>Hasta</td>
+                  <td>Horas</td>
+                  <td>
+                      <button class="btn btn-warning" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
+                      <button class="btn btn-danger ml-1" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,4 +1,3 @@
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,20 +8,9 @@ import { Component, OnInit } from '@angular/core';
 export class HojaVidaComponent implements OnInit {
   fecha: Date;
 
-  constructor(private modalService: NgbModal) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  open(content) {
-    console.log(this.fecha);
-    this.modalService.open(content)
-    .result
-    .then((resultAceptar => {
-
-    }), (resultCancel => {
-
-    }));
   }
 
 }

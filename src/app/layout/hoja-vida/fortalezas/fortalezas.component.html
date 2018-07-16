@@ -1,0 +1,69 @@
+<div class="col-12 mt-2">
+    <div class="row">
+      <div class="col-12 card">
+        <div class="row">
+          <h4 class="col-12 text-center">Fortaleza / Habilidad / Destreza</h4>
+        </div>
+        <div class="row">
+          <div class="col-3">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="descripcion">Descripción</label>
+              <input type="text" class="form-control" id="descripcion" placeholder="Descripción">
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="form-group">
+              <label for="nivel">Nivel</label>
+              <select class="form-control" id="nivel" name="nivel">
+                <option value="" selected>Seleccione...</option>
+                <option value="Básico">Básico</option>
+                <option value="Intermedio">Intermedio</option>
+                <option value="Avanzado">Avanzado</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-12 text-center">
+            <button class="btn btn-primary" (click)="aceptar()"><span class="fa fa-plus-circle"></span>&nbsp;Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 card mt-3">
+        <div class="row">
+          <div class="col-12">
+            <h4 class="col-12 text-center">Fortaleza / Habilidad / Destreza</h4>
+          </div>
+          <div class="col-12">
+            <table class="table table-sm table-hover">
+              <thead>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Nivel</th>
+                <th>Opciones</th>
+              </thead>
+              <tbody>
+                <tr >
+                  <td>Nombre</td>
+                  <td>Descripción</td>
+                  <td>Nivel</td>
+                  <td>
+                      <button class="btn btn-warning" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
+                      <button class="btn btn-danger ml-1" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

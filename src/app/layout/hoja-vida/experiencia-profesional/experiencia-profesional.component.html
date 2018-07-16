@@ -1,0 +1,98 @@
+<div class="col-12 mt-2">
+    <div class="row">
+      <div class="col-12 card">
+        <div class="row">
+          <h4 class="col-12 text-center">Experiencia Profesional</h4>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="empleador">Empleador</label>
+              <input type="text" class="form-control" id="empleador" placeholder="Empleador">
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="cargo">Cargo Desempeñado</label>
+              <input type="text" class="form-control" id="cargo" placeholder="Cargo Desempeñado">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="form-group">
+              <label for="nombreEvento">Descripción del Cargo</label>
+              <input type="text" class="form-control" id="nombreEvento" placeholder="Descripción del Cargo">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="form-group">
+              <label for="fechaRegistro">Fecha de Inicio</label>
+              <div class="input-group datepicker-input">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                <button class="input-group-addon" (click)="d.toggle()" type="button">
+                  <span class="fa fa-calendar"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="form-group">
+              <label for="fechaRegistro">Fecha de Finalización</label>
+              <div class="input-group datepicker-input">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                <button class="input-group-addon" (click)="d.toggle()" type="button">
+                  <span class="fa fa-calendar"></span>
+                </button>
+              </div>
+              <div class="form-group text-center">
+                <input type="checkbox" class="form-check-input" id="actualmenteTrabajoAqui">
+                <label class="form-check-label" for="actualmenteTrabajoAqui">Actualmente trabajo aquí</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-12 text-center">
+            <button class="btn btn-primary" (click)="aceptar()"><span class="fa fa-plus-circle"></span>&nbsp;Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 card mt-3">
+        <div class="row">
+          <div class="col-12">
+            <h4 class="col-12 text-center">Experiencia Profesional</h4>
+          </div>
+          <div class="col-12">
+            <table class="table table-sm table-hover">
+              <thead>
+                <th>Empleador</th>
+                <th>Cargo Desempeñado</th>
+                <th>Descripción del Cargo</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de Salida</th>
+                <th>Opciones</th>
+              </thead>
+              <tbody>
+                <tr >
+                  <td>Empleador</td>
+                  <td>Cargo Desempeñado</td>
+                  <td>Descripción del Cargo</td>
+                  <td>Fecha de Inicio</td>
+                  <td>Fecha de Salida</td>
+                  <td>
+                      <button class="btn btn-warning" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
+                      <button class="btn btn-danger ml-1" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
