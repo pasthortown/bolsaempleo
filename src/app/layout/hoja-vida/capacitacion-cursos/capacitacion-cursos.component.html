@@ -32,8 +32,8 @@
                 <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
                 <td>{{item.horas}}</td>
                 <td>
-                    <button class="btn btn-warning btn-sm" (click)="editar(item)"><span class="fa fa-edit"></span></button>
-                    <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
+                  <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span class="fa fa-edit"></span></button>
+                  <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
                 </td>
               </tr>
             </tbody>

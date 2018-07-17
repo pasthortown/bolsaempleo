@@ -18,18 +18,20 @@
               <th>Descripción del Cargo</th>
               <th>Fecha de Inicio</th>
               <th>Fecha de Salida</th>
+              <th>Actual</th>
               <th width="100px">Opciones</th>
             </thead>
             <tbody>
-              <tr >
-                <td>Empleador</td>
-                <td>Cargo Desempeñado</td>
-                <td>Descripción del Cargo</td>
-                <td>Fecha de Inicio</td>
-                <td>Fecha de Salida</td>
+              <tr *ngFor="let item of postulanteService.postulante.experienciasLaborales">
+                <td>{{item.empleador}}</td>
+                <td>{{item.cargoDesempenado}}</td>
+                <td>{{item.descripcionCargo}}</td>
+                <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+                <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
+                <td><div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span class="badge badge-success">Actual</span> </div></td>
                 <td>
-                    <button class="btn btn-warning btn-sm" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
-                    <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
+                  <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span class="fa fa-edit"></span></button>
+                  <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
                 </td>
               </tr>
             </tbody>
@@ -48,66 +50,49 @@
   </div>
   <div class="modal-body">
     <div class="row">
-      <div class="col-6">
+      <div class="col-12">
         <div class="form-group">
           <label for="empleador">Empleador</label>
-          <input type="text" class="form-control" id="empleador" placeholder="Empleador">
+          <input type="text" [(ngModel)]="experienciaLaboral.empleador" class="form-control" id="empleador" placeholder="Empleador">
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-12">
         <div class="form-group">
           <label for="cargo">Cargo Desempeñado</label>
-          <input type="text" class="form-control" id="cargo" placeholder="Cargo Desempeñado">
+          <input type="text" [(ngModel)]="experienciaLaboral.cargoDesempenado" class="form-control" id="cargo" placeholder="Cargo Desempeñado">
         </div>
       </div>
-    </div>
-    <div class="row">
       <div class="col-12">
         <div class="form-group">
           <label for="nombreEvento">Descripción del Cargo</label>
-          <input type="text" class="form-control" id="nombreEvento" placeholder="Descripción del Cargo">
+          <input type="text" [(ngModel)]="experienciaLaboral.descripcionCargo" class="form-control" id="nombreEvento" placeholder="Descripción del Cargo">
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-6">
+      <div class="col-12">
         <div class="form-group">
           <label for="fechaRegistro">Fecha de Inicio</label>
           <div class="input-group datepicker-input">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-            <button class="input-group-addon" (click)="d.toggle()" type="button">
+            <input class="form-control" [(ngModel)]="experienciaLaboral.fechaInicio" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #di="ngbDatepicker">
+            <button class="input-group-addon" (click)="di.toggle()" type="button">
               <span class="fa fa-calendar"></span>
             </button>
           </div>
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-12">
         <div class="form-group">
           <label for="fechaRegistro">Fecha de Finalización</label>
           <div class="input-group datepicker-input">
-            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+            <input class="form-control" [(ngModel)]="experienciaLaboral.fechaFinalizacion" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
             <button class="input-group-addon" (click)="d.toggle()" type="button">
               <span class="fa fa-calendar"></span>
             </button>
           </div>
           <div class="form-group text-center">
-            <input type="checkbox" class="form-check-input" id="actualmenteTrabajoAqui">
+            <input type="checkbox" [(ngModel)]="experienciaLaboral.actualmenteVigente" class="form-check-input" id="actualmenteTrabajoAqui">
             <label class="form-check-label" for="actualmenteTrabajoAqui">Actualmente trabajo aquí</label>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row mb-2">
-      <div class="col-12 text-center">
-        <button class="btn btn-success m-2" (click)="agregar()">
-          <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-        </button>
-        <button class="btn btn-secondary m-2" (click)="actualizar()">
-          <span class="fa fa-refresh"></span>&nbsp;Actualizar
-        </button>
-        <button class="btn btn-primary m-2" (click)="nuevo()">
-          <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
-        </button>
       </div>
     </div>
   </div>
