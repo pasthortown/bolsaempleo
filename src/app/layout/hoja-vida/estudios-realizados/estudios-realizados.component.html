@@ -73,14 +73,14 @@
           <h4 class="col-12 text-center">Estudios Realizados</h4>
         </div>
         <div class="col-12">
-          <table class="table table-sm table-hover">
-            <thead>
+          <table class="table table-bordered table-hover">
+            <thead class="table-active">
               <th>Institución</th>
               <th>Nivel</th>
               <th>Título</th>
               <th>Fecha de Registro</th>
               <th>Código de Registro SENESCYT</th>
-              <th>Opciones</th>
+              <th width="100px">Opciones</th>
             </thead>
             <tbody>
               <tr *ngFor="let item of postulanteService.postulante.estudiosRealizados">
@@ -90,8 +90,8 @@
                 <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
                 <td>{{item.codigoRegistroSENESCYT}}</td>
                 <td>
-                    <button class="btn btn-warning" (click)="editar(item)"><span class="fa fa-edit"></span></button>
-                    <button class="btn btn-danger ml-1" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
+                    <button class="btn btn-warning btn-sm" (click)="editar(item)"><span class="fa fa-edit"></span></button>
+                    <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
                 </td>
               </tr>
             </tbody>

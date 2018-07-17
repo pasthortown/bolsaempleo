@@ -114,7 +114,7 @@
         <div class="row">
           <div class="col-12">
             <table class="table table-sm">
-              <thead>
+              <thead class="table-active">
                 <th>Institución</th>
                 <th>Nivel</th>
                 <th>Título</th>
@@ -141,7 +141,7 @@
         <div class="row">
           <div class="col-12">
             <table class="table table-sm">
-              <thead>
+              <thead class="table-active">
                 <th>Institución</th>
                 <th>Tipo de Evento</th>
                 <th>Nombre del Evento</th>
@@ -151,14 +151,14 @@
                 <th>Horas</th>
               </thead>
               <tbody>
-                <tr >
-                  <td>Institución</td>
-                  <td>Tipo de Evento</td>
-                  <td>Nombre del Evento</td>
-                  <td>Tipo de Certificado</td>
-                  <td>Desde</td>
-                  <td>Hasta</td>
-                  <td>Horas</td>
+                <tr *ngFor="let item of postulanteService.postulante.capacitaciones">
+                  <td>{{item.institucion}}</td>
+                  <td>{{item.tipoEvento}}</td>
+                  <td>{{item.nombreEvento}}</td>
+                  <td>{{item.tipoCertificado}}</td>
+                  <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+                  <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
+                  <td>{{item.horas}}</td>
                 </tr>
               </tbody>
             </table>
@@ -172,7 +172,7 @@
         <div class="row">
           <div class="col-12">
             <table class="table table-sm">
-              <thead>
+              <thead class="table-active">
                 <th>Idioma</th>
                 <th>Nivel Escrito</th>
                 <th>Nivel Hablado</th>
@@ -197,7 +197,7 @@
         <div class="row">
           <div class="col-12">
             <table class="table table-sm">
-              <thead>
+              <thead class="table-active">
                 <th>Empleador</th>
                 <th>Cargo Desempeñado</th>
                 <th>Descripción del Cargo</th>
@@ -224,11 +224,11 @@
         <div class="row">
           <div class="col-12">
             <table class="table table-sm">
-              <thead>
+              <thead class="table-active">
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Nivel</th>
-                <th>Opciones</th>
+                <th width="100px">Opciones</th>
               </thead>
               <tbody>
                 <tr >
@@ -248,7 +248,7 @@
         <div class="row">
           <div class="col-12">
             <table class="table table-sm">
-              <thead>
+              <thead class="table-active">
                 <th>Nombres y Apellidos</th>
                 <th>Cargo</th>
                 <th>Empresa</th>

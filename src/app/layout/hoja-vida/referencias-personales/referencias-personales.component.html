@@ -52,13 +52,13 @@
             <h4 class="col-12 text-center">Referencias Personales</h4>
           </div>
           <div class="col-12">
-            <table class="table table-sm table-hover">
-              <thead>
+            <table class="table table-bordered table-hover">
+              <thead class="table-active">
                 <th>Nombres y Apellidos</th>
                 <th>Cargo</th>
                 <th>Empresa</th>
                 <th>Teléfono</th>
-                <th>Opciones</th>
+                <th width="100px">Opciones</th>
               </thead>
               <tbody>
                 <tr >
@@ -67,8 +67,8 @@
                   <td>Empresa</td>
                   <td>Teléfono</td>
                   <td>
-                      <button class="btn btn-warning" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
-                      <button class="btn btn-danger ml-1" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
+                      <button class="btn btn-warning btn-sm" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
+                      <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
                   </td>
                 </tr>
               </tbody>

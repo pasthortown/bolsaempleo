@@ -76,14 +76,14 @@
             <h4 class="col-12 text-center">Experiencia Profesional</h4>
           </div>
           <div class="col-12">
-            <table class="table table-sm table-hover">
-              <thead>
+            <table class="table table-bordered table-hover">
+              <thead class="table-active">
                 <th>Empleador</th>
                 <th>Cargo Desempeñado</th>
                 <th>Descripción del Cargo</th>
                 <th>Fecha de Inicio</th>
                 <th>Fecha de Salida</th>
-                <th>Opciones</th>
+                <th width="100px">Opciones</th>
               </thead>
               <tbody>
                 <tr >
@@ -93,8 +93,8 @@
                   <td>Fecha de Inicio</td>
                   <td>Fecha de Salida</td>
                   <td>
-                      <button class="btn btn-warning" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
-                      <button class="btn btn-danger ml-1" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
+                      <button class="btn btn-warning btn-sm" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
+                      <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
                   </td>
                 </tr>
               </tbody>
