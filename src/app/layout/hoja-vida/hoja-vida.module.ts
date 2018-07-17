@@ -1,3 +1,4 @@
+import { PostulanteService } from './../../services/postulante.service';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HojaVidaRoutingModule } from './hoja-vida-routing.module';
@@ -20,6 +21,7 @@ import { PdfComponent } from './pdf/pdf.component';
     NgbModule,
     FormsModule
   ],
+  providers: [PostulanteService],
   declarations: [HojaVidaComponent, DatosPersonalesComponent, EstudiosRealizadosComponent, CapacitacionCursosComponent, IdiomasComponent, ExperienciaProfesionalComponent, FortalezasComponent, ReferenciasPersonalesComponent, PdfComponent]
 })
 export class HojaVidaModule { }
