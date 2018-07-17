@@ -44,48 +44,41 @@
   </div>
   <div class="modal-body">
     <div class="row">
-      <div class="col-12 card">
-        <div class="row">
-          <h4 class="col-12 text-center">Fortaleza / Habilidad / Destreza</h4>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" id="nombre" placeholder="Nombre">
         </div>
-        <div class="row">
-          <div class="col-3">
-            <div class="form-group">
-              <label for="nombre">Nombre</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Nombre">
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="form-group">
-              <label for="descripcion">Descripción</label>
-              <input type="text" class="form-control" id="descripcion" placeholder="Descripción">
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="form-group">
-              <label for="nivel">Nivel</label>
-              <select class="form-control" id="nivel" name="nivel">
-                <option value="" selected>Seleccione...</option>
-                <option value="Básico">Básico</option>
-                <option value="Intermedio">Intermedio</option>
-                <option value="Avanzado">Avanzado</option>
-              </select>
-            </div>
-          </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <input type="text" class="form-control" id="descripcion" placeholder="Descripción">
         </div>
-        <div class="row mb-2">
-          <div class="col-12 text-center">
-            <button class="btn btn-success m-2" (click)="agregar()">
-              <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-            </button>
-            <button class="btn btn-secondary m-2" (click)="actualizar()">
-              <span class="fa fa-refresh"></span>&nbsp;Actualizar
-            </button>
-            <button class="btn btn-primary m-2" (click)="nuevo()">
-              <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
-            </button>
-          </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="nivel">Nivel</label>
+          <select class="form-control" id="nivel" name="nivel">
+            <option value="" selected>Seleccione...</option>
+            <option value="Básico">Básico</option>
+            <option value="Intermedio">Intermedio</option>
+            <option value="Avanzado">Avanzado</option>
+          </select>
         </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12 text-center">
+        <button class="btn btn-success m-2" (click)="agregar()">
+          <span class="fa fa-plus-circle"></span>&nbsp;Agregar
+        </button>
+        <button class="btn btn-secondary m-2" (click)="actualizar()">
+          <span class="fa fa-refresh"></span>&nbsp;Actualizar
+        </button>
+        <button class="btn btn-primary m-2" (click)="nuevo()">
+          <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
+        </button>
       </div>
     </div>
   </div>

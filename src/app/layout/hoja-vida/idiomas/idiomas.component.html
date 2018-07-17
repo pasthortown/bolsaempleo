@@ -46,64 +46,57 @@
   </div>
   <div class="modal-body">
     <div class="row">
-      <div class="col-12 card">
-        <div class="row">
-          <h4 class="col-12 text-center">Idioma</h4>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="idioma">Idioma</label>
+          <input type="text" class="form-control" id="idioma" placeholder="Idioma">
         </div>
-        <div class="row">
-          <div class="col-3">
-            <div class="form-group">
-              <label for="idioma">Idioma</label>
-              <input type="text" class="form-control" id="idioma" placeholder="Idioma">
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="form-group">
-              <label for="nivelEscrito">Nivel Escrito</label>
-              <select class="form-control" id="nivelEscrito" name="nivelEscrito">
-                <option value="" selected>Seleccione...</option>
-                <option value="Básico">Básico</option>
-                <option value="Intermedio">Intermedio</option>
-                <option value="Avanzado">Avanzado</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="form-group">
-              <label for="nivelHablado">Nivel Hablado</label>
-              <select class="form-control" id="nivelHablado" name="nivelHablado">
-                <option value="" selected>Seleccione...</option>
-                <option value="Básico">Básico</option>
-                <option value="Intermedio">Intermedio</option>
-                <option value="Avanzado">Avanzado</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="form-group">
-              <label for="nivelLectura">Nivel Lectura</label>
-              <select class="form-control" id="nivelLectura" name="nivelLectura">
-                <option value="" selected>Seleccione...</option>
-                <option value="Básico">Básico</option>
-                <option value="Intermedio">Intermedio</option>
-                <option value="Avanzado">Avanzado</option>
-              </select>
-            </div>
-          </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="nivelEscrito">Nivel Escrito</label>
+          <select class="form-control" id="nivelEscrito" name="nivelEscrito">
+            <option value="" selected>Seleccione...</option>
+            <option value="Básico">Básico</option>
+            <option value="Intermedio">Intermedio</option>
+            <option value="Avanzado">Avanzado</option>
+          </select>
         </div>
-        <div class="row mb-2">
-          <div class="col-12 text-center">
-            <button class="btn btn-success m-2" (click)="agregar()">
-              <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-            </button>
-            <button class="btn btn-secondary m-2" (click)="actualizar()">
-              <span class="fa fa-refresh"></span>&nbsp;Actualizar
-            </button>
-            <button class="btn btn-primary m-2" (click)="nuevo()">
-              <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
-            </button>
-          </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="nivelHablado">Nivel Hablado</label>
+          <select class="form-control" id="nivelHablado" name="nivelHablado">
+            <option value="" selected>Seleccione...</option>
+            <option value="Básico">Básico</option>
+            <option value="Intermedio">Intermedio</option>
+            <option value="Avanzado">Avanzado</option>
+          </select>
         </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="nivelLectura">Nivel Lectura</label>
+          <select class="form-control" id="nivelLectura" name="nivelLectura">
+            <option value="" selected>Seleccione...</option>
+            <option value="Básico">Básico</option>
+            <option value="Intermedio">Intermedio</option>
+            <option value="Avanzado">Avanzado</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12 text-center">
+        <button class="btn btn-success m-2" (click)="agregar()">
+          <span class="fa fa-plus-circle"></span>&nbsp;Agregar
+        </button>
+        <button class="btn btn-secondary m-2" (click)="actualizar()">
+          <span class="fa fa-refresh"></span>&nbsp;Actualizar
+        </button>
+        <button class="btn btn-primary m-2" (click)="nuevo()">
+          <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
+        </button>
       </div>
     </div>
   </div>

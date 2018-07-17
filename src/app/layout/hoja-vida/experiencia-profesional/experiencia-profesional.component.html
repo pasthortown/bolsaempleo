@@ -48,73 +48,66 @@
   </div>
   <div class="modal-body">
     <div class="row">
-      <div class="col-12 card">
-        <div class="row">
-          <h4 class="col-12 text-center">Experiencia Profesional</h4>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="empleador">Empleador</label>
+          <input type="text" class="form-control" id="empleador" placeholder="Empleador">
         </div>
-        <div class="row">
-          <div class="col-6">
-            <div class="form-group">
-              <label for="empleador">Empleador</label>
-              <input type="text" class="form-control" id="empleador" placeholder="Empleador">
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="form-group">
-              <label for="cargo">Cargo Desempeñado</label>
-              <input type="text" class="form-control" id="cargo" placeholder="Cargo Desempeñado">
-            </div>
-          </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="cargo">Cargo Desempeñado</label>
+          <input type="text" class="form-control" id="cargo" placeholder="Cargo Desempeñado">
         </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="form-group">
-              <label for="nombreEvento">Descripción del Cargo</label>
-              <input type="text" class="form-control" id="nombreEvento" placeholder="Descripción del Cargo">
-            </div>
-          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="nombreEvento">Descripción del Cargo</label>
+          <input type="text" class="form-control" id="nombreEvento" placeholder="Descripción del Cargo">
         </div>
-        <div class="row">
-          <div class="col-6">
-            <div class="form-group">
-              <label for="fechaRegistro">Fecha de Inicio</label>
-              <div class="input-group datepicker-input">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-                <button class="input-group-addon" (click)="d.toggle()" type="button">
-                  <span class="fa fa-calendar"></span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
-            <div class="form-group">
-              <label for="fechaRegistro">Fecha de Finalización</label>
-              <div class="input-group datepicker-input">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-                <button class="input-group-addon" (click)="d.toggle()" type="button">
-                  <span class="fa fa-calendar"></span>
-                </button>
-              </div>
-              <div class="form-group text-center">
-                <input type="checkbox" class="form-check-input" id="actualmenteTrabajoAqui">
-                <label class="form-check-label" for="actualmenteTrabajoAqui">Actualmente trabajo aquí</label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row mb-2">
-          <div class="col-12 text-center">
-            <button class="btn btn-success m-2" (click)="agregar()">
-              <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-            </button>
-            <button class="btn btn-secondary m-2" (click)="actualizar()">
-              <span class="fa fa-refresh"></span>&nbsp;Actualizar
-            </button>
-            <button class="btn btn-primary m-2" (click)="nuevo()">
-              <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="form-group">
+          <label for="fechaRegistro">Fecha de Inicio</label>
+          <div class="input-group datepicker-input">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+            <button class="input-group-addon" (click)="d.toggle()" type="button">
+              <span class="fa fa-calendar"></span>
             </button>
           </div>
         </div>
+      </div>
+      <div class="col-6">
+        <div class="form-group">
+          <label for="fechaRegistro">Fecha de Finalización</label>
+          <div class="input-group datepicker-input">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+            <button class="input-group-addon" (click)="d.toggle()" type="button">
+              <span class="fa fa-calendar"></span>
+            </button>
+          </div>
+          <div class="form-group text-center">
+            <input type="checkbox" class="form-check-input" id="actualmenteTrabajoAqui">
+            <label class="form-check-label" for="actualmenteTrabajoAqui">Actualmente trabajo aquí</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12 text-center">
+        <button class="btn btn-success m-2" (click)="agregar()">
+          <span class="fa fa-plus-circle"></span>&nbsp;Agregar
+        </button>
+        <button class="btn btn-secondary m-2" (click)="actualizar()">
+          <span class="fa fa-refresh"></span>&nbsp;Actualizar
+        </button>
+        <button class="btn btn-primary m-2" (click)="nuevo()">
+          <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
+        </button>
       </div>
     </div>
   </div>

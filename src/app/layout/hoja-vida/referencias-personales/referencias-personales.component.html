@@ -46,49 +46,42 @@
   </div>
   <div class="modal-body">
     <div class="row">
-      <div class="col-12 card">
-        <div class="row">
-          <h4 class="col-12 text-center">Referencia Personal</h4>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="nombresApellidos">Nombres y Apellidos</label>
+          <input type="text" class="form-control" id="nombresApellidos" placeholder="Nombres y Apellidos">
         </div>
-        <div class="row">
-          <div class="col-3">
-            <div class="form-group">
-              <label for="nombresApellidos">Nombres y Apellidos</label>
-              <input type="text" class="form-control" id="nombresApellidos" placeholder="Nombres y Apellidos">
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="form-group">
-              <label for="cargo">Cargo</label>
-              <input type="text" class="form-control" id="cargo" placeholder="Cargo">
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="form-group">
-              <label for="empresa">Empresa</label>
-              <input type="text" class="form-control" id="empresa" placeholder="Empresa">
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="form-group">
-              <label for="telefono">Teléfono</label>
-              <input type="text" class="form-control" id="telefono" placeholder="Teléfono">
-            </div>
-          </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="cargo">Cargo</label>
+          <input type="text" class="form-control" id="cargo" placeholder="Cargo">
         </div>
-        <div class="row mb-2">
-          <div class="col-12 text-center">
-            <button class="btn btn-success m-2" (click)="agregar()">
-              <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-            </button>
-            <button class="btn btn-secondary m-2" (click)="actualizar()">
-              <span class="fa fa-refresh"></span>&nbsp;Actualizar
-            </button>
-            <button class="btn btn-primary m-2" (click)="nuevo()">
-              <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
-            </button>
-          </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="empresa">Empresa</label>
+          <input type="text" class="form-control" id="empresa" placeholder="Empresa">
         </div>
+      </div>
+      <div class="col-3">
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input type="text" class="form-control" id="telefono" placeholder="Teléfono">
+        </div>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12 text-center">
+        <button class="btn btn-success m-2" (click)="agregar()">
+          <span class="fa fa-plus-circle"></span>&nbsp;Agregar
+        </button>
+        <button class="btn btn-secondary m-2" (click)="actualizar()">
+          <span class="fa fa-refresh"></span>&nbsp;Actualizar
+        </button>
+        <button class="btn btn-primary m-2" (click)="nuevo()">
+          <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
+        </button>
       </div>
     </div>
   </div>
