@@ -12,6 +12,7 @@ const routes: Routes = [
             { path: 'empresas', loadChildren: './empresas/empresas.module#EmpresasModule' },
             { path: 'hoja-vida', loadChildren: './hoja-vida/hoja-vida.module#HojaVidaModule' },
             { path: 'postulaciones', loadChildren: './postulaciones/postulaciones.module#PostulacionesModule' },
+            { path: 'perfil-empresa', loadChildren: './perfil-empresa/perfil-empresa.module#PerfilEmpresaModule' },
         ]
     }
 ];

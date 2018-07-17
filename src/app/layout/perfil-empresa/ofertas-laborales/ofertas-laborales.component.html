@@ -1,0 +1,452 @@
+<div class="row mt-2">
+  <div class="col-5">
+    <div class="input-group mb-1">
+      <button type="button" class="btn btn-success mr-1" (click)="open(modalOfertaLaboral)">
+        <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>
+        Agregar
+      </button>
+      <div class="input-group-prepend">
+        <button type="button" class="btn btn-info">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </div>
+      <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar">
+      <button type="button" class="btn btn-warning" (click)="openFiltro(modalFiltroOferta)">
+        <i class="fa fa-filter" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row m-2">
+  <div class="col-12">
+    <div class="row" style="margin-top:15px">
+      <div class="col-lg-12">
+        <table class="table table-hover table-bordered">
+          <thead class="thead table-active">
+          <tr>
+            <th width="10%">
+              Código
+            </th>
+            <th width="20%">
+              Cargo
+            </th>
+            <th width="30%">
+              Actividades
+            </th>
+            <th width="5%" scope="col" class="text-center">
+              <i class="fa fa-wrench fa-lg" aria-hidden="true"></i>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let oferta of empresaService.empresa.oferta">
+            <td>
+              {{oferta.codigo}}
+            </td>
+            <td>
+              {{oferta.cargo}}
+            </td>
+            <td>
+              {{oferta.actividades}}
+            </td>
+            <td>
+              <button class="btn btn-warning btn-sm" (click)="open(modalOfertaLaboral)">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </button>
+              <button class="btn btn-danger btn-sm ml-1" (click)="delete()">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalOfertaLaboral let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-lg">
+    <div class="card">
+      <div class="card-header bg-primary">
+        <h3 class="text-white">Oferta Laboral</h3>
+      </div>
+      <div class="card-body m-1">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Codigo !-->
+            <div class="form-group">
+              <label for="editCodigo" class="col-form-label">
+                Código:
+              </label>
+              <input class="form-control" name="codigo" id="editCodigo" [(ngModel)]="oferta.codigo">
+            </div>
+
+            <!-- Cargo !-->
+            <div class="form-group">
+              <label for="editCargo" class="col-form-label">
+                Cargo:
+              </label>
+              <input class="form-control" name="cargo" id="editCargo" [(ngModel)]="oferta.cargo">
+            </div>
+
+            <!-- Ciudad !-->
+            <div class="form-group ">
+              <label for="idCIudad" class="col-form-label">
+                Ciudad:
+              </label>
+              <select class="form-control" name="idCIudad" id="editCiudad" [(ngModel)]="oferta.ciudad">
+                <option value="">
+                  Seleccione...
+                </option>
+                <option value="Quito">
+                  Quito
+                </option>
+              </select>
+            </div>
+
+            <!-- Inicio Publicacion !-->
+            <div class="form-group ">
+              <label for="editInicioPublicacion" class="col-form-label">
+                Inicio Publicación:
+              </label>
+              <input type="date" class="form-control" name="inicioPublicacion"
+                     id="editInicioPublicacion" [(ngModel)]="oferta.inicioPublicacion">
+            </div>
+
+            <!-- Fin Publicacion !-->
+            <div class="form-group ">
+              <label for="editFinPublicacion" class="col-form-label">
+                Fin Publicación:
+              </label>
+              <input type="date" class="form-control" name="finPublicacion" id="editFinPublicacion"
+                     [(ngModel)]="oferta.finPublicacion">
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!-- Contacto !-->
+            <div class="form-group">
+              <label for="editContacto" class="col-form-label">
+                Contacto:
+              </label>
+              <input class="form-control" name="contacto" id="editContacto" [(ngModel)]="oferta.contacto">
+            </div>
+
+            <!-- Correo Electronico !-->
+            <div class="form-group ">
+              <label for="editCorreoElectronico" class="col-form-label">
+                Correo:
+              </label>
+              <input type="email" class="form-control" id="editCorreoElectronico"
+                     [(ngModel)]="oferta.correoElectronico">
+            </div>
+
+            <!-- Telefono Fijo !-->
+            <div class="form-group ">
+              <label for="editTelefonoFijo" class="col-form-label">
+                Teléfono Fijo:
+              </label>
+              <input class="form-control" id="editTelefonoFijo" [(ngModel)]="oferta.telefonoFijo">
+            </div>
+
+            <!-- Telefono Celular !-->
+            <div class="form-group ">
+              <label for="editTelefonoCelular" class="col-form-label">
+                Teléfono Celular:
+              </label>
+              <input class="form-control" id="editTelefonoCelular"
+                     [(ngModel)]="oferta.telefonoCelular">
+            </div>
+
+            <!-- Tipo Contrato !-->
+            <div class="form-group ">
+              <label for="editTipoContrato" class="col-form-label">
+                Tipo Contrato:
+              </label>
+              <select class="form-control" id="editTipoContrato" [(ngModel)]="oferta.tipoContrato">
+                <option value="">Seleccione...</option>
+                <option value="Ocasional">Ocasional</option>
+                <option value="Tiempo Completo">Tiempo Completo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="card">
+      <div class="card-header bg-info">
+        <h3 class="text-white">Perfil del Cargo</h3>
+      </div>
+      <div class="card-body  m-1">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Instruccion Nivel !-->
+            <div class="form-group ">
+              <label for="instruccionNivel" class="col-form-label">
+                Instrucción Nivel:
+              </label>
+              <select class="form-control" name="instruccionNivel" id="instruccionNivel">
+                <option value="">Seleccione...</option>
+                <option value="Tercer Nivel">Tercer Nivel</option>
+                <option value="Cuarto Nivel">Cuarto Nivel</option>
+              </select>
+            </div>
+            <!-- Horas de Capacitacion !-->
+            <div class="form-group ">
+              <label for="horasCapacitacion" class="col-form-label">
+                Horas de Capacitación:
+              </label>
+              <input class="form-control" name="horasCapacitacion" id="horasCapacitacion">
+            </div>
+            <!-- Numero de Puestos !-->
+            <div class="form-group ">
+              <label for="numeroPuestos" class="col-form-label">
+                Puestos:
+              </label>
+              <input class="form-control" name="numeroPuestos" id="numeroPuestos">
+            </div>
+            <!-- Informacion Adicional !-->
+            <div class="form-group ">
+              <label for="informacionAdicional" class="col-form-label">
+                Información Adicional:
+              </label>
+              <textarea class="form-control" name="informacionAdicional" id="informacionAdicional"></textarea>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!-- Remuneracion !-->
+            <div class="form-group ">
+              <label for="remuneracion" class="col-form-label">
+                Remuneración:
+              </label>
+              <input class="form-control" name="remuneracion" id="remuneracion">
+            </div>
+            <!-- Tiempo Experiencia!-->
+            <div class="form-group ">
+              <label for="experiencia" class="col-form-label">
+                Tiempo Experiencia:
+              </label>
+              <input class="form-control" name="experiencia" id="experiencia">
+            </div>
+            <!-- Jornada !-->
+            <div class="form-group ">
+              <label for="jornada" class="col-form-label">
+                Jornada:
+              </label>
+              <input class="form-control" name="jornada" id="jornada">
+            </div>
+            <!-- Actividades !-->
+            <div class="form-group ">
+              <label for="actividades" class="col-form-label">
+                Actividades:
+              </label>
+              <textarea class="form-control" name="actividades" id="actividades"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success btn-lg" title="Aplicar">
+      <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
+    </button>
+    <button class="btn btn-danger btn-lg" title="Cancelar">
+      <i class="fa fa-close" aria-hidden="true"> Cancelar</i>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalFiltroOferta let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-lg">
+    <div class="card">
+      <div class="card-header bg-warning">
+        <h3 class="text-white">
+          <i class="fa fa-filter" aria-hidden="true"> Filtrar</i>
+        </h3>
+      </div>
+      <div class="card-body m-1">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- Codigo !-->
+            <div class="form-group">
+              <label for="codigo" class="col-form-label">
+                Código:
+              </label>
+              <input class="form-control" name="codigo" id="codigo">
+            </div>
+
+            <!-- Cargo !-->
+            <div class="form-group">
+              <label for="cargo" class="col-form-label">
+                Cargo:
+              </label>
+              <input class="form-control" name="cargo" id="cargo">
+            </div>
+
+            <!-- Ciudad !-->
+            <div class="form-group ">
+              <label for="idCIudad" class="col-form-label">
+                Ciudad:
+              </label>
+              <select class="form-control" name="idCIudad" id="idCiudad">
+                <option value="1">
+                  Quito
+                </option>
+              </select>
+            </div>
+
+            <!-- Inicio Publicacion !-->
+            <div class="form-group ">
+              <label for="inicioPublicacion" class="col-form-label">
+                Inicio Publicación:
+              </label>
+              <input type="date" class="form-control" name="inicioPublicacion"
+                     id="inicioPublicacion">
+            </div>
+
+            <!-- Fin Publicacion !-->
+            <div class="form-group ">
+              <label for="finPublicacion" class="col-form-label">
+                Fin Publicación:
+              </label>
+              <input type="date" class="form-control" name="finPublicacion" id="finPublicacion">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success btn-lg" title="Aplicar">
+      <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
+    </button>
+    <button class="btn btn-danger btn-lg" title="Cancelar">
+      <i class="fa fa-close" aria-hidden="true"> Limpiar</i>
+    </button>
+  </div>
+</ng-template>
+<!--
+<div class="row m-2">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <h1>Desarrollador de Software</h1>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Ofer 001</h5>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Código:</b></label>
+            <input id="cargo" class="form-control col-lg-10" value="Ofer 001">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Cargo:</b></label>
+            <input id="actividades" class="form-control"
+                   value="Desarrollar Software de alta calidad, Administrar Base de Datos">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Remuneración:</b></label>
+            <input id="remuneracion" class="form-control" value="$300 - 400">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Ciudad:</b></label>
+            <input id="ciudad" class="form-control" value="Quito">
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        <div class="form-group">
+          <button href="#" class="btn btn-warning">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            Editar
+          </button>
+          <button href="#" class="btn btn-danger">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+            Eliminar
+          </button>
+          <button href="#" class="btn btn-info">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Postulaciones
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <h1>Desarrollador de Software</h1>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Ofer 001</h5>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Código:</b></label>
+            <input id="cargo" class="form-control col-lg-10" value="Ofer 001">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Cargo:</b></label>
+            <input id="actividades" class="form-control"
+                   value="Desarrollar Software de alta calidad, Administrar Base de Datos">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Remuneración:</b></label>
+            <input id="remuneracion" class="form-control" value="$300 - 400">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Ciudad:</b></label>
+            <input id="ciudad" class="form-control" value="Quito">
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        <div class="form-group">
+          <button href="#" class="btn btn-warning">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            Editar
+          </button>
+          <button href="#" class="btn btn-danger">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+            Eliminar
+          </button>
+          <button href="#" class="btn btn-info">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Postulaciones
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->
