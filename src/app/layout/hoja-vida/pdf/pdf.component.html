@@ -1,14 +1,14 @@
 <div class="col-12">
   <div class="col-12 mt-2 mb-2">
     <div class="col-12" style="background: white; border: 1px #D3D3D3 solid; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-      <div class="col-12">
+      <div class="col-12" #encabezadoHojaVida>
         <div class="row">
           <div class="col-12">
             <h3 class="col-12 text-center">CABECERA</h3>
           </div>
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-12" #cuerpoHojaVida>
         <div class="row">
           <div class="col-12">
             <h3 class="col-12 text-center">Hoja de Vida</h3>
@@ -265,7 +265,7 @@
           </div>
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-12" #pieHojaVida>
         <div class="row">
           <div class="col-12">
             <h3 class="col-12 text-center">PIE</h3>
@@ -278,7 +278,7 @@
   <div class="col-12">
     <div class="row">
       <div class="col-12 text-center">
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success" (click)="imprimir()">
           Imprimir
         </button>
       </div>
