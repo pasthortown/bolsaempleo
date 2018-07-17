@@ -19,4 +19,15 @@ export class Oferta {
   numeroPuestos: number;
   nombreComercial: string;
   ciudad: string;
+
+  constructor() {
+    this.tipoContrato = '';
+    this.instruccionNivel = '';
+    this.remuneracion = '';
+    this.tiempoExperiencia = '';
+    this.horasCapacitacion = '';
+    this.jornada = '';
+    this.tipoContrato = '';
+    this.ciudad = '';
+  }
 }

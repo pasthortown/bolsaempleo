@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
 import {EmpresaService} from '../../../services/empresa.service';
+import {EstudioRealizado} from '../../../models/estudio-realizado';
+import {Oferta} from '../../../models/oferta';
 
 @Component({
   selector: 'app-ofertas-laborales',
@@ -10,6 +12,7 @@ import {EmpresaService} from '../../../services/empresa.service';
 })
 export class OfertasLaboralesComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
+  oferta: Oferta;
   srcFoto1: string;
   srcFoto2: string;
   srcFoto3: string;
@@ -19,6 +22,7 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.oferta = new Oferta();
     this.srcFoto1 = 'assets/img/prueba/empresa1.png';
     this.srcFoto2 = 'assets/img/prueba/empresa2.png';
     this.srcFoto3 = 'assets/img/prueba/empresa3.png';
@@ -57,6 +61,11 @@ export class OfertasLaboralesComponent implements OnInit {
       }), (resultCancel => {
 
       }));
+  }
+
+  agregar() {
+    this.empresaService.empresa.oferta.push(this.oferta);
+    this.oferta = new Oferta();
   }
 
   delete() {

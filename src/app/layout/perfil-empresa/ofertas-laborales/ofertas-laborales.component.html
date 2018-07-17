@@ -40,15 +40,15 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let ofeta of empresaService.empresa.oferta">
+          <tr *ngFor="let oferta of empresaService.empresa.oferta">
             <td>
-              {{ofeta.codigo}}
+              {{oferta.codigo}}
             </td>
             <td>
-              {{ofeta.cargo}}
+              {{oferta.cargo}}
             </td>
             <td>
-              {{ofeta.actividades}}
+              {{oferta.actividades}}
             </td>
             <td>
               <button class="btn btn-warning btn-sm" (click)="open(modalOfertaLaboral)">
@@ -85,18 +85,18 @@
           <div class="col-lg-6">
             <!-- Codigo !-->
             <div class="form-group">
-              <label for="codigo" class="col-form-label">
+              <label for="editCodigo" class="col-form-label">
                 Código:
               </label>
-              <input class="form-control" name="codigo" id="codigo">
+              <input class="form-control" name="codigo" id="editCodigo" [(ngModel)]="oferta.codigo">
             </div>
 
             <!-- Cargo !-->
             <div class="form-group">
-              <label for="cargo" class="col-form-label">
+              <label for="editCargo" class="col-form-label">
                 Cargo:
               </label>
-              <input class="form-control" name="cargo" id="cargo">
+              <input class="form-control" name="cargo" id="editCargo" [(ngModel)]="oferta.cargo">
             </div>
 
             <!-- Ciudad !-->
@@ -104,8 +104,11 @@
               <label for="idCIudad" class="col-form-label">
                 Ciudad:
               </label>
-              <select class="form-control" name="idCIudad" id="idCiudad">
-                <option value="1">
+              <select class="form-control" name="idCIudad" id="editCiudad" [(ngModel)]="oferta.ciudad">
+                <option value="">
+                  Seleccione...
+                </option>
+                <option value="Quito">
                   Quito
                 </option>
               </select>
@@ -113,63 +116,66 @@
 
             <!-- Inicio Publicacion !-->
             <div class="form-group ">
-              <label for="inicioPublicacion" class="col-form-label">
+              <label for="editInicioPublicacion" class="col-form-label">
                 Inicio Publicación:
               </label>
               <input type="date" class="form-control" name="inicioPublicacion"
-                     id="inicioPublicacion">
+                     id="editInicioPublicacion" [(ngModel)]="oferta.inicioPublicacion">
             </div>
 
             <!-- Fin Publicacion !-->
             <div class="form-group ">
-              <label for="finPublicacion" class="col-form-label">
+              <label for="editFinPublicacion" class="col-form-label">
                 Fin Publicación:
               </label>
-              <input type="date" class="form-control" name="finPublicacion" id="finPublicacion">
+              <input type="date" class="form-control" name="finPublicacion" id="editFinPublicacion"
+                     [(ngModel)]="oferta.finPublicacion">
             </div>
           </div>
           <div class="col-lg-6">
             <!-- Contacto !-->
             <div class="form-group">
-              <label for="contacto" class="col-form-label">
+              <label for="editContacto" class="col-form-label">
                 Contacto:
               </label>
-              <input class="form-control" name="contacto" id="contacto">
+              <input class="form-control" name="contacto" id="editContacto" [(ngModel)]="oferta.contacto">
             </div>
 
             <!-- Correo Electronico !-->
             <div class="form-group ">
-              <label for="correoElectronico" class="col-form-label">
+              <label for="editCorreoElectronico" class="col-form-label">
                 Correo:
               </label>
-              <input type="email" class="form-control" name="correoElectronico"
-                     id="correoElectronico">
+              <input type="email" class="form-control" id="editCorreoElectronico"
+                     [(ngModel)]="oferta.correoElectronico">
             </div>
 
             <!-- Telefono Fijo !-->
             <div class="form-group ">
-              <label for="telefonoFijo" class="col-form-label">
+              <label for="editTelefonoFijo" class="col-form-label">
                 Teléfono Fijo:
               </label>
-              <input class="form-control" name="telefonoFijo" id="telefonoFijo">
+              <input class="form-control" id="editTelefonoFijo" [(ngModel)]="oferta.telefonoFijo">
             </div>
 
             <!-- Telefono Celular !-->
             <div class="form-group ">
-              <label for="telefonoCelular" class="col-form-label">
+              <label for="editTelefonoCelular" class="col-form-label">
                 Teléfono Celular:
               </label>
-              <input class="form-control" name="telefonoCelular" id="telefonoCelular">
+              <input class="form-control" id="editTelefonoCelular"
+                     [(ngModel)]="oferta.telefonoCelular">
             </div>
 
             <!-- Tipo Contrato !-->
             <div class="form-group ">
-              <label for="tipoContrato" class="col-form-label">
+              <label for="editTipoContrato" class="col-form-label">
                 Tipo Contrato:
               </label>
-              <select class="form-control" name="tipoContrato" id="tipoContrato">
-                <option value="">Ocasional</option>
-                <option value="">Tiempo Completo</option>
+              <select class="form-control" id="editTipoContrato" [(ngModel)]="oferta.tipoContrato">
+                <option value="">Seleccione...</option>
+                <option value="Ocasional">Ocasional</option>
+                <option value="Tiempo Completo">Tiempo Completo</option>
               </select>
             </div>
           </div>
@@ -190,8 +196,9 @@
                 Instrucción Nivel:
               </label>
               <select class="form-control" name="instruccionNivel" id="instruccionNivel">
-                <option value="">TERCER NIVEL</option>
-                <option value="">BACHILLER</option>
+                <option value="">Seleccione...</option>
+                <option value="Tercer Nivel">Tercer Nivel</option>
+                <option value="Cuarto Nivel">Cuarto Nivel</option>
               </select>
             </div>
             <!-- Horas de Capacitacion !-->
