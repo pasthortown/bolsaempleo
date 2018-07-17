@@ -8,7 +8,7 @@
           <div class="col-3">
             <div class="form-group">
               <label for="nivel">Tipo de Evento</label>
-              <select class="form-control" id="nivel" name="nivel">
+              <select [(ngModel)]="capacitacion.tipoEvento" class="form-control" id="nivel" name="nivel">
                 <option value="" selected>Seleccione...</option>
                 <option value="Conferencia">Conferencia</option>
                 <option value="Congreso">Congreso</option>
@@ -24,7 +24,7 @@
           <div class="col-9">
             <div class="form-group">
               <label for="institucion">Institución</label>
-              <input type="text" class="form-control" id="institucion" placeholder="Institución">
+              <input type="text" [(ngModel)]="capacitacion.institucion" class="form-control" id="institucion" placeholder="Institución">
             </div>
           </div>
         </div>
@@ -32,7 +32,7 @@
           <div class="col-12">
             <div class="form-group">
               <label for="nombreEvento">Nombre del Evento</label>
-              <input type="text" class="form-control" id="nombreEvento" placeholder="Nombre del Evento">
+              <input type="text" [(ngModel)]="capacitacion.nombreEvento" class="form-control" id="nombreEvento" placeholder="Nombre del Evento">
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="form-group">
               <label for="fechaRegistro">Fecha de Inicio</label>
               <div class="input-group datepicker-input">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+                <input class="form-control" [(ngModel)]="capacitacion.fechaInicio" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
                 <button class="input-group-addon" (click)="d.toggle()" type="button">
                   <span class="fa fa-calendar"></span>
                 </button>
@@ -52,8 +52,8 @@
             <div class="form-group">
               <label for="fechaRegistro">Fecha de Finalización</label>
               <div class="input-group datepicker-input">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-                <button class="input-group-addon" (click)="d.toggle()" type="button">
+                <input class="form-control" [(ngModel)]="capacitacion.fechaFinalizacion" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #df="ngbDatepicker">
+                <button class="input-group-addon" (click)="df.toggle()" type="button">
                   <span class="fa fa-calendar"></span>
                 </button>
               </div>
@@ -62,13 +62,13 @@
           <div class="col-3">
             <div class="form-group">
               <label for="horas">Horas</label>
-              <input type="number" class="form-control" id="horas" placeholder="Horas">
+              <input type="number" [(ngModel)]="capacitacion.horas" class="form-control" id="horas" placeholder="Horas">
             </div>
           </div>
           <div class="col-3">
             <div class="form-group">
               <label for="nivel">Tipo de Certificado</label>
-              <select class="form-control" id="nivel" name="nivel">
+              <select [(ngModel)]="capacitacion.tipoCertificado" class="form-control" id="nivel" name="nivel">
                 <option value="" selected>Seleccione...</option>
                 <option value="Aprobación">Aprobación</option>
                 <option value="Asistencia">Asistencia</option>
@@ -78,7 +78,15 @@
         </div>
         <div class="row mb-2">
           <div class="col-12 text-center">
-            <button class="btn btn-primary" (click)="aceptar()"><span class="fa fa-plus-circle"></span>&nbsp;Agregar</button>
+            <button class="btn btn-success m-2" (click)="agregar()">
+              <span class="fa fa-plus-circle"></span>&nbsp;Agregar
+            </button>
+            <button class="btn btn-secondary m-2" (click)="actualizar()">
+              <span class="fa fa-refresh"></span>&nbsp;Actualizar
+            </button>
+            <button class="btn btn-primary m-2" (click)="nuevo()">
+              <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
+            </button>
           </div>
         </div>
       </div>
@@ -90,8 +98,8 @@
             <h4 class="col-12 text-center">Capacitaciones y Cursos</h4>
           </div>
           <div class="col-12">
-            <table class="table table-sm table-hover">
-              <thead>
+            <table class="table table-bordered table-hover">
+              <thead class="table-active">
                 <th>Institución</th>
                 <th>Tipo de Evento</th>
                 <th>Nombre del Evento</th>
@@ -99,20 +107,20 @@
                 <th>Desde</th>
                 <th>Hasta</th>
                 <th>Horas</th>
-                <th>Opciones</th>
+                <th width="100px">Opciones</th>
               </thead>
               <tbody>
-                <tr >
-                  <td>Institución</td>
-                  <td>Tipo de Evento</td>
-                  <td>Nombre del Evento</td>
-                  <td>Tipo de Certificado</td>
-                  <td>Desde</td>
-                  <td>Hasta</td>
-                  <td>Horas</td>
+                <tr *ngFor="let item of postulanteService.postulante.capacitaciones">
+                  <td>{{item.institucion}}</td>
+                  <td>{{item.tipoEvento}}</td>
+                  <td>{{item.nombreEvento}}</td>
+                  <td>{{item.tipoCertificado}}</td>
+                  <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+                  <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
+                  <td>{{item.horas}}</td>
                   <td>
-                      <button class="btn btn-warning" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
-                      <button class="btn btn-danger ml-1" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
+                      <button class="btn btn-warning btn-sm" (click)="editar(item)"><span class="fa fa-edit"></span></button>
+                      <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
                   </td>
                 </tr>
               </tbody>

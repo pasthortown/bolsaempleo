@@ -56,7 +56,15 @@
         </div>
         <div class="row mb-2">
           <div class="col-12 text-center">
-            <button class="btn btn-primary" (click)="aceptar()"><span class="fa fa-plus-circle"></span>&nbsp;Agregar</button>
+            <button class="btn btn-success m-2" (click)="agregar()">
+              <span class="fa fa-plus-circle"></span>&nbsp;Agregar
+            </button>
+            <button class="btn btn-secondary m-2" (click)="actualizar()">
+              <span class="fa fa-refresh"></span>&nbsp;Actualizar
+            </button>
+            <button class="btn btn-primary m-2" (click)="nuevo()">
+              <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
+            </button>
           </div>
         </div>
       </div>
@@ -68,14 +76,14 @@
             <h4 class="col-12 text-center">Experiencia Profesional</h4>
           </div>
           <div class="col-12">
-            <table class="table table-sm table-hover">
-              <thead>
+            <table class="table table-bordered table-hover">
+              <thead class="table-active">
                 <th>Empleador</th>
                 <th>Cargo Desempeñado</th>
                 <th>Descripción del Cargo</th>
                 <th>Fecha de Inicio</th>
                 <th>Fecha de Salida</th>
-                <th>Opciones</th>
+                <th width="100px">Opciones</th>
               </thead>
               <tbody>
                 <tr >
@@ -85,8 +93,8 @@
                   <td>Fecha de Inicio</td>
                   <td>Fecha de Salida</td>
                   <td>
-                      <button class="btn btn-warning" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
-                      <button class="btn btn-danger ml-1" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
+                      <button class="btn btn-warning btn-sm" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
+                      <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
                   </td>
                 </tr>
               </tbody>
