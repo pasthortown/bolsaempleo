@@ -31,18 +31,19 @@
             </div>
             <div class="row">
               <div class="col-12 mt-3 text-center">
-                <img src="{{srcFoto}}" class="rounded-circle col-8" (click)="fileInput.click()">
+                <img src="{{postulanteService.postulante.fotografia}}" class="rounded-circle col-8" (click)="fileInput.click()">
               </div>
             </div>
           </div>
           <div class="col-7">
+            <div class="col-12" style="height: 40px;"></div>
             <table class="col-12 table-sm">
               <tr>
                 <th class="text-right">
                   Nombre Completo:
                 </th>
                 <td>
-                  Luis Alfonso Salazar Vaca
+                  {{postulanteService.postulante.nombreCompleto}}
                 </td>
               </tr>
               <tr>
@@ -50,7 +51,7 @@
                   Identificación:
                 </th>
                 <td>
-                  1720364049
+                  {{postulanteService.postulante.identificacion}}
                 </td>
               </tr>
               <tr>
@@ -58,7 +59,7 @@
                   Estado Civil:
                 </th>
                 <td>
-                  Casado
+                  {{postulanteService.postulante.estadoCivil}}
                 </td>
               </tr>
               <tr>
@@ -66,7 +67,7 @@
                   Fecha de Nacimiento:
                 </th>
                 <td>
-                  15-Septiembre-1986
+                  {{postulanteService.postulante.fechaDeNacimiento.day}} de {{meses[postulanteService.postulante.fechaDeNacimiento.month-1]}} del {{postulanteService.postulante.fechaDeNacimiento.year}}
                 </td>
               </tr>
               <tr>
@@ -74,7 +75,7 @@
                   Nacionalidad:
                 </th>
                 <td>
-                  Ecuatoriano
+                  {{postulanteService.postulante.nacionalidad}}
                 </td>
               </tr>
               <tr>
@@ -82,7 +83,7 @@
                   Domicilio:
                 </th>
                 <td>
-                  De Los Robles E14-16 y De Los Cardos
+                  {{postulanteService.postulante.domicilio}}
                 </td>
               </tr>
               <tr>
@@ -90,7 +91,7 @@
                   Correo Electrónico:
                 </th>
                 <td>
-                  luissalazarvaca1986@gmail.com
+                  {{postulanteService.postulante.correoElectronico}}
                 </td>
               </tr>
               <tr>
@@ -98,7 +99,7 @@
                   Teléfono:
                 </th>
                 <td>
-                  0998600661
+                  {{postulanteService.postulante.telefono}}
                 </td>
               </tr>
             </table>
@@ -121,12 +122,12 @@
                 <th>Código de Registro SENESCYT</th>
               </thead>
               <tbody>
-                <tr >
-                  <td>Institución</td>
-                  <td>Nivel</td>
-                  <td>Título</td>
-                  <td>Fecha de Registro</td>
-                  <td>Código de Registro SENESCYT</td>
+                <tr *ngFor="let item of postulanteService.postulante.estudiosRealizados">
+                  <td>{{item.institucion}}</td>
+                  <td>{{item.nivel}}</td>
+                  <td>{{item.titulo}}</td>
+                  <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
+                  <td>{{item.codigoRegistroSENESCYT}}</td>
                 </tr>
               </tbody>
             </table>

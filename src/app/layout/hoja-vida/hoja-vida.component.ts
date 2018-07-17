@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./hoja-vida.component.css']
 })
 export class HojaVidaComponent implements OnInit {
-  fecha: Date;
 
   constructor() { }
 
