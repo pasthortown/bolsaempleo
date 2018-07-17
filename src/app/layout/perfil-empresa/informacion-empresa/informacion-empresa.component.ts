@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {EmpresaService} from '../../../services/empresa.service';
 
 @Component({
   selector: 'app-informacion-empresa',
@@ -8,7 +9,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class InformacionEmpresaComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   srcFoto: string;
-  constructor() { }
+
+  constructor(public empresaService: EmpresaService) {
+  }
 
   ngOnInit() {
     this.srcFoto = 'assets/img/prueba/descarga.jpg';

@@ -11,7 +11,7 @@
         </button>
       </div>
       <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar">
-      <button type="button" class="btn btn-warning">
+      <button type="button" class="btn btn-warning" (click)="openFiltro(modalFiltroOferta)">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </button>
     </div>
@@ -40,22 +40,21 @@
           </tr>
           </thead>
           <tbody>
-          <!--<tr *ngFor="let actual of hojaVidaTitulos" (click)="onSelectTitulo(actual)">-->
-          <tr>
+          <tr *ngFor="let ofeta of empresaService.empresa.oferta">
             <td>
-              Ofer 001
+              {{ofeta.codigo}}
             </td>
             <td>
-              Desarrollador de Software
+              {{ofeta.cargo}}
             </td>
             <td>
-              Desarrollar Aplicaciones Web
+              {{ofeta.actividades}}
             </td>
             <td>
-              <button class="btn btn-warning btn-sm">
+              <button class="btn btn-warning btn-sm" (click)="open(modalOfertaLaboral)">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </button>
-              <button class="btn btn-danger btn-sm ml-1">
+              <button class="btn btn-danger btn-sm ml-1" (click)="delete()">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
             </td>
@@ -81,119 +80,97 @@
       <div class="card-header bg-primary">
         <h3 class="text-white">Oferta Laboral</h3>
       </div>
-      <div class="card-body m-3">
+      <div class="card-body m-1">
         <div class="row">
           <div class="col-lg-6">
             <!-- Codigo !-->
-            <div class="form-group row">
-              <label for="codigo" class="col-lg-4 col-form-label">
+            <div class="form-group">
+              <label for="codigo" class="col-form-label">
                 Código:
               </label>
-              <div class="col-lg-8">
-                <input class="form-control" name="codigo" id="codigo">
-              </div>
+              <input class="form-control" name="codigo" id="codigo">
             </div>
 
             <!-- Cargo !-->
-            <div class="form-group row">
-              <label for="cargo" class="col-lg-4 col-form-label">
+            <div class="form-group">
+              <label for="cargo" class="col-form-label">
                 Cargo:
               </label>
-              <div class="col-lg-8">
-                <input class="form-control" name="cargo" id="cargo">
-              </div>
+              <input class="form-control" name="cargo" id="cargo">
             </div>
 
             <!-- Ciudad !-->
-            <div class="form-group row">
-              <label for="idCIudad" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="idCIudad" class="col-form-label">
                 Ciudad:
               </label>
-              <div class="col-lg-8">
-                <select class="form-control" name="idCIudad" id="idCiudad">
-                  <option value="1">
-                    Quito
-                  </option>
-                </select>
-              </div>
+              <select class="form-control" name="idCIudad" id="idCiudad">
+                <option value="1">
+                  Quito
+                </option>
+              </select>
             </div>
 
             <!-- Inicio Publicacion !-->
-            <div class="form-group row">
-              <label for="inicioPublicacion" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="inicioPublicacion" class="col-form-label">
                 Inicio Publicación:
               </label>
-              <div class="col-lg-8">
-                <input type="date" class="form-control" name="inicioPublicacion"
-                       id="inicioPublicacion">
-              </div>
+              <input type="date" class="form-control" name="inicioPublicacion"
+                     id="inicioPublicacion">
             </div>
 
             <!-- Fin Publicacion !-->
-            <div class="form-group row">
-              <label for="finPublicacion" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="finPublicacion" class="col-form-label">
                 Fin Publicación:
               </label>
-              <div class="col-lg-8">
-                <input type="date" class="form-control" name="finPublicacion" id="finPublicacion">
-              </div>
+              <input type="date" class="form-control" name="finPublicacion" id="finPublicacion">
             </div>
           </div>
           <div class="col-lg-6">
             <!-- Contacto !-->
-            <div class="form-group row">
-              <div class="col-lg-4 col-form-label">
-                <label for="contacto">
-                  Contacto:
-                </label>
-              </div>
-              <div class="col-lg-8">
-                <input class="form-control" name="contacto" id="contacto">
-              </div>
+            <div class="form-group">
+              <label for="contacto" class="col-form-label">
+                Contacto:
+              </label>
+              <input class="form-control" name="contacto" id="contacto">
             </div>
 
             <!-- Correo Electronico !-->
-            <div class="form-group row">
-              <label for="correoElectronico" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="correoElectronico" class="col-form-label">
                 Correo:
               </label>
-              <div class="col-lg-8">
-                <input type="email" class="form-control" name="correoElectronico"
-                       id="correoElectronico">
-              </div>
+              <input type="email" class="form-control" name="correoElectronico"
+                     id="correoElectronico">
             </div>
 
             <!-- Telefono Fijo !-->
-            <div class="form-group row">
-              <label for="telefonoFijo" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="telefonoFijo" class="col-form-label">
                 Teléfono Fijo:
               </label>
-              <div class="col-lg-8">
-                <input class="form-control" name="telefonoFijo" id="telefonoFijo">
-              </div>
+              <input class="form-control" name="telefonoFijo" id="telefonoFijo">
             </div>
 
             <!-- Telefono Celular !-->
-            <div class="form-group row">
-              <label for="telefonoCelular" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="telefonoCelular" class="col-form-label">
                 Teléfono Celular:
               </label>
-              <div class="col-lg-8">
-                <input class="form-control" name="telefonoCelular" id="telefonoCelular">
-              </div>
+              <input class="form-control" name="telefonoCelular" id="telefonoCelular">
             </div>
 
             <!-- Tipo Contrato !-->
-            <div class="form-group row">
-              <label for="tipoContrato" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="tipoContrato" class="col-form-label">
                 Tipo Contrato:
               </label>
-              <div class="col-lg-8">
-                <select class="form-control" name="tipoContrato" id="tipoContrato">
-                  <option value="">Ocasional</option>
-                  <option value="">Tiempo Completo</option>
-                </select>
-              </div>
+              <select class="form-control" name="tipoContrato" id="tipoContrato">
+                <option value="">Ocasional</option>
+                <option value="">Tiempo Completo</option>
+              </select>
             </div>
           </div>
         </div>
@@ -204,85 +181,69 @@
       <div class="card-header bg-info">
         <h3 class="text-white">Perfil del Cargo</h3>
       </div>
-      <div class="card-body  m-3">
+      <div class="card-body  m-1">
         <div class="row">
           <div class="col-lg-6">
             <!-- Instruccion Nivel !-->
-            <div class="form-group row">
-              <label for="instruccionNivel" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="instruccionNivel" class="col-form-label">
                 Instrucción Nivel:
               </label>
-              <div class="col-lg-8">
-                <select class="form-control" name="instruccionNivel" id="instruccionNivel">
-                  <option value="">TERCER NIVEL</option>
-                  <option value="">BACHILLER</option>
-                </select>
-              </div>
+              <select class="form-control" name="instruccionNivel" id="instruccionNivel">
+                <option value="">TERCER NIVEL</option>
+                <option value="">BACHILLER</option>
+              </select>
             </div>
             <!-- Horas de Capacitacion !-->
-            <div class="form-group row">
-              <label for="horasCapacitacion" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="horasCapacitacion" class="col-form-label">
                 Horas de Capacitación:
               </label>
-              <div class="col-lg-8">
-                <input class="form-control" name="horasCapacitacion" id="horasCapacitacion">
-              </div>
+              <input class="form-control" name="horasCapacitacion" id="horasCapacitacion">
             </div>
             <!-- Numero de Puestos !-->
-            <div class="form-group row">
-              <label for="numeroPuestos" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="numeroPuestos" class="col-form-label">
                 Puestos:
               </label>
-              <div class="col-lg-8">
-                <input class="form-control" name="numeroPuestos" id="numeroPuestos">
-              </div>
+              <input class="form-control" name="numeroPuestos" id="numeroPuestos">
             </div>
             <!-- Informacion Adicional !-->
-            <div class="form-group row">
-              <label for="informacionAdicional" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="informacionAdicional" class="col-form-label">
                 Información Adicional:
               </label>
-              <div class="col-lg-8">
-                <textarea class="form-control" name="informacionAdicional" id="informacionAdicional"></textarea>
-              </div>
+              <textarea class="form-control" name="informacionAdicional" id="informacionAdicional"></textarea>
             </div>
           </div>
           <div class="col-lg-6">
             <!-- Remuneracion !-->
-            <div class="form-group row">
-              <label for="remuneracion" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="remuneracion" class="col-form-label">
                 Remuneración:
               </label>
-              <div class="col-lg-8">
-                <input class="form-control" name="remuneracion" id="remuneracion">
-              </div>
+              <input class="form-control" name="remuneracion" id="remuneracion">
             </div>
             <!-- Tiempo Experiencia!-->
-            <div class="form-group row">
-              <label for="experiencia" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="experiencia" class="col-form-label">
                 Tiempo Experiencia:
               </label>
-              <div class="col-lg-8">
-                <input class="form-control" name="experiencia" id="experiencia">
-              </div>
+              <input class="form-control" name="experiencia" id="experiencia">
             </div>
             <!-- Jornada !-->
-            <div class="form-group row">
-              <label for="jornada" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="jornada" class="col-form-label">
                 Jornada:
               </label>
-              <div class="col-lg-8">
-                <input class="form-control" name="jornada" id="jornada">
-              </div>
+              <input class="form-control" name="jornada" id="jornada">
             </div>
             <!-- Actividades !-->
-            <div class="form-group row">
-              <label for="actividades" class="col-lg-4 col-form-label">
+            <div class="form-group ">
+              <label for="actividades" class="col-form-label">
                 Actividades:
               </label>
-              <div class="col-lg-8">
-                <textarea class="form-control" name="actividades" id="actividades"></textarea>
-              </div>
+              <textarea class="form-control" name="actividades" id="actividades"></textarea>
             </div>
           </div>
         </div>
@@ -295,6 +256,84 @@
     </button>
     <button class="btn btn-danger btn-lg" title="Cancelar">
       <i class="fa fa-close" aria-hidden="true"> Cancelar</i>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalFiltroOferta let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-lg">
+    <div class="card">
+      <div class="card-header bg-warning">
+        <h3 class="text-white">
+          <i class="fa fa-filter" aria-hidden="true"> Filtrar</i>
+        </h3>
+      </div>
+      <div class="card-body m-1">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- Codigo !-->
+            <div class="form-group">
+              <label for="codigo" class="col-form-label">
+                Código:
+              </label>
+              <input class="form-control" name="codigo" id="codigo">
+            </div>
+
+            <!-- Cargo !-->
+            <div class="form-group">
+              <label for="cargo" class="col-form-label">
+                Cargo:
+              </label>
+              <input class="form-control" name="cargo" id="cargo">
+            </div>
+
+            <!-- Ciudad !-->
+            <div class="form-group ">
+              <label for="idCIudad" class="col-form-label">
+                Ciudad:
+              </label>
+              <select class="form-control" name="idCIudad" id="idCiudad">
+                <option value="1">
+                  Quito
+                </option>
+              </select>
+            </div>
+
+            <!-- Inicio Publicacion !-->
+            <div class="form-group ">
+              <label for="inicioPublicacion" class="col-form-label">
+                Inicio Publicación:
+              </label>
+              <input type="date" class="form-control" name="inicioPublicacion"
+                     id="inicioPublicacion">
+            </div>
+
+            <!-- Fin Publicacion !-->
+            <div class="form-group ">
+              <label for="finPublicacion" class="col-form-label">
+                Fin Publicación:
+              </label>
+              <input type="date" class="form-control" name="finPublicacion" id="finPublicacion">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success btn-lg" title="Aplicar">
+      <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
+    </button>
+    <button class="btn btn-danger btn-lg" title="Cancelar">
+      <i class="fa fa-close" aria-hidden="true"> Limpiar</i>
     </button>
   </div>
 </ng-template>

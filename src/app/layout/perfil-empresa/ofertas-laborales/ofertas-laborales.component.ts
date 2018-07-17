@@ -1,5 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+import swal from 'sweetalert2';
+import {EmpresaService} from '../../../services/empresa.service';
 
 @Component({
   selector: 'app-ofertas-laborales',
@@ -13,7 +15,7 @@ export class OfertasLaboralesComponent implements OnInit {
   srcFoto3: string;
   srcFoto4: string;
 
-  constructor(private modalService: NgbModal) {
+  constructor(private modalService: NgbModal, public empresaService: EmpresaService) {
   }
 
   ngOnInit() {
@@ -46,4 +48,41 @@ export class OfertasLaboralesComponent implements OnInit {
 
       }));
   }
+
+  openFiltro(content) {
+    this.modalService.open(content)
+      .result
+      .then((resultAceptar => {
+
+      }), (resultCancel => {
+
+      }));
+  }
+
+  delete() {
+    swal({
+      title: '¿Está seguro de Eliminar?',
+      text: 'Empleador',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
+    }).then((result) => {
+      if (result.value) {
+        swal(
+          'Eliminado!',
+          'Su registro fue eliminado.',
+          'success'
+        );
+      } else {
+        swal(
+          'Eliminado!',
+          'Su registro no fue eliminado.',
+          'error'
+        );
+      }
+    });
+  }
+
 }
