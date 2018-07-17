@@ -1,3 +1,4 @@
+import { Postulante } from './../models/postulante';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
@@ -5,27 +6,23 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
   providedIn: 'root'
 })
 export class FirebaseBDDService {
-  coleccion: AngularFireList<any>;
+  postulantes: AngularFireList<any>;
 
   constructor(private firebase: AngularFireDatabase) { }
 
-  leer() {
-    return this.coleccion = this.firebase.list('coleccion');
+  leerPostulantes() {
+    return this.postulantes = this.firebase.list('Postulantes');
   }
 
-  crear() {
-    //this.coleccion.push(this.productoSeleccionado);
+  insertarPostulante(postulante: Postulante) {
+    this.postulantes.push(postulante);
   }
 
-  actualizar() {
-    /*this.coleccion.update(this.productoSeleccionado.id, {
-      nombre: this.productoSeleccionado.nombre,
-      clase: this.productoSeleccionado.clase,
-      precio: this.productoSeleccionado.precio
-    });*/
+  actualizarPostulante(postulante: Postulante) {
+    this.postulantes.update(postulante.id, postulante);
   }
 
-  borrar(id: string) {
-    this.coleccion.remove(id);
+  borrarPostulante(postulante: Postulante) {
+    this.postulantes.remove(postulante.id);
   }
 }
