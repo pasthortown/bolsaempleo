@@ -4,4 +4,10 @@ export class Idioma {
   nivelEscrito: string;
   nivelHablado: string;
   nivelLectura: string;
+
+  constructor() {
+    this.nivelEscrito = '';
+    this.nivelHablado = '';
+    this.nivelLectura = '';
+  }
 }

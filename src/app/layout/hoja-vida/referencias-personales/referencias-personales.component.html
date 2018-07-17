@@ -20,14 +20,14 @@
               <th width="100px">Opciones</th>
             </thead>
             <tbody>
-              <tr >
-                <td>Nombres y Apellidos</td>
-                <td>Cargo</td>
-                <td>Empresa</td>
-                <td>Teléfono</td>
+              <tr *ngFor="let item of postulanteService.postulante.referenciasPersonales">
+                <td>{{item.nombresApellidos}}</td>
+                <td>{{item.cargo}}</td>
+                <td>{{item.empresa}}</td>
+                <td>{{item.telefono}}</td>
                 <td>
-                    <button class="btn btn-warning btn-sm" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
-                    <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
+                  <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span class="fa fa-edit"></span></button>
+                  <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
                 </td>
               </tr>
             </tbody>
@@ -46,42 +46,29 @@
   </div>
   <div class="modal-body">
     <div class="row">
-      <div class="col-3">
+      <div class="col-12">
         <div class="form-group">
           <label for="nombresApellidos">Nombres y Apellidos</label>
-          <input type="text" class="form-control" id="nombresApellidos" placeholder="Nombres y Apellidos">
+          <input type="text" [(ngModel)]="referenciaPersonal.nombresApellidos" class="form-control" id="nombresApellidos" placeholder="Nombres y Apellidos">
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-12">
         <div class="form-group">
           <label for="cargo">Cargo</label>
-          <input type="text" class="form-control" id="cargo" placeholder="Cargo">
+          <input type="text" [(ngModel)]="referenciaPersonal.cargo" class="form-control" id="cargo" placeholder="Cargo">
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-12">
         <div class="form-group">
           <label for="empresa">Empresa</label>
-          <input type="text" class="form-control" id="empresa" placeholder="Empresa">
+          <input type="text" [(ngModel)]="referenciaPersonal.empresa" class="form-control" id="empresa" placeholder="Empresa">
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-12">
         <div class="form-group">
           <label for="telefono">Teléfono</label>
-          <input type="text" class="form-control" id="telefono" placeholder="Teléfono">
+          <input type="text" [(ngModel)]="referenciaPersonal.telefono" class="form-control" id="telefono" placeholder="Teléfono">
         </div>
-      </div>
-    </div>
-    <div class="row mb-2">
-      <div class="col-12 text-center">
-        <button class="btn btn-success m-2" (click)="agregar()">
-          <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-        </button>
-        <button class="btn btn-secondary m-2" (click)="actualizar()">
-          <span class="fa fa-refresh"></span>&nbsp;Actualizar
-        </button>
-        <button class="btn btn-primary m-2" (click)="nuevo()">
-          <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
-        </button>
       </div>
     </div>
   </div>

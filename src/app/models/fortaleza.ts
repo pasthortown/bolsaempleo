@@ -3,4 +3,8 @@ export class Fortaleza {
   nombre: string;
   descripcion: string;
   nivel: string;
+
+  constructor() {
+    this.nivel = '';
+  }
 }
