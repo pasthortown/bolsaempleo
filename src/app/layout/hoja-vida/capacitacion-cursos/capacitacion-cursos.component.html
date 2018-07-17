@@ -1,4 +1,9 @@
 <div class="col-12 mt-2">
+  <div class="row">
+      <button class="btn btn-success m-2" (click)="open(content, estudioRealizado, false)">
+      <span class="fa fa-plus-circle"></span>&nbsp;Agregar
+    </button>
+  </div>
     <div class="row">
       <div class="col-12 card">
         <div class="row">
@@ -130,3 +135,21 @@
       </div>
     </div>
   </div>
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <div class="row">
+        <h4 class="col-12 text-center">Capacitación</h4>
+      </div>
+    </div>
+    <div class="modal-body">
+
+    <div class="modal-footer">
+      <button class="btn btn-success" (click)="c('save')">
+        <span class="fa fa-check"></span>&nbsp;Aceptar
+      </button>
+      <button class="btn btn-danger" (click)="c('close')">
+        <span class="fa fa-close"></span>&nbsp;Cancelar
+      </button>
+    </div>
+  </ng-template>

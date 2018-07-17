@@ -50,12 +50,4 @@ export class EstudiosRealizadosComponent implements OnInit {
     });
     this.postulanteService.postulante.estudiosRealizados = estudios;
   }
-
-  nuevo() {
-    this.estudioRealizado = new EstudioRealizado();
-  }
-
-  actualizar() {
-    this.estudioRealizado = new EstudioRealizado();
-  }
 }
