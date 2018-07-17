@@ -1,0 +1,406 @@
+<div class="row mt-2">
+  <div class="col-5">
+    <div class="input-group mb-1">
+      <button type="button" class="btn btn-success mr-1" (click)="open(modalOfertaLaboral)">
+        <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>
+        Agregar
+      </button>
+      <div class="input-group-prepend">
+        <button type="button" class="btn btn-info">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </div>
+      <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar">
+      <button type="button" class="btn btn-warning">
+        <i class="fa fa-filter" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<hr>
+<div class="row m-2">
+  <div class="col-12">
+    <div class="row" style="margin-top:15px">
+      <div class="col-lg-12">
+        <table class="table table-hover table-bordered">
+          <thead class="thead table-active">
+          <tr>
+            <th width="10%">
+              Código
+            </th>
+            <th width="20%">
+              Cargo
+            </th>
+            <th width="30%">
+              Actividades
+            </th>
+            <th width="5%" scope="col" class="text-center">
+              <i class="fa fa-wrench fa-lg" aria-hidden="true"></i>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <!--<tr *ngFor="let actual of hojaVidaTitulos" (click)="onSelectTitulo(actual)">-->
+          <tr>
+            <td>
+              Ofer 001
+            </td>
+            <td>
+              Desarrollador de Software
+            </td>
+            <td>
+              Desarrollar Aplicaciones Web
+            </td>
+            <td>
+              <button class="btn btn-warning btn-sm">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </button>
+              <button class="btn btn-danger btn-sm ml-1">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalOfertaLaboral let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-lg">
+    <div class="card">
+      <div class="card-header bg-primary">
+        <h3 class="text-white">Oferta Laboral</h3>
+      </div>
+      <div class="card-body m-3">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Codigo !-->
+            <div class="form-group row">
+              <label for="codigo" class="col-lg-4 col-form-label">
+                Código:
+              </label>
+              <div class="col-lg-8">
+                <input class="form-control" name="codigo" id="codigo">
+              </div>
+            </div>
+
+            <!-- Cargo !-->
+            <div class="form-group row">
+              <label for="cargo" class="col-lg-4 col-form-label">
+                Cargo:
+              </label>
+              <div class="col-lg-8">
+                <input class="form-control" name="cargo" id="cargo">
+              </div>
+            </div>
+
+            <!-- Ciudad !-->
+            <div class="form-group row">
+              <label for="idCIudad" class="col-lg-4 col-form-label">
+                Ciudad:
+              </label>
+              <div class="col-lg-8">
+                <select class="form-control" name="idCIudad" id="idCiudad">
+                  <option value="1">
+                    Quito
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Inicio Publicacion !-->
+            <div class="form-group row">
+              <label for="inicioPublicacion" class="col-lg-4 col-form-label">
+                Inicio Publicación:
+              </label>
+              <div class="col-lg-8">
+                <input type="date" class="form-control" name="inicioPublicacion"
+                       id="inicioPublicacion">
+              </div>
+            </div>
+
+            <!-- Fin Publicacion !-->
+            <div class="form-group row">
+              <label for="finPublicacion" class="col-lg-4 col-form-label">
+                Fin Publicación:
+              </label>
+              <div class="col-lg-8">
+                <input type="date" class="form-control" name="finPublicacion" id="finPublicacion">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!-- Contacto !-->
+            <div class="form-group row">
+              <div class="col-lg-4 col-form-label">
+                <label for="contacto">
+                  Contacto:
+                </label>
+              </div>
+              <div class="col-lg-8">
+                <input class="form-control" name="contacto" id="contacto">
+              </div>
+            </div>
+
+            <!-- Correo Electronico !-->
+            <div class="form-group row">
+              <label for="correoElectronico" class="col-lg-4 col-form-label">
+                Correo:
+              </label>
+              <div class="col-lg-8">
+                <input type="email" class="form-control" name="correoElectronico"
+                       id="correoElectronico">
+              </div>
+            </div>
+
+            <!-- Telefono Fijo !-->
+            <div class="form-group row">
+              <label for="telefonoFijo" class="col-lg-4 col-form-label">
+                Teléfono Fijo:
+              </label>
+              <div class="col-lg-8">
+                <input class="form-control" name="telefonoFijo" id="telefonoFijo">
+              </div>
+            </div>
+
+            <!-- Telefono Celular !-->
+            <div class="form-group row">
+              <label for="telefonoCelular" class="col-lg-4 col-form-label">
+                Teléfono Celular:
+              </label>
+              <div class="col-lg-8">
+                <input class="form-control" name="telefonoCelular" id="telefonoCelular">
+              </div>
+            </div>
+
+            <!-- Tipo Contrato !-->
+            <div class="form-group row">
+              <label for="tipoContrato" class="col-lg-4 col-form-label">
+                Tipo Contrato:
+              </label>
+              <div class="col-lg-8">
+                <select class="form-control" name="tipoContrato" id="tipoContrato">
+                  <option value="">Ocasional</option>
+                  <option value="">Tiempo Completo</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="card">
+      <div class="card-header bg-info">
+        <h3 class="text-white">Perfil del Cargo</h3>
+      </div>
+      <div class="card-body  m-3">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Instruccion Nivel !-->
+            <div class="form-group row">
+              <label for="instruccionNivel" class="col-lg-4 col-form-label">
+                Instrucción Nivel:
+              </label>
+              <div class="col-lg-8">
+                <select class="form-control" name="instruccionNivel" id="instruccionNivel">
+                  <option value="">TERCER NIVEL</option>
+                  <option value="">BACHILLER</option>
+                </select>
+              </div>
+            </div>
+            <!-- Horas de Capacitacion !-->
+            <div class="form-group row">
+              <label for="horasCapacitacion" class="col-lg-4 col-form-label">
+                Horas de Capacitación:
+              </label>
+              <div class="col-lg-8">
+                <input class="form-control" name="horasCapacitacion" id="horasCapacitacion">
+              </div>
+            </div>
+            <!-- Numero de Puestos !-->
+            <div class="form-group row">
+              <label for="numeroPuestos" class="col-lg-4 col-form-label">
+                Puestos:
+              </label>
+              <div class="col-lg-8">
+                <input class="form-control" name="numeroPuestos" id="numeroPuestos">
+              </div>
+            </div>
+            <!-- Informacion Adicional !-->
+            <div class="form-group row">
+              <label for="informacionAdicional" class="col-lg-4 col-form-label">
+                Información Adicional:
+              </label>
+              <div class="col-lg-8">
+                <textarea class="form-control" name="informacionAdicional" id="informacionAdicional"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!-- Remuneracion !-->
+            <div class="form-group row">
+              <label for="remuneracion" class="col-lg-4 col-form-label">
+                Remuneración:
+              </label>
+              <div class="col-lg-8">
+                <input class="form-control" name="remuneracion" id="remuneracion">
+              </div>
+            </div>
+            <!-- Tiempo Experiencia!-->
+            <div class="form-group row">
+              <label for="experiencia" class="col-lg-4 col-form-label">
+                Tiempo Experiencia:
+              </label>
+              <div class="col-lg-8">
+                <input class="form-control" name="experiencia" id="experiencia">
+              </div>
+            </div>
+            <!-- Jornada !-->
+            <div class="form-group row">
+              <label for="jornada" class="col-lg-4 col-form-label">
+                Jornada:
+              </label>
+              <div class="col-lg-8">
+                <input class="form-control" name="jornada" id="jornada">
+              </div>
+            </div>
+            <!-- Actividades !-->
+            <div class="form-group row">
+              <label for="actividades" class="col-lg-4 col-form-label">
+                Actividades:
+              </label>
+              <div class="col-lg-8">
+                <textarea class="form-control" name="actividades" id="actividades"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success btn-lg" title="Aplicar">
+      <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
+    </button>
+    <button class="btn btn-danger btn-lg" title="Cancelar">
+      <i class="fa fa-close" aria-hidden="true"> Cancelar</i>
+    </button>
+  </div>
+</ng-template>
+<!--
+<div class="row m-2">
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <h1>Desarrollador de Software</h1>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Ofer 001</h5>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Código:</b></label>
+            <input id="cargo" class="form-control col-lg-10" value="Ofer 001">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Cargo:</b></label>
+            <input id="actividades" class="form-control"
+                   value="Desarrollar Software de alta calidad, Administrar Base de Datos">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Remuneración:</b></label>
+            <input id="remuneracion" class="form-control" value="$300 - 400">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Ciudad:</b></label>
+            <input id="ciudad" class="form-control" value="Quito">
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        <div class="form-group">
+          <button href="#" class="btn btn-warning">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            Editar
+          </button>
+          <button href="#" class="btn btn-danger">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+            Eliminar
+          </button>
+          <button href="#" class="btn btn-info">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Postulaciones
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header">
+        <h1>Desarrollador de Software</h1>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Ofer 001</h5>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Código:</b></label>
+            <input id="cargo" class="form-control col-lg-10" value="Ofer 001">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Cargo:</b></label>
+            <input id="actividades" class="form-control"
+                   value="Desarrollar Software de alta calidad, Administrar Base de Datos">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Remuneración:</b></label>
+            <input id="remuneracion" class="form-control" value="$300 - 400">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <label for="cargo" class="input-group-prepend col-lg-2"><b>Ciudad:</b></label>
+            <input id="ciudad" class="form-control" value="Quito">
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-muted">
+        <div class="form-group">
+          <button href="#" class="btn btn-warning">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            Editar
+          </button>
+          <button href="#" class="btn btn-danger">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+            Eliminar
+          </button>
+          <button href="#" class="btn btn-info">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+            Postulaciones
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+-->

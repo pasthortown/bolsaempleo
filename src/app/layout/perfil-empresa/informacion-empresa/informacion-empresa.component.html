@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-12 mt-2 card">
+    <div class="row mt-3">
+      <div class="col-2">
+        <div class="row">
+          <div class="col-12 mt-3 text-center">
+            <input type="file" style="visibility: hidden; height: 0px" class="form-control btn" id="logo"
+                   placeholder="logo" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
+            <img src="{{srcFoto}}" class="btn rounded-circle col-8" (click)="fileInput.click()">
+          </div>
+        </div>
+      </div>
+      <div class="col-10">
+        <div class="row">
+          <div class="col-12">
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <!--Identificacion-->
+            <div class="form-group">
+              <label for="identificacion">Indentificación:</label>
+              <input type="text" class="form-control" id="identificacion" placeholder="RUC o Cédula">
+            </div>
+            <!--Razon Social-->
+            <div class="form-group">
+              <label for="razonSocial">Razón Social:</label>
+              <input type="text" class="form-control" id="razonSocial" placeholder="Razón Social">
+            </div>
+            <!--Nombre Comercial-->
+            <div class="form-group">
+              <label for="nombreComercial">Nombre Comercial:</label>
+              <input type="text" class="form-control" id="nombreComercial" placeholder="Nombre Comercial">
+            </div>
+            <!--Actividad Economica-->
+            <div class="form-group">
+              <label for="actividadEconomica">Actividad Económica:</label>
+              <input type="text" class="form-control" id="actividadEconomica" placeholder="Actividad Económica">
+            </div>
+            <!--Naturaleza-->
+            <div class="form-group">
+              <label for="naturaleza">Naturaleza:</label>
+              <select class="form-control" id="naturaleza">
+                <option value="" selected>SELECCIONE...</option>
+                <option value="Soltero">PÚBLICA</option>
+                <option value="Casado">PRIVADA</option>
+                <option value="Divorciado">MIXTA</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-6">
+            <!--Direccion-->
+            <div class="form-group">
+              <label for="direccion">Dirección:</label>
+              <input type="text" class="form-control" id="direccion" placeholder="Dirección">
+            </div>
+            <!--Pagina Web-->
+            <div class="form-group">
+              <label for="paginaWeb">Página Web:</label>
+              <input type="text" class="form-control" id="paginaWeb" placeholder="Página Web">
+            </div>
+            <!--Correo Electronico-->
+            <div class="form-group">
+              <label for="correoElectronico">Correo Electrónico:</label>
+              <input type="email" class="form-control" id="correoElectronico" placeholder="Correo Electrónico">
+            </div>
+            <!--Telefono Celular-->
+            <div class="form-group">
+              <label for="telefonoCelular">Teléfono Celular:</label>
+              <input type="text" class="form-control" id="telefonoCelular" placeholder="Teléfono Celular">
+            </div>
+            <!--Telefono Fijo-->
+            <div class="form-group">
+              <label for="telefonoFijo">Teléfono Fijo:</label>
+              <input type="text" class="form-control" id="telefonoFijo" placeholder="Teléfono Fijo">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
