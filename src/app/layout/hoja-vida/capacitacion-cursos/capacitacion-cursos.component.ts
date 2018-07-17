@@ -1,3 +1,4 @@
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Capacitacion } from './../../../models/capacitacion';
 import { PostulanteService } from './../../../services/postulante.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,10 +11,29 @@ import { Component, OnInit } from '@angular/core';
 export class CapacitacionCursosComponent implements OnInit {
   capacitacion: Capacitacion;
 
-  constructor(public postulanteService: PostulanteService) { }
+  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) { }
 
   ngOnInit() {
     this.capacitacion = new Capacitacion();
+  }
+
+  open(content, item: Capacitacion, editar) {
+    if ( editar ) {
+      this.capacitacion = item;
+    } else {
+      this.capacitacion = new Capacitacion();
+    }
+    this.modalService.open(content)
+    .result
+    .then((resultModal => {
+      if ( resultModal === 'save' ) {
+        if ( !editar ) {
+          this.agregar();
+        }
+      }
+    }), (resultCancel => {
+
+    }));
   }
 
   agregar() {
@@ -21,25 +41,13 @@ export class CapacitacionCursosComponent implements OnInit {
     this.capacitacion = new Capacitacion();
   }
 
-  editar(item: Capacitacion) {
-    this.capacitacion = item;
-  }
-
   borrar(item: Capacitacion) {
-    const capacitaciones = [];
+    const estudios = [];
     this.postulanteService.postulante.capacitaciones.forEach(element => {
       if (element !== item) {
-        capacitaciones.push(element);
+        estudios.push(element);
       }
     });
-    this.postulanteService.postulante.capacitaciones = capacitaciones;
-  }
-
-  nuevo() {
-    this.capacitacion = new Capacitacion();
-  }
-
-  actualizar() {
-    this.capacitacion = new Capacitacion();
+    this.postulanteService.postulante.capacitaciones = estudios;
   }
 }

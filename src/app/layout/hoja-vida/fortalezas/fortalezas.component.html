@@ -4,6 +4,45 @@
       <span class="fa fa-plus-circle"></span>&nbsp;Agregar
     </button>
   </div>
+  <div class="row">
+    <div class="col-12 card mt-3">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="col-12 text-center">Fortaleza / Habilidad / Destreza</h4>
+        </div>
+        <div class="col-12">
+          <table class="table table-bordered table-hover">
+            <thead class="table-active">
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Nivel</th>
+              <th width="100px">Opciones</th>
+            </thead>
+            <tbody>
+              <tr >
+                <td>Nombre</td>
+                <td>Descripción</td>
+                <td>Nivel</td>
+                <td>
+                    <button class="btn btn-warning btn-sm" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
+                    <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <div class="row">
+      <h4 class="col-12 text-center">Fortaleza / Habilidad / Destreza</h4>
+    </div>
+  </div>
+  <div class="modal-body">
     <div class="row">
       <div class="col-12 card">
         <div class="row">
@@ -49,46 +88,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 card mt-3">
-        <div class="row">
-          <div class="col-12">
-            <h4 class="col-12 text-center">Fortaleza / Habilidad / Destreza</h4>
-          </div>
-          <div class="col-12">
-            <table class="table table-bordered table-hover">
-              <thead class="table-active">
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Nivel</th>
-                <th width="100px">Opciones</th>
-              </thead>
-              <tbody>
-                <tr >
-                  <td>Nombre</td>
-                  <td>Descripción</td>
-                  <td>Nivel</td>
-                  <td>
-                      <button class="btn btn-warning btn-sm" (click)="editar(producto)"><span class="fa fa-edit"></span></button>
-                      <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(producto)"><span class="fa fa-trash"></span></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
-
-<ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <div class="row">
-      <h4 class="col-12 text-center">Fortaleza / Habilidad / Destreza</h4>
-    </div>
-  </div>
-  <div class="modal-body">
-
   <div class="modal-footer">
     <button class="btn btn-success" (click)="c('save')">
       <span class="fa fa-check"></span>&nbsp;Aceptar
