@@ -1,3 +1,4 @@
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PostulanteService } from './../../../services/postulante.service';
 import { Component, OnInit } from '@angular/core';
 import { EstudioRealizado } from '../../../models/estudio-realizado';
@@ -10,19 +11,34 @@ import { EstudioRealizado } from '../../../models/estudio-realizado';
 export class EstudiosRealizadosComponent implements OnInit {
   estudioRealizado: EstudioRealizado;
 
-  constructor(public postulanteService: PostulanteService) { }
+  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) { }
 
   ngOnInit() {
     this.estudioRealizado = new EstudioRealizado();
   }
 
+  open(content, item: EstudioRealizado, editar) {
+    if ( editar ) {
+      this.estudioRealizado = item;
+    } else {
+      this.estudioRealizado = new EstudioRealizado();
+    }
+    this.modalService.open(content)
+    .result
+    .then((resultModal => {
+      if ( resultModal === 'save' ) {
+        if ( !editar ) {
+          this.agregar();
+        }
+      }
+    }), (resultCancel => {
+
+    }));
+  }
+
   agregar() {
     this.postulanteService.postulante.estudiosRealizados.push(this.estudioRealizado);
     this.estudioRealizado = new EstudioRealizado();
-  }
-
-  editar(item: EstudioRealizado) {
-    this.estudioRealizado = item;
   }
 
   borrar(item: EstudioRealizado) {

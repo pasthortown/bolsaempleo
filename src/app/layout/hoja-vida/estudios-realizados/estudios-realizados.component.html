@@ -1,70 +1,8 @@
 <div class="col-12 mt-2">
   <div class="row">
-    <div class="col-12 card">
-      <div class="row">
-        <h4 class="col-12 text-center">Estudio Realizado</h4>
-      </div>
-      <div class="row">
-        <div class="col-3">
-          <div class="form-group">
-            <label for="nivel">Nivel</label>
-            <select [(ngModel)]="estudioRealizado.nivel" class="form-control" id="nivel" name="nivel">
-                <option value="" selected>Seleccione...</option>
-                <option value="Bachillerato">Bachillerato</option>
-                <option value="Tercer Nivel">Tercer Nivel</option>
-                <option value="Cuarto Nivel">Cuarto Nivel</option>
-                <option value="Doctorado">Doctorado</option>
-              </select>
-          </div>
-        </div>
-        <div class="col-9">
-          <div class="form-group">
-            <label for="institucion">Institución</label>
-            <input type="text" [(ngModel)]="estudioRealizado.institucion" class="form-control" id="institucion" placeholder="Institución">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="form-group">
-            <label for="titulo">Título</label>
-            <input type="text" [(ngModel)]="estudioRealizado.titulo" class="form-control" id="titulo" placeholder="Título">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6">
-          <div class="form-group">
-            <label for="fechaRegistro">Fecha de Registro</label>
-            <div class="input-group datepicker-input">
-              <input class="form-control" [(ngModel)]="estudioRealizado.fechaRegistro" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-              <button class="input-group-addon" (click)="d.toggle()" type="button">
-                <span class="fa fa-calendar"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="col-6">
-          <div class="form-group">
-            <label for="codigoRegistro">Código de Registro SENESCYT</label>
-            <input type="text" [(ngModel)]="estudioRealizado.codigoRegistroSENESCYT" class="form-control" id="codigoRegistro" placeholder="Código de Registro SENESCYT">
-          </div>
-        </div>
-      </div>
-      <div class="row mb-2">
-        <div class="col-12 text-center">
-          <button class="btn btn-success m-2" (click)="agregar()">
-            <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-          </button>
-          <button class="btn btn-secondary m-2" (click)="actualizar()">
-            <span class="fa fa-refresh"></span>&nbsp;Actualizar
-          </button>
-          <button class="btn btn-primary m-2" (click)="nuevo()">
-            <span class="fa fa-circle-thin"></span>&nbsp;Nuevo
-          </button>
-        </div>
-      </div>
-    </div>
+    <button class="btn btn-success m-2" (click)="open(content, estudioRealizado, false)">
+      <span class="fa fa-plus-circle"></span>&nbsp;Agregar
+    </button>
   </div>
   <div class="row">
     <div class="col-12 card mt-3">
@@ -90,7 +28,7 @@
                 <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
                 <td>{{item.codigoRegistroSENESCYT}}</td>
                 <td>
-                    <button class="btn btn-warning btn-sm" (click)="editar(item)"><span class="fa fa-edit"></span></button>
+                    <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span class="fa fa-edit"></span></button>
                     <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
                 </td>
               </tr>
@@ -101,3 +39,63 @@
     </div>
   </div>
 </div>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <div class="row">
+      <h4 class="col-12 text-center">Estudio Realizado</h4>
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="nivel">Nivel</label>
+          <select [(ngModel)]="estudioRealizado.nivel" class="form-control" id="nivel" name="nivel">
+              <option value="" selected>Seleccione...</option>
+              <option value="Bachillerato">Bachillerato</option>
+              <option value="Tercer Nivel">Tercer Nivel</option>
+              <option value="Cuarto Nivel">Cuarto Nivel</option>
+              <option value="Doctorado">Doctorado</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label for="institucion">Institución</label>
+          <input type="text" [(ngModel)]="estudioRealizado.institucion" class="form-control" id="institucion" placeholder="Institución">
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label for="titulo">Título</label>
+          <input type="text" [(ngModel)]="estudioRealizado.titulo" class="form-control" id="titulo" placeholder="Título">
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label for="fechaRegistro">Fecha de Registro</label>
+          <div class="input-group datepicker-input">
+            <input class="form-control" [(ngModel)]="estudioRealizado.fechaRegistro" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+            <button class="input-group-addon" (click)="d.toggle()" type="button">
+              <span class="fa fa-calendar"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="form-group">
+          <label for="codigoRegistro">Código de Registro SENESCYT</label>
+          <input type="text" [(ngModel)]="estudioRealizado.codigoRegistroSENESCYT" class="form-control" id="codigoRegistro" placeholder="Código de Registro SENESCYT">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" (click)="c('save')">
+      <span class="fa fa-check"></span>&nbsp;Aceptar
+    </button>
+    <button class="btn btn-danger" (click)="c('close')">
+      <span class="fa fa-close"></span>&nbsp;Cancelar
+    </button>
+  </div>
+</ng-template>
