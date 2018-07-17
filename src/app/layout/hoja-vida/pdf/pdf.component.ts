@@ -1,12 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import * as jsPDF from 'jspdf';
+import * as html2canvas from 'html2canvas';
+import { ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-pdf',
   templateUrl: './pdf.component.html',
   styleUrls: ['./pdf.component.css']
 })
+
 export class PdfComponent implements OnInit {
   srcFoto: string;
+  @ViewChild('encabezadoHojaDatos') encabezadoHojaDatos: ElementRef;
+  @ViewChild('cuerpoHojaDatos') cuerpoHojaDatos: ElementRef;
+  @ViewChild('pieHojaDatos') pieHojaDatos: ElementRef;
 
   constructor() { }
 
