@@ -6,22 +6,22 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown" ngbDropdown>
         <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
-          <i><img src="{{fotoPerfil}}" class="rounded-circle" style="width: 70px; height: 70px;"></i>&nbsp;Luis Alfonso Salazar Vaca<b class="caret"></b>
+          <i><img src="{{fotoPerfil}}" class="rounded-circle" style="width: 70px; height: 70px;"></i>&nbsp;{{nameOrEmail}}<b class="caret"></b>
         </a>
-        <div ngbDropdownMenu >
-          <a class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
+        <div ngbDropdownMenu>
+          <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Postulaciones
           </a>
-          <a class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
+          <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Ofertas Laborales
           </a>
-          <a class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
+          <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Hoja de Vida
           </a>
-          <a class="dropdown-item" [routerLink]="['/perfil']" [routerLinkActive]="['router-link-active']">
+          <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/perfil']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Perfil
           </a>
-          <a class="dropdown-item" (click)="cerrarSesion()">
+          <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" (click)="cerrarSesion()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
           </a>
         </div>

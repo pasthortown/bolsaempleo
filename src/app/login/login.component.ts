@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,20 +10,26 @@ import { Router } from '@angular/router';
   animations: [routerTransition()]
 })
 export class LoginComponent implements OnInit {
-  email: string;
-  clave: string;
-  datosConfirmados: Boolean;
+  user = {
+    email: '',
+    password: ''
+  };
 
-
-  constructor(public router: Router) { }
+  constructor(public router: Router, public authService: AuthService ) { }
 
   ngOnInit() {
-    this.datosConfirmados = true;
   }
 
-  ingresar() {
+  signInWithEmail() {
+    this.authService.signInRegular(this.user.email, this.user.password)
+      .then((res) => {
+        console.log(res);
+        this.router.navigate(['postulantes']);
+      })
+      .catch((err) => console.log('error: ' + err));
   }
 
   recuperarClave() {
+    // TODO
   }
 }
