@@ -10,20 +10,12 @@ import { Postulante } from '../../models/postulante';
 })
 export class HojaVidaComponent implements OnInit {
   postulantes = [];
+  id = '-LHiW7NRVSatQPsGYfZk';
 
   constructor(private postulanteService: PostulanteService, private firebaseBDDService: FirebaseBDDService) { }
 
   ngOnInit() {
-    /*this.firebaseBDDService.leerPostulantes().snapshotChanges().subscribe(items => {
-      this.postulantes = [];
-      items.forEach(element => {
-        let itemLeido: Postulante;
-        itemLeido = element.payload.toJSON() as Postulante;
-        itemLeido.id = element.key;
-        this.postulantes.push(itemLeido as Postulante);
-      });
-    });*/
-    this.firebaseBDDService.firebaseControllerPostulantes.querySimple('id', '-LHiW7NRVSatQPsGYfZk').snapshotChanges().subscribe(items => {
+    this.firebaseBDDService.firebaseControllerPostulantes.querySimple('id', this.id).snapshotChanges().subscribe(items => {
       items.forEach(element => {
         let itemLeido: Postulante;
         itemLeido = element.payload.val() as Postulante;
@@ -34,9 +26,7 @@ export class HojaVidaComponent implements OnInit {
   }
 
   guardarCambios() {
-    console.log(this.postulanteService.postulante);
-    //this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
-    this.postulanteService.postulante.id = '-LHiW7NRVSatQPsGYfZk';
+    this.postulanteService.postulante.id = this.id;
     this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
   }
 }
