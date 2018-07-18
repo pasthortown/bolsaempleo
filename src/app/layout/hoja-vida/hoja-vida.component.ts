@@ -26,6 +26,8 @@ export class HojaVidaComponent implements OnInit {
   }
 
   guardarCambios() {
-    this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
+    //this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
+    this.postulanteService.postulante.id = '-LHi3nYXEBL7vbFnE9Wv';
+    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
   }
 }
