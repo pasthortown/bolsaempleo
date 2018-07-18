@@ -28,7 +28,6 @@ export class OfertasLaboralesComponent implements OnInit {
     this.srcFoto2 = 'assets/img/prueba/empresa2.png';
     this.srcFoto3 = 'assets/img/prueba/empresa3.png';
     this.srcFoto4 = 'assets/img/prueba/empresa4.png';
-    // this.leer();
   }
 
   CodificarArchivo(event) {

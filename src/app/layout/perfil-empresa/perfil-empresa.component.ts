@@ -18,7 +18,7 @@ export class PerfilEmpresaComponent implements OnInit {
   }
 
   leer() {
-    this.empresaService.empresa.id = '-LHi9j3SRUU-NmEb9lgT';
+    this.empresaService.empresa.id = '-LHim59xdYSFrG47QOhg';
     this.firebaseBDDService.firebaseControllerEmpresas.querySimple('id', this.empresaService.empresa.id)
       .snapshotChanges().subscribe(items => {
       items.forEach(element => {

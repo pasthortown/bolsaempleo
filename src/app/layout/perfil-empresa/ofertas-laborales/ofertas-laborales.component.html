@@ -88,7 +88,8 @@
               <label for="editCodigo" class="col-form-label">
                 Código:
               </label>
-              <input class="form-control" name="codigo" id="editCodigo" [(ngModel)]="oferta.codigo">
+              <input class="form-control" name="codigo" id="editCodigo" [(ngModel)]="oferta.codigo"
+                     placeholder="Código">
             </div>
 
             <!-- Cargo !-->
@@ -96,7 +97,7 @@
               <label for="editCargo" class="col-form-label">
                 Cargo:
               </label>
-              <input class="form-control" name="cargo" id="editCargo" [(ngModel)]="oferta.cargo">
+              <input class="form-control" name="cargo" id="editCargo" [(ngModel)]="oferta.cargo" placeholder="Cargo">
             </div>
 
             <!-- Ciudad !-->
@@ -115,21 +116,31 @@
             </div>
 
             <!-- Inicio Publicacion !-->
-            <div class="form-group ">
+            <div class="form-group datepicker-input">
               <label for="editInicioPublicacion" class="col-form-label">
                 Inicio Publicación:
               </label>
-              <input type="date" class="form-control" name="inicioPublicacion"
-                     id="editInicioPublicacion" [(ngModel)]="oferta.inicioPublicacion">
+              <div class="input-group datepicker-input">
+                <input [(ngModel)]="oferta.inicioPublicacion" class="form-control" id="editInicioPublicacion"
+                       placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d1="ngbDatepicker">
+                <button class="input-group-addon" (click)="d1.toggle()" type="button">
+                  <span class="fa fa-calendar"></span>
+                </button>
+              </div>
             </div>
 
             <!-- Fin Publicacion !-->
-            <div class="form-group ">
+            <div class="form-group datepicker-input">
               <label for="editFinPublicacion" class="col-form-label">
                 Fin Publicación:
               </label>
-              <input type="date" class="form-control" name="finPublicacion" id="editFinPublicacion"
-                     [(ngModel)]="oferta.finPublicacion">
+              <div class="input-group datepicker-input">
+                <input [(ngModel)]="oferta.finPublicacion" class="form-control" id="editFinPublicacion"
+                       placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d2="ngbDatepicker">
+                <button class="input-group-addon" (click)="d2.toggle()" type="button">
+                  <span class="fa fa-calendar"></span>
+                </button>
+              </div>
             </div>
           </div>
           <div class="col-lg-6">
@@ -138,7 +149,8 @@
               <label for="editContacto" class="col-form-label">
                 Contacto:
               </label>
-              <input class="form-control" name="contacto" id="editContacto" [(ngModel)]="oferta.contacto">
+              <input class="form-control" name="contacto" id="editContacto" [(ngModel)]="oferta.contacto"
+                     placeholder="Nombres y Apellidos">
             </div>
 
             <!-- Correo Electronico !-->
@@ -147,7 +159,7 @@
                 Correo:
               </label>
               <input type="email" class="form-control" id="editCorreoElectronico"
-                     [(ngModel)]="oferta.correoElectronico">
+                     [(ngModel)]="oferta.correoElectronico" placeholder="Correo Electrónico">
             </div>
 
             <!-- Telefono Fijo !-->
@@ -155,7 +167,8 @@
               <label for="editTelefonoFijo" class="col-form-label">
                 Teléfono Fijo:
               </label>
-              <input class="form-control" id="editTelefonoFijo" [(ngModel)]="oferta.telefonoFijo">
+              <input class="form-control" id="editTelefonoFijo" [(ngModel)]="oferta.telefonoFijo"
+                     placeholder="Teléfono Fijo">
             </div>
 
             <!-- Telefono Celular !-->
@@ -164,7 +177,7 @@
                 Teléfono Celular:
               </label>
               <input class="form-control" id="editTelefonoCelular"
-                     [(ngModel)]="oferta.telefonoCelular">
+                     [(ngModel)]="oferta.telefonoCelular" placeholder="Teléfono Celular">
             </div>
 
             <!-- Tipo Contrato !-->
@@ -208,14 +221,15 @@
                 Horas de Capacitación:
               </label>
               <input class="form-control" id="horasCapacitacion"
-                     [(ngModel)]="oferta.horasCapacitacion">
+                     [(ngModel)]="oferta.horasCapacitacion" placeholder="Horas de Capacitación">
             </div>
             <!-- Numero de Puestos !-->
             <div class="form-group ">
               <label for="numeroPuestos" class="col-form-label">
                 Puestos:
               </label>
-              <input class="form-control" id="numeroPuestos" [(ngModel)]="oferta.numeroPuestos">
+              <input class="form-control" id="numeroPuestos" [(ngModel)]="oferta.numeroPuestos"
+                     placeholder="# de Puestos">
             </div>
             <!-- Informacion Adicional !-->
             <div class="form-group ">
@@ -223,7 +237,7 @@
                 Información Adicional:
               </label>
               <textarea class="form-control" id="informacionAdicional"
-                        [(ngModel)]="oferta.informacionAdicional"></textarea>
+                        [(ngModel)]="oferta.informacionAdicional" placeholder="Información Adicional"></textarea>
             </div>
           </div>
           <div class="col-lg-6">
@@ -232,28 +246,31 @@
               <label for="remuneracion" class="col-form-label">
                 Remuneración:
               </label>
-              <input class="form-control" id="remuneracion" [(ngModel)]="oferta.remuneracion">
+              <input class="form-control" id="remuneracion" [(ngModel)]="oferta.remuneracion"
+                     placeholder="Remuneración">
             </div>
             <!-- Tiempo Experiencia!-->
             <div class="form-group ">
               <label for="experiencia" class="col-form-label">
                 Tiempo Experiencia:
               </label>
-              <input class="form-control" id="experiencia" [(ngModel)]="oferta.tiempoExperiencia">
+              <input class="form-control" id="experiencia" [(ngModel)]="oferta.tiempoExperiencia"
+                     placeholder="Tiempo de Experiencia">
             </div>
             <!-- Jornada !-->
             <div class="form-group ">
               <label for="jornada" class="col-form-label">
                 Jornada:
               </label>
-              <input class="form-control" id="jornada" [(ngModel)]="oferta.jornada">
+              <input class="form-control" id="jornada" [(ngModel)]="oferta.jornada" placeholder="Jornada">
             </div>
             <!-- Actividades !-->
             <div class="form-group ">
               <label for="actividades" class="col-form-label">
                 Actividades:
               </label>
-              <textarea class="form-control" id="actividades" [(ngModel)]="oferta.actividades"></textarea>
+              <textarea class="form-control" id="actividades" [(ngModel)]="oferta.actividades"
+                        placeholder="Actividades"></textarea>
             </div>
           </div>
         </div>
