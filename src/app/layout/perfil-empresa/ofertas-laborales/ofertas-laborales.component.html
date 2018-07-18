@@ -195,7 +195,8 @@
               <label for="instruccionNivel" class="col-form-label">
                 Instrucción Nivel:
               </label>
-              <select class="form-control" name="instruccionNivel" id="instruccionNivel">
+              <select class="form-control" name="instruccionNivel" id="instruccionNivel"
+                      [(ngModel)]="oferta.instruccionNivel">
                 <option value="">Seleccione...</option>
                 <option value="Tercer Nivel">Tercer Nivel</option>
                 <option value="Cuarto Nivel">Cuarto Nivel</option>
@@ -206,21 +207,23 @@
               <label for="horasCapacitacion" class="col-form-label">
                 Horas de Capacitación:
               </label>
-              <input class="form-control" name="horasCapacitacion" id="horasCapacitacion">
+              <input class="form-control" id="horasCapacitacion"
+                     [(ngModel)]="oferta.horasCapacitacion">
             </div>
             <!-- Numero de Puestos !-->
             <div class="form-group ">
               <label for="numeroPuestos" class="col-form-label">
                 Puestos:
               </label>
-              <input class="form-control" name="numeroPuestos" id="numeroPuestos">
+              <input class="form-control" id="numeroPuestos" [(ngModel)]="oferta.numeroPuestos">
             </div>
             <!-- Informacion Adicional !-->
             <div class="form-group ">
               <label for="informacionAdicional" class="col-form-label">
                 Información Adicional:
               </label>
-              <textarea class="form-control" name="informacionAdicional" id="informacionAdicional"></textarea>
+              <textarea class="form-control" id="informacionAdicional"
+                        [(ngModel)]="oferta.informacionAdicional"></textarea>
             </div>
           </div>
           <div class="col-lg-6">
@@ -229,28 +232,28 @@
               <label for="remuneracion" class="col-form-label">
                 Remuneración:
               </label>
-              <input class="form-control" name="remuneracion" id="remuneracion">
+              <input class="form-control" id="remuneracion" [(ngModel)]="oferta.remuneracion">
             </div>
             <!-- Tiempo Experiencia!-->
             <div class="form-group ">
               <label for="experiencia" class="col-form-label">
                 Tiempo Experiencia:
               </label>
-              <input class="form-control" name="experiencia" id="experiencia">
+              <input class="form-control" id="experiencia" [(ngModel)]="oferta.tiempoExperiencia">
             </div>
             <!-- Jornada !-->
             <div class="form-group ">
               <label for="jornada" class="col-form-label">
                 Jornada:
               </label>
-              <input class="form-control" name="jornada" id="jornada">
+              <input class="form-control" id="jornada" [(ngModel)]="oferta.jornada">
             </div>
             <!-- Actividades !-->
             <div class="form-group ">
               <label for="actividades" class="col-form-label">
                 Actividades:
               </label>
-              <textarea class="form-control" name="actividades" id="actividades"></textarea>
+              <textarea class="form-control" id="actividades" [(ngModel)]="oferta.actividades"></textarea>
             </div>
           </div>
         </div>
@@ -258,10 +261,10 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-success btn-lg" title="Aplicar">
+    <button class="btn btn-success btn-lg" title="Aplicar" (click)="c('save')">
       <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
     </button>
-    <button class="btn btn-danger btn-lg" title="Cancelar">
+    <button class="btn btn-danger btn-lg" title="Cancelar" (click)="c('close')">
       <i class="fa fa-close" aria-hidden="true"> Cancelar</i>
     </button>
   </div>
