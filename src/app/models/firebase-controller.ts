@@ -1,4 +1,3 @@
-import { Postulante } from './postulante';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 export class FirebaseController {
