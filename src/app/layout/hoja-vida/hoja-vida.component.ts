@@ -14,7 +14,7 @@ export class HojaVidaComponent implements OnInit {
   constructor(private postulanteService: PostulanteService, private firebaseBDDService: FirebaseBDDService) { }
 
   ngOnInit() {
-    this.firebaseBDDService.leerPostulantes().snapshotChanges().subscribe(items => {
+    /*this.firebaseBDDService.leerPostulantes().snapshotChanges().subscribe(items => {
       this.postulantes = [];
       items.forEach(element => {
         let itemLeido: Postulante;
@@ -22,10 +22,10 @@ export class HojaVidaComponent implements OnInit {
         itemLeido.id = element.key;
         this.postulantes.push(itemLeido as Postulante);
       });
-    });
+    });*/
   }
 
   guardarCambios() {
-    this.firebaseBDDService.insertarPostulante(this.postulanteService.postulante);
+    this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
   }
 }
