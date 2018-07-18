@@ -37,6 +37,9 @@ export class FortalezasComponent implements OnInit {
   }
 
   agregar() {
+    if ( this.postulanteService.postulante.fortalezas == null ) {
+      this.postulanteService.postulante.fortalezas = [];
+    }
     this.postulanteService.postulante.fortalezas.push(this.fortaleza);
     this.fortaleza = new Fortaleza();
   }

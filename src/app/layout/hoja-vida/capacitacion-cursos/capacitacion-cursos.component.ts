@@ -37,6 +37,9 @@ export class CapacitacionCursosComponent implements OnInit {
   }
 
   agregar() {
+    if ( this.postulanteService.postulante.capacitaciones == null ) {
+      this.postulanteService.postulante.capacitaciones = [];
+    }
     this.postulanteService.postulante.capacitaciones.push(this.capacitacion);
     this.capacitacion = new Capacitacion();
   }

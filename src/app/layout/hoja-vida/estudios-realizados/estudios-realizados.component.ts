@@ -37,6 +37,9 @@ export class EstudiosRealizadosComponent implements OnInit {
   }
 
   agregar() {
+    if ( this.postulanteService.postulante.estudiosRealizados == null ) {
+      this.postulanteService.postulante.estudiosRealizados = [];
+    }
     this.postulanteService.postulante.estudiosRealizados.push(this.estudioRealizado);
     this.estudioRealizado = new EstudioRealizado();
   }

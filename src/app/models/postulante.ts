@@ -16,14 +16,20 @@ export class Postulante {
   correoElectronico: string;
   telefono: string;
   domicilio: string;
-  estudiosRealizados = [];
-  capacitaciones = [];
-  experienciasLaborales = [];
-  idiomas: any;
-  fortalezas = [];
-  referenciasPersonales = [];
+  estudiosRealizados: Array<EstudioRealizado>;
+  capacitaciones: Array<Capacitacion>;
+  experienciasLaborales: Array<ExperienciaLaboral>;
+  idiomas: Array<Idioma>;
+  fortalezas: Array<Fortaleza>;
+  referenciasPersonales: Array<ReferenciaPersonal>;
 
   constructor() {
     this.estadoCivil = '';
+    this.estudiosRealizados = [];
+    this.capacitaciones = [];
+    this.experienciasLaborales = [];
+    this.idiomas = [];
+    this.fortalezas = [];
+    this.referenciasPersonales = [];
   }
 }

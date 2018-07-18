@@ -37,6 +37,9 @@ export class ExperienciaProfesionalComponent implements OnInit {
   }
 
   agregar() {
+    if ( this.postulanteService.postulante.experienciasLaborales == null ) {
+      this.postulanteService.postulante.experienciasLaborales = [];
+    }
     this.postulanteService.postulante.experienciasLaborales.push(this.experienciaLaboral);
     this.experienciaLaboral = new ExperienciaLaboral();
   }
