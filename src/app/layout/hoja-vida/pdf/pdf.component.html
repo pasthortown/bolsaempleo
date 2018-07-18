@@ -1,14 +1,14 @@
 <div class="col-12">
   <div class="col-12 mt-2 mb-2">
     <div class="col-12" style="background: white; border: 1px #D3D3D3 solid; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-      <div class="col-12">
+      <div class="col-12" #encabezadoHojaVida>
         <div class="row">
           <div class="col-12">
             <h3 class="col-12 text-center">CABECERA</h3>
           </div>
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-12" #cuerpoHojaVida>
         <div class="row">
           <div class="col-12">
             <h3 class="col-12 text-center">Hoja de Vida</h3>
@@ -21,7 +21,7 @@
         </div>
         <div class="row">
           <div class="col-1"></div>
-          <div class="col-3">
+          <div class="col-4">
             <div class="row">
               <div class="col-12">
                 <div class="form-group">
@@ -31,18 +31,19 @@
             </div>
             <div class="row">
               <div class="col-12 mt-3 text-center">
-                <img src="{{srcFoto}}" class="rounded-circle col-8" (click)="fileInput.click()">
+                <img src="{{postulanteService.postulante.fotografia}}" class="rounded-circle col-8" (click)="fileInput.click()">
               </div>
             </div>
           </div>
-          <div class="col-7">
+          <div class="col-6">
+            <div class="col-12" style="height: 40px;"></div>
             <table class="col-12 table-sm">
               <tr>
                 <th class="text-right">
                   Nombre Completo:
                 </th>
                 <td>
-                  Luis Alfonso Salazar Vaca
+                  {{postulanteService.postulante.nombreCompleto}}
                 </td>
               </tr>
               <tr>
@@ -50,7 +51,7 @@
                   Identificación:
                 </th>
                 <td>
-                  1720364049
+                  {{postulanteService.postulante.identificacion}}
                 </td>
               </tr>
               <tr>
@@ -58,7 +59,7 @@
                   Estado Civil:
                 </th>
                 <td>
-                  Casado
+                  {{postulanteService.postulante.estadoCivil}}
                 </td>
               </tr>
               <tr>
@@ -66,7 +67,7 @@
                   Fecha de Nacimiento:
                 </th>
                 <td>
-                  15-Septiembre-1986
+                  {{postulanteService.postulante.fechaDeNacimiento.day}} de {{meses[postulanteService.postulante.fechaDeNacimiento.month-1]}} del {{postulanteService.postulante.fechaDeNacimiento.year}}
                 </td>
               </tr>
               <tr>
@@ -74,7 +75,7 @@
                   Nacionalidad:
                 </th>
                 <td>
-                  Ecuatoriano
+                  {{postulanteService.postulante.nacionalidad}}
                 </td>
               </tr>
               <tr>
@@ -82,7 +83,7 @@
                   Domicilio:
                 </th>
                 <td>
-                  De Los Robles E14-16 y De Los Cardos
+                  {{postulanteService.postulante.domicilio}}
                 </td>
               </tr>
               <tr>
@@ -90,7 +91,7 @@
                   Correo Electrónico:
                 </th>
                 <td>
-                  luissalazarvaca1986@gmail.com
+                  {{postulanteService.postulante.correoElectronico}}
                 </td>
               </tr>
               <tr>
@@ -98,7 +99,7 @@
                   Teléfono:
                 </th>
                 <td>
-                  0998600661
+                  {{postulanteService.postulante.telefono}}
                 </td>
               </tr>
             </table>
@@ -121,12 +122,12 @@
                 <th>Código de Registro SENESCYT</th>
               </thead>
               <tbody>
-                <tr >
-                  <td>Institución</td>
-                  <td>Nivel</td>
-                  <td>Título</td>
-                  <td>Fecha de Registro</td>
-                  <td>Código de Registro SENESCYT</td>
+                <tr *ngFor="let item of postulanteService.postulante.estudiosRealizados">
+                  <td>{{item.institucion}}</td>
+                  <td>{{item.nivel}}</td>
+                  <td>{{item.titulo}}</td>
+                  <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
+                  <td>{{item.codigoRegistroSENESCYT}}</td>
                 </tr>
               </tbody>
             </table>
@@ -150,14 +151,14 @@
                 <th>Horas</th>
               </thead>
               <tbody>
-                <tr >
-                  <td>Institución</td>
-                  <td>Tipo de Evento</td>
-                  <td>Nombre del Evento</td>
-                  <td>Tipo de Certificado</td>
-                  <td>Desde</td>
-                  <td>Hasta</td>
-                  <td>Horas</td>
+                <tr *ngFor="let item of postulanteService.postulante.capacitaciones">
+                  <td>{{item.institucion}}</td>
+                  <td>{{item.tipoEvento}}</td>
+                  <td>{{item.nombreEvento}}</td>
+                  <td>{{item.tipoCertificado}}</td>
+                  <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+                  <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
+                  <td>{{item.horas}}</td>
                 </tr>
               </tbody>
             </table>
@@ -178,11 +179,11 @@
                 <th>Nivel Lectura</th>
               </thead>
               <tbody>
-                <tr >
-                  <td>Idioma</td>
-                  <td>Nivel Escrito</td>
-                  <td>Nivel Hablado</td>
-                  <td>Nivel Lectura</td>
+                <tr *ngFor="let item of postulanteService.postulante.idiomas">
+                  <td>{{item.idioma}}</td>
+                  <td>{{item.nivelEscrito}}</td>
+                  <td>{{item.nivelHablado}}</td>
+                  <td>{{item.nivelLectura}}</td>
                 </tr>
               </tbody>
             </table>
@@ -202,14 +203,16 @@
                 <th>Descripción del Cargo</th>
                 <th>Fecha de Inicio</th>
                 <th>Fecha de Salida</th>
+                <th>Actual</th>
               </thead>
               <tbody>
-                <tr >
-                  <td>Empleador</td>
-                  <td>Cargo Desempeñado</td>
-                  <td>Descripción del Cargo</td>
-                  <td>Fecha de Inicio</td>
-                  <td>Fecha de Salida</td>
+                <tr *ngFor="let item of postulanteService.postulante.experienciasLaborales">
+                  <td>{{item.empleador}}</td>
+                  <td>{{item.cargoDesempenado}}</td>
+                  <td>{{item.descripcionCargo}}</td>
+                  <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+                  <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
+                  <td><div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span class="badge badge-success">Actual</span> </div></td>
                 </tr>
               </tbody>
             </table>
@@ -227,13 +230,12 @@
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Nivel</th>
-                <th>Opciones</th>
               </thead>
               <tbody>
-                <tr >
-                  <td>Nombre</td>
-                  <td>Descripción</td>
-                  <td>Nivel</td>
+                <tr *ngFor="let item of postulanteService.postulante.fortalezas">
+                  <td>{{item.nombre}}</td>
+                  <td>{{item.descripcion}}</td>
+                  <td>{{item.nivel}}</td>
                 </tr>
               </tbody>
             </table>
@@ -254,18 +256,18 @@
                 <th>Teléfono</th>
               </thead>
               <tbody>
-                <tr >
-                  <td>Nombres y Apellidos</td>
-                  <td>Cargo</td>
-                  <td>Empresa</td>
-                  <td>Teléfono</td>
+                <tr *ngFor="let item of postulanteService.postulante.referenciasPersonales">
+                  <td>{{item.nombresApellidos}}</td>
+                  <td>{{item.cargo}}</td>
+                  <td>{{item.empresa}}</td>
+                  <td>{{item.telefono}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-      <div class="col-12">
+      <div class="col-12" #pieHojaVida>
         <div class="row">
           <div class="col-12">
             <h3 class="col-12 text-center">PIE</h3>
@@ -278,7 +280,7 @@
   <div class="col-12">
     <div class="row">
       <div class="col-12 text-center">
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success" (click)="imprimir()">
           Imprimir
         </button>
       </div>

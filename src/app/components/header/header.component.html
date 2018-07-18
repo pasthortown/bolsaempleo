@@ -12,6 +12,7 @@
           <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Postulaciones
           </a>
+<<<<<<< HEAD
           <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Ofertas Laborales
           </a>
@@ -20,6 +21,13 @@
           </a>
           <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/perfil']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Perfil
+=======
+          <a class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Hoja de Vida
+          </a>
+          <a class="dropdown-item" [routerLink]="['/perfil-empresa']" [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Perfil de mi Empresa
+>>>>>>> 85fc2725b1bf0f675dc1ab56f4708baa8acf242c
           </a>
           <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" (click)="cerrarSesion()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
