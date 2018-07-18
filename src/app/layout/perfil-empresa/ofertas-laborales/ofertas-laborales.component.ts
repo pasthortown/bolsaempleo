@@ -47,7 +47,7 @@ export class OfertasLaboralesComponent implements OnInit {
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
-
+        this.agregar();
       }), (resultCancel => {
 
       }));

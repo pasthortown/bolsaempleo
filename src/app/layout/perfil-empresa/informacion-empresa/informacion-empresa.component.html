@@ -4,9 +4,14 @@
       <div class="col-2">
         <div class="row">
           <div class="col-12 mt-3 text-center">
-            <input type="file" style="visibility: hidden; height: 0px" class="form-control btn" id="logo"
-                   placeholder="logo" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
-            <img src="{{srcFoto}}" class="btn rounded-circle col-8" (click)="fileInput.click()">
+            <div class="group-form">
+              <input type="file" style="visibility: hidden; height: 0px" class="form-control btn" id="logo"
+                     placeholder="logo" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
+              <img src="{{srcFoto}}" class="btn rounded-circle col-8" (click)="fileInput.click()">
+              <button type="button" class="btn btn-success form-control">
+                <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -79,13 +84,6 @@
               <input type="text" class="form-control" id="telefonoFijo" placeholder="Teléfono Fijo"
                      [(ngModel)]="empresaService.empresa.telefonoFijo">
             </div>
-          </div>
-        </div>
-        <div class="row  m-1">
-          <div class="col-12">
-            <button type="button" class="btn btn-success pull-right">
-              <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
-            </button>
           </div>
         </div>
       </div>
