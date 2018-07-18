@@ -1,5 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmpresaService} from '../../../services/empresa.service';
+import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
+import swal from 'sweetalert2';
+import {Empresa} from '../../../models/empresa';
+import {forEach} from '@angular/router/src/utils/collection';
+import {Postulante} from '../../../models/postulante';
 
 @Component({
   selector: 'app-informacion-empresa',
@@ -10,7 +15,7 @@ export class InformacionEmpresaComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   srcFoto: string;
 
-  constructor(public empresaService: EmpresaService) {
+  constructor(public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
@@ -27,4 +32,35 @@ export class InformacionEmpresaComponent implements OnInit {
       };
     }
   }
+
+
+  insertar() {
+    this.firebaseBDDService.firebaseControllerEmpresas.insertar(this.empresaService.empresa);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Actualizar',
+      text: 'Actualización fue exitosa!',
+      showConfirmButton: false,
+      timer: 2000
+    });
+  }
+
+  actualizar() {
+    this.empresaService.empresa.id = '-LHim59xdYSFrG47QOhg';
+    if (this.empresaService.empresa.oferta == null) {
+      this.empresaService.empresa.oferta = [];
+    }
+    this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Actualizar',
+      text: 'Actualización fue exitosa!',
+      showConfirmButton: false,
+      timer: 2000
+    });
+  }
+
+
 }

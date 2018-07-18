@@ -1,7 +1,7 @@
 <div class="row mt-2">
   <div class="col-5">
     <div class="input-group mb-1">
-      <button type="button" class="btn btn-success mr-1" (click)="open(modalOfertaLaboral)">
+      <button type="button" class="btn btn-success mr-1" (click)="openOfertaLaboral(modalOfertaLaboral,null,false)">
         <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>
         Agregar
       </button>
@@ -51,10 +51,10 @@
               {{oferta.actividades}}
             </td>
             <td>
-              <button class="btn btn-warning btn-sm" (click)="open(modalOfertaLaboral)">
+              <button class="btn btn-warning btn-sm" (click)="openOfertaLaboral(modalOfertaLaboral,oferta,true)">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </button>
-              <button class="btn btn-danger btn-sm ml-1" (click)="delete()">
+              <button class="btn btn-danger btn-sm ml-1" (click)="borrar()">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
             </td>
