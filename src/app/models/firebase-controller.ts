@@ -3,9 +3,8 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 export class FirebaseController {
   coleccion: AngularFireList<any>;
   coleccionBDD: string;
-  private firebase: AngularFireDatabase;
 
-  constructor(coleccion: string) {
+  constructor(coleccion: string, private firebase: AngularFireDatabase) {
     this.coleccionBDD = coleccion;
     this.leer();
   }

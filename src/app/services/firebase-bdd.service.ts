@@ -11,8 +11,8 @@ export class FirebaseBDDService {
   firebaseControllerPostulantes: FirebaseController;
   firebaseControllerEmpresas: FirebaseController;
 
-  constructor() {
-    this.firebaseControllerPostulantes = new FirebaseController('postulantes');
-    this.firebaseControllerEmpresas = new FirebaseController('empresas');
+  constructor(private firebase: AngularFireDatabase) {
+    this.firebaseControllerPostulantes = new FirebaseController('postulantes', firebase);
+    this.firebaseControllerEmpresas = new FirebaseController('empresas', firebase);
   }
 }
