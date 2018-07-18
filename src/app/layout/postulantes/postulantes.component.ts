@@ -18,15 +18,11 @@ export class PostulantesComponent implements OnInit {
     this.contadorEmpresas = 0;
 
     this.firebaseBDDService.firebaseControllerPostulantes.leer().snapshotChanges().subscribe(items => {
-      items.forEach(element => {
-        this.contadorPersonas++;
-      });
+      this.contadorPersonas = items.length;
     });
 
     this.firebaseBDDService.firebaseControllerEmpresas.leer().snapshotChanges().subscribe(items => {
-      items.forEach(element => {
-        this.contadorEmpresas++;
-      });
+      this.contadorEmpresas = items.length;
     });
   }
 
