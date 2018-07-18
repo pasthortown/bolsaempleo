@@ -88,6 +88,9 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   agregarOferta() {
+    if ( this.empresaService.empresa.oferta == null ) {
+      this.empresaService.empresa.oferta = [];
+    }
     this.empresaService.empresa.oferta.push(this.oferta);
     this.oferta = new Oferta();
   }
