@@ -19,7 +19,7 @@ export class Postulante {
   estudiosRealizados = [];
   capacitaciones = [];
   experienciasLaborales = [];
-  idiomas = [];
+  idiomas: any;
   fortalezas = [];
   referenciasPersonales = [];
 

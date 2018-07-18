@@ -14,9 +14,9 @@ export class FirebaseController {
     return this.coleccion = this.firebase.list(this.coleccionBDD);
   }
 
-  query() {
-    return this.firebase.list('postulantes', ref => {
-      return ref.orderByChild('id').equalTo('-LHi96VymBMtGV1nitXC');
+  querySimple(campo: string, valor: string) {
+    return this.firebase.list(this.coleccionBDD, ref => {
+      return ref.orderByChild(campo).equalTo(valor);
     });
   }
 

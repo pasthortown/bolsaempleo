@@ -37,6 +37,9 @@ export class IdiomasComponent implements OnInit {
   }
 
   agregar() {
+    if ( this.postulanteService.postulante.idiomas == null ) {
+      this.postulanteService.postulante.idiomas = [];
+    }
     this.postulanteService.postulante.idiomas.push(this.idioma);
     this.idioma = new Idioma();
   }
