@@ -23,11 +23,23 @@ export class HojaVidaComponent implements OnInit {
         this.postulantes.push(itemLeido as Postulante);
       });
     });*/
+    this.firebaseBDDService.firebaseControllerPostulantes.query().snapshotChanges().subscribe(items => {
+      items.forEach(element => {
+        let itemLeido: Postulante;
+        console.log(element.payload.toJSON());
+        itemLeido = element.payload.toJSON() as Postulante;
+        itemLeido.id = element.key;
+        itemLeido.idiomas = [];
+        this.postulanteService.postulante = itemLeido;
+        //console.log(this.postulanteService.postulante);
+      });
+    });
   }
 
   guardarCambios() {
-    this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
-    this.postulanteService.postulante.id = '-LHi3nYXEBL7vbFnE9Wv';
-    //this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    //console.log(this.postulanteService.postulante);
+    //this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
+    this.postulanteService.postulante.id = '-LHi96VymBMtGV1nitXC';
+    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
   }
 }

@@ -50,4 +50,8 @@ export class IdiomasComponent implements OnInit {
     });
     this.postulanteService.postulante.idiomas = idiomas;
   }
+
+  actualizar() {
+    console.log(this.postulanteService.postulante.idiomas);
+  }
 }

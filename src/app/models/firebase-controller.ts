@@ -1,3 +1,4 @@
+import { Postulante } from './postulante';
 import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
 export class FirebaseController {
@@ -11,6 +12,12 @@ export class FirebaseController {
 
   leer() {
     return this.coleccion = this.firebase.list(this.coleccionBDD);
+  }
+
+  query() {
+    return this.firebase.list('postulantes', ref => {
+      return ref.orderByChild('id').equalTo('-LHi96VymBMtGV1nitXC');
+    });
   }
 
   insertar(objeto: any) {
