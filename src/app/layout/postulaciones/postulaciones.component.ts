@@ -11,5 +11,4 @@ export class PostulacionesComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }
