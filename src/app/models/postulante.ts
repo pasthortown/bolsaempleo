@@ -25,12 +25,12 @@ export class Postulante {
   referenciasPersonales: Array<ReferenciaPersonal>;
 
   constructor() {
+    this.estadoCivil = '';
     this.estudiosRealizados = [];
     this.capacitaciones = [];
     this.experienciasLaborales = [];
     this.idiomas = [];
     this.fortalezas = [];
     this.referenciasPersonales = [];
-    this.estadoCivil = '';
   }
 }

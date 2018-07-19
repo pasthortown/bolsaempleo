@@ -4,6 +4,7 @@
   height: 250px;
   background-position: bottom center;
   background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .video-area {

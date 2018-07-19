@@ -8,8 +8,8 @@
               <input type="file" style="visibility: hidden; height: 0px" class="form-control btn" id="logo"
                      placeholder="logo" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
               <img src="{{srcFoto}}" class="btn rounded-circle col-8" (click)="fileInput.click()">
-              <button type="button" class="btn btn-success form-control">
-                <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
+              <button type="button" class="btn btn-success form-control" (click)="actualizar()">
+                <span class="fa fa-save"></span>&nbsp;Guardar Cambios
               </button>
             </div>
           </div>
@@ -46,10 +46,10 @@
             <div class="form-group">
               <label for="naturaleza">Naturaleza:</label>
               <select class="form-control" id="naturaleza" [(ngModel)]="empresaService.empresa.naturaleza">
-                <option value="0" selected>SELECCIONE...</option>
-                <option value="PÚBLICA">PÚBLICA</option>
-                <option value="PRIVADA">PRIVADA</option>
-                <option value="MIXTA">MIXTA</option>
+                <option value="" selected>Seleccione...</option>
+                <option value="PÚBLICA">Pública</option>
+                <option value="PRIVADA">Privada</option>
+                <option value="MIXTA">Mixta</option>
               </select>
             </div>
           </div>

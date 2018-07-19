@@ -2,8 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
 import {EmpresaService} from '../../../services/empresa.service';
-import {EstudioRealizado} from '../../../models/estudio-realizado';
 import {Oferta} from '../../../models/oferta';
+import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
+import {Idioma} from '../../../models/idioma';
 
 @Component({
   selector: 'app-ofertas-laborales',
@@ -18,7 +19,7 @@ export class OfertasLaboralesComponent implements OnInit {
   srcFoto3: string;
   srcFoto4: string;
 
-  constructor(private modalService: NgbModal, public empresaService: EmpresaService) {
+  constructor(private modalService: NgbModal, public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
@@ -40,14 +41,22 @@ export class OfertasLaboralesComponent implements OnInit {
     }
   }
 
-  open(content) {
+  openOfertaLaboral(content, item: Oferta, editar) {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
+    if (editar) {
+      this.oferta = item;
+    } else {
+      this.oferta = new Oferta();
+    }
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
-        this.agregar();
+        if (!editar) {
+          this.agregarOferta();
+        }
+        this.actualizar();
       }), (resultCancel => {
 
       }));
@@ -63,12 +72,43 @@ export class OfertasLaboralesComponent implements OnInit {
       }));
   }
 
-  agregar() {
+  insertar() {
+    this.agregarOferta();
+    this.empresaService.empresa.id = '-LHim59xdYSFrG47QOhg';
+    this.firebaseBDDService.firebaseControllerEmpresas.insertar(this.empresaService.empresa);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Insertar',
+      text: 'Registro exitoso!',
+      showConfirmButton: false,
+      timer: 2000
+    });
+  }
+
+  agregarOferta() {
+    if ( this.empresaService.empresa.oferta == null ) {
+      this.empresaService.empresa.oferta = [];
+    }
     this.empresaService.empresa.oferta.push(this.oferta);
     this.oferta = new Oferta();
   }
 
-  delete() {
+  actualizar() {
+    this.empresaService.empresa.id = '-LHim59xdYSFrG47QOhg';
+    this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Actualizar',
+      text: 'Actualización fue exitosa!',
+      showConfirmButton: false,
+      timer: 2000
+    });
+  }
+
+  borrar(item) {
+    const ofertas = [];
     swal({
       title: '¿Está seguro de Eliminar?',
       text: 'Empleador',
@@ -79,6 +119,13 @@ export class OfertasLaboralesComponent implements OnInit {
       confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
     }).then((result) => {
       if (result.value) {
+        this.empresaService.empresa.oferta.forEach(element => {
+          if (element !== item) {
+            ofertas.push(element);
+          }
+        });
+        this.empresaService.empresa.oferta = ofertas;
+        this.firebaseBDDService.firebaseControllerEmpresas.borrar(this.empresaService.empresa);
         swal(
           'Eliminado!',
           'Su registro fue eliminado.',
@@ -93,5 +140,4 @@ export class OfertasLaboralesComponent implements OnInit {
       }
     });
   }
-
 }

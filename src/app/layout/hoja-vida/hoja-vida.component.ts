@@ -10,22 +10,23 @@ import { Postulante } from '../../models/postulante';
 })
 export class HojaVidaComponent implements OnInit {
   postulantes = [];
+  id = '-LHiW7NRVSatQPsGYfZk';
 
   constructor(private postulanteService: PostulanteService, private firebaseBDDService: FirebaseBDDService) { }
 
   ngOnInit() {
-    /*this.firebaseBDDService.leerPostulantes().snapshotChanges().subscribe(items => {
-      this.postulantes = [];
+    this.firebaseBDDService.firebaseControllerPostulantes.querySimple('id', this.id).snapshotChanges().subscribe(items => {
       items.forEach(element => {
         let itemLeido: Postulante;
-        itemLeido = element.payload.toJSON() as Postulante;
+        itemLeido = element.payload.val() as Postulante;
         itemLeido.id = element.key;
-        this.postulantes.push(itemLeido as Postulante);
+        this.postulanteService.postulante = itemLeido;
       });
-    });*/
+    });
   }
 
   guardarCambios() {
-    this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
+    this.postulanteService.postulante.id = this.id;
+    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
   }
 }

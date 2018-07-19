@@ -37,6 +37,9 @@ export class ReferenciasPersonalesComponent implements OnInit {
   }
 
   agregar() {
+    if ( this.postulanteService.postulante.referenciasPersonales == null ) {
+      this.postulanteService.postulante.referenciasPersonales = [];
+    }
     this.postulanteService.postulante.referenciasPersonales.push(this.referenciaPersonal);
     this.referenciaPersonal = new ReferenciaPersonal();
   }

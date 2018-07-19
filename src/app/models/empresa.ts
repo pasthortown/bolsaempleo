@@ -16,7 +16,7 @@ export class Empresa {
   oferta: Array<Oferta>;
 
   constructor() {
-    this.naturaleza = '0';
+    this.naturaleza = '';
     this.oferta = [];
   }
 }

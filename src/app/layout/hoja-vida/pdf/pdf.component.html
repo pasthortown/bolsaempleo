@@ -1,10 +1,10 @@
 <div class="col-12">
   <div class="col-12 mt-2 mb-2">
     <div class="col-12" style="background: white; border: 1px #D3D3D3 solid; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-      <div class="col-12" #encabezadoHojaVida>
+      <div class="col-12 mt-4" #encabezadoHojaVida>
         <div class="row">
-          <div class="col-12">
-            <h3 class="col-12 text-center">CABECERA</h3>
+          <div class="col-12 text-right">
+              <img src="assets/img/logo-saber-hacer_2.png" style="height: 75px; width: auto;">
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="row">
               <div class="col-12 mt-3 text-center">
-                <img src="{{postulanteService.postulante.fotografia}}" class="rounded-circle col-8" (click)="fileInput.click()">
+                <img src="{{postulanteService.postulante.fotografia}}" class="rounded-circle col-8">
               </div>
             </div>
           </div>
@@ -209,9 +209,10 @@
                 <tr *ngFor="let item of postulanteService.postulante.experienciasLaborales">
                   <td>{{item.empleador}}</td>
                   <td>{{item.cargoDesempenado}}</td>
-                  <td>{{item.descripcionCargo}}</td>
+                  <td><p class="text-justify">{{item.descripcionCargo}}</p></td>
                   <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
-                  <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
+                  <td *ngIf="item.actualmenteVigente"></td>
+                  <td *ngIf="!item.actualmenteVigente">{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
                   <td><div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span class="badge badge-success">Actual</span> </div></td>
                 </tr>
               </tbody>
@@ -270,20 +271,16 @@
       <div class="col-12" #pieHojaVida>
         <div class="row">
           <div class="col-12">
-            <h3 class="col-12 text-center">PIE</h3>
+
           </div>
         </div>
       </div>
     </div>
   </div>`
 
-  <div class="col-12">
-    <div class="row">
-      <div class="col-12 text-center">
-        <button type="submit" class="btn btn-success" (click)="imprimir()">
-          Imprimir
-        </button>
-      </div>
-    </div>
+  <div class="col-12 m-2 text-center">
+    <button type="submit" class="btn btn-primary" (click)="imprimir()">
+      <span class="fa fa-print"></span>&nbsp;Imprimir
+    </button>
   </div>
 </div>
