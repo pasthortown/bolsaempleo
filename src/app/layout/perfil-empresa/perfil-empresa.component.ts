@@ -9,12 +9,22 @@ import {FirebaseBDDService} from '../../services/firebase-bdd.service';
   styleUrls: ['./perfil-empresa.component.css']
 })
 export class PerfilEmpresaComponent implements OnInit {
+  contadorEmpresas: number;
 
   constructor(public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
+    this.contadorEmpresas = 0;
     this.leer();
+    this.contarRegistros();
+  }
+
+  contarRegistros() {
+    return this.firebaseBDDService.firebaseControllerEmpresas.leer().snapshotChanges().subscribe(items => {
+      this.contadorEmpresas = items.length;
+    });
+
   }
 
   leer() {
