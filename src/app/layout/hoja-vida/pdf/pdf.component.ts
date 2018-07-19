@@ -30,10 +30,10 @@ export class PdfComponent implements OnInit {
             html2canvas(this.pieHojaVida.nativeElement).then(canvasPie => {
                 const pieHojaDatosImg = canvasPie.toDataURL('image/png');
                 const doc = new jsPDF();
-                doc.addImage(encabezadoHojaDatosImg, 'PNG', 10, 10, 190, 30);
-                doc.addImage(cuerpoHojaDatosImg, 'PNG', 30, 40, 160, 217);
-                doc.addImage(pieHojaDatosImg, 'PNG', 10, 257, 190, 30);
-                doc.save('CV.pdf');
+                doc.addImage(encabezadoHojaDatosImg, 'PNG', 10, 10, 190, 7);
+                doc.addImage(cuerpoHojaDatosImg, 'PNG', 30, 17, 160, 265);
+                doc.addImage(pieHojaDatosImg, 'PNG', 10, 288, 190, 7);
+                doc.save('CV_' + this.postulanteService.postulante.identificacion + '.pdf');
             });
         });
     });
