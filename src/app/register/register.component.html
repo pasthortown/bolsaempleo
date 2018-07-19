@@ -1,2 +1,11 @@
-<app-empresa></app-empresa>
-<app-persona></app-persona>
+<div class="row">
+  <input type="radio" value="true" name="tipo" [ngModel]="soyPersona">&nbsp;Persona
+  <input type="radio" value="false" name="tipo" [ngModel]="soyPersona">&nbsp;Empresa
+</div>
+<hr>
+<div [hidden]="soyPersona">
+  <app-empresa></app-empresa>
+</div>
+<div [hidden]="!soyPersona">
+  <app-persona></app-persona>
+</div>

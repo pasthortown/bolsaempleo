@@ -14,8 +14,9 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   };
+  usuario: firebase.User;
 
-  constructor(public router: Router, public authService: AuthService ) { }
+  constructor(public router: Router, public authService: AuthService) {}
 
   ngOnInit() {
   }
@@ -23,7 +24,6 @@ export class LoginComponent implements OnInit {
   signInWithEmail() {
     this.authService.signInRegular(this.user.email, this.user.password)
       .then((res) => {
-        console.log(res);
         this.router.navigate(['postulantes']);
       })
       .catch((err) => console.log('error: ' + err));

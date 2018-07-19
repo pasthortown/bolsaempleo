@@ -1,6 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+// import firebase = require('firebase');
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,14 @@ export class HeaderComponent implements OnInit {
   constructor(public router: Router, public authService: AuthService) { }
 
   ngOnInit() {
+//    firebase.auth().onAuthStateChanged(function(user) {
+//      if (!user) {
+//        this.nameOrEmail = 'Anónimo';
+//      }
+      // Step 1:
+      //  If no user, sign in anonymously with firebase.auth().signInAnonymously()
+      //  If there is a user, log out out user details for debugging purposes.
+//    });
     this.nameOrEmail = this.authService.displayNameOrEmail();
   }
 
