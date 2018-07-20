@@ -19,6 +19,11 @@ export class FirebaseController {
     });
   }
 
+  getAll(campo: string) {
+    return this.firebase.list(this.coleccionBDD, ref => {
+      return ref.orderByChild(campo);
+    });
+  }
   insertar(objeto: any) {
     this.coleccion.push(objeto);
   }

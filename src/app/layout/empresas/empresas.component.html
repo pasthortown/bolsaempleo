@@ -100,13 +100,13 @@
   </div>
   <!--Ofertas de trabajo-->
   <div class="col-10">
-    <div class="card m-2" *ngFor="let oferta of empresaService.empresa.oferta">
+    <div class="card m-2" *ngFor="let ofertaActual of ofertas2">
       <div class="card-body">
         <div class="card-title">
           <div class="row">
             <div class="col-8">
-              <h3 class="col-12 text-left">NOMBRE DE LA EMPRESA</h3>
-              <h5 class="col-12 text-left">{{oferta.cargo}}</h5>
+              <h3 class="col-12 text-left">{{ofertaActual.nombreComercial}}</h3>
+              <h5 class="col-12 text-left">{{ofertaActual.cargo}}</h5>
             </div>
             <div class="col-4 text-right">
               <table class="col-12">
@@ -119,9 +119,9 @@
                     <strong style="color: silver;">
                       <i>
                         {{
-                                oferta.inicioPublicacion.year
-                        + '/' + oferta.inicioPublicacion.month
-                        + '/' + oferta.inicioPublicacion.day
+                        ofertaActual.inicioPublicacion.year
+                        + '/' + ofertaActual.inicioPublicacion.month
+                        + '/' + ofertaActual.inicioPublicacion.day
                         }}
                       </i></strong>
                   </td>
@@ -132,9 +132,7 @@
           </div>
         </div>
         <p class="card-text text-justify">
-          Administrar la infraestructura de red y servidores de la institución, Mantenimiento de correo electŕonico
-          ZIMBRA, gestionar la disponibilidad de los servicios y administrar la infraestructura virtualizada. Gestionar
-          los respaldos de la información de correos y bases de datos.
+          {{ofertaActual.actividades}}
         </p>
         <div class="col-12 m-2 text-left">
           <button type="submit" class="btn btn-primary" (click)="openOfertaLaboral(modalOfertaLaboral,oferta,true)">

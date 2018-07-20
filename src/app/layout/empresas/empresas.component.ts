@@ -16,15 +16,19 @@ export class EmpresasComponent implements OnInit {
   contadorEmpresas: number;
   contadorPostulantes: number;
   oferta: Oferta;
+  ofertas: Array<Empresa>;
+  ofertas2: Array<Oferta>;
 
   constructor(private modalService: NgbModal, public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
     this.oferta = new Oferta();
+    this.ofertas = new Array<Empresa>();
+    this.ofertas2 = new Array<Oferta>();
     this.contadorEmpresas = 0;
     this.contadorPostulantes = 0;
-    this.leer();
+    this.leer3();
     this.contarEmpresas();
     this.contarPostulantes();
   }
@@ -65,14 +69,55 @@ export class EmpresasComponent implements OnInit {
   }
 
   leer() {
-    this.empresaService.empresa.id = '-LHnYYcnqIEj4yUV4izj';
-    this.firebaseBDDService.firebaseControllerEmpresas.querySimple('id', this.empresaService.empresa.id)
+    this.firebaseBDDService.firebaseControllerEmpresas.getAll('oferta')
       .snapshotChanges().subscribe(items => {
       items.forEach(element => {
         let itemLeido: Empresa;
         itemLeido = element.payload.val() as Empresa;
         itemLeido.id = element.key;
-        this.empresaService.empresa = itemLeido;
+        this.ofertas.push(itemLeido);
+
+        this.ofertas.forEach(value => {
+          console.log('empresas');
+          console.log(value.oferta[0]);
+          //this.ofertas2.push(value.oferta[0]);
+        });
+
+        //this.empresaService.empresa = itemLeido;
+      });
+    });
+  }
+
+  leer2() {
+    this.firebaseBDDService.firebaseControllerEmpresas.getAll('inicioPublicacion')
+      .snapshotChanges().subscribe(items => {
+      items.forEach(element => {
+        let itemLeido: Empresa;
+        itemLeido = element.payload.val() as Empresa;
+
+        itemLeido.oferta.forEach(value => {
+          this.ofertas2.push(value);
+          console.log('oferta');
+          console.log(this.ofertas2);
+        });
+
+      });
+    });
+  }
+
+  leer3() {
+    this.firebaseBDDService.firebaseControllerEmpresas.getAll('inicioPublicacion')
+      .snapshotChanges().subscribe(items => {
+      items.forEach(element => {
+        let itemLeido: Empresa;
+        itemLeido = element.payload.val() as Empresa;
+
+        itemLeido.oferta.forEach(value => {
+          this.ofertas2.push(value);
+          console.log('oferta');
+          console.log(this.ofertas2);
+        });
+
       });
     });
   }

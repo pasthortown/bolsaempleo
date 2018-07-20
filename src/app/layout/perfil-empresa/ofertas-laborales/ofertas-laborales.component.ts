@@ -95,7 +95,7 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   actualizar() {
-    this.empresaService.empresa.id = '-LHnYYcnqIEj4yUV4izj';
+    this.empresaService.empresa.id = '-LHim59xdYSFrG47QOhg';
     this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
     swal({
       position: 'center',
