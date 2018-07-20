@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
     password: ''
   };
   usuario: firebase.User;
+  mostrarMensajeError = false;
 
   constructor(public router: Router, public authService: AuthService) {}
 

@@ -1,103 +1,121 @@
 <div class="container">
-    <div>
-      <div class="row">
-        <div class="col-lg-6">
-          <!-- Identificacion !-->
-          <div class="form-group row">
-            <label for="identificacion" class="col-lg-4 col-form-label">
-              Cédula:
-            </label>
-            <div class="col-lg-8">
-              <input class="form-control" name="identificacion" id="identificacion" [(ngModel)]="postulante.identificacion">
-            </div>
-          </div>
-          <!-- nombreCompleto !-->
-          <div class="form-group row">
-              <label for="nombreCompleto" class="col-lg-4 col-form-label">
-                Nombres y apellidos:
-              </label>
-              <div class="col-lg-8">
-                <input class="form-control" name="nombreCompleto" id="nombreCompleto" [(ngModel)]="postulante.nombreCompleto">
-              </div>
-            </div>
-          <!-- Correo Electronico !-->
-          <div class="form-group row">
-            <label for="correoElectronico" class="col-lg-4 col-form-label">
-              Correo electrónico:
-            </label>
-            <div class="col-lg-8">
-              <input type="email" class="form-control" name="correoElectronico" id="correoElectronico" [(ngModel)]="postulante.correoElectronico">
-            </div>
-          </div>
-          <!-- Contraseña !-->
-          <div class="form-group row">
-            <label for="contrasena" class="col-lg-4 col-form-label">
-              Contraseña:
-            </label>
-            <div class="col-lg-8">
-              <input type="password" class="form-control" name="contrasena" id="contrasena" [(ngModel)]="contrasena">
-            </div>
-          </div>
-          <!-- Telefono Celular !-->
-          <div class="form-group row">
-            <label for="telefonoCelular" class="col-lg-4 col-form-label">
-              Teléfono celular:
-            </label>
-            <div class="col-lg-8">
-              <input type="tel" class="form-control" name="telefonoCelular" id="telefonoCelular" [(ngModel)]="postulante.telefonoCelular">
-            </div>
-          </div>
-          <!-- Telefono Fijo -->
-          <div class="form-group row">
-            <label for="telefonoFijo" class="col-lg-4 col-form-label">
-              Teléfono fijo:
-            </label>
-            <div class="col-lg-8">
-              <input type="tel" class="form-control" name="telefonoFijo" id="telefonoFijo" [(ngModel)]="postulante.telefonoFijo">
-            </div>
-          </div>
-          <!-- Dirección -->
-          <div class="form-group row">
-            <label for="direccion" class="col-lg-4 col-form-label">
-              Dirección:
-            </label>
-            <div class="col-lg-8">
-              <textarea class="form-control" name="direccion" id="direccion" [(ngModel)]="postulante.direccion"></textarea>
-            </div>
-          </div>
-          <!-- Tipo !-->
-          <div class="form-group row">
-            <label for="nacionalidad" class="col-lg-4 col-form-label">
-              Nacionalidad:
-            </label>
-            <div class="col-lg-8">
-              <input class="form-control" name="nacionalidad" id="nacionalidad" [(ngModel)]="postulante.nacionalidad" />
-            </div>
-          </div>
-          <!-- Pagina Web !-->
-          <div class="form-group row">
-            <label for="estadoCivil" class="col-lg-4 col-form-label">
-              Estado civil:
-            </label>
-            <div class="col-lg-8">
-              <input class="form-control" name="estadoCivil" id="estadoCivil" [(ngModel)]="postulante.estadoCivil">
-            </div>
+  <div>
+    <div class="row" style="margin-top: 15px;">
+      <a routerLink="/empresa" >Soy empresa</a>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-lg-6">
+        <!-- Identificacion !-->
+        <div class="form-group row">
+          <label for="identificacion" class="col-lg-4 col-form-label">
+            Cédula:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="identificacion" id="identificacion" [(ngModel)]="postulante.identificacion">
           </div>
         </div>
-        <div class="col-lg-6">
-          <!-- Actividad Economica !-->
-          <div class="form-group row">
-            <label for="fechaDeNacimiento" class="col-lg-4 col-form-label">
-              Nacimiento:
-            </label>
-            <div class="col-lg-8">
-              <input class="form-control" name="fechaDeNacimiento" id="fechaDeNacimiento" [(ngModel)]="postulante.fechaDeNacimiento">
-            </div>
+        <!-- nombreCompleto !-->
+        <div class="form-group row">
+          <label for="nombreCompleto" class="col-lg-4 col-form-label">
+            Nombres y apellidos:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="nombreCompleto" id="nombreCompleto" [(ngModel)]="postulante.nombreCompleto">
+          </div>
+        </div>
+        <!-- Correo Electronico !-->
+        <div class="form-group row">
+          <label for="correoElectronico" class="col-lg-4 col-form-label">
+            Correo electrónico:
+          </label>
+          <div class="col-lg-8">
+            <input type="email" class="form-control" name="correoElectronico" id="correoElectronico" [(ngModel)]="postulante.correoElectronico">
+          </div>
+        </div>
+        <!-- Contraseña !-->
+        <div class="form-group row">
+          <label for="contrasena" class="col-lg-4 col-form-label">
+            Contraseña:
+          </label>
+          <div class="col-lg-8">
+            <input type="password" class="form-control" name="contrasena" id="contrasena" [(ngModel)]="contrasena">
+          </div>
+        </div>
+        <!-- Confirmacion !-->
+        <div class="form-group row">
+          <label for="confirmar" class="col-lg-4 col-form-label">
+            Confirmar:
+          </label>
+          <div class="col-lg-8">
+            <input type="password" class="form-control" name="confirmar" id="confirmar" [(ngModel)]="confirmar">
           </div>
         </div>
       </div>
-      <button class="btn btn-primary btn-lg" (click)="registrar()">
-        <i class="fa fa-save" aria-hidden="true"> Registrarse</i>
-      </button>
+      <div class="col-lg-6">
+        <!-- Telefono Celular !-->
+        <div class="form-group row">
+          <label for="telefonoCelular" class="col-lg-4 col-form-label">
+            Teléfono celular:
+          </label>
+          <div class="col-lg-8">
+            <input type="tel" class="form-control" name="telefonoCelular" id="telefonoCelular" [(ngModel)]="postulante.telefonoCelular">
+          </div>
+        </div>
+        <!-- Telefono Fijo -->
+        <div class="form-group row">
+          <label for="telefonoFijo" class="col-lg-4 col-form-label">
+            Teléfono fijo:
+          </label>
+          <div class="col-lg-8">
+            <input type="tel" class="form-control" name="telefonoFijo" id="telefonoFijo" [(ngModel)]="postulante.telefonoFijo">
+          </div>
+        </div>
+        <!-- Dirección -->
+        <div class="form-group row">
+          <label for="direccion" class="col-lg-4 col-form-label">
+            Dirección:
+          </label>
+          <div class="col-lg-8">
+            <textarea class="form-control" name="direccion" id="direccion" [(ngModel)]="postulante.direccion"></textarea>
+          </div>
+        </div>
+        <!-- Nacionalidad !-->
+        <div class="form-group row">
+          <label for="nacionalidad" class="col-lg-4 col-form-label">
+            Nacionalidad:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="nacionalidad" id="nacionalidad" [(ngModel)]="postulante.nacionalidad" />
+          </div>
+        </div>
+        <!-- Estado civil !-->
+        <div class="form-group row">
+          <label for="estadoCivil" class="col-lg-4 col-form-label">
+            Estado civil:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="estadoCivil" id="estadoCivil" [(ngModel)]="postulante.estadoCivil">
+          </div>
+        </div>
+        <!-- Nacimiento !-->
+        <div class="form-group row">
+          <label for="fechaDeNacimiento" class="col-lg-4 col-form-label">
+            Nacimiento:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="fechaDeNacimiento" id="fechaDeNacimiento" [(ngModel)]="postulante.fechaDeNacimiento">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4"></div>
+          <div style="margin-left: 15px">
+            <button class="btn btn-primary" (click)="registrar()">
+              Registrar
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+</div>

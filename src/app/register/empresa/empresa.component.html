@@ -1,5 +1,9 @@
 <div class="container">
   <div>
+    <div class="row" style="margin-top: 15px;">
+      <a routerLink="/persona">Soy persona</a>
+    </div>
+    <hr>
     <div class="row">
       <div class="col-lg-6">
         <!-- Identificacion !-->
@@ -8,7 +12,7 @@
             Ruc o cédula:
           </label>
           <div class="col-lg-8">
-            <input class="form-control" name="codigo" id="identificacion" [(ngModel)]="empresa.identificacion">
+            <input class="form-control" name="identificacion" id="identificacion" [(ngModel)]="empresa.identificacion">
           </div>
         </div>
         <!-- Correo Electronico !-->
@@ -20,6 +24,15 @@
             <input type="email" class="form-control" name="correoElectronico" id="correoElectronico" [(ngModel)]="empresa.correoElectronico">
           </div>
         </div>
+        <!-- Razon Social !-->
+        <div class="form-group row">
+          <label for="razonSocial" class="col-lg-4 col-form-label">
+            Razón social:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="razonSocial" id="razonSocial" [(ngModel)]="empresa.razonSocial">
+          </div>
+        </div>
         <!-- Contraseña !-->
         <div class="form-group row">
           <label for="contrasena" class="col-lg-4 col-form-label">
@@ -29,13 +42,13 @@
             <input type="password" class="form-control" name="contrasena" id="contrasena" [(ngModel)]="contrasena">
           </div>
         </div>
-        <!-- Razon Social !-->
+        <!-- Confirmacion !-->
         <div class="form-group row">
-          <label for="razonSocial" class="col-lg-4 col-form-label">
-            Razón social:
+          <label for="confirmar" class="col-lg-4 col-form-label">
+            Confirmar:
           </label>
           <div class="col-lg-8">
-            <input class="form-control" name="razonSocial" id="razonSocial" [(ngModel)]="empresa.razonSocial">
+            <input type="password" class="form-control" name="confirmar" id="confirmar" [(ngModel)]="confirmar">
           </div>
         </div>
         <!-- Nombre Comercial !-->
@@ -49,6 +62,8 @@
             <input class="form-control" name="nombreComercial" id="nombreComercial" [(ngModel)]="empresa.nombreComercial">
           </div>
         </div>
+      </div>
+      <div class="col-lg-6">
         <!-- Telefono Celular !-->
         <div class="form-group row">
           <label for="telefonoCelular" class="col-lg-4 col-form-label">
@@ -76,6 +91,15 @@
             <textarea class="form-control" name="direccion" id="direccion" [(ngModel)]="empresa.direccion"></textarea>
           </div>
         </div>
+        <!-- Pagina Web !-->
+        <div class="form-group row">
+          <label for="paginaWeb" class="col-lg-4 col-form-label">
+            Página web:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="paginaWeb" id="paginaWeb" [(ngModel)]="empresa.paginaWeb">
+          </div>
+        </div>
         <!-- Tipo !-->
         <div class="form-group row">
           <label for="naturaleza" class="col-lg-4 col-form-label">
@@ -95,30 +119,23 @@
             </select>
           </div>
         </div>
-        <!-- Pagina Web !-->
-        <div class="form-group row">
-          <label for="paginaWeb" class="col-lg-4 col-form-label">
-            Página web:
-          </label>
-          <div class="col-lg-8">
-            <input class="form-control" name="paginaWeb" id="paginaWeb" [(ngModel)]="empresa.paginaWeb">
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-6">
         <!-- Actividad Economica !-->
         <div class="form-group row">
           <label for="actividadEconomica" class="col-lg-4 col-form-label">
-            Actividad económica:
+            Actividad:
           </label>
           <div class="col-lg-8">
             <input class="form-control" name="actividadEconomica" id="actividadEconomica" [(ngModel)]="empresa.actividadEconomica">
           </div>
         </div>
+        <div class="form-group row">
+          <div class="col-lg-4"></div>
+          <div style="margin-left: 15px">
+            <button class="btn btn-primary" (click)="registrar()">
+              Registrar
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <button class="btn btn-primary btn-lg">
-      <i class="fa fa-save" aria-hidden="true"> Registrarse</i>
-    </button>
   </div>
-</div>

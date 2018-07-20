@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Postulante } from '../../models/postulante';
 import { FirebaseBDDService } from './../../services/firebase-bdd.service';
 import { PostulanteService } from '../../services/postulante.service';
-import { CifradoService } from '../../services/cifrado.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,29 +10,42 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./persona.component.css']
 })
 export class PersonaComponent implements OnInit {
-  postulante: Postulante;
+  postulante = new Postulante();
   contrasena: string;
+  confirmacion: string;
+
   constructor(private postulanteService: PostulanteService,
     private firebaseBDDService: FirebaseBDDService,
-    private cifradoService: CifradoService,
     public authService: AuthService) { }
 
   ngOnInit() {
   }
 
   existe(): boolean {
-    // const existe = this.firebaseBDDService.firebaseControllerPostulantes
-    // .leer(this.postulanteService.postulante);
-    // return existe;
+    const resultado = this.firebaseBDDService.firebaseControllerPostulantes
+      .querySimple('correoElectronico', this.postulante.correoElectronico);
+    if (resultado) {
+      return true;
+    }
     return false;
   }
 
   registrar() {
-    if (!this.existe()) {
-      // TODO : crear usuario en firebase
-      this.postulanteService.postulante = this.postulante;
-      this.firebaseBDDService.firebaseControllerPostulantes
-        .insertar(this.postulanteService.postulante);
-    }
+    // TODO : verificar datos obligatorios
+    // TODO : verificar coincidencia entre contrasena y confirmar
+    // TODO : verificar valores duplicados en la base de datos: identificacion, correo, razon social
+    // if (!this.existe()) {
+    this.authService.createUserWithEmailAndPassword(this.postulante.correoElectronico
+      , this.contrasena).then(resultado => {
+        this.postulanteService.postulante = this.postulante;
+        this.firebaseBDDService.firebaseControllerPostulantes
+          .insertar(this.postulanteService.postulante);
+        // TODO : mensaje de alerta
+      }).catch(error => {
+        // TODO : mensaje de alerta
+        alert(error.message);
+        console.log(error);
+      });
+    // }
   }
 }

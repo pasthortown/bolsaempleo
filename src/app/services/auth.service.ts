@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   createUserWithEmailAndPassword(email, password): Promise<any> {
-    return firebase.auth().createUserWithEmailAndPassword(email, password);
+    return this._firebaseAuth.auth.createUserWithEmailAndPassword(email, password);
   }
 
   signInRegular(email, password) {
@@ -65,7 +65,7 @@ export class AuthService {
   }
 
   actualizarContrasena() {
-    const user = firebase.auth().currentUser;
+    const user = this._firebaseAuth.auth.currentUser;
     const newPassword = this.getASecureRandomPassword();
 
     user.updatePassword(newPassword).then(function () {
@@ -76,12 +76,12 @@ export class AuthService {
   }
 
   reinicioClaveEnvioCorreo(emailAddress, idioma) {
-    const auth = firebase.auth();
+    const auth = this._firebaseAuth.auth;
     if (!idioma) {
       idioma = 'es';
     }
 
-    firebase.auth().languageCode = idioma;
+    this._firebaseAuth.auth.languageCode = idioma;
     auth.sendPasswordResetEmail(emailAddress).then(function () {
       // Email sent.
     }).catch(function (error) {
