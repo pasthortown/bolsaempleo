@@ -14,8 +14,9 @@ export class Postulante {
   estadoCivil: string;
   fechaDeNacimiento: any;
   correoElectronico: string;
-  telefono: string;
-  domicilio: string;
+  telefonoCelular: string;
+  telefonoFijo: string;
+  direccion: string;
   estudiosRealizados: Array<EstudioRealizado>;
   capacitaciones: Array<Capacitacion>;
   experienciasLaborales: Array<ExperienciaLaboral>;

@@ -1,3 +1,141 @@
-<p>
-  empresa works!
-</p>
+<div class="container">
+  <div>
+    <div class="row" style="margin-top: 15px;">
+      <a routerLink="/persona">Soy persona</a>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-lg-6">
+        <!-- Identificacion !-->
+        <div class="form-group row">
+          <label for="identificacion" class="col-lg-4 col-form-label">
+            Ruc o cédula:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="identificacion" id="identificacion" [(ngModel)]="empresa.identificacion">
+          </div>
+        </div>
+        <!-- Correo Electronico !-->
+        <div class="form-group row">
+          <label for="correoElectronico" class="col-lg-4 col-form-label">
+            Correo electrónico:
+          </label>
+          <div class="col-lg-8">
+            <input type="email" class="form-control" name="correoElectronico" id="correoElectronico" [(ngModel)]="empresa.correoElectronico">
+          </div>
+        </div>
+        <!-- Razon Social !-->
+        <div class="form-group row">
+          <label for="razonSocial" class="col-lg-4 col-form-label">
+            Razón social:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="razonSocial" id="razonSocial" [(ngModel)]="empresa.razonSocial">
+          </div>
+        </div>
+        <!-- Contraseña !-->
+        <div class="form-group row">
+          <label for="contrasena" class="col-lg-4 col-form-label">
+            Contraseña:
+          </label>
+          <div class="col-lg-8">
+            <input type="password" class="form-control" name="contrasena" id="contrasena" [(ngModel)]="contrasena">
+          </div>
+        </div>
+        <!-- Confirmacion !-->
+        <div class="form-group row">
+          <label for="confirmar" class="col-lg-4 col-form-label">
+            Confirmar:
+          </label>
+          <div class="col-lg-8">
+            <input type="password" class="form-control" name="confirmar" id="confirmar" [(ngModel)]="confirmar">
+          </div>
+        </div>
+        <!-- Nombre Comercial !-->
+        <div class="form-group row">
+          <div class="col-lg-4 col-form-label">
+            <label for="nombreComercial">
+              Nombre comercial:
+            </label>
+          </div>
+          <div class="col-lg-8">
+            <input class="form-control" name="nombreComercial" id="nombreComercial" [(ngModel)]="empresa.nombreComercial">
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <!-- Telefono Celular !-->
+        <div class="form-group row">
+          <label for="telefonoCelular" class="col-lg-4 col-form-label">
+            Teléfono celular:
+          </label>
+          <div class="col-lg-8">
+            <input type="tel" class="form-control" name="telefonoCelular" id="telefonoCelular" [(ngModel)]="empresa.telefonoCelular">
+          </div>
+        </div>
+        <!-- Telefono Fijo -->
+        <div class="form-group row">
+          <label for="telefonoFijo" class="col-lg-4 col-form-label">
+            Teléfono fijo:
+          </label>
+          <div class="col-lg-8">
+            <input type="tel" class="form-control" name="telefonoFijo" id="telefonoFijo" [(ngModel)]="empresa.telefonoFijo">
+          </div>
+        </div>
+        <!-- Dirección -->
+        <div class="form-group row">
+          <label for="direccion" class="col-lg-4 col-form-label">
+            Dirección:
+          </label>
+          <div class="col-lg-8">
+            <textarea class="form-control" name="direccion" id="direccion" [(ngModel)]="empresa.direccion"></textarea>
+          </div>
+        </div>
+        <!-- Pagina Web !-->
+        <div class="form-group row">
+          <label for="paginaWeb" class="col-lg-4 col-form-label">
+            Página web:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="paginaWeb" id="paginaWeb" [(ngModel)]="empresa.paginaWeb">
+          </div>
+        </div>
+        <!-- Tipo !-->
+        <div class="form-group row">
+          <label for="naturaleza" class="col-lg-4 col-form-label">
+            Naturaleza:
+          </label>
+          <div class="col-lg-8">
+            <select class="form-control" name="naturaleza" id="naturaleza" [(ngModel)]="empresa.naturaleza">
+              <option value="1">
+                Pública
+              </option>
+              <option value="2">
+                Privada
+              </option>
+              <option value="3">
+                Mixta
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- Actividad Economica !-->
+        <div class="form-group row">
+          <label for="actividadEconomica" class="col-lg-4 col-form-label">
+            Actividad:
+          </label>
+          <div class="col-lg-8">
+            <input class="form-control" name="actividadEconomica" id="actividadEconomica" [(ngModel)]="empresa.actividadEconomica">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-lg-4"></div>
+          <div style="margin-left: 15px">
+            <button class="btn btn-primary" (click)="registrar()">
+              Registrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
