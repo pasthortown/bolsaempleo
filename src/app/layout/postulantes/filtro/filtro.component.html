@@ -1,19 +1,76 @@
 <div class="container">
-  <div class="row">
-    <div class="col-12 mt-4">
-      <div class="input-group mb-3">
+  <div class="row mt-4">
+    <div class="col-4">
+      <h6 class="bg-warning form-control">
+        <i class="fa fa-filter" aria-hidden="true"></i>
+        Filtrar Por
+      </h6>
+      <div *ngFor="let item of filtro" class="input-group mb-3">
         <div class="input-group-prepend">
-          <button class="btn btn-success" type="button">
-            <span class="fa fa-filter"></span>&nbsp;Filtrar
-          </button>
-          </div>
-          <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1">
+          <span class="input-group-text" id="basic-addon1">{{item.area}}</span>
+        </div>
+        <select class="form-control">
+          <option value="" selected>Seleccione...</option>
+          <option *ngFor="let criterio of item.criterios" value="{{criterio.descripcion}}">{{criterio.descripcion}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="row">
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Búsqueda">
           <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <span class="fa fa-search"></span>&nbsp;Buscar
-          </button>
+            <button class="btn btn-primary" type="button">
+              <span class="fa fa-search"></span>&nbsp;Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 card mt-2" *ngFor="let postulanteActual of postulantes">
+          <div class="card-body">
+            <div class="card-title">
+              <div class="row">
+                <div class="col-8">
+                  <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
+                  <h5 class="col-12 text-left">{{postulanteActual.domicilio}}</h5>
+                </div>
+                <div class="col-4 text-right">
+                  <table class="col-12">
+                    <tbody>
+                    <tr>
+                      <th>
+                        <i>Fecha de Anuncio:</i>&nbsp;
+                      </th>
+                      <td class="text-left">
+                        <strong style="color: silver;">
+                          <i>
+                            {{
+                            postulanteActual.fechaDeNacimiento.year
+                            + '/' + postulanteActual.fechaDeNacimiento.month
+                            + '/' + postulanteActual.fechaDeNacimiento.day
+                            }}
+                          </i></strong>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <p class="card-text text-justify">
+              {{postulanteActual.identificacion}}
+            </p>
+            <div class="col-12 m-2 text-left">
+              <button type="submit" class="btn btn-primary">
+                <span class="fa fa-info-circle"></span>&nbsp;Mas Información
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+
+
 </div>
