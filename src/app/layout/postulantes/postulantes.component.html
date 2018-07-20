@@ -1,7 +1,150 @@
 <div class="top-banner-div" style="background-image: url(assets/img/welcome-bg.png);">
   <h1 class="col-12 text-left" style="color:white; font-size: 70px; font-weight: 700;">BOLSA DE EMPLEO</h1>
 </div>
-<app-filtro></app-filtro>
+
+<div class="row">
+  <div class="col-2">
+    <h6 class="bg-warning form-control">
+      <i class="fa fa-filter" aria-hidden="true"></i>
+      Filtros
+    </h6>
+  </div>
+  <div class="col-8">
+    <app-filtro></app-filtro>
+  </div>
+</div>
+<div class="row">
+  <!--Menu lateral izquierdo-->
+  <div class="col-2">
+    <div id="accordion" class="accordion">
+      <div class="card mb-0 bg-white">
+        <div class="card-header collapsed" data-toggle="collapse" href="#collapseOne">
+          <a class="card-title">
+            Fecha de publicación
+          </a>
+        </div>
+        <div id="collapseOne" class="card-body collapse" data-parent="#accordion">
+          <div class="panel-body">
+            <table class="table">
+              <tr>
+                <td>
+                  <a href="">Hoy</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="">Ayer</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="">Menor a 1 semana</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+          <a class="card-title">
+            Provincia
+          </a>
+        </div>
+        <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
+          <div class="panel-body">
+            <table class="table">
+              <tr>
+                <td>
+                  <a href="">Pichincha</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="">Guayas</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="">Azuay</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+          <a class="card-title">
+            Área
+          </a>
+        </div>
+        <div id="collapseThree" class="card-body collapse" data-parent="#accordion">
+          <div class="panel-body">
+            <table class="table">
+              <tr>
+                <td>
+                  <a href="">Tecnología, Sistemas y Telecomunicaciones</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="">Marketing y Publicidad</a>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <a href="">Otros</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Ofertas de talento humano-->
+  <div class="col-10">
+    <div class="card m-2" *ngFor="let postulanteActual of postulantes">
+      <div class="card-body">
+        <div class="card-title">
+          <div class="row">
+            <div class="col-8">
+              <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
+              <h5 class="col-12 text-left">{{postulanteActual.domicilio}}</h5>
+            </div>
+            <div class="col-4 text-right">
+              <table class="col-12">
+                <tbody>
+                <tr>
+                  <th>
+                    <i>Fecha de Anuncio:</i>&nbsp;
+                  </th>
+                  <td class="text-left">
+                    <strong style="color: silver;">
+                      <i>
+                        {{
+                        postulanteActual.fechaDeNacimiento.year
+                        + '/' + postulanteActual.fechaDeNacimiento.month
+                        + '/' + postulanteActual.fechaDeNacimiento.day
+                        }}
+                      </i></strong>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <p class="card-text text-justify">
+          {{postulanteActual.identificacion}}
+        </p>
+        <div class="col-12 m-2 text-left">
+          <button type="submit" class="btn btn-primary">
+            <span class="fa fa-info-circle"></span>&nbsp;Mas Información
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="col-12 mt-4">
   <div class="row">
     <div class="col-1"></div>

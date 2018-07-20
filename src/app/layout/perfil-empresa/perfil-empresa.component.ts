@@ -17,14 +17,6 @@ export class PerfilEmpresaComponent implements OnInit {
   ngOnInit() {
     this.contadorEmpresas = 0;
     this.leer();
-    this.contarRegistros();
-  }
-
-  contarRegistros() {
-    return this.firebaseBDDService.firebaseControllerEmpresas.leer().snapshotChanges().subscribe(items => {
-      this.contadorEmpresas = items.length;
-    });
-
   }
 
   leer() {

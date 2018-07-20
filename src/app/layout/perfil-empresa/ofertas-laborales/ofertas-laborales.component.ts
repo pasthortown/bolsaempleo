@@ -74,7 +74,7 @@ export class OfertasLaboralesComponent implements OnInit {
 
   insertar() {
     this.agregarOferta();
-    this.empresaService.empresa.id = '-LHim59xdYSFrG47QOhg';
+    this.empresaService.empresa.id = '-LHnYYcnqIEj4yUV4izj';
     this.firebaseBDDService.firebaseControllerEmpresas.insertar(this.empresaService.empresa);
     swal({
       position: 'center',
