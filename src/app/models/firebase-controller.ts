@@ -24,6 +24,7 @@ export class FirebaseController {
       return ref.orderByChild(campo);
     });
   }
+
   insertar(objeto: any) {
     this.coleccion.push(objeto);
   }
