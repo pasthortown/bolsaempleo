@@ -2,9 +2,6 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmpresaService} from '../../../services/empresa.service';
 import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 import swal from 'sweetalert2';
-import {Empresa} from '../../../models/empresa';
-import {forEach} from '@angular/router/src/utils/collection';
-import {Postulante} from '../../../models/postulante';
 
 @Component({
   selector: 'app-informacion-empresa',
@@ -47,7 +44,7 @@ export class InformacionEmpresaComponent implements OnInit {
   }
 
   actualizar() {
-    this.empresaService.empresa.id = '-LHim59xdYSFrG47QOhg';
+    this.empresaService.empresa.id = '-LHnYYcnqIEj4yUV4izj';
     if (this.empresaService.empresa.oferta == null) {
       this.empresaService.empresa.oferta = [];
     }

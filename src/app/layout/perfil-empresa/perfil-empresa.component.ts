@@ -17,18 +17,10 @@ export class PerfilEmpresaComponent implements OnInit {
   ngOnInit() {
     this.contadorEmpresas = 0;
     this.leer();
-    this.contarRegistros();
-  }
-
-  contarRegistros() {
-    return this.firebaseBDDService.firebaseControllerEmpresas.leer().snapshotChanges().subscribe(items => {
-      this.contadorEmpresas = items.length;
-    });
-
   }
 
   leer() {
-    this.empresaService.empresa.id = '-LHim59xdYSFrG47QOhg';
+    this.empresaService.empresa.id = '-LHnYYcnqIEj4yUV4izj';
     this.firebaseBDDService.firebaseControllerEmpresas.querySimple('id', this.empresaService.empresa.id)
       .snapshotChanges().subscribe(items => {
       items.forEach(element => {
