@@ -83,7 +83,7 @@
                   Domicilio:
                 </th>
                 <td>
-                  {{postulanteService.postulante.domicilio}}
+                  {{postulanteService.postulante.direccion}}
                 </td>
               </tr>
               <tr>
@@ -116,7 +116,7 @@
             <table class="table table-sm">
               <thead>
                 <th>Institución</th>
-                <th>Nivel</th>
+                <th>Tipo de Título</th>
                 <th>Título</th>
                 <th>Fecha de Registro</th>
                 <th>Código de Registro SENESCYT</th>
@@ -124,7 +124,7 @@
               <tbody>
                 <tr *ngFor="let item of postulanteService.postulante.estudiosRealizados">
                   <td>{{item.institucion}}</td>
-                  <td>{{item.nivel}}</td>
+                  <td>{{item.tipo_titulo}}</td>
                   <td>{{item.titulo}}</td>
                   <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
                   <td>{{item.codigoRegistroSENESCYT}}</td>
