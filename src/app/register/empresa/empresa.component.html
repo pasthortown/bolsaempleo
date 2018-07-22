@@ -1,7 +1,12 @@
 <div class="container">
   <div>
     <div class="row" style="margin-top: 15px;">
-      <a routerLink="/persona">Soy persona</a>
+      <div class="col">
+        <a routerLink="/persona">Soy postulante</a>
+      </div>
+      <div class="col text-right">
+        <h2>Registro de empresa</h2>
+      </div>
     </div>
     <hr>
     <div class="row">
@@ -48,7 +53,7 @@
             Confirmar:
           </label>
           <div class="col-lg-8">
-            <input type="password" class="form-control" name="confirmar" id="confirmar" [(ngModel)]="confirmar">
+            <input type="password" class="form-control" name="confirmar" id="confirmar" [(ngModel)]="confirmacion">
           </div>
         </div>
         <!-- Nombre Comercial !-->

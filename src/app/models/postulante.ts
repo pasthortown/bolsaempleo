@@ -12,7 +12,7 @@ export class Postulante {
   nacionalidad: string;
   identificacion: string;
   estadoCivil: string;
-  fechaDeNacimiento: any;
+  fechaDeNacimiento: Date;
   correoElectronico: string;
   telefonoCelular: string;
   telefonoFijo: string;

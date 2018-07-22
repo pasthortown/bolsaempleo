@@ -5,23 +5,57 @@ import { Subject } from 'rxjs';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
+import { FirebaseBDDService } from './firebase-bdd.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  private user: Observable<firebase.User>;
-  private userDetails: firebase.User = null;
 
-  constructor(private _firebaseAuth: AngularFireAuth, private router: Router) {
+  public user: Observable<firebase.User>;
+  private userDetails: firebase.User = null;
+  rolActual: string;
+
+  constructor(private _firebaseAuth: AngularFireAuth,
+    private router: Router,
+    private firebaseBDDService: FirebaseBDDService, ) {
     this.user = _firebaseAuth.authState;
     this.user.subscribe(
       (user) => {
         if (user) {
           this.userDetails = user;
+          this.consultarRol();
         } else {
           this.userDetails = null;
+          this.rolActual = null;
         }
       }
     );
+  }
+
+  private consultarRol() {
+    this.rolActual = null;
+
+    this.firebaseBDDService.firebaseControllerEmpresas
+      .querySimple('correoElectronico', this.userDetails.email)
+      .snapshotChanges().subscribe(empresas => {
+        if (empresas.length > 0) {
+          this.rolActual = 'e';
+          return;
+        }
+
+        this.firebaseBDDService.firebaseControllerPostulantes
+          .querySimple('correoElectronico', this.userDetails.email)
+          .snapshotChanges().subscribe(postulantes => {
+            if (postulantes.length > 0) {
+              this.rolActual = 'p';
+              return;
+            }
+          });
+
+      });
+  }
+
+  rol(): string {
+    return this.rolActual;
   }
 
   createUserWithEmailAndPassword(email, password): Promise<any> {
@@ -96,6 +130,19 @@ export class AuthService {
       }
       if (this.userDetails.email) {
         return this.userDetails.email;
+      }
+      return '¡Sin nombre!';
+    }
+    return 'Anónimo';
+  }
+
+  displayNameOrEmail2(userDetails: firebase.User): string {
+    if (userDetails) {
+      if (userDetails.displayName) {
+        return userDetails.displayName;
+      }
+      if (userDetails.email) {
+        return userDetails.email;
       }
       return '¡Sin nombre!';
     }

@@ -107,7 +107,7 @@
           <div class="row">
             <div class="col-8">
               <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
-              <h5 class="col-12 text-left">{{postulanteActual.domicilio}}</h5>
+              <h5 class="col-12 text-left">{{postulanteActual.direccion}}</h5>
             </div>
             <div class="col-4 text-right">
               <table class="col-12">
@@ -119,11 +119,7 @@
                   <td class="text-left">
                     <strong style="color: silver;">
                       <i>
-                        {{
-                        postulanteActual.fechaDeNacimiento.year
-                        + '/' + postulanteActual.fechaDeNacimiento.month
-                        + '/' + postulanteActual.fechaDeNacimiento.day
-                        }}
+                        {{postulanteActual.fechaDeNacimiento}}
                       </i></strong>
                   </td>
                 </tr>

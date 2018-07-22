@@ -4,24 +4,24 @@
   </div>
   <div class="navbar-collapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown" ngbDropdown>
+      <li [hidden]="!estaLogueado" class="nav-item dropdown" ngbDropdown>
         <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
           <i><img src="{{fotoPerfil}}" class="rounded-circle" style="width: 70px; height: 70px;"></i>&nbsp;{{nameOrEmail}}<b class="caret"></b>
         </a>
         <div ngbDropdownMenu>
-          <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
+          <a class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Postulaciones
           </a>
-          <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
+          <a class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Ofertas Laborales
           </a>
-          <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
+          <a class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Hoja de Vida
           </a>
-          <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" [routerLink]="['/perfil']" [routerLinkActive]="['router-link-active']">
+          <a class="dropdown-item" [routerLink]="['/perfil']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Perfil
           </a>
-          <a [hidden]="!authService.isLoggedIn()" class="dropdown-item" (click)="cerrarSesion()">
+          <a class="dropdown-item" (click)="cerrarSesion()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
           </a>
         </div>
@@ -51,10 +51,10 @@
           <i class="fa fa-fw fa-user"></i>&nbsp;Registrarse
         </a>
         <div ngbDropdownMenu >
-          <a class="dropdown-item" (click)="registrarse('personas')">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Personas
+          <a class="dropdown-item" routerLink="/persona">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Postulante
           </a>
-          <a class="dropdown-item" (click)="registrarse('empresas')">
+          <a class="dropdown-item" routerLink="/empresa">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Empresas
           </a>
         </div>
