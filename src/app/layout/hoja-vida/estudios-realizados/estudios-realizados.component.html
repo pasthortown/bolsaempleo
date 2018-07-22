@@ -14,7 +14,7 @@
           <table class="table table-bordered table-hover">
             <thead class="table-active">
               <th>Institución</th>
-              <th>Nivel</th>
+              <th>Tipo de Título</th>
               <th>Título</th>
               <th>Fecha de Registro</th>
               <th>Código de Registro SENESCYT</th>
@@ -23,7 +23,7 @@
             <tbody>
               <tr *ngFor="let item of postulanteService.postulante.estudiosRealizados">
                 <td>{{item.institucion}}</td>
-                <td>{{item.nivel}}</td>
+                <td>{{item.tipo_titulo}}</td>
                 <td>{{item.titulo}}</td>
                 <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
                 <td>{{item.codigoRegistroSENESCYT}}</td>
@@ -49,25 +49,26 @@
     <div class="row">
       <div class="col-12">
         <div class="form-group">
-          <label for="nivel">Nivel</label>
-          <select [(ngModel)]="estudioRealizado.nivel" class="form-control" id="nivel" name="nivel">
-              <option value="" selected>Seleccione...</option>
-              <option value="Tercer Nivel">Tercer Nivel</option>
-              <option value="Cuarto Nivel">Cuarto Nivel</option>
-              <option value="Doctorado">Doctorado</option>
-            </select>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
           <label for="institucion">Institución</label>
           <input type="text" [(ngModel)]="estudioRealizado.institucion" class="form-control" id="institucion" placeholder="Institución">
         </div>
       </div>
+      <div class="col-12 mt-2">
+        <div class="form-group">
+          <label>Tipo de Título</label>
+          <select class="form-control" [(ngModel)]="estudioRealizado.tipo_titulo" (change)="mostrar()">
+            <option value="" selected>Seleccione...</option>
+            <option *ngFor="let item of filtro" value="{{item.campo_amplio}}">{{item.campo_amplio}}</option>
+          </select>
+        </div>
+      </div>
       <div class="col-12">
         <div class="form-group">
-          <label for="titulo">Título</label>
-          <input type="text" [(ngModel)]="estudioRealizado.titulo" class="form-control" id="titulo" placeholder="Título">
+          <label>Título</label>
+          <select class="form-control" [(ngModel)]="estudioRealizado.titulo">
+            <option value="" selected>Seleccione...</option>
+            <option *ngFor="let item of tipo_titulo" value="{{item.nombre}}">{{item.nombre}}</option>
+          </select>
         </div>
       </div>
       <div class="col-12">

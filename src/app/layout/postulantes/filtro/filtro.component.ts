@@ -11,9 +11,9 @@ import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 })
 export class FiltroComponent implements OnInit {
   filtro: Array<any>;
-  postulantes: Array<Postulante>;
   opcionSeleccionada = '';
   tipo_titulo: Array<any>;
+  postulantes: Array<Postulante>;
 
   constructor(private modalService: NgbModal, private firebaseBDDService: FirebaseBDDService) {}
 
