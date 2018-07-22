@@ -1,10 +1,14 @@
 [
   {
-campo_amplio: "Educación", campos_especificos: [	
-	{nombre: "Asistente Pedagógico con nivel equivalente a Tecnólogo superior"},
-	{nombre: "Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior"}
-	]
-campo_amplio: "Ciencias sociales, periodismo e información", campos_especificos: [	
+  campo_amplio: "Educación",
+  campos_especificos: [
+	  {nombre: "Asistente Pedagógico con nivel equivalente a Tecnólogo superior"},
+	  {nombre: "Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior"}
+	  ]
+  },
+  {
+  campo_amplio: "Ciencias sociales, periodismo e información",
+  campos_especificos: [
 	{nombre: "Productor y conductor de radio con nivel equivalente a Tecnólogo Superior"},
 	{nombre: "Productor y conductor de televisión con nivel equivalente a Tecnólogo Superior"},
 	{nombre: "Productor radiofónico con nivel equivalente a Tecnólogo Superior"},
@@ -20,7 +24,8 @@ campo_amplio: "Ciencias sociales, periodismo e información", campos_especificos
 	{nombre: "Tecnólogo Superior en Criminalística"},
 	{nombre: "Tecnólogo Superior en Criminología"}
 	]
-campo_amplio: "Administración", campos_especificos: [	
+  },
+{campo_amplio: "Administración", campos_especificos: [
 	{nombre: "Tecnólogo Superior en Tributación"},
 	{nombre: "Tecnólogo Superior en Auditoría"},
 	{nombre: "Tecnólogo Superior en Contabilidad"},
@@ -49,7 +54,9 @@ campo_amplio: "Administración", campos_especificos: [
 	{nombre: "Tecnólogo Superior en Gestión del Talento Humano"},
 	{nombre: "Tecnólogo Superior en Formación Ocupacional por competencias"}
 	]
-campo_amplio: "Ciencias naturales, matemáticas y estadística", campos_especificos: [	
+},
+{
+campo_amplio: "Ciencias naturales, matemáticas y estadística", campos_especificos: [
 	{nombre: "Tecnólogo Superior en Biotecnología"},
 	{nombre: "Técnico Superior en Protección del Medio Ambiente"},
 	{nombre: "Tecnólogo Superior en Protección del Medio Ambiente"},
@@ -61,7 +68,9 @@ campo_amplio: "Ciencias naturales, matemáticas y estadística", campos_especifi
 	{nombre: "Topógrafo con nivel equivalente a Tecnólogo Superior"},
 	{nombre: "Analista de Suelos con nivel equivalente a Tecnólogo Superior"}
 	]
-campo_amplio: "Tecnologías de la información y la comunicación (TIC)", campos_especificos: [	
+},
+{
+campo_amplio: "Tecnologías de la información y la comunicación (TIC)", campos_especificos: [
 	{nombre: "Técnico Superior en  Ensamblaje y Mantenimiento de Equipos de Cómputo"},
 	{nombre: "Tecnólogo Superior en  Ensamblaje y Mantenimiento de Equipos de Cómputo"},
 	{nombre: "Técnico Superior en Gestión de Bases de Datos"},
@@ -77,7 +86,9 @@ campo_amplio: "Tecnologías de la información y la comunicación (TIC)", campos
 	{nombre: "Tecnólogo Superior en Desarrollo de Aplicaciones Web"},
 	{nombre: "Técnico Superior en  Mantenimiento de Software"}
 	]
-campo_amplio: "Ingeniería, industria y construcción", campos_especificos: [	
+},
+{
+campo_amplio: "Ingeniería, industria y construcción", campos_especificos: [
 	{nombre: "Tecnólogo Superior en Polímeros"},
 	{nombre: "Tecnólogo Superior en Química"},
 	{nombre: "Tecnólogo Superior en Medición y Monitoreo Ambiental"},
@@ -137,7 +148,9 @@ campo_amplio: "Ingeniería, industria y construcción", campos_especificos: [
 	{nombre: "Técnico Superior en Obras Civiles"},
 	{nombre: "Tecnólogo Superior en Construcción"}
 	]
-campo_amplio: "Agricultura, silvicultura, pesca y veterinaria", campos_especificos: [	
+},
+{
+campo_amplio: "Agricultura, silvicultura, pesca y veterinaria", campos_especificos: [
 	{nombre: "Tecnólogo Superior en Permacultura"},
 	{nombre: "Técnico Superior en Agroecología"},
 	{nombre: "Tecnólogo Superior en Agroecología"},
@@ -157,7 +170,9 @@ campo_amplio: "Agricultura, silvicultura, pesca y veterinaria", campos_especific
 	{nombre: "Tecnólogo Superior en Nutrición Animal"},
 	{nombre: "Tecnólogo Superior en Cuidado canino"}
 	]
-campo_amplio: "Salud y bienestar", campos_especificos: [	
+},
+{
+campo_amplio: "Salud y bienestar", campos_especificos: [
 	{nombre: "Técnico Superior en Odontología"},
 	{nombre: "Técnico Superior en Mecánica Dental"},
 	{nombre: "Técnico Superior en Laboratorio Clínico"},
@@ -175,7 +190,9 @@ campo_amplio: "Salud y bienestar", campos_especificos: [
 	{nombre: "Tecnólogo Superior en  Atención Integral a Adultos Mayores"},
 	{nombre: "Tecnólogo Superior en Desarrollo Infantil Integral"}
 	]
-campo_amplio: "Servicios", campos_especificos: [	
+},
+{
+campo_amplio: "Servicios", campos_especificos: [
 	{nombre: "Tecnólogo Superior en Tricología y Cosmiatría"},
 	{nombre: "Asesor de Imagen con nivel equivalente a Tecnólogo Superior"},
 	{nombre: "Técnico Superior en Estética Integral"},
@@ -236,6 +253,5 @@ campo_amplio: "Servicios", campos_especificos: [
 	{nombre: "Técnico Superior en Logística de Almacenamiento y Distribución"},
 	{nombre: "Tecnólogo Superior en Logística de Almacenamiento y Distribución"}
 	]
-    
-  },
+  }
 ]

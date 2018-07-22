@@ -1,3 +1,4 @@
+import { catalogos } from './../../../../environments/catalogos';
 import { FirebaseBDDService } from './../../../services/firebase-bdd.service';
 import { Postulante } from './../../../models/postulante';
 import { Component, OnInit } from '@angular/core';
@@ -17,21 +18,7 @@ export class FiltroComponent implements OnInit {
   ngOnInit() {
     this.postulantes = [];
     this.talentoHumano();
-    this.filtro = [ {area: 'Fecha',
-                    href: 'Fecha',
-                    criterios: [{descripcion: 'Año'},
-                                {descripcion: 'Mes'},
-                                {descripcion: 'Día'},
-                                {descripcion: 'Semana'}
-                              ]},
-                    {area: 'Fecha2',
-                    href: 'Fecha2',
-                    criterios: [{descripcion: 'Año2'},
-                                {descripcion: 'Mes2'},
-                                {descripcion: 'Día2'},
-                                {descripcion: 'Semana2'}
-                              ]},
-                  ];
+    this.filtro = catalogos.titulos;
   }
 
   talentoHumano() {

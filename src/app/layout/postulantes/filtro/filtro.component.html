@@ -7,11 +7,11 @@
       </h6>
       <div *ngFor="let item of filtro" class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">{{item.area}}</span>
+          <span class="input-group-text" id="basic-addon1">{{item.campo_amplio}}</span>
         </div>
         <select class="form-control">
           <option value="" selected>Seleccione...</option>
-          <option *ngFor="let criterio of item.criterios" value="{{criterio.descripcion}}">{{criterio.descripcion}}</option>
+          <option *ngFor="let criterio of item.campos_especificos" value="{{criterio.nombre}}">{{criterio.nombre}}</option>
         </select>
       </div>
     </div>
