@@ -12,6 +12,8 @@ import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 export class FiltroComponent implements OnInit {
   filtro: Array<any>;
   postulantes: Array<Postulante>;
+  opcionSeleccionada = '';
+  tipo_titulo: Array<any>;
 
   constructor(private modalService: NgbModal, private firebaseBDDService: FirebaseBDDService) {}
 
@@ -40,5 +42,13 @@ export class FiltroComponent implements OnInit {
     }), (resultCancel => {
 
     }));
+  }
+
+  mostrar() {
+    this.filtro.forEach(element => {
+      if (element.campo_amplio === this.opcionSeleccionada) {
+        this.tipo_titulo = element.campos_especificos;
+      }
+    });
   }
 }

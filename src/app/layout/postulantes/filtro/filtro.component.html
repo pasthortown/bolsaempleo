@@ -1,18 +1,29 @@
-<div class="container">
+<div class="col-12">
   <div class="row mt-4">
     <div class="col-4">
       <h6 class="bg-warning form-control">
         <i class="fa fa-filter" aria-hidden="true"></i>
         Filtrar Por
       </h6>
-      <div *ngFor="let item of filtro" class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">{{item.campo_amplio}}</span>
+      <div class="card col-12">
+        <div class="col-12 mt-2">
+          <div class="form-group">
+            <label>Tipo de Título</label>
+            <select class="form-control" [(ngModel)]="opcionSeleccionada" (change)="mostrar()">
+              <option value="" selected>Seleccione...</option>
+              <option *ngFor="let item of filtro" value="{{item.campo_amplio}}">{{item.campo_amplio}}</option>
+            </select>
+          </div>
         </div>
-        <select class="form-control">
-          <option value="" selected>Seleccione...</option>
-          <option *ngFor="let criterio of item.campos_especificos" value="{{criterio.nombre}}">{{criterio.nombre}}</option>
-        </select>
+        <div *ngIf="tipo_titulo!=null" class="col-12">
+          <div class="form-group">
+            <label>Título</label>
+            <select class="form-control">
+              <option value="" selected>Seleccione...</option>
+              <option *ngFor="let item of tipo_titulo" value="{{item.nombre}}">{{item.nombre}}</option>
+            </select>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-8">
