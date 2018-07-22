@@ -1,8 +1,7 @@
 import { PostulanteService } from './../../../services/postulante.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
-import { ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-pdf',
