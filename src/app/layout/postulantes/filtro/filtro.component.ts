@@ -46,6 +46,10 @@ export class FiltroComponent implements OnInit {
 
   mostrar() {
     this.filtro.forEach(element => {
+      if (this.opcionSeleccionada === '') {
+        this.tipo_titulo = null;
+        return;
+      }
       if (element.campo_amplio === this.opcionSeleccionada) {
         this.tipo_titulo = element.campos_especificos;
       }
