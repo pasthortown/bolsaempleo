@@ -9,7 +9,7 @@
         <div class="col-12 mt-2">
           <div class="form-group">
             <label>Tipo de Título</label>
-            <select class="form-control" [(ngModel)]="opcionSeleccionada" (change)="mostrar()">
+            <select class="form-control" [(ngModel)]="opcionSeleccionada" (change)="mostrarTitulos()">
               <option value="" selected>Seleccione...</option>
               <option *ngFor="let item of filtro" value="{{item.campo_amplio}}">{{item.campo_amplio}}</option>
             </select>
@@ -18,7 +18,7 @@
         <div *ngIf="tipo_titulo!=null" class="col-12">
           <div class="form-group">
             <label>Título</label>
-            <select class="form-control">
+            <select class="form-control" (change)="filtrarPorTitulo()">
               <option value="" selected>Seleccione...</option>
               <option *ngFor="let item of tipo_titulo" value="{{item.nombre}}">{{item.nombre}}</option>
             </select>

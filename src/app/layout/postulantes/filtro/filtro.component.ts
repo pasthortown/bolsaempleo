@@ -47,7 +47,7 @@ export class FiltroComponent implements OnInit {
     this.postulanteSeleccionado = postulanteSeleccionado;
   }
 
-  mostrar() {
+  mostrarTitulos() {
     this.filtro.forEach(element => {
       if (this.opcionSeleccionada === '') {
         this.tipo_titulo = null;
@@ -57,6 +57,10 @@ export class FiltroComponent implements OnInit {
         this.tipo_titulo = element.campos_especificos;
       }
     });
+  }
+
+  filtrarPorTitulo() {
+
   }
 
   imprimir() {
