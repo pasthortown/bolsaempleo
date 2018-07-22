@@ -27,6 +27,8 @@ export class FiltroComponent implements OnInit {
   ngOnInit() {
     this.postulantes = [];
     this.talentoHumano();
+    this.postulanteSeleccionado = new Postulante();
+    this.postulanteSeleccionado.nombreCompleto = '';
     this.filtro = catalogos.titulos;
   }
 
@@ -41,18 +43,8 @@ export class FiltroComponent implements OnInit {
     });
   }
 
-  mostrarHojaVida(content, postulanteSeleccionado: Postulante) {
-    const options: NgbModalOptions = {
-      size: 'lg'
-    };
+  mostrarHojaVida(postulanteSeleccionado: Postulante) {
     this.postulanteSeleccionado = postulanteSeleccionado;
-    this.modalService.open(content, options)
-    .result
-    .then((resultAceptar => {
-
-    }), (resultCancel => {
-
-    }));
   }
 
   mostrar() {

@@ -42,38 +42,93 @@
           <div class="card-body">
             <div class="card-title">
               <div class="row">
-                <div class="col-8">
+                <div class="col-12">
                   <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
-                  <h5 class="col-12 text-left">{{postulanteActual.direccion}}</h5>
                 </div>
-                <div class="col-4 text-right">
-                  <table class="col-12">
+                <div class="col-12">
+                  <table class="table table-sm">
+                    <thead>
+                      <th>Institución</th>
+                      <th>Tipo de Título</th>
+                      <th>Título</th>
+                      <th>Fecha de Registro</th>
+                      <th>Código de Registro SENESCYT</th>
+                    </thead>
                     <tbody>
-                    <tr>
-                      <th>
-                        <i>Fecha de Anuncio:</i>&nbsp;
-                      </th>
-                      <td class="text-left">
-                        <strong style="color: silver;">
-                          <i>
-                            {{
-                            postulanteActual.fechaDeNacimiento.year
-                            + '/' + postulanteActual.fechaDeNacimiento.month
-                            + '/' + postulanteActual.fechaDeNacimiento.day
-                            }}
-                          </i></strong>
-                      </td>
-                    </tr>
+                      <tr *ngFor="let item of postulanteActual.estudiosRealizados">
+                        <td>{{item.institucion}}</td>
+                        <td>{{item.tipo_titulo}}</td>
+                        <td>{{item.titulo}}</td>
+                        <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
+                        <td>{{item.codigoRegistroSENESCYT}}</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-            <p class="card-text text-justify">
-              {{postulanteActual.identificacion}}
-            </p>
+            <div class="col-12">
+              <table class="col-12 table-sm">
+                <tr>
+                  <th class="text-right">
+                    Identificación:
+                  </th>
+                  <td>
+                    {{postulanteActual.identificacion}}
+                  </td>
+                </tr>
+                <tr>
+                  <th class="text-right">
+                    Estado Civil:
+                  </th>
+                  <td>
+                    {{postulanteActual.estadoCivil}}
+                  </td>
+                </tr>
+                <tr>
+                  <th class="text-right">
+                    Fecha de Nacimiento:
+                  </th>
+                  <td>
+                    {{postulanteActual.fechaDeNacimiento.day}} de {{meses[postulanteActual.fechaDeNacimiento.month-1]}} del {{postulanteActual.fechaDeNacimiento.year}}
+                  </td>
+                </tr>
+                <tr>
+                  <th class="text-right">
+                    Nacionalidad:
+                  </th>
+                  <td>
+                    {{postulanteActual.nacionalidad}}
+                  </td>
+                </tr>
+                <tr>
+                  <th class="text-right">
+                    Domicilio:
+                  </th>
+                  <td>
+                    {{postulanteActual.direccion}}
+                  </td>
+                </tr>
+                <tr>
+                  <th class="text-right">
+                    Correo Electrónico:
+                  </th>
+                  <td>
+                    {{postulanteActual.correoElectronico}}
+                  </td>
+                </tr>
+                <tr>
+                  <th class="text-right">
+                    Teléfono:
+                  </th>
+                  <td>
+                    {{postulanteActual.telefono}}
+                  </td>
+                </tr>
+              </table>
+            </div>
             <div class="col-12 m-2 text-left">
-              <button type="submit" class="btn btn-primary" (click)="mostrarHojaVida(content, postulanteActual)">
+              <button type="submit" class="btn btn-primary" (click)="mostrarHojaVida(postulanteActual)">
                 <span class="fa fa-info-circle"></span>&nbsp;Mas Información
               </button>
             </div>
@@ -84,9 +139,9 @@
   </div>
 </div>
 
-<ng-template #content let-c="close" let-d="dismiss">
+<div class="col-12 mt-2" *ngIf="postulanteSeleccionado.nombreCompleto!=''">
   <div class="modal-header">
-    <h1>{{postulanteSeleccionado.nombreCompleto}}</h1>
+
   </div>
   <div class="modal-body">
     <div class="col-12">
@@ -377,4 +432,4 @@
       </button>
     </div>
   </div>
-</ng-template>
+</div>
