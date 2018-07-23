@@ -1,0 +1,279 @@
+[
+  {
+campo_amplio: "AZUAY", campos_especificos: [	
+	{nombre: "CUENCA"},
+	{nombre: "GIRÓN"},
+	{nombre: "GUALACEO"},
+	{nombre: "NABÓN"},
+	{nombre: "PAUTE"},
+	{nombre: "PUCARA"},
+	{nombre: "SAN FERNANDO"},
+	{nombre: "SANTA ISABEL"},
+	{nombre: "SIGSIG"},
+	{nombre: "OÑA"},
+	{nombre: "CHORDELEG"},
+	{nombre: "EL PAN"},
+	{nombre: "SEVILLA DE ORO"},
+	{nombre: "GUACHAPALA"},
+	{nombre: "CAMILO PONCE ENRÍQUEZ"}
+	]
+campo_amplio: "BOLIVAR", campos_especificos: [
+	{nombre: "GUARANDA"},
+	{nombre: "CHILLANES"},
+	{nombre: "CHIMBO"},
+	{nombre: "ECHEANDÍA"},
+	{nombre: "SAN MIGUEL"},
+	{nombre: "CALUMA"},
+	{nombre: "LAS NAVES"}
+	]
+campo_amplio: "CAÑAR", campos_especificos: [
+	{nombre: "AZOGUES"},
+	{nombre: "BIBLIÁN"},
+	{nombre: "CAÑAR"},
+	{nombre: "LA TRONCAL"},
+	{nombre: "EL TAMBO"},
+	{nombre: "DÉLEG"},
+	{nombre: "SUSCAL"}
+	]
+campo_amplio: "CARCHI", campos_especificos: [
+	{nombre: "TULCÁN"},
+	{nombre: "BOLÍVAR"},
+	{nombre: "ESPEJO"},
+	{nombre: "MIRA"},
+	{nombre: "MONTÚFAR"},
+	{nombre: "SAN PEDRO DE HUACA"}
+	]
+campo_amplio: "COTOPAXI", campos_especificos: [
+	{nombre: "LATACUNGA"},
+	{nombre: "LA MANÁ"},
+	{nombre: "PANGUA"},
+	{nombre: "PUJILI"},
+	{nombre: "SALCEDO"},
+	{nombre: "SAQUISILÍ"},
+	{nombre: "SIGCHOS"}
+	]
+campo_amplio: "CHIMBORAZO", campos_especificos: [
+	{nombre: "RIOBAMBA"},
+	{nombre: "ALAUSI"},
+	{nombre: "COLTA"},
+	{nombre: "CHAMBO"},
+	{nombre: "CHUNCHI"},
+	{nombre: "GUAMOTE"},
+	{nombre: "GUANO"},
+	{nombre: "PALLATANGA"},
+	{nombre: "PENIPE"},
+	{nombre: "CUMANDÁ"}
+	]
+campo_amplio: "EL ORO", campos_especificos: [
+	{nombre: "MACHALA"},
+	{nombre: "ARENILLAS"},
+	{nombre: "ATAHUALPA"},
+	{nombre: "BALSAS"},
+	{nombre: "CHILLA"},
+	{nombre: "EL GUABO"},
+	{nombre: "HUAQUILLAS"},
+	{nombre: "MARCABELÍ"},
+	{nombre: "PASAJE"},
+	{nombre: "PIÑAS"},
+	{nombre: "PORTOVELO"},
+	{nombre: "SANTA ROSA"},
+	{nombre: "ZARUMA"},
+	{nombre: "LAS LAJAS"}
+	]
+campo_amplio: "ESMERALDAS", campos_especificos: [
+	{nombre: "ESMERALDAS"},
+	{nombre: "ELOY ALFARO"},
+	{nombre: "MUISNE"},
+	{nombre: "QUININDÉ"},
+	{nombre: "SAN LORENZO"},
+	{nombre: "ATACAMES"},
+	{nombre: "RIOVERDE"},
+	{nombre: "LA CONCORDIA"}
+	]
+campo_amplio: "GUAYAS", campos_especificos: [
+	{nombre: "GUAYAQUIL"},
+	{nombre: "ALFREDO BAQUERIZO MORENO (JUJÁN)"},
+	{nombre: "BALAO"},
+	{nombre: "BALZAR"},
+	{nombre: "COLIMES"},
+	{nombre: "DAULE"},
+	{nombre: "DURÁN"},
+	{nombre: "EL EMPALME"},
+	{nombre: "EL TRIUNFO"},
+	{nombre: "MILAGRO"},
+	{nombre: "NARANJAL"},
+	{nombre: "NARANJITO"},
+	{nombre: "PALESTINA"},
+	{nombre: "PEDRO CARBO"},
+	{nombre: "SAMBORONDÓN"},
+	{nombre: "SANTA LUCÍA"},
+	{nombre: "SALITRE (URBINA JADO)"},
+	{nombre: "SAN JACINTO DE YAGUACHI"},
+	{nombre: "PLAYAS"},
+	{nombre: "SIMÓN BOLÍVAR"},
+	{nombre: "CORONEL MARCELINO MARIDUE"},
+	{nombre: "LOMAS DE SARGENTILLO"},
+	{nombre: "NOBOL"},
+	{nombre: "GENERAL ANTONIO ELIZALDE"},
+	{nombre: "ISIDRO AYORA"}
+	]
+campo_amplio: "IMBABURA", campos_especificos: [
+	{nombre: "IBARRA"},
+	{nombre: "ANTONIO ANTE"},
+	{nombre: "COTACACHI"},
+	{nombre: "OTAVALO"},
+	{nombre: "PIMAMPIRO"},
+	{nombre: "SAN MIGUEL DE URCUQUÍ"}
+	]
+campo_amplio: "LOJA", campos_especificos: [
+	{nombre: "LOJA"},
+	{nombre: "CALVAS"},
+	{nombre: "CATAMAYO"},
+	{nombre: "CELICA"},
+	{nombre: "CHAGUARPAMBA"},
+	{nombre: "ESPÍNDOLA"},
+	{nombre: "GONZANAMÁ"},
+	{nombre: "MACARÁ"},
+	{nombre: "PALTAS"},
+	{nombre: "PUYANGO"},
+	{nombre: "SARAGURO"},
+	{nombre: "SOZORANGA"},
+	{nombre: "ZAPOTILLO"},
+	{nombre: "PINDAL"},
+	{nombre: "QUILANGA"},
+	{nombre: "OLMEDO"}
+	]
+campo_amplio: "LOS RIOS", campos_especificos: [
+	{nombre: "BABAHOYO"},
+	{nombre: "BABA"},
+	{nombre: "MONTALVO"},
+	{nombre: "PUEBLOVIEJO"},
+	{nombre: "QUEVEDO"},
+	{nombre: "URDANETA"},
+	{nombre: "VENTANAS"},
+	{nombre: "VÍNCES"},
+	{nombre: "PALENQUE"},
+	{nombre: "BUENA FÉ"},
+	{nombre: "VALENCIA"},
+	{nombre: "MOCACHE"},
+	{nombre: "QUINSALOMA"}
+	]
+campo_amplio: "MANABI", campos_especificos: [
+	{nombre: "PORTOVIEJO"},
+	{nombre: "BOLÍVAR"},
+	{nombre: "CHONE"},
+	{nombre: "EL CARMEN"},
+	{nombre: "FLAVIO ALFARO"},
+	{nombre: "JIPIJAPA"},
+	{nombre: "JUNÍN"},
+	{nombre: "MANTA"},
+	{nombre: "MONTECRISTI"},
+	{nombre: "PAJÁN"},
+	{nombre: "PICHINCHA"},
+	{nombre: "ROCAFUERTE"},
+	{nombre: "SANTA ANA"},
+	{nombre: "SUCRE"},
+	{nombre: "TOSAGUA"},
+	{nombre: "24 DE MAYO"},
+	{nombre: "PEDERNALES"},
+	{nombre: "OLMEDO"},
+	{nombre: "PUERTO LÓPEZ"},
+	{nombre: "JAMA"},
+	{nombre: "JARAMIJÓ"},
+	{nombre: "SAN VICENTE"}
+	]
+campo_amplio: "MORONA SANTIAGO", campos_especificos: [
+	{nombre: "MORONA"},
+	{nombre: "GUALAQUIZA"},
+	{nombre: "LIMÓN INDANZA"},
+	{nombre: "PALORA"},
+	{nombre: "SANTIAGO"},
+	{nombre: "SUCÚA"},
+	{nombre: "HUAMBOYA"},
+	{nombre: "SAN JUAN BOSCO"},
+	{nombre: "TAISHA"},
+	{nombre: "LOGROÑO"},
+	{nombre: "PABLO SEXTO"},
+	{nombre: "TIWINTZA"}
+	]
+campo_amplio: "NAPO", campos_especificos: [
+	{nombre: "TENA"},
+	{nombre: "ARCHIDONA"},
+	{nombre: "EL CHACO"},
+	{nombre: "QUIJOS"},
+	{nombre: "ARLOS JULIO AROSEMENA TOLA"}
+	]
+campo_amplio: "PASTAZA", campos_especificos: [
+	{nombre: "PASTAZA"},
+	{nombre: "MERA"},
+	{nombre: "SANTA CLARA"},
+	{nombre: "ARAJUNO"}
+	]
+campo_amplio: "PICHINCHA", campos_especificos: [
+	{nombre: "QUITO"},
+	{nombre: "CAYAMBE"},
+	{nombre: "MEJIA"},
+	{nombre: "PEDRO MONCAYO"},
+	{nombre: "RUMIÑAHUI"},
+	{nombre: "SAN MIGUEL DE LOS BANCOS"},
+	{nombre: "PEDRO VICENTE MALDONADO"},
+	{nombre: "PUERTO QUITO"}
+	]
+campo_amplio: "TUNGURAHUA", campos_especificos: [
+	{nombre: "AMBATO"},
+	{nombre: "BAÑOS DE AGUA SANTA"},
+	{nombre: "CEVALLOS"},
+	{nombre: "MOCHA"},
+	{nombre: "PATATE"},
+	{nombre: "QUERO"},
+	{nombre: "SAN PEDRO DE PELILEO"},
+	{nombre: "SANTIAGO DE PÍLLARO"},
+	{nombre: "TISALEO"}
+	]
+campo_amplio: "ZAMORA CHINCHIPE", campos_especificos: [
+	{nombre: "ZAMORA"},
+	{nombre: "CHINCHIPE"},
+	{nombre: "NANGARITZA"},
+	{nombre: "YACUAMBI"},
+	{nombre: "YANTZAZA (YANZATZA)"},
+	{nombre: "EL PANGUI"},
+	{nombre: "CENTINELA DEL CÓNDOR"},
+	{nombre: "PALANDA"},
+	{nombre: "PAQUISHA"}
+	]
+campo_amplio: "GALAPAGOS", campos_especificos: [
+	{nombre: "SAN CRISTÓBAL"},
+	{nombre: "ISABELA"},
+	{nombre: "SANTA CRUZ"}
+	]
+campo_amplio: "SUCUMBIOS", campos_especificos: [
+	{nombre: "LAGO AGRIO"},
+	{nombre: "GONZALO PIZARRO"},
+	{nombre: "PUTUMAYO"},
+	{nombre: "SHUSHUFINDI"},
+	{nombre: "SUCUMBÍOS"},
+	{nombre: "CASCALES"},
+	{nombre: "CUYABENO"}
+	]
+campo_amplio: "ORELLANA", campos_especificos: [
+	{nombre: "ORELLANA"},
+	{nombre: "AGUARICO"},
+	{nombre: "LA JOYA DE LOS SACHAS"},
+	{nombre: "LORETO"}
+	]
+campo_amplio: "SANTO DOMINGO DE LOS TSACHILAS", campos_especificos: [
+	{nombre: "SANTO DOMINGO"}
+	]
+campo_amplio: "SANTA ELENA", campos_especificos: [
+	{nombre: "SANTA ELENA"},
+	{nombre: "LA LIBERTAD"},
+	{nombre: "SALINAS"}
+	]
+campo_amplio: "ZONAS NO DELIMITADAS", campos_especificos: [
+	{nombre: "LAS GOLONDRINAS"},
+	{nombre: "MANGA DEL CURA"},
+	{nombre: "EL PIEDRERO"}
+	]
+    
+  },
+]
