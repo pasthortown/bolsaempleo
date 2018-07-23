@@ -1,11 +1,8 @@
-<div class="container">
+<div class="col-12">
   <div>
     <div class="row" style="margin-top: 15px;">
-      <div class="col">
-        <a routerLink="/empresa">Soy empresa</a>
-      </div>
       <div class="col text-right">
-        <h2>Registro de postulante</h2>
+        <h2>Registro de Postulante</h2>
       </div>
     </div>
     <hr>
@@ -14,7 +11,7 @@
         <!-- Identificacion !-->
         <div class="form-group row">
           <label for="identificacion" class="col-lg-4 col-form-label">
-            Cédula:
+            Identificación:
           </label>
           <div class="col-lg-8">
             <input class="form-control" name="identificacion" id="identificacion" [(ngModel)]="postulante.identificacion">
@@ -23,7 +20,7 @@
         <!-- nombreCompleto !-->
         <div class="form-group row">
           <label for="nombreCompleto" class="col-lg-4 col-form-label">
-            Nombres y apellidos:
+            Nombre Completo:
           </label>
           <div class="col-lg-8">
             <input class="form-control" name="nombreCompleto" id="nombreCompleto" [(ngModel)]="postulante.nombreCompleto">
@@ -32,7 +29,7 @@
         <!-- Correo Electronico !-->
         <div class="form-group row">
           <label for="correoElectronico" class="col-lg-4 col-form-label">
-            Correo electrónico:
+            Correo Electrónico:
           </label>
           <div class="col-lg-8">
             <input type="email" class="form-control" name="correoElectronico" id="correoElectronico" [(ngModel)]="postulante.correoElectronico">
@@ -50,7 +47,7 @@
         <!-- Confirmacion !-->
         <div class="form-group row">
           <label for="confirmar" class="col-lg-4 col-form-label">
-            Confirmar:
+            Confirmar Contraseña:
           </label>
           <div class="col-lg-8">
             <input type="password" class="form-control" name="confirmar" id="confirmar" [(ngModel)]="confirmacion">
@@ -61,28 +58,19 @@
         <!-- Telefono Celular !-->
         <div class="form-group row">
           <label for="telefonoCelular" class="col-lg-4 col-form-label">
-            Teléfono celular:
+            Teléfono:
           </label>
           <div class="col-lg-8">
-            <input type="tel" class="form-control" name="telefonoCelular" id="telefonoCelular" [(ngModel)]="postulante.telefonoCelular">
-          </div>
-        </div>
-        <!-- Telefono Fijo -->
-        <div class="form-group row">
-          <label for="telefonoFijo" class="col-lg-4 col-form-label">
-            Teléfono fijo:
-          </label>
-          <div class="col-lg-8">
-            <input type="tel" class="form-control" name="telefonoFijo" id="telefonoFijo" [(ngModel)]="postulante.telefonoFijo">
+            <input type="tel" class="form-control" name="telefonoCelular" id="telefonoCelular" [(ngModel)]="postulante.telefono">
           </div>
         </div>
         <!-- Dirección -->
         <div class="form-group row">
           <label for="direccion" class="col-lg-4 col-form-label">
-            Dirección:
+            Dirección de Domicilio:
           </label>
           <div class="col-lg-8">
-            <textarea class="form-control" name="direccion" id="direccion" [(ngModel)]="postulante.direccion"></textarea>
+            <input class="form-control" name="direccion" id="direccion" [(ngModel)]="postulante.direccion">
           </div>
         </div>
         <!-- Nacionalidad !-->
@@ -100,27 +88,35 @@
             Estado civil:
           </label>
           <div class="col-lg-8">
-            <input class="form-control" name="estadoCivil" id="estadoCivil" [(ngModel)]="postulante.estadoCivil">
+            <select [(ngModel)]="postulante.estadoCivil" class="form-control" id="estadoCivil" name="estadoCivil">
+              <option value="" selected>Seleccione...</option>
+              <option value="Soltero / Soltera">Soltero / Soltera</option>
+              <option value="Casado / Casada">Casado / Casada</option>
+              <option value="Divorciado / Divorciada">Divorciado / Divorciada</option>
+              <option value="Viudo / Viuda">Viudo / Viuda</option>
+            </select>
           </div>
         </div>
         <!-- Nacimiento !-->
         <div class="form-group row">
           <label for="fechaDeNacimiento" class="col-lg-4 col-form-label">
-            Nacimiento:
+            Fecha de Nacimiento:
           </label>
           <div class="col-lg-8">
-            <input class="form-control" name="fechaDeNacimiento" id="fechaDeNacimiento" [(ngModel)]="postulante.fechaDeNacimiento">
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-lg-4"></div>
-          <div style="margin-left: 15px">
-            <button class="btn btn-primary" (click)="registrar()">
-              Registrar
-            </button>
+            <div class="input-group datepicker-input">
+              <input [(ngModel)]="postulante.fechaDeNacimiento" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
+              <button class="input-group-addon" (click)="d.toggle()" type="button">
+                <span class="fa fa-calendar"></span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+<div class="col-12 text-center">
+    <button class="btn btn-primary" (click)="registrar()">
+      Registrar
+    </button>
 </div>

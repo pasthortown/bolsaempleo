@@ -1,3 +1,4 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PersonaRoutingModule } from './persona-routing.module';
 import { PersonaComponent } from './persona.component';
 import { NgModule } from '@angular/core';
@@ -8,7 +9,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     PersonaRoutingModule,
-    FormsModule
+    FormsModule,
+    NgbModule
   ],
   declarations: [PersonaComponent]
 })

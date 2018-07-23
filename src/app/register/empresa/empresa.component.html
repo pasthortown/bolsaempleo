@@ -1,11 +1,8 @@
-<div class="container">
+<div class="col-12">
   <div>
     <div class="row" style="margin-top: 15px;">
-      <div class="col">
-        <a routerLink="/persona">Soy postulante</a>
-      </div>
       <div class="col text-right">
-        <h2>Registro de empresa</h2>
+        <h2>Registro de Empresa</h2>
       </div>
     </div>
     <hr>
@@ -14,7 +11,7 @@
         <!-- Identificacion !-->
         <div class="form-group row">
           <label for="identificacion" class="col-lg-4 col-form-label">
-            Ruc o cédula:
+            Identificación / RUC:
           </label>
           <div class="col-lg-8">
             <input class="form-control" name="identificacion" id="identificacion" [(ngModel)]="empresa.identificacion">
@@ -23,7 +20,7 @@
         <!-- Correo Electronico !-->
         <div class="form-group row">
           <label for="correoElectronico" class="col-lg-4 col-form-label">
-            Correo electrónico:
+            Correo Electrónico:
           </label>
           <div class="col-lg-8">
             <input type="email" class="form-control" name="correoElectronico" id="correoElectronico" [(ngModel)]="empresa.correoElectronico">
@@ -32,7 +29,7 @@
         <!-- Razon Social !-->
         <div class="form-group row">
           <label for="razonSocial" class="col-lg-4 col-form-label">
-            Razón social:
+            Razón Social:
           </label>
           <div class="col-lg-8">
             <input class="form-control" name="razonSocial" id="razonSocial" [(ngModel)]="empresa.razonSocial">
@@ -50,7 +47,7 @@
         <!-- Confirmacion !-->
         <div class="form-group row">
           <label for="confirmar" class="col-lg-4 col-form-label">
-            Confirmar:
+            Confirmar Contraseña:
           </label>
           <div class="col-lg-8">
             <input type="password" class="form-control" name="confirmar" id="confirmar" [(ngModel)]="confirmacion">
@@ -60,7 +57,7 @@
         <div class="form-group row">
           <div class="col-lg-4 col-form-label">
             <label for="nombreComercial">
-              Nombre comercial:
+              Nombre Comercial:
             </label>
           </div>
           <div class="col-lg-8">
@@ -93,7 +90,7 @@
             Dirección:
           </label>
           <div class="col-lg-8">
-            <textarea class="form-control" name="direccion" id="direccion" [(ngModel)]="empresa.direccion"></textarea>
+            <input class="form-control" name="direccion" id="direccion" [(ngModel)]="empresa.direccion">
           </div>
         </div>
         <!-- Pagina Web !-->
@@ -127,20 +124,18 @@
         <!-- Actividad Economica !-->
         <div class="form-group row">
           <label for="actividadEconomica" class="col-lg-4 col-form-label">
-            Actividad:
+            Actividad Comercial:
           </label>
           <div class="col-lg-8">
             <input class="form-control" name="actividadEconomica" id="actividadEconomica" [(ngModel)]="empresa.actividadEconomica">
           </div>
         </div>
-        <div class="form-group row">
-          <div class="col-lg-4"></div>
-          <div style="margin-left: 15px">
-            <button class="btn btn-primary" (click)="registrar()">
-              Registrar
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
+  <div class="col-12 text-center">
+      <button class="btn btn-primary" (click)="registrar()">
+        Registrar
+      </button>
+  </div>
+
