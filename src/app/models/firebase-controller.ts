@@ -21,6 +21,12 @@ export class FirebaseController {
     });
   }
 
+  filtroExacto(campo: string, valor: string) {
+    return this.firebase.list(this.coleccionBDD, ref => {
+      return ref.orderByChild(campo).equalTo(valor);
+    });
+  }
+
   getAll(campo: string) {
     return this.firebase.list(this.coleccionBDD, ref => {
       return ref.orderByChild(campo);

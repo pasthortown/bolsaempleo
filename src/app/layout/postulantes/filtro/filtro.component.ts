@@ -64,7 +64,7 @@ export class FiltroComponent implements OnInit {
 
   filtrarPorTitulo() {
     this.postulantes = [];
-    this.firebaseBDDService.firebaseControllerPostulantes.querySimple('estudiosRealizados/0/titulo', this.tituloSeleccionado)
+    this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('estudiosRealizados/0/titulo', this.tituloSeleccionado)
       .snapshotChanges().subscribe(items => {
       items.forEach(element => {
         let itemLeido: Postulante;
