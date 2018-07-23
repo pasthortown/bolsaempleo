@@ -11,7 +11,7 @@ export class FirebaseController {
 
   leer() {
     return this.coleccion = this.firebase.list(this.coleccionBDD, ref => {
-      return ref.orderByChild('estudiosRealizados/tipo_titulo').limitToFirst(5);
+      return ref.orderByChild('estudiosRealizados/0/tipo_titulo').limitToFirst(5);
     });
   }
 
