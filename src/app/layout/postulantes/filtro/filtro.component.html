@@ -9,7 +9,7 @@
         <div class="col-12 mt-2">
           <div class="form-group">
             <label>Tipo de Título</label>
-            <select class="form-control" [(ngModel)]="opcionSeleccionada" (change)="mostrarTitulos()">
+            <select class="form-control" [(ngModel)]="tipoTituloSeleccionado" (change)="mostrarTitulos()">
               <option value="" selected>Seleccione...</option>
               <option *ngFor="let item of filtro" value="{{item.campo_amplio}}">{{item.campo_amplio}}</option>
             </select>
@@ -18,7 +18,7 @@
         <div *ngIf="tipo_titulo!=null" class="col-12">
           <div class="form-group">
             <label>Título</label>
-            <select class="form-control" (change)="filtrarPorTitulo()">
+            <select class="form-control" [(ngModel)]="tituloSeleccionado" (change)="filtrarPorTitulo()">
               <option value="" selected>Seleccione...</option>
               <option *ngFor="let item of tipo_titulo" value="{{item.nombre}}">{{item.nombre}}</option>
             </select>
@@ -29,9 +29,9 @@
     <div class="col-8">
       <div class="row">
         <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Búsqueda">
+          <input type="text" class="form-control" placeholder="Búsqueda" [(ngModel)]="criterioBusqueda">
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
+            <button class="btn btn-primary" type="button" (click)="filtroDirecto()">
               <span class="fa fa-search"></span>&nbsp;Buscar
             </button>
           </div>

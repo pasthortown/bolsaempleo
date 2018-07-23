@@ -10,12 +10,14 @@ export class FirebaseController {
   }
 
   leer() {
-    return this.coleccion = this.firebase.list(this.coleccionBDD);
+    return this.coleccion = this.firebase.list(this.coleccionBDD, ref => {
+      return ref.orderByChild('estudiosRealizados/tipo_titulo').limitToFirst(5);
+    });
   }
 
   querySimple(campo: string, valor: string) {
     return this.firebase.list(this.coleccionBDD, ref => {
-      return ref.orderByChild(campo).equalTo(valor);
+      return ref.orderByChild(campo).startAt(valor);
     });
   }
 

@@ -13,7 +13,9 @@ import * as html2canvas from 'html2canvas';
 })
 export class FiltroComponent implements OnInit {
   filtro: Array<any>;
-  opcionSeleccionada = '';
+  tipoTituloSeleccionado = '';
+  tituloSeleccionado = '';
+  criterioBusqueda = '';
   tipo_titulo: Array<any>;
   postulantes: Array<Postulante>;
   postulanteSeleccionado: Postulante;
@@ -41,6 +43,7 @@ export class FiltroComponent implements OnInit {
         this.postulantes.push(itemLeido);
       });
     });
+    console.log(this.postulantes);
   }
 
   mostrarHojaVida(postulanteSeleccionado: Postulante) {
@@ -49,18 +52,38 @@ export class FiltroComponent implements OnInit {
 
   mostrarTitulos() {
     this.filtro.forEach(element => {
-      if (this.opcionSeleccionada === '') {
+      if (this.tipoTituloSeleccionado === '') {
         this.tipo_titulo = null;
         return;
       }
-      if (element.campo_amplio === this.opcionSeleccionada) {
+      if (element.campo_amplio === this.tipoTituloSeleccionado) {
         this.tipo_titulo = element.campos_especificos;
       }
     });
   }
 
   filtrarPorTitulo() {
+    this.postulantes = [];
+    this.firebaseBDDService.firebaseControllerPostulantes.querySimple('estudiosRealizados/0/titulo', this.tituloSeleccionado)
+      .snapshotChanges().subscribe(items => {
+      items.forEach(element => {
+        let itemLeido: Postulante;
+        itemLeido = element.payload.val() as Postulante;
+        this.postulantes.push(itemLeido);
+      });
+    });
+  }
 
+  filtroDirecto() {
+    this.postulantes = [];
+    this.firebaseBDDService.firebaseControllerPostulantes.querySimple('nombreCompleto', this.criterioBusqueda)
+      .snapshotChanges().subscribe(items => {
+      items.forEach(element => {
+        let itemLeido: Postulante;
+        itemLeido = element.payload.val() as Postulante;
+        this.postulantes.push(itemLeido);
+      });
+    });
   }
 
   imprimir() {
