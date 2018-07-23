@@ -28,22 +28,10 @@ export class FiltroComponent implements OnInit {
 
   ngOnInit() {
     this.postulantes = [];
-    this.talentoHumano();
+    this.filtroDirecto();
     this.postulanteSeleccionado = new Postulante();
     this.postulanteSeleccionado.nombreCompleto = '';
     this.filtro = catalogos.titulos;
-  }
-
-  talentoHumano() {
-    this.firebaseBDDService.firebaseControllerPostulantes.leer()
-      .snapshotChanges().subscribe(items => {
-      items.forEach(element => {
-        let itemLeido: Postulante;
-        itemLeido = element.payload.val() as Postulante;
-        this.postulantes.push(itemLeido);
-      });
-    });
-    console.log(this.postulantes);
   }
 
   mostrarHojaVida(postulanteSeleccionado: Postulante) {
