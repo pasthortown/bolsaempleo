@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   usuario: firebase.User;
   mostrarMensajeError = false;
 
-  constructor(public router: Router, public authService: AuthService) {}
+  constructor(public router: Router, public authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -27,10 +27,10 @@ export class LoginComponent implements OnInit {
       .then((res) => {
         this.router.navigate(['postulantes']);
       })
-      .catch((err) => console.log('error: ' + err));
-  }
-
-  recuperarClave() {
-    // TODO
+      .catch((err) => {
+        // TODO :
+        alert('Se produjo un error al validar las cedenciales');
+        console.log('error: ' + err);
+      });
   }
 }
