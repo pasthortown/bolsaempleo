@@ -12,7 +12,7 @@ import swal from 'sweetalert2';
   styleUrls: ['./persona.component.css']
 })
 export class PersonaComponent implements OnInit {
-  postulante = new Postulante();
+  postulante: Postulante;
   contrasena: string;
   confirmacion: string;
 
@@ -22,6 +22,7 @@ export class PersonaComponent implements OnInit {
     private _router: Router) { }
 
   ngOnInit() {
+    this.postulante = new Postulante();
   }
 
   estaCompleto(): boolean {
