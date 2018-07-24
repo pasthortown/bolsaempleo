@@ -12,7 +12,7 @@ import swal from 'sweetalert2';
   styleUrls: ['./empresa.component.css']
 })
 export class EmpresaComponent implements OnInit {
-  empresa = new Empresa();
+  empresa: Empresa;
   contrasena: string;
   confirmacion: string;
 
@@ -22,6 +22,7 @@ export class EmpresaComponent implements OnInit {
     private _router: Router) { }
 
   ngOnInit() {
+    this.empresa = new Empresa();
   }
 
   estaCompleto(): boolean {
