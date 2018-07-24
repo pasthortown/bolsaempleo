@@ -4,6 +4,7 @@ import { FirebaseBDDService } from './../../services/firebase-bdd.service';
 import { PostulanteService } from '../../services/postulante.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-persona',
@@ -54,19 +55,47 @@ export class PersonaComponent implements OnInit {
   }
   esValido(): boolean {
     if (!this.estaCompleto()) {
-      alert('Datos incompletos');
+      swal({
+        position: 'center',
+        type: 'warning',
+        title: 'Validación',
+        text: 'Datos incompletos',
+        showConfirmButton: false,
+        timer: 2000
+      });
       return false;
     }
     if (!this.sonIguales()) {
-      alert('Contraseña no coincide con la confirmación');
+      swal({
+        position: 'center',
+        type: 'warning',
+        title: 'Validación',
+        text: 'Contraseña no coincide con la confirmación',
+        showConfirmButton: false,
+        timer: 2000
+      });
       return false;
     }
     if (!this.esCompleja()) {
-      alert('Contraseña debe ser más compleja');
+      swal({
+        position: 'center',
+        type: 'warning',
+        title: 'Validación',
+        text: 'Contraseña debe ser más compleja',
+        showConfirmButton: false,
+        timer: 2000
+      });
       return false;
     }
     if (this.hayDuplicados()) {
-      alert('Hay datos duplicados');
+      swal({
+        position: 'center',
+        type: 'warning',
+        title: 'Validación',
+        text: 'Hay datos duplicados',
+        showConfirmButton: false,
+        timer: 2000
+      });
       return false;
     }
     return true;
@@ -82,7 +111,14 @@ export class PersonaComponent implements OnInit {
 
     resultado.snapshotChanges().subscribe(items => {
       if (items.length > 0) {
-        alert('Correo duplicado');
+        swal({
+          position: 'center',
+          type: 'warning',
+          title: 'Validación',
+          text: 'Correo duplicado',
+          showConfirmButton: false,
+          timer: 2000
+        });
         return false;
       }
 
@@ -91,12 +127,24 @@ export class PersonaComponent implements OnInit {
           this.postulanteService.postulante = this.postulante;
           this.firebaseBDDService.firebaseControllerPostulantes
             .insertar(this.postulanteService.postulante);
-          // TODO : mensaje de éxito
-          alert('Todo bien');
+            swal({
+              position: 'center',
+              type: 'success',
+              title: 'Registro de postulante',
+              text: 'Todo bien',
+              showConfirmButton: false,
+              timer: 2000
+            });
           this._router.navigate(['postulantes']);
         }).catch(error => {
-          // TODO : mensaje de alerta
-          alert(error.message);
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Registro de postulante',
+            text: 'Se produjo un error',
+            showConfirmButton: false,
+            timer: 2000
+          });
           console.log(error);
         });
     });

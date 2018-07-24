@@ -4,14 +4,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  overflow: auto;
+  overflow: hidden;
   background-color: #232624;
-  padding: 3em;
+  padding: 1em;
 }
 
 .pretty-form {
   background-color:white;
-  padding:40px;
+  padding:20px;
   border-radius: 25px;
 }
 

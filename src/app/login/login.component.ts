@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { routerTransition } from '../router.animations';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -28,8 +29,14 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['postulantes']);
       })
       .catch((err) => {
-        // TODO :
-        alert('Se produjo un error al validar las cedenciales');
+        swal({
+          position: 'center',
+          type: 'warning',
+          title: 'Ingreso a la aplicación',
+          text: 'Se produjo un error al validar las credenciales',
+          showConfirmButton: false,
+          timer: 2000
+        });
         console.log('error: ' + err);
       });
   }
