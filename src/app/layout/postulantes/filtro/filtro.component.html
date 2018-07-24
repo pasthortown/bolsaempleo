@@ -46,86 +46,57 @@
                   <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
                 </div>
                 <div class="col-12">
+                  <h5 class="col-12 text-left mt-3">Estudios Realizados</h5>
                   <table class="table table-sm">
                     <thead>
                       <th>Institución</th>
                       <th>Tipo de Título</th>
                       <th>Título</th>
-                      <th>Fecha de Registro</th>
-                      <th>Código de Registro SENESCYT</th>
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of postulanteActual.estudiosRealizados">
                         <td>{{item.institucion}}</td>
                         <td>{{item.tipo_titulo}}</td>
                         <td>{{item.titulo}}</td>
-                        <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
-                        <td>{{item.codigoRegistroSENESCYT}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-12">
+                  <h5 class="col-12 text-left mt-3">Idiomas</h5>
+                  <table class="table table-sm">
+                    <thead>
+                      <th>Idioma</th>
+                      <th>Nivel Escrito</th>
+                      <th>Nivel Hablado</th>
+                      <th>Nivel Lectura</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of postulanteActual.idiomas">
+                        <td>{{item.idioma}}</td>
+                        <td>{{item.nivelEscrito}}</td>
+                        <td>{{item.nivelHablado}}</td>
+                        <td>{{item.nivelLectura}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-12">
+                  <h5 class="col-12 text-left mt-3">Capacitaciones y Certificaciones</h5>
+                  <table class="table table-sm">
+                    <thead>
+                      <th>Nombre del Evento</th>
+                      <th>Horas</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of postulanteActual.capacitaciones">
+                        <td>{{item.nombreEvento}}</td>
+                        <td>{{item.horas}}</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
-            </div>
-            <div class="col-12">
-              <table class="col-12 table-sm">
-                <tr>
-                  <th class="text-right">
-                    Identificación:
-                  </th>
-                  <td>
-                    {{postulanteActual.identificacion}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Estado Civil:
-                  </th>
-                  <td>
-                    {{postulanteActual.estadoCivil}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Fecha de Nacimiento:
-                  </th>
-                  <td>
-                    {{postulanteActual.fechaDeNacimiento.day}} de {{meses[postulanteActual.fechaDeNacimiento.month-1]}} del {{postulanteActual.fechaDeNacimiento.year}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Nacionalidad:
-                  </th>
-                  <td>
-                    {{postulanteActual.nacionalidad}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Domicilio:
-                  </th>
-                  <td>
-                    {{postulanteActual.direccion}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Correo Electrónico:
-                  </th>
-                  <td>
-                    {{postulanteActual.correoElectronico}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Teléfono:
-                  </th>
-                  <td>
-                    {{postulanteActual.telefono}}
-                  </td>
-                </tr>
-              </table>
             </div>
             <div class="col-12 m-2 text-left">
               <button type="submit" class="btn btn-primary" (click)="mostrarHojaVida(postulanteActual)">
