@@ -6,6 +6,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
 import { FirebaseBDDService } from './firebase-bdd.service';
+import { Postulante } from '../models/postulante';
+import { Empresa } from '../models/empresa';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -13,10 +15,11 @@ export class AuthService {
   public user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
   rolActual: string;
+  foto: string;
 
   constructor(private _firebaseAuth: AngularFireAuth,
     private router: Router,
-    private firebaseBDDService: FirebaseBDDService, ) {
+    private firebaseBDDService: FirebaseBDDService) {
     this.user = _firebaseAuth.authState;
     this.user.subscribe(
       (user) => {
@@ -39,6 +42,11 @@ export class AuthService {
       .snapshotChanges().subscribe(empresas => {
         if (empresas.length > 0) {
           this.rolActual = 'e';
+          empresas.forEach(empresa => {
+            const empre = empresa.payload.val() as Empresa;
+            this.foto = empre.fotografia;
+            return;
+          });
           return;
         }
 
@@ -47,6 +55,11 @@ export class AuthService {
           .snapshotChanges().subscribe(postulantes => {
             if (postulantes.length > 0) {
               this.rolActual = 'p';
+              postulantes.forEach(postulante => {
+                const postula = postulante.payload.val() as Postulante;
+                this.foto = postula.fotografia;
+                return;
+              });
               return;
             }
           });
@@ -56,6 +69,10 @@ export class AuthService {
 
   rol(): string {
     return this.rolActual;
+  }
+
+  fotografia(): string {
+    return this.foto;
   }
 
   createUserWithEmailAndPassword(email, password): Promise<any> {

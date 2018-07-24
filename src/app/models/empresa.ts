@@ -13,6 +13,7 @@ export class Empresa {
   telefonoCelular: string;
   telefonoFijo: string;
   direccion: string;
+  fotografia: string;
   oferta: Array<Oferta>;
 
   constructor() {
