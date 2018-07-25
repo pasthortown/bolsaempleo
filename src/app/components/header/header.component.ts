@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
       if (user) {
         this.estaLogueado = true;
         this.rol = this.authService.rol();
-        this.fotoPerfil = this.authService.fotografia();
+        //this.fotoPerfil = this.authService.fotografia();
         return;
       }
       this.estaLogueado = false;

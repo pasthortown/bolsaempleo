@@ -76,10 +76,6 @@ export class AuthService {
     return this.rolActual;
   }
 
-  fotografia(): string {
-    return this.usuarioNegocio.fotografia;
-  }
-
   createUserWithEmailAndPassword(email, password): Promise<any> {
     return this._firebaseAuth.auth.createUserWithEmailAndPassword(
       email,
