@@ -44,26 +44,28 @@ export class AuthService {
     this.rolActual = null;
 
     this.firebaseBDDService.firebaseControllerEmpresas
-      .querySimple('correoElectronico', this.userDetails.email)
+      .filtroExacto('correoElectronico', this.userDetails.email)
       .snapshotChanges()
       .subscribe(empresas => {
         if (empresas.length > 0) {
           this.rolActual = 'e';
           empresas.forEach(item => {
             this.usuarioNegocio = item.payload.val() as Empresa;
+            console.log(this.usuarioNegocio);
             return;
           });
           return;
         }
 
         this.firebaseBDDService.firebaseControllerPostulantes
-          .querySimple('correoElectronico', this.userDetails.email)
+          .filtroExacto('correoElectronico', this.userDetails.email)
           .snapshotChanges()
           .subscribe(postulantes => {
             if (postulantes.length > 0) {
               this.rolActual = 'p';
               postulantes.forEach(item => {
                 this.usuarioNegocio = item.payload.val() as Postulante;
+                console.log(this.usuarioNegocio);
                 return;
               });
               return;
@@ -77,6 +79,9 @@ export class AuthService {
   }
 
   fotografia(): string {
+    if (!this.usuarioNegocio) {
+      return null;
+    }
     return this.usuarioNegocio.fotografia;
   }
 
