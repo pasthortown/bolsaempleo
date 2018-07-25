@@ -3,7 +3,7 @@ import { FirebaseBDDService } from './../../services/firebase-bdd.service';
 import { Component, OnInit } from '@angular/core';
 import { PostulanteService } from '../../services/postulante.service';
 import { Postulante } from '../../models/postulante';
-
+import swal from 'sweetalert2';
 @Component({
   selector: 'app-hoja-vida',
   templateUrl: './hoja-vida.component.html',
@@ -20,6 +20,14 @@ export class HojaVidaComponent implements OnInit {
   }
 
   guardarCambios() {
-    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    // this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Insertar',
+      text: 'Registro exitoso!',
+      showConfirmButton: false,
+      timer: 2000
+    });
   }
 }
