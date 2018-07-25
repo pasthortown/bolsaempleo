@@ -14,9 +14,7 @@ export class AuthService {
   public user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
   rolActual: string;
-  foto: string;
-  empresa: Empresa;
-  postulante: Postulante;
+  usuarioNegocio: any;
 
   constructor(
     private _firebaseAuth: AngularFireAuth,
@@ -36,14 +34,10 @@ export class AuthService {
   }
 
   public obtenerUsuario(): any {
-    if (this.isLoggedIn()) {
+    if (!this.isLoggedIn() || !this.usuarioNegocio) {
       return null;
     }
-
-    if (!this.empresa) {
-      return this.postulante;
-    }
-    return this.empresa;
+    return this.usuarioNegocio;
   }
 
   private consultarUsuario() {
@@ -56,8 +50,7 @@ export class AuthService {
         if (empresas.length > 0) {
           this.rolActual = 'e';
           empresas.forEach(item => {
-            this.empresa = item.payload.val() as Empresa;
-            this.foto = this.empresa.fotografia;
+            this.usuarioNegocio = item.payload.val() as Empresa;
             return;
           });
           return;
@@ -70,8 +63,7 @@ export class AuthService {
             if (postulantes.length > 0) {
               this.rolActual = 'p';
               postulantes.forEach(item => {
-                this.postulante = item.payload.val() as Postulante;
-                this.foto = this.postulante.fotografia;
+                this.usuarioNegocio = item.payload.val() as Postulante;
                 return;
               });
               return;
@@ -85,7 +77,7 @@ export class AuthService {
   }
 
   fotografia(): string {
-    return this.foto;
+    return this.usuarioNegocio.fotografia;
   }
 
   createUserWithEmailAndPassword(email, password): Promise<any> {
@@ -147,21 +139,14 @@ export class AuthService {
       });
   }
 
-  reinicioClaveEnvioCorreo(emailAddress, idioma) {
+  reinicioClaveEnvioCorreo(emailAddress, idioma): Promise<void> {
     const auth = this._firebaseAuth.auth;
     if (!idioma) {
       idioma = 'es';
     }
 
     this._firebaseAuth.auth.languageCode = idioma;
-    auth
-      .sendPasswordResetEmail(emailAddress)
-      .then(function() {
-        // Email sent.
-      })
-      .catch(function(error) {
-        // An error happened.
-      });
+    return auth.sendPasswordResetEmail(emailAddress);
   }
 
   displayNameOrEmail(): string {

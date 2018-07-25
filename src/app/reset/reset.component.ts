@@ -12,11 +12,9 @@ import swal from 'sweetalert2';
 export class ResetComponent implements OnInit {
   correoElectronico: string;
 
-  constructor(public authService: AuthService, private _router: Router) {
-  }
+  constructor(public authService: AuthService, private _router: Router) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   reiniciar() {
     if (!this.correoElectronico) {
@@ -30,15 +28,31 @@ export class ResetComponent implements OnInit {
       });
       return;
     }
-    this.authService.reinicioClaveEnvioCorreo(this.correoElectronico, 'es');
-    swal({
-      position: 'center',
-      type: 'success',
-      title: 'Reinicio de contraseña',
-      text: 'Se ha enviado un enlace a tu correo electrónico para que reinicies tu contraseña',
-      showConfirmButton: false,
-      timer: 2000
-    });
+    this.authService
+      .reinicioClaveEnvioCorreo(this.correoElectronico, 'es')
+      .then(function() {
+        swal({
+          position: 'center',
+          type: 'success',
+          title: 'Reinicio de contraseña',
+          text:
+            'Se ha enviado un enlace a tu correo electrónico para que reinicies tu contraseña',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      })
+      .catch(function(error) {
+        swal({
+          position: 'center',
+          type: 'warning',
+          title: 'Reinicio de contraseña',
+          text:
+            'Se produjo un error al enviar el correo electrónico de reinicio de contraseña',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      });
+
     this._router.navigate(['login']);
   }
 }
