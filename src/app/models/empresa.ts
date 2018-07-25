@@ -1,5 +1,3 @@
-import {Oferta} from './oferta';
-
 export class Empresa {
   id: string;
   logo: string;
@@ -14,10 +12,8 @@ export class Empresa {
   telefonoFijo: string;
   direccion: string;
   fotografia: string;
-  oferta: Array<Oferta>;
 
   constructor() {
     this.naturaleza = '';
-    this.oferta = [];
   }
 }

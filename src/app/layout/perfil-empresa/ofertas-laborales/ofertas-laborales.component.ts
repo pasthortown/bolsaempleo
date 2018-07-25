@@ -5,6 +5,7 @@ import {EmpresaService} from '../../../services/empresa.service';
 import {Oferta} from '../../../models/oferta';
 import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 import {Idioma} from '../../../models/idioma';
+import {OfertaService} from '../../../services/oferta.service';
 
 @Component({
   selector: 'app-ofertas-laborales',
@@ -14,12 +15,13 @@ import {Idioma} from '../../../models/idioma';
 export class OfertasLaboralesComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   oferta: Oferta;
+  ofertas: Array<Oferta>;
   srcFoto1: string;
   srcFoto2: string;
   srcFoto3: string;
   srcFoto4: string;
 
-  constructor(private modalService: NgbModal, public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService) {
+  constructor(private modalService: NgbModal, public ofertaService: OfertaService, private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
@@ -28,6 +30,7 @@ export class OfertasLaboralesComponent implements OnInit {
     this.srcFoto2 = 'assets/img/prueba/empresa2.png';
     this.srcFoto3 = 'assets/img/prueba/empresa3.png';
     this.srcFoto4 = 'assets/img/prueba/empresa4.png';
+    this.leerOfertas();
   }
 
   CodificarArchivo(event) {
@@ -53,10 +56,12 @@ export class OfertasLaboralesComponent implements OnInit {
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
-        if (!editar) {
+        if (editar) {
+          this.actualizar();
+        } else {
+          this.insertar();
           this.agregarOferta();
         }
-        this.actualizar();
       }), (resultCancel => {
 
       }));
@@ -72,10 +77,20 @@ export class OfertasLaboralesComponent implements OnInit {
       }));
   }
 
+  openPostulantes(content) {
+    this.modalService.open(content)
+      .result
+      .then((resultAceptar => {
+
+      }), (resultCancel => {
+
+      }));
+  }
+
   insertar() {
-    this.agregarOferta();
-    this.empresaService.empresa.id = '-LHnYYcnqIEj4yUV4izj';
-    this.firebaseBDDService.firebaseControllerEmpresas.insertar(this.empresaService.empresa);
+    // this.ofertaService.ofertas.idEmpresa = '-LHnYYcnqIEj4yUV4izj';
+    this.oferta.idEmpresa = '-LHim59xdYSFrG47QOhg';
+    this.firebaseBDDService.firebaseControllerOfertas.insertar(this.oferta);
     swal({
       position: 'center',
       type: 'success',
@@ -87,16 +102,15 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   agregarOferta() {
-    if ( this.empresaService.empresa.oferta == null ) {
-      this.empresaService.empresa.oferta = [];
+    if (this.ofertaService.ofertas == null) {
+      this.ofertaService.ofertas = [];
     }
-    this.empresaService.empresa.oferta.push(this.oferta);
+    this.ofertaService.ofertas.push(this.oferta);
     this.oferta = new Oferta();
   }
 
   actualizar() {
-    this.empresaService.empresa.id = '-LHim59xdYSFrG47QOhg';
-    this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
+    this.firebaseBDDService.firebaseControllerOfertas.actualizar(this.oferta);
     swal({
       position: 'center',
       type: 'success',
@@ -119,25 +133,28 @@ export class OfertasLaboralesComponent implements OnInit {
       confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
     }).then((result) => {
       if (result.value) {
-        this.empresaService.empresa.oferta.forEach(element => {
-          if (element !== item) {
-            ofertas.push(element);
-          }
-        });
-        this.empresaService.empresa.oferta = ofertas;
-        this.firebaseBDDService.firebaseControllerEmpresas.borrar(this.empresaService.empresa);
+        this.firebaseBDDService.firebaseControllerOfertas.borrar(item);
         swal(
           'Eliminado!',
           'Su registro fue eliminado.',
           'success'
         );
-      } else {
-        swal(
-          'Eliminado!',
-          'Su registro no fue eliminado.',
-          'error'
-        );
       }
+    });
+  }
+
+  leerOfertas() {
+    this.ofertaService.ofertas = null;
+    this.ofertaService.ofertas = [];
+    this.firebaseBDDService.firebaseControllerOfertas.getAll('idEmpresa', '-LHim59xdYSFrG47QOhg')
+      .snapshotChanges().subscribe(items => {
+      this.ofertaService.ofertas = [];
+      items.forEach(element => {
+        let itemLeido: Oferta;
+        itemLeido = element.payload.val() as Oferta;
+        itemLeido.id = element.key;
+        this.ofertaService.ofertas.push(itemLeido);
+      });
     });
   }
 }

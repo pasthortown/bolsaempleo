@@ -1,5 +1,6 @@
 export class Oferta {
-  id: number;
+  id: string;
+  idEmpresa: string;
   codigo: string;
   cargo: string;
   inicioPublicacion: Date;

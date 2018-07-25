@@ -2,94 +2,59 @@
   <h1 class="col-12 text-left" style="color:white; font-size: 70px; font-weight: 700;">BOLSA DE EMPLEO</h1>
 </div>
 <div class="row">
+  <div class="col-12 mt-4">
+    <div class="row">
+      <div class="col-1"></div>
+      <div class="col-5 text-right">
+        <img class="col-9" src="assets/img/CONTRATANDO.png">
+      </div>
+      <div class="col-5">
+        <div class="col-9">
+          <h1 style="color: #5b32b4;font-size: 48px;">Ofertas de Tabajo</h1>
+          <p class="text-justify">
+            Las instituciones públicas y/o privadas demandan profesionales con excelencia académica, valores
+            humanísticos,
+            morales y éticos, basados en una formación de calidad y calidez acordes al Plan nacional del Buen Vivir.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row ml-2">
   <div class="col-2">
     <h6 class="bg-warning form-control">
       <i class="fa fa-filter" aria-hidden="true"></i>
       Filtros
     </h6>
   </div>
-  <div class="col-8">
-    <app-filtro></app-filtro>
+  <div class="col-4">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Buscar..." aria-label="" aria-describedby="basic-addon1">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button">
+          <span class="fa fa-search"></span>&nbsp;Buscar
+        </button>
+      </div>
+    </div>
   </div>
 </div>
-<div class="row">
-  <!--Menu lateral izquierdo-->
+<div class="row ml-2">
+  <!--Menu lateral izquierdo Filtros-->
   <div class="col-2">
-    <div id="accordion" class="accordion">
-      <div class="card mb-0 bg-white">
-        <div class="card-header collapsed" data-toggle="collapse" href="#collapseOne">
+    <div id="accordion" class="accordion" *ngFor="let area of areas">
+      <div class="card mb-0 bg-dark">
+        <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+area.campo_amplio">
           <a class="card-title">
-            Fecha de publicación
+            {{area.campo_amplio}}
           </a>
-        </div>
-        <div id="collapseOne" class="card-body collapse" data-parent="#accordion">
+        </a>
+        <div id="{{area.campo_amplio}}" class="card-body collapse" data-parent="#accordion">
           <div class="panel-body">
             <table class="table">
-              <tr>
+              <tr *ngFor="let areaEspecifica of area.campos_especificos">
                 <td>
-                  <a href="">Hoy</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="">Ayer</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="">Menor a 1 semana</a>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-          <a class="card-title">
-            Provincia
-          </a>
-        </div>
-        <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
-          <div class="panel-body">
-            <table class="table">
-              <tr>
-                <td>
-                  <a href="">Pichincha</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="">Guayas</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="">Azuay</a>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-          <a class="card-title">
-            Área
-          </a>
-        </div>
-        <div id="collapseThree" class="card-body collapse" data-parent="#accordion">
-          <div class="panel-body">
-            <table class="table">
-              <tr>
-                <td>
-                  <a href="">Tecnología, Sistemas y Telecomunicaciones</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="">Marketing y Publicidad</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="">Otros</a>
+                  <a href="">{{areaEspecifica}}</a>
                 </td>
               </tr>
             </table>
@@ -100,13 +65,13 @@
   </div>
   <!--Ofertas de trabajo-->
   <div class="col-10">
-    <div class="card m-2" *ngFor="let ofertaActual of ofertas2">
+    <div class="card m-2" *ngFor="let ofertaActual of ofertaService.ofertas">
       <div class="card-body">
         <div class="card-title">
           <div class="row">
             <div class="col-8">
-              <h3 class="col-12 text-left">{{ofertaActual.nombreComercial}}</h3>
-              <h5 class="col-12 text-left">{{ofertaActual.cargo}}</h5>
+              <h3 class="col-12 text-left">{{ofertaActual.cargo}}</h3>
+              <h5 class="col-12 text-left">{{ofertaActual.actividades}}</h5>
             </div>
             <div class="col-4 text-right">
               <table class="col-12">
@@ -118,8 +83,7 @@
                   <td class="text-left">
                     <strong style="color: silver;">
                       <i>
-                        {{
-                        ofertaActual.inicioPublicacion.year
+                        {{ofertaActual.inicioPublicacion.year
                         + '/' + ofertaActual.inicioPublicacion.month
                         + '/' + ofertaActual.inicioPublicacion.day
                         }}
@@ -132,30 +96,13 @@
           </div>
         </div>
         <p class="card-text text-justify">
-          {{ofertaActual.actividades}}
+          {{ofertaActual.ciudad}}
         </p>
         <div class="col-12 m-2 text-left">
           <button type="submit" class="btn btn-primary" (click)="openOfertaLaboral(modalOfertaLaboral,oferta,true)">
             <span class="fa fa-info-circle"></span>&nbsp;Mas Información
           </button>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="col-12 mt-4">
-  <div class="row">
-    <div class="col-1"></div>
-    <div class="col-5 text-right">
-      <img class="col-9" src="assets/img/CONTRATANDO.png">
-    </div>
-    <div class="col-5">
-      <div class="col-9">
-        <h1 style="color: #5b32b4;font-size: 48px;">Ofertas de Tabajo</h1>
-        <p class="text-justify">
-          Las instituciones públicas y/o privadas demandan profesionales con excelencia académica, valores humanísticos,
-          morales y éticos, basados en una formación de calidad y calidez acordes al Plan nacional del Buen Vivir.
-        </p>
       </div>
     </div>
   </div>
