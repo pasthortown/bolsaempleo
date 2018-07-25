@@ -11,40 +11,53 @@ import { Empresa } from '../models/empresa';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
   public user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
   rolActual: string;
   foto: string;
+  empresa: Empresa;
+  postulante: Postulante;
 
-  constructor(private _firebaseAuth: AngularFireAuth,
+  constructor(
+    private _firebaseAuth: AngularFireAuth,
     private router: Router,
-    private firebaseBDDService: FirebaseBDDService) {
+    private firebaseBDDService: FirebaseBDDService
+  ) {
     this.user = _firebaseAuth.authState;
-    this.user.subscribe(
-      (user) => {
-        if (user) {
-          this.userDetails = user;
-          this.consultarRol();
-        } else {
-          this.userDetails = null;
-          this.rolActual = null;
-        }
+    this.user.subscribe(user => {
+      if (user) {
+        this.userDetails = user;
+        this.consultarUsuario();
+      } else {
+        this.userDetails = null;
+        this.rolActual = null;
       }
-    );
+    });
   }
 
-  private consultarRol() {
+  public obtenerUsuario(): any {
+    if (this.isLoggedIn()) {
+      return null;
+    }
+
+    if (!this.empresa) {
+      return this.postulante;
+    }
+    return this.empresa;
+  }
+
+  private consultarUsuario() {
     this.rolActual = null;
 
     this.firebaseBDDService.firebaseControllerEmpresas
       .querySimple('correoElectronico', this.userDetails.email)
-      .snapshotChanges().subscribe(empresas => {
+      .snapshotChanges()
+      .subscribe(empresas => {
         if (empresas.length > 0) {
           this.rolActual = 'e';
-          empresas.forEach(empresa => {
-            const empre = empresa.payload.val() as Empresa;
-            this.foto = empre.fotografia;
+          empresas.forEach(item => {
+            this.empresa = item.payload.val() as Empresa;
+            this.foto = this.empresa.fotografia;
             return;
           });
           return;
@@ -52,18 +65,18 @@ export class AuthService {
 
         this.firebaseBDDService.firebaseControllerPostulantes
           .querySimple('correoElectronico', this.userDetails.email)
-          .snapshotChanges().subscribe(postulantes => {
+          .snapshotChanges()
+          .subscribe(postulantes => {
             if (postulantes.length > 0) {
               this.rolActual = 'p';
-              postulantes.forEach(postulante => {
-                const postula = postulante.payload.val() as Postulante;
-                this.foto = postula.fotografia;
+              postulantes.forEach(item => {
+                this.postulante = item.payload.val() as Postulante;
+                this.foto = this.postulante.fotografia;
                 return;
               });
               return;
             }
           });
-
       });
   }
 
@@ -76,7 +89,10 @@ export class AuthService {
   }
 
   createUserWithEmailAndPassword(email, password): Promise<any> {
-    return this._firebaseAuth.auth.createUserWithEmailAndPassword(email, password);
+    return this._firebaseAuth.auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
   }
 
   signInRegular(email, password) {
@@ -92,21 +108,23 @@ export class AuthService {
   }
 
   logout() {
-    this._firebaseAuth.auth.signOut()
-      .then((res) => this.router.navigate(['/']));
+    this._firebaseAuth.auth.signOut().then(res => this.router.navigate(['/']));
   }
 
   actualizarPerfil(displayName, photoURL) {
     const user = firebase.auth().currentUser;
 
-    user.updateProfile({
-      displayName: displayName,
-      photoURL: photoURL
-    }).then(function () {
-      // Update successful.
-    }).catch(function (error) {
-      // An error happened.
-    });
+    user
+      .updateProfile({
+        displayName: displayName,
+        photoURL: photoURL
+      })
+      .then(function() {
+        // Update successful.
+      })
+      .catch(function(error) {
+        // An error happened.
+      });
   }
 
   getASecureRandomPassword(): string {
@@ -119,11 +137,14 @@ export class AuthService {
     const user = this._firebaseAuth.auth.currentUser;
     const newPassword = this.getASecureRandomPassword();
 
-    user.updatePassword(newPassword).then(function () {
-      // Update successful.
-    }).catch(function (error) {
-      // An error happened.
-    });
+    user
+      .updatePassword(newPassword)
+      .then(function() {
+        // Update successful.
+      })
+      .catch(function(error) {
+        // An error happened.
+      });
   }
 
   reinicioClaveEnvioCorreo(emailAddress, idioma) {
@@ -133,11 +154,14 @@ export class AuthService {
     }
 
     this._firebaseAuth.auth.languageCode = idioma;
-    auth.sendPasswordResetEmail(emailAddress).then(function () {
-      // Email sent.
-    }).catch(function (error) {
-      // An error happened.
-    });
+    auth
+      .sendPasswordResetEmail(emailAddress)
+      .then(function() {
+        // Email sent.
+      })
+      .catch(function(error) {
+        // An error happened.
+      });
   }
 
   displayNameOrEmail(): string {
@@ -147,19 +171,6 @@ export class AuthService {
       }
       if (this.userDetails.email) {
         return this.userDetails.email;
-      }
-      return '¡Sin nombre!';
-    }
-    return 'Anónimo';
-  }
-
-  displayNameOrEmail2(userDetails: firebase.User): string {
-    if (userDetails) {
-      if (userDetails.displayName) {
-        return userDetails.displayName;
-      }
-      if (userDetails.email) {
-        return userDetails.email;
       }
       return '¡Sin nombre!';
     }
