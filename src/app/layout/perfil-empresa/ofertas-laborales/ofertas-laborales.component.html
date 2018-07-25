@@ -1,20 +1,10 @@
 <div class="row mt-2">
-  <div class="col-5">
-    <div class="input-group mb-1">
-      <button type="button" class="btn btn-success mr-1" (click)="openOfertaLaboral(modalOfertaLaboral,null,false)">
-        <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>
-        Agregar
-      </button>
-      <!--<div class="input-group-prepend">-->
-        <!--<button type="button" class="btn btn-info">-->
-          <!--<i class="fa fa-search" aria-hidden="true"></i>-->
-        <!--</button>-->
-      <!--</div>-->
-      <!--<input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar">-->
-      <!--<button type="button" class="btn btn-warning" (click)="openFiltro(modalFiltroOferta)">-->
-        <!--<i class="fa fa-filter" aria-hidden="true"></i>-->
-      <!--</button>-->
-    </div>
+  <div class="col-12">
+    <button type="button" class="btn btn-success pull-right mr-4"
+            (click)="openOfertaLaboral(modalOfertaLaboral,null,false)">
+      <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>
+      Agregar
+    </button>
   </div>
 </div>
 <hr>
@@ -34,7 +24,7 @@
             <th width="30%">
               Actividades
             </th>
-            <th width="5%" scope="col" class="text-center">
+            <th width="10%" scope="col" class="text-center">
               <i class="fa fa-wrench fa-lg" aria-hidden="true"></i>
             </th>
           </tr>
@@ -50,12 +40,18 @@
             <td>
               {{oferta.actividades}}
             </td>
-            <td>
+            <td class="text-center">
               <button class="btn btn-warning btn-sm" (click)="openOfertaLaboral(modalOfertaLaboral,oferta,true)">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </button>
               <button class="btn btn-danger btn-sm ml-1" (click)="borrar(oferta)">
                 <i class="fa fa-trash" aria-hidden="true"></i>
+              </button>
+              <button class="btn btn-info btn-sm ml-1" (click)="openPostulantes(modalPostulantes)">
+                <i class="fa fa-users" aria-hidden="true"></i>
+              </button>
+              <button class="btn btn-dark btn-sm ml-1" (click)="borrar(oferta)">
+                <i class="fa fa-power-off" aria-hidden="true"></i>
               </button>
             </td>
           </tr>
@@ -362,6 +358,87 @@
     </button>
     <button class="btn btn-danger btn-lg" title="Cancelar">
       <i class="fa fa-close" aria-hidden="true"> Limpiar</i>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalPostulantes let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-lg">
+    <div class="card">
+      <div class="card-header bg-info">
+        <h3 class="text-white">
+          <i class="fa fa-users" aria-hidden="true"> Postulantes</i>
+        </h3>
+      </div>
+      <div class="card-body m-1">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- Codigo !-->
+            <div class="form-group">
+              <label for="codigo" class="col-form-label">
+                Código:
+              </label>
+              <input class="form-control" name="codigo" id="codigo">
+            </div>
+
+            <!-- Cargo !-->
+            <div class="form-group">
+              <label for="cargo" class="col-form-label">
+                Cargo:
+              </label>
+              <input class="form-control" name="cargo" id="cargo">
+            </div>
+
+            <!-- Ciudad !-->
+            <div class="form-group ">
+              <label for="idCIudad" class="col-form-label">
+                Ciudad:
+              </label>
+              <select class="form-control" name="idCIudad" id="idCiudad">
+                <option value="1">
+                  Quito
+                </option>
+              </select>
+            </div>
+
+            <!-- Inicio Publicacion !-->
+            <div class="form-group ">
+              <label for="inicioPublicacion" class="col-form-label">
+                Inicio Publicación:
+              </label>
+              <input type="date" class="form-control" name="inicioPublicacion"
+                     id="inicioPublicacion">
+            </div>
+
+            <!-- Fin Publicacion !-->
+            <div class="form-group ">
+              <label for="finPublicacion" class="col-form-label">
+                Fin Publicación:
+              </label>
+              <input type="date" class="form-control" name="finPublicacion" id="finPublicacion">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success btn-lg" title="Aplicar">
+      <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
+    </button>
+    <button class="btn btn-info btn-lg" title="Limpiar">
+      <i class="fa fa-refresh" aria-hidden="true"> Limpiar</i>
+    </button>
+    <button class="btn btn-danger btn-lg" title="Cancelar">
+      <i class="fa fa-close" aria-hidden="true" (click)="c('cancel')"> Cancelar</i>
     </button>
   </div>
 </ng-template>

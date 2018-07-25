@@ -77,6 +77,16 @@ export class OfertasLaboralesComponent implements OnInit {
       }));
   }
 
+  openPostulantes(content) {
+    this.modalService.open(content)
+      .result
+      .then((resultAceptar => {
+
+      }), (resultCancel => {
+
+      }));
+  }
+
   insertar() {
     // this.ofertaService.ofertas.idEmpresa = '-LHnYYcnqIEj4yUV4izj';
     this.oferta.idEmpresa = '-LHim59xdYSFrG47QOhg';
@@ -128,12 +138,6 @@ export class OfertasLaboralesComponent implements OnInit {
           'Eliminado!',
           'Su registro fue eliminado.',
           'success'
-        );
-      } else {
-        swal(
-          'Eliminado!',
-          'Su registro no fue eliminado.',
-          'error'
         );
       }
     });
