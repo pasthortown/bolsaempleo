@@ -204,9 +204,9 @@
                 Campo Amplio:
               </label>
               <select class="form-control" id="campoAmplio"
-                      [(ngModel)]="oferta.campoAmplio">
+                      [(ngModel)]="oferta.campoAmplio" (change)="filtrarCamposEspecificos(oferta.campoAmplio)">
                 <option value="">SELECCIONE...</option>
-                <option *ngFor="let campoAmplio of areas" (click)="filtrarCamposEspecificos(campoAmplio.campo_amplio)">
+                <option *ngFor="let campoAmplio of areas">
                   {{campoAmplio.campo_amplio}}
                 </option>
               </select>
@@ -219,11 +219,9 @@
               <select class="form-control" id="campoEspecifico"
                       [(ngModel)]="oferta.campoEspecifico">
                 <option value="">SELECCIONE...</option>
-                <div *ngFor="let campoAmplio of areas">
-                  <option *ngFor="let campoEspecifico of campoAmplio.campos_especificos">
-                    {{campoEspecifico.nombre}}
-                  </option>
-                </div>
+                <option *ngFor="let campoEspecifico of camposEspecificos">
+                  {{campoEspecifico.nombre}}
+                </option>
               </select>
             </div>
             <!-- Horas de Capacitacion !-->
@@ -446,9 +444,12 @@
               {{oferta.actividades}}
             </td>
             <td class="text-center">
-              <button class="btn btn-info btn-sm" (click)="openOfertaLaboral(modalOfertaLaboral,oferta,true)">
-                <i class="fa fa-address-card" aria-hidden="true"></i>
-              </button>
+              <form action="hoja-vida" method="post">
+                <a type="submit" target="_blank" class="btn btn-info btn-sm" href="hoja-vida">
+                  <i class="fa fa-address-card" aria-hidden="true"></i>
+                  <input type="text" value="123" hidden>
+                </a>
+              </form>
             </td>
           </tr>
           </tbody>
