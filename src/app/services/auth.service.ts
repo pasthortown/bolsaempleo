@@ -25,7 +25,7 @@ export class AuthService {
     this.user.subscribe(user => {
       if (user) {
         this.userDetails = user;
-        this.consultarUsuario();
+        // this.consultarUsuario(this.userDetails.email);
       } else {
         this.userDetails = null;
         this.rolActual = null;
@@ -40,17 +40,18 @@ export class AuthService {
     return this.usuarioNegocio;
   }
 
-  private consultarUsuario() {
+  private consultarUsuario(email) {
     this.rolActual = null;
 
     this.firebaseBDDService.firebaseControllerEmpresas
-      .filtroExacto('correoElectronico', this.userDetails.email)
+      .filtroExacto('correoElectronico', email)
       .snapshotChanges()
       .subscribe(empresas => {
         if (empresas.length > 0) {
           this.rolActual = 'e';
           empresas.forEach(item => {
             this.usuarioNegocio = item.payload.val() as Empresa;
+            this.usuarioNegocio.id = item.key;
             console.log(this.usuarioNegocio);
             return;
           });
@@ -65,6 +66,7 @@ export class AuthService {
               this.rolActual = 'p';
               postulantes.forEach(item => {
                 this.usuarioNegocio = item.payload.val() as Postulante;
+                this.usuarioNegocio.id = item.key;
                 console.log(this.usuarioNegocio);
                 return;
               });
@@ -93,7 +95,11 @@ export class AuthService {
   }
 
   signInRegular(email, password) {
-    return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password);
+    return this._firebaseAuth.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(result => {
+        this.consultarUsuario(result.user.email);
+      });
   }
 
   isLoggedIn() {
