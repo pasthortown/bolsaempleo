@@ -10,7 +10,6 @@ export class Oferta {
   correoElectronico: string;
   telefonoCelular: string;
   telefonoFijo: string;
-  instruccionNivel: string;
   remuneracion: string;
   tiempoExperiencia: string;
   actividades: string;
@@ -20,15 +19,18 @@ export class Oferta {
   numeroPuestos: number;
   nombreComercial: string;
   ciudad: string;
+  campoAmplio: string;
+  campoEspecifico: string;
 
   constructor() {
     this.tipoContrato = '';
-    this.instruccionNivel = '';
     this.remuneracion = '';
     this.tiempoExperiencia = '';
     this.horasCapacitacion = '';
     this.jornada = '';
     this.tipoContrato = '';
     this.ciudad = '';
+    this.campoAmplio = '';
+    this.campoEspecifico = '';
   }
 }

@@ -1,0 +1,315 @@
+<div class="row ml-2">
+  <div class="col-2">
+
+  </div>
+  <div class="col-4">
+
+  </div>
+</div>
+<div class="row ml-2">
+  <!--Menu lateral izquierdo Filtros-->
+  <div class="col-3">
+    <h6 class="bg-warning form-control">
+      <i class="fa fa-filter" aria-hidden="true"></i>
+      Filtros
+    </h6>
+    <div id="accordion" class="accordion" *ngFor="let area of areas">
+      <div class="card mb-0 bg-ligth">
+        <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+area.id" (click)="filtrarPorCampoAmplio(area)">
+          <a class="card-title">
+            {{area.campo_amplio}}
+          </a>
+        </a>
+        <div id="{{area.id}}" class="card-body collapse" data-parent="#accordion">
+          <div class="panel-body">
+            <table class="table">
+              <tr *ngFor="let areaEspecifica of area.campos_especificos">
+                <td>
+                  <a class="page-link" (click)="filtrarPorCampoEspecifico(areaEspecifica)">{{areaEspecifica.nombre}}</a>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Ofertas de trabajo-->
+  <div class="col-9">
+    <div class="row">
+      <div class="col-8">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Buscar..." aria-label="" aria-describedby="basic-addon1">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <span class="fa fa-search"></span>&nbsp;Buscar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card m-2" *ngFor="let ofertaActual of ofertas">
+          <div class="card-body">
+            <div class="card-title">
+              <div class="row">
+                <div class="col-8">
+                  <h3 class="col-12 text-left">{{ofertaActual.cargo}}</h3>
+                  <h5 class="col-12 text-left">{{ofertaActual.actividades}}</h5>
+                </div>
+                <div class="col-4 text-right">
+                  <table class="col-12">
+                    <tbody>
+                    <tr>
+                      <th>
+                        <i>Fecha de Anuncio:</i>&nbsp;
+                      </th>
+                      <td class="text-left">
+                        <strong style="color: silver;">
+                          <i>
+                            {{ofertaActual.inicioPublicacion.year
+                            + '/' + ofertaActual.inicioPublicacion.month
+                            + '/' + ofertaActual.inicioPublicacion.day
+                            }}
+                          </i></strong>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <p class="card-text text-justify">
+              {{ofertaActual.ciudad}}
+            </p>
+            <div class="col-12 m-2 text-left">
+              <button type="submit" class="btn btn-primary" (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
+                <span class="fa fa-info-circle"></span>&nbsp;Mas Información
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalOfertaLaboral let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-lg">
+    <div class="card">
+      <div class="card-header bg-primary">
+        <h3 class="text-white">Oferta Laboral</h3>
+      </div>
+      <div class="card-body m-1">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Codigo !-->
+            <div class="form-group">
+              <label for="editCodigo" class="col-form-label">
+                Código:
+              </label>
+              <input class="form-control" name="codigo" id="editCodigo" [(ngModel)]="oferta.codigo"
+                     placeholder="Código">
+            </div>
+
+            <!-- Cargo !-->
+            <div class="form-group">
+              <label for="editCargo" class="col-form-label">
+                Cargo:
+              </label>
+              <input class="form-control" name="cargo" id="editCargo" [(ngModel)]="oferta.cargo" placeholder="Cargo">
+            </div>
+
+            <!-- Ciudad !-->
+            <div class="form-group ">
+              <label for="idCIudad" class="col-form-label">
+                Ciudad:
+              </label>
+              <select class="form-control" name="idCIudad" id="editCiudad" [(ngModel)]="oferta.ciudad">
+                <option value="">
+                  Seleccione...
+                </option>
+                <option value="Quito">
+                  Quito
+                </option>
+              </select>
+            </div>
+
+            <!-- Inicio Publicacion !-->
+            <div class="form-group datepicker-input">
+              <label for="editInicioPublicacion" class="col-form-label">
+                Inicio Publicación:
+              </label>
+              <div class="input-group datepicker-input">
+                <input [(ngModel)]="oferta.inicioPublicacion" class="form-control" id="editInicioPublicacion"
+                       placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d1="ngbDatepicker">
+                <button class="input-group-addon" (click)="d1.toggle()" type="button">
+                  <span class="fa fa-calendar"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Fin Publicacion !-->
+            <div class="form-group datepicker-input">
+              <label for="editFinPublicacion" class="col-form-label">
+                Fin Publicación:
+              </label>
+              <div class="input-group datepicker-input">
+                <input [(ngModel)]="oferta.finPublicacion" class="form-control" id="editFinPublicacion"
+                       placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d2="ngbDatepicker">
+                <button class="input-group-addon" (click)="d2.toggle()" type="button">
+                  <span class="fa fa-calendar"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!-- Contacto !-->
+            <div class="form-group">
+              <label for="editContacto" class="col-form-label">
+                Contacto:
+              </label>
+              <input class="form-control" name="contacto" id="editContacto" [(ngModel)]="oferta.contacto"
+                     placeholder="Nombres y Apellidos">
+            </div>
+
+            <!-- Correo Electronico !-->
+            <div class="form-group ">
+              <label for="editCorreoElectronico" class="col-form-label">
+                Correo:
+              </label>
+              <input type="email" class="form-control" id="editCorreoElectronico"
+                     [(ngModel)]="oferta.correoElectronico" placeholder="Correo Electrónico">
+            </div>
+
+            <!-- Telefono Fijo !-->
+            <div class="form-group ">
+              <label for="editTelefonoFijo" class="col-form-label">
+                Teléfono Fijo:
+              </label>
+              <input class="form-control" id="editTelefonoFijo" [(ngModel)]="oferta.telefonoFijo"
+                     placeholder="Teléfono Fijo">
+            </div>
+
+            <!-- Telefono Celular !-->
+            <div class="form-group ">
+              <label for="editTelefonoCelular" class="col-form-label">
+                Teléfono Celular:
+              </label>
+              <input class="form-control" id="editTelefonoCelular"
+                     [(ngModel)]="oferta.telefonoCelular" placeholder="Teléfono Celular">
+            </div>
+
+            <!-- Tipo Contrato !-->
+            <div class="form-group ">
+              <label for="editTipoContrato" class="col-form-label">
+                Tipo Contrato:
+              </label>
+              <select class="form-control" id="editTipoContrato" [(ngModel)]="oferta.tipoContrato">
+                <option value="">Seleccione...</option>
+                <option value="Ocasional">Ocasional</option>
+                <option value="Tiempo Completo">Tiempo Completo</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="card">
+      <div class="card-header bg-info">
+        <h3 class="text-white">Perfil del Cargo</h3>
+      </div>
+      <div class="card-body  m-1">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Instruccion Nivel !-->
+            <div class="form-group ">
+              <label for="instruccionNivel" class="col-form-label">
+                Instrucción Nivel:
+              </label>
+              <select class="form-control" name="instruccionNivel" id="instruccionNivel"
+                      [(ngModel)]="oferta.instruccionNivel">
+                <option value="">Seleccione...</option>
+                <option value="Tercer Nivel">Tercer Nivel</option>
+                <option value="Cuarto Nivel">Cuarto Nivel</option>
+              </select>
+            </div>
+            <!-- Horas de Capacitacion !-->
+            <div class="form-group ">
+              <label for="horasCapacitacion" class="col-form-label">
+                Horas de Capacitación:
+              </label>
+              <input class="form-control" id="horasCapacitacion"
+                     [(ngModel)]="oferta.horasCapacitacion" placeholder="Horas de Capacitación">
+            </div>
+            <!-- Numero de Puestos !-->
+            <div class="form-group ">
+              <label for="numeroPuestos" class="col-form-label">
+                Puestos:
+              </label>
+              <input class="form-control" id="numeroPuestos" [(ngModel)]="oferta.numeroPuestos"
+                     placeholder="# de Puestos">
+            </div>
+            <!-- Informacion Adicional !-->
+            <div class="form-group ">
+              <label for="informacionAdicional" class="col-form-label">
+                Información Adicional:
+              </label>
+              <textarea class="form-control" id="informacionAdicional"
+                        [(ngModel)]="oferta.informacionAdicional" placeholder="Información Adicional"></textarea>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!-- Remuneracion !-->
+            <div class="form-group ">
+              <label for="remuneracion" class="col-form-label">
+                Remuneración:
+              </label>
+              <input class="form-control" id="remuneracion" [(ngModel)]="oferta.remuneracion"
+                     placeholder="Remuneración">
+            </div>
+            <!-- Tiempo Experiencia!-->
+            <div class="form-group ">
+              <label for="experiencia" class="col-form-label">
+                Tiempo Experiencia:
+              </label>
+              <input class="form-control" id="experiencia" [(ngModel)]="oferta.tiempoExperiencia"
+                     placeholder="Tiempo de Experiencia">
+            </div>
+            <!-- Jornada !-->
+            <div class="form-group ">
+              <label for="jornada" class="col-form-label">
+                Jornada:
+              </label>
+              <input class="form-control" id="jornada" [(ngModel)]="oferta.jornada" placeholder="Jornada">
+            </div>
+            <!-- Actividades !-->
+            <div class="form-group ">
+              <label for="actividades" class="col-form-label">
+                Actividades:
+              </label>
+              <textarea class="form-control" id="actividades" [(ngModel)]="oferta.actividades"
+                        placeholder="Actividades"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger btn-lg" title="Aplicar" (click)="c('save')">
+      <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
+    </button>
+    <button class="btn btn-primary btn-lg" title="Cancelar" (click)="c('close')">
+      <i class="fa fa-close" aria-hidden="true"> Cancelar</i>
+    </button>
+  </div>
+</ng-template>

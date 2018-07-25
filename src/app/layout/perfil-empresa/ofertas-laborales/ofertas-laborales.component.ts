@@ -20,17 +20,48 @@ export class OfertasLaboralesComponent implements OnInit {
   srcFoto2: string;
   srcFoto3: string;
   srcFoto4: string;
+  areas: Array<any>;
+  camposEspecificios: Array<any>;
+  habilitarCamposEspecificos: boolean;
 
   constructor(private modalService: NgbModal, public ofertaService: OfertaService, private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
+    this.habilitarCamposEspecificos = false;
     this.oferta = new Oferta();
     this.srcFoto1 = 'assets/img/prueba/empresa1.png';
     this.srcFoto2 = 'assets/img/prueba/empresa2.png';
     this.srcFoto3 = 'assets/img/prueba/empresa3.png';
     this.srcFoto4 = 'assets/img/prueba/empresa4.png';
     this.leerOfertas();
+    this.areas = [
+      {
+        id: 'a',
+        campo_amplio: 'Educación',
+        campos_especificos: [
+          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
+          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
+        ]
+      },
+      {
+        id: 'b',
+        campo_amplio: 'TICS',
+        campos_especificos: [
+          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
+          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
+        ]
+      },
+      {
+        id: 'c',
+        campo_amplio: 'Servicios',
+        campos_especificos: [
+          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
+          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
+        ]
+      },
+
+    ];
   }
 
   CodificarArchivo(event) {
@@ -78,7 +109,10 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   openPostulantes(content) {
-    this.modalService.open(content)
+    const logoutScreenOptions: NgbModalOptions = {
+      size: 'lg'
+    };
+    this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
 
@@ -155,6 +189,13 @@ export class OfertasLaboralesComponent implements OnInit {
         itemLeido.id = element.key;
         this.ofertaService.ofertas.push(itemLeido);
       });
+    });
+  }
+
+  filtrarCamposEspecificos() {
+    this.habilitarCamposEspecificos = true;
+    this.areas.forEach(value => {
+
     });
   }
 }
