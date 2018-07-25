@@ -6,6 +6,7 @@ import {Oferta} from '../../models/oferta';
 import {Empresa} from '../../models/empresa';
 import {EmpresaService} from '../../services/empresa.service';
 import {OfertaService} from '../../services/oferta.service';
+import {catalogos} from '../../../environments/catalogos';
 
 @Component({
   selector: 'app-empresas',
@@ -19,7 +20,7 @@ export class EmpresasComponent implements OnInit {
   oferta: Oferta;
   ofertas: Array<Empresa>;
   ofertas2: Array<Oferta>;
-  filtro: Array<any>;
+  areas: Array<any>;
   flag: string;
 
   constructor(private modalService: NgbModal, public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService,
@@ -36,8 +37,32 @@ export class EmpresasComponent implements OnInit {
     this.leerOfertas();
     this.contarEmpresas();
     this.contarPostulantes();
-    // this.filtro = catalogos.titulos;
+    this.areas = [
+      {
+        campo_amplio: 'Educación',
+        campos_especificos: [
+          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
+          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
+        ]
+      },
+      {
+        campo_amplio: 'TICS',
+        campos_especificos: [
+          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
+          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
+        ]
+      },
+      {
+        campo_amplio: 'Servicios',
+        campos_especificos: [
+          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
+          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
+        ]
+      },
+
+    ];
   }
+
 
   contarEmpresas() {
     return this.firebaseBDDService.firebaseControllerEmpresas.leer().snapshotChanges().subscribe(items => {
