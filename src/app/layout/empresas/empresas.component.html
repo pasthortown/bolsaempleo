@@ -13,16 +13,17 @@
   </div>
 </div>
 <div class="row">
-  <!--Menu lateral izquierdo-->
+  <!--Menu lateral izquierdo Filtros-->
   <div class="col-2">
-    <div id="accordion" class="accordion">
-      <div class="card mb-0 bg-white">
-        <div class="card-header collapsed" data-toggle="collapse" href="#collapseOne">
+    <div id="accordion" class="accordion" *ngFor="let area of ofertaService.ofertas">
+      <div class="card mb-0 bg-dark">
+        <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+area.id">
           <a class="card-title">
             Fecha de publicación
           </a>
-        </div>
-        <div id="collapseOne" class="card-body collapse" data-parent="#accordion">
+
+        </a>
+        <div id="{{area.id}}" class="card-body collapse" data-parent="#accordion">
           <div class="panel-body">
             <table class="table">
               <tr>
@@ -43,64 +44,12 @@
             </table>
           </div>
         </div>
-        <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-          <a class="card-title">
-            Provincia
-          </a>
-        </div>
-        <div id="collapseTwo" class="card-body collapse" data-parent="#accordion">
-          <div class="panel-body">
-            <table class="table">
-              <tr>
-                <td>
-                  <a href="">Pichincha</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="">Guayas</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="">Azuay</a>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="card-header collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-          <a class="card-title">
-            Área
-          </a>
-        </div>
-        <div id="collapseThree" class="card-body collapse" data-parent="#accordion">
-          <div class="panel-body">
-            <table class="table">
-              <tr>
-                <td>
-                  <a href="">Tecnología, Sistemas y Telecomunicaciones</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="">Marketing y Publicidad</a>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <a href="">Otros</a>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
       </div>
     </div>
   </div>
   <!--Ofertas de trabajo-->
   <div class="col-10">
-    <div class="card m-2" *ngFor="let ofertaActual of ofertas2">
+    <div class="card m-2" *ngFor="let ofertaActual of ofertaService.ofertas">
       <div class="card-body">
         <div class="card-title">
           <div class="row">

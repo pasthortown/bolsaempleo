@@ -5,6 +5,7 @@ import {FirebaseBDDService} from '../../services/firebase-bdd.service';
 import {Oferta} from '../../models/oferta';
 import {Empresa} from '../../models/empresa';
 import {EmpresaService} from '../../services/empresa.service';
+import {OfertaService} from '../../services/oferta.service';
 
 @Component({
   selector: 'app-empresas',
@@ -18,19 +19,24 @@ export class EmpresasComponent implements OnInit {
   oferta: Oferta;
   ofertas: Array<Empresa>;
   ofertas2: Array<Oferta>;
+  filtro: Array<any>;
+  flag: string;
 
-  constructor(private modalService: NgbModal, public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService) {
+  constructor(private modalService: NgbModal, public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService,
+              public ofertaService: OfertaService) {
   }
 
   ngOnInit() {
+
     this.oferta = new Oferta();
     this.ofertas = new Array<Empresa>();
     this.ofertas2 = new Array<Oferta>();
     this.contadorEmpresas = 0;
     this.contadorPostulantes = 0;
-    this.leer3();
+    this.leerOfertas();
     this.contarEmpresas();
     this.contarPostulantes();
+    // this.filtro = catalogos.titulos;
   }
 
   contarEmpresas() {
@@ -68,55 +74,50 @@ export class EmpresasComponent implements OnInit {
       }));
   }
 
-  leer() {
-    this.firebaseBDDService.firebaseControllerEmpresas.getAll('oferta')
+  leerOfertas() {
+    this.ofertaService.ofertas = null;
+    this.ofertaService.ofertas = [];
+    this.firebaseBDDService.firebaseControllerOfertas.getAll('idEmpresa', '-LHim59xdYSFrG47QOhg')
       .snapshotChanges().subscribe(items => {
+      this.ofertaService.ofertas = [];
       items.forEach(element => {
-        let itemLeido: Empresa;
-        itemLeido = element.payload.val() as Empresa;
+        let itemLeido: Oferta;
+        itemLeido = element.payload.val() as Oferta;
         itemLeido.id = element.key;
-        this.ofertas.push(itemLeido);
-
-        this.ofertas.forEach(value => {
-          console.log('empresas');
-          console.log(value.oferta[0]);
-          //this.ofertas2.push(value.oferta[0]);
-        });
-
-        //this.empresaService.empresa = itemLeido;
+        this.ofertaService.ofertas.push(itemLeido);
       });
     });
   }
 
   leer2() {
-    this.firebaseBDDService.firebaseControllerEmpresas.getAll('inicioPublicacion')
+    this.firebaseBDDService.firebaseControllerEmpresas.getAll('inicioPublicacion', 'as')
       .snapshotChanges().subscribe(items => {
       items.forEach(element => {
         let itemLeido: Empresa;
         itemLeido = element.payload.val() as Empresa;
 
-        itemLeido.oferta.forEach(value => {
+        /*itemLeido.oferta.forEach(value => {
           this.ofertas2.push(value);
           console.log('oferta');
           console.log(this.ofertas2);
         });
-
+*/
       });
     });
   }
 
   leer3() {
-    this.firebaseBDDService.firebaseControllerEmpresas.getAll('inicioPublicacion')
+    this.firebaseBDDService.firebaseControllerEmpresas.getAll('inicioPublicacion', 'asd')
       .snapshotChanges().subscribe(items => {
       items.forEach(element => {
         let itemLeido: Empresa;
         itemLeido = element.payload.val() as Empresa;
 
-        itemLeido.oferta.forEach(value => {
-          this.ofertas2.push(value);
-          console.log('oferta');
-          console.log(this.ofertas2);
-        });
+        /*        itemLeido.oferta.forEach(value => {
+                  this.ofertas2.push(value);
+                  console.log('oferta');
+                  console.log(this.ofertas2);
+                });*/
 
       });
     });

@@ -45,9 +45,7 @@ export class InformacionEmpresaComponent implements OnInit {
 
   actualizar() {
     this.empresaService.empresa.id = '-LHnYYcnqIEj4yUV4izj';
-    if (this.empresaService.empresa.oferta == null) {
-      this.empresaService.empresa.oferta = [];
-    }
+
     this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
     swal({
       position: 'center',

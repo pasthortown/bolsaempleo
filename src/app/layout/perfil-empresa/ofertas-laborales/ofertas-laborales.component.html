@@ -5,15 +5,15 @@
         <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>
         Agregar
       </button>
-      <div class="input-group-prepend">
-        <button type="button" class="btn btn-info">
-          <i class="fa fa-search" aria-hidden="true"></i>
-        </button>
-      </div>
-      <input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar">
-      <button type="button" class="btn btn-warning" (click)="openFiltro(modalFiltroOferta)">
-        <i class="fa fa-filter" aria-hidden="true"></i>
-      </button>
+      <!--<div class="input-group-prepend">-->
+        <!--<button type="button" class="btn btn-info">-->
+          <!--<i class="fa fa-search" aria-hidden="true"></i>-->
+        <!--</button>-->
+      <!--</div>-->
+      <!--<input type="text" class="form-control" placeholder="Buscar..." aria-label="Buscar">-->
+      <!--<button type="button" class="btn btn-warning" (click)="openFiltro(modalFiltroOferta)">-->
+        <!--<i class="fa fa-filter" aria-hidden="true"></i>-->
+      <!--</button>-->
     </div>
   </div>
 </div>
@@ -40,7 +40,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let oferta of empresaService.empresa.oferta">
+          <tr *ngFor="let oferta of ofertaService.ofertas">
             <td>
               {{oferta.codigo}}
             </td>
@@ -54,7 +54,7 @@
               <button class="btn btn-warning btn-sm" (click)="openOfertaLaboral(modalOfertaLaboral,oferta,true)">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
               </button>
-              <button class="btn btn-danger btn-sm ml-1" (click)="borrar()">
+              <button class="btn btn-danger btn-sm ml-1" (click)="borrar(oferta)">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
             </td>
@@ -79,6 +79,7 @@
     <div class="card">
       <div class="card-header bg-primary">
         <h3 class="text-white">Oferta Laboral</h3>
+
       </div>
       <div class="card-body m-1">
         <div class="row">
