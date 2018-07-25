@@ -13,8 +13,6 @@ import * as html2canvas from 'html2canvas';
 })
 export class FiltroComponent implements OnInit {
   filtro: Array<any>;
-  tipoTituloSeleccionado = '';
-  tituloSeleccionado = '';
   criterioBusqueda = '';
   tipo_titulo: Array<any>;
   postulantes: Array<Postulante>;
@@ -38,21 +36,9 @@ export class FiltroComponent implements OnInit {
     this.postulanteSeleccionado = postulanteSeleccionado;
   }
 
-  mostrarTitulos() {
-    this.filtro.forEach(element => {
-      if (this.tipoTituloSeleccionado === '') {
-        this.tipo_titulo = null;
-        return;
-      }
-      if (element.campo_amplio === this.tipoTituloSeleccionado) {
-        this.tipo_titulo = element.campos_especificos;
-      }
-    });
-  }
-
-  filtrarPorTitulo() {
+  filtrarPorTitulo(areaEspecifica: string) {
     this.postulantes = [];
-    this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('estudiosRealizados/0/titulo', this.tituloSeleccionado)
+    this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('estudiosRealizados/0/titulo', areaEspecifica)
       .snapshotChanges().subscribe(items => {
       items.forEach(element => {
         let itemLeido: Postulante;

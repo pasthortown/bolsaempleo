@@ -11,59 +11,68 @@ import { Empresa } from '../models/empresa';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
   public user: Observable<firebase.User>;
   private userDetails: firebase.User = null;
   rolActual: string;
-  foto: string;
+  usuarioNegocio: any;
 
-  constructor(private _firebaseAuth: AngularFireAuth,
+  constructor(
+    private _firebaseAuth: AngularFireAuth,
     private router: Router,
-    private firebaseBDDService: FirebaseBDDService) {
+    private firebaseBDDService: FirebaseBDDService
+  ) {
     this.user = _firebaseAuth.authState;
-    this.user.subscribe(
-      (user) => {
-        if (user) {
-          this.userDetails = user;
-          this.consultarRol();
-        } else {
-          this.userDetails = null;
-          this.rolActual = null;
-        }
+    this.user.subscribe(user => {
+      if (user) {
+        this.userDetails = user;
+        // this.consultarUsuario(this.userDetails.email);
+      } else {
+        this.userDetails = null;
+        this.rolActual = null;
       }
-    );
+    });
   }
 
-  private consultarRol() {
+  public obtenerUsuario(): any {
+    if (!this.isLoggedIn() || !this.usuarioNegocio) {
+      return null;
+    }
+    return this.usuarioNegocio;
+  }
+
+  private consultarUsuario(email) {
     this.rolActual = null;
 
     this.firebaseBDDService.firebaseControllerEmpresas
-      .querySimple('correoElectronico', this.userDetails.email)
-      .snapshotChanges().subscribe(empresas => {
+      .filtroExacto('correoElectronico', email)
+      .snapshotChanges()
+      .subscribe(empresas => {
         if (empresas.length > 0) {
           this.rolActual = 'e';
-          empresas.forEach(empresa => {
-            const empre = empresa.payload.val() as Empresa;
-            this.foto = empre.fotografia;
+          empresas.forEach(item => {
+            this.usuarioNegocio = item.payload.val() as Empresa;
+            this.usuarioNegocio.id = item.key;
+            console.log(this.usuarioNegocio);
             return;
           });
           return;
         }
 
         this.firebaseBDDService.firebaseControllerPostulantes
-          .querySimple('correoElectronico', this.userDetails.email)
-          .snapshotChanges().subscribe(postulantes => {
+          .filtroExacto('correoElectronico', this.userDetails.email)
+          .snapshotChanges()
+          .subscribe(postulantes => {
             if (postulantes.length > 0) {
               this.rolActual = 'p';
-              postulantes.forEach(postulante => {
-                const postula = postulante.payload.val() as Postulante;
-                this.foto = postula.fotografia;
+              postulantes.forEach(item => {
+                this.usuarioNegocio = item.payload.val() as Postulante;
+                this.usuarioNegocio.id = item.key;
+                console.log(this.usuarioNegocio);
                 return;
               });
               return;
             }
           });
-
       });
   }
 
@@ -72,15 +81,25 @@ export class AuthService {
   }
 
   fotografia(): string {
-    return this.foto;
+    if (!this.usuarioNegocio) {
+      return null;
+    }
+    return this.usuarioNegocio.fotografia;
   }
 
   createUserWithEmailAndPassword(email, password): Promise<any> {
-    return this._firebaseAuth.auth.createUserWithEmailAndPassword(email, password);
+    return this._firebaseAuth.auth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
   }
 
   signInRegular(email, password) {
-    return this._firebaseAuth.auth.signInWithEmailAndPassword(email, password);
+    return this._firebaseAuth.auth
+      .signInWithEmailAndPassword(email, password)
+      .then(result => {
+        this.consultarUsuario(result.user.email);
+      });
   }
 
   isLoggedIn() {
@@ -92,21 +111,23 @@ export class AuthService {
   }
 
   logout() {
-    this._firebaseAuth.auth.signOut()
-      .then((res) => this.router.navigate(['/']));
+    this._firebaseAuth.auth.signOut().then(res => this.router.navigate(['/']));
   }
 
   actualizarPerfil(displayName, photoURL) {
     const user = firebase.auth().currentUser;
 
-    user.updateProfile({
-      displayName: displayName,
-      photoURL: photoURL
-    }).then(function () {
-      // Update successful.
-    }).catch(function (error) {
-      // An error happened.
-    });
+    user
+      .updateProfile({
+        displayName: displayName,
+        photoURL: photoURL
+      })
+      .then(function() {
+        // Update successful.
+      })
+      .catch(function(error) {
+        // An error happened.
+      });
   }
 
   getASecureRandomPassword(): string {
@@ -119,25 +140,24 @@ export class AuthService {
     const user = this._firebaseAuth.auth.currentUser;
     const newPassword = this.getASecureRandomPassword();
 
-    user.updatePassword(newPassword).then(function () {
-      // Update successful.
-    }).catch(function (error) {
-      // An error happened.
-    });
+    user
+      .updatePassword(newPassword)
+      .then(function() {
+        // Update successful.
+      })
+      .catch(function(error) {
+        // An error happened.
+      });
   }
 
-  reinicioClaveEnvioCorreo(emailAddress, idioma) {
+  reinicioClaveEnvioCorreo(emailAddress, idioma): Promise<void> {
     const auth = this._firebaseAuth.auth;
     if (!idioma) {
       idioma = 'es';
     }
 
     this._firebaseAuth.auth.languageCode = idioma;
-    auth.sendPasswordResetEmail(emailAddress).then(function () {
-      // Email sent.
-    }).catch(function (error) {
-      // An error happened.
-    });
+    return auth.sendPasswordResetEmail(emailAddress);
   }
 
   displayNameOrEmail(): string {
@@ -147,19 +167,6 @@ export class AuthService {
       }
       if (this.userDetails.email) {
         return this.userDetails.email;
-      }
-      return '¡Sin nombre!';
-    }
-    return 'Anónimo';
-  }
-
-  displayNameOrEmail2(userDetails: firebase.User): string {
-    if (userDetails) {
-      if (userDetails.displayName) {
-        return userDetails.displayName;
-      }
-      if (userDetails.email) {
-        return userDetails.email;
       }
       return '¡Sin nombre!';
     }

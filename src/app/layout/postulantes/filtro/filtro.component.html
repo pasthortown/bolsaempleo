@@ -6,22 +6,24 @@
         Filtrar Por
       </h6>
       <div class="card col-12">
-        <div class="col-12 mt-2">
-          <div class="form-group">
-            <label>Tipo de Título</label>
-            <select class="form-control" [(ngModel)]="tipoTituloSeleccionado" (change)="mostrarTitulos()">
-              <option value="" selected>Seleccione...</option>
-              <option *ngFor="let item of filtro" value="{{item.campo_amplio}}">{{item.campo_amplio}}</option>
-            </select>
-          </div>
-        </div>
-        <div *ngIf="tipo_titulo!=null" class="col-12">
-          <div class="form-group">
-            <label>Título</label>
-            <select class="form-control" [(ngModel)]="tituloSeleccionado" (change)="filtrarPorTitulo()">
-              <option value="" selected>Seleccione...</option>
-              <option *ngFor="let item of tipo_titulo" value="{{item.nombre}}">{{item.nombre}}</option>
-            </select>
+        <div id="accordion" class="accordion" *ngFor="let item of filtro">
+          <div class="card mb-0">
+            <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
+              <a class="card-title">
+                {{item.campo_amplio}}
+              </a>
+            </a>
+            <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
+              <div class="panel-body">
+                <table class="table">
+                  <tr *ngFor="let areaEspecifica of item.campos_especificos">
+                    <td>
+                      <a href="javascript:void(0)" (click)="filtrarPorTitulo(areaEspecifica.nombre)">{{areaEspecifica.nombre}}</a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

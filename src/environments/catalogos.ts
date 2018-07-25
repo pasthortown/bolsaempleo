@@ -2,6 +2,7 @@ export const catalogos = {
 
 titulos: [
   {
+  id: "a",
   campo_amplio: "Educación",
   campos_especificos: [
     {nombre: "Asistente Pedagógico con nivel equivalente a Tecnólogo superior"},
@@ -9,6 +10,7 @@ titulos: [
     ]
   },
   {
+  id: "b",
   campo_amplio: "Ciencias sociales, periodismo e información",
   campos_especificos: [
   {nombre: "Productor y conductor de radio con nivel equivalente a Tecnólogo Superior"},
@@ -27,7 +29,7 @@ titulos: [
   {nombre: "Tecnólogo Superior en Criminología"}
   ]
   },
-{campo_amplio: "Administración", campos_especificos: [
+{id: "c", campo_amplio: "Administración", campos_especificos: [
   {nombre: "Tecnólogo Superior en Tributación"},
   {nombre: "Tecnólogo Superior en Auditoría"},
   {nombre: "Tecnólogo Superior en Contabilidad"},
@@ -57,7 +59,7 @@ titulos: [
   {nombre: "Tecnólogo Superior en Formación Ocupacional por competencias"}
   ]
 },
-{
+{id: "d",
 campo_amplio: "Ciencias naturales, matemáticas y estadística", campos_especificos: [
   {nombre: "Tecnólogo Superior en Biotecnología"},
   {nombre: "Técnico Superior en Protección del Medio Ambiente"},
@@ -71,7 +73,7 @@ campo_amplio: "Ciencias naturales, matemáticas y estadística", campos_especifi
   {nombre: "Analista de Suelos con nivel equivalente a Tecnólogo Superior"}
   ]
 },
-{
+{id: "e",
 campo_amplio: "Tecnologías de la información y la comunicación (TIC)", campos_especificos: [
   {nombre: "Técnico Superior en  Ensamblaje y Mantenimiento de Equipos de Cómputo"},
   {nombre: "Tecnólogo Superior en  Ensamblaje y Mantenimiento de Equipos de Cómputo"},
@@ -89,7 +91,7 @@ campo_amplio: "Tecnologías de la información y la comunicación (TIC)", campos
   {nombre: "Técnico Superior en  Mantenimiento de Software"}
   ]
 },
-{
+{id: "f",
 campo_amplio: "Ingeniería, industria y construcción", campos_especificos: [
   {nombre: "Tecnólogo Superior en Polímeros"},
   {nombre: "Tecnólogo Superior en Química"},
@@ -152,6 +154,7 @@ campo_amplio: "Ingeniería, industria y construcción", campos_especificos: [
   ]
 },
 {
+  id: "g",
 campo_amplio: "Agricultura, silvicultura, pesca y veterinaria", campos_especificos: [
   {nombre: "Tecnólogo Superior en Permacultura"},
   {nombre: "Técnico Superior en Agroecología"},
@@ -173,7 +176,7 @@ campo_amplio: "Agricultura, silvicultura, pesca y veterinaria", campos_especific
   {nombre: "Tecnólogo Superior en Cuidado canino"}
   ]
 },
-{
+{id: "h",
 campo_amplio: "Salud y bienestar", campos_especificos: [
   {nombre: "Técnico Superior en Odontología"},
   {nombre: "Técnico Superior en Mecánica Dental"},
@@ -193,7 +196,7 @@ campo_amplio: "Salud y bienestar", campos_especificos: [
   {nombre: "Tecnólogo Superior en Desarrollo Infantil Integral"}
   ]
 },
-{
+{id: "i",
 campo_amplio: "Servicios", campos_especificos: [
   {nombre: "Tecnólogo Superior en Tricología y Cosmiatría"},
   {nombre: "Asesor de Imagen con nivel equivalente a Tecnólogo Superior"},
