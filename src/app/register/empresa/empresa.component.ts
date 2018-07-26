@@ -26,7 +26,6 @@ export class EmpresaComponent implements OnInit {
   }
 
   estaCompleto(): boolean {
-    // TODO : validar con HTML5 en la interfaz gráfica faltan otros campos obligatorios
     if (!this.empresa.correoElectronico || !this.contrasena) {
       return false;
     }
@@ -34,11 +33,9 @@ export class EmpresaComponent implements OnInit {
   }
 
   sonIguales(): boolean {
-    // TODO : validar con HTML5 en la interfaz gráfica
     if (!this.confirmacion || !this.contrasena) {
       return false;
     }
-    // TODO : validar con HTML5 en la interfaz gráfica
     if (this.confirmacion !== this.contrasena) {
       return false;
     }
@@ -46,13 +43,7 @@ export class EmpresaComponent implements OnInit {
   }
 
   esCompleja(): boolean {
-    // TODO : esta validación se realiza en el SERVIDOR this.contrasena
     return true;
-  }
-
-  hayDuplicados(): boolean {
-    // TODO : verificar valores duplicados en la base de datos: identificacion, correo, razon social
-    return false;
   }
 
   esValido(): boolean {
@@ -89,17 +80,6 @@ export class EmpresaComponent implements OnInit {
       });
       return false;
     }
-    if (this.hayDuplicados()) {
-      swal({
-        position: 'center',
-        type: 'warning',
-        title: 'Validación',
-        text: 'Hay datos duplicados',
-        showConfirmButton: false,
-        timer: 2000
-      });
-      return false;
-    }
     return true;
   }
 
@@ -112,18 +92,6 @@ export class EmpresaComponent implements OnInit {
       .querySimple('correoElectronico', this.empresa.correoElectronico);
 
     resultado.snapshotChanges().subscribe(items => {
-      if (items.length > 0) {
-        swal({
-          position: 'center',
-          type: 'warning',
-          title: 'Validación',
-          text: 'Correo duplicado',
-          showConfirmButton: false,
-          timer: 2000
-        });
-        return false;
-      }
-
       this.authService.createUserWithEmailAndPassword(this.empresa.correoElectronico
         , this.contrasena).then(x => {
           this.empresaService.empresa = this.empresa;
@@ -133,11 +101,11 @@ export class EmpresaComponent implements OnInit {
             position: 'center',
             type: 'success',
             title: 'Registro de empresa',
-            text: 'Todo bien',
+            text: 'Registro Satisfactorio',
             showConfirmButton: false,
             timer: 2000
           });
-          this._router.navigate(['postulantes']);
+          this._router.navigate(['/postulantes']);
         }).catch(error => {
           swal({
             position: 'center',
