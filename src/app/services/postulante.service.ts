@@ -9,7 +9,9 @@ export class PostulanteService {
 
   constructor() {
     this.postulante = JSON.parse(localStorage.getItem('usuarioNegocio')) as Postulante;
-    console.log(this.postulante);
+    if (this.postulante == null) {
+      return;
+    }
     if (this.postulante.fotografia == null) {
       this.postulante.fotografia = 'assets/img/user.png';
     }

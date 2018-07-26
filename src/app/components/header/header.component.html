@@ -13,16 +13,16 @@
         </a>
         <div ngbDropdownMenu>
           <a [hidden]="rol!='p'" class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Postulaciones
+            <i class="fa fa-fw fa-book"></i>&nbsp;Mis Postulaciones
           </a>
           <a [hidden]="rol!='p'" class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Hoja de Vida
+            <i class="fa fa-fw fa-address-card-o"></i>&nbsp;Hoja de Vida
           </a>
           <a [hidden]="rol!='e'" class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Ofertas Laborales
+            <i class="fa fa-fw fa-book"></i>&nbsp;Mis Ofertas Laborales
           </a>
-          <a class="dropdown-item" [routerLink]="['/perfil']" [routerLinkActive]="['router-link-active']">
-            <i [hidden]="rol!='e'" class="fa fa-fw fa-power-off"></i>&nbsp;Perfil
+          <a [hidden]="rol!='e'" class="dropdown-item" [routerLink]="['/perfil-empresa']" [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-address-card-o"></i>&nbsp;Perfil
           </a>
           <a class="dropdown-item" (click)="cerrarSesion()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión

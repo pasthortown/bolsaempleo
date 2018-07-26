@@ -9,6 +9,9 @@ export class EmpresaService {
 
   constructor() {
     this.empresa = JSON.parse(localStorage.getItem('usuarioNegocio')) as Empresa;
+    if (this.empresa == null) {
+      return;
+    }
     if (this.empresa.fotografia == null) {
       this.empresa.fotografia = 'assets/img/user.png';
     }
