@@ -1,9 +1,9 @@
 #main-header {
   overflow:scroll;
-  height: 600px;
+  height: 820px;
 
   width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
-  left: 370px; /* Posicionamos la cabecera al lado izquierdo */
-  top: 400px; /* Posicionamos la cabecera pegada arriba */
-  position: static; /* Hacemos que la cabecera tenga una posición fija */
+  left: 0px; /* Posicionamos la cabecera al lado izquierdo */
+  top: 0px; /* Posicionamos la cabecera pegada arriba */
+  /* position: fixed; /* Hacemos que la cabecera tenga una posición fija */
 }
