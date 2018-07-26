@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import {Injectable} from '@angular/core';
 import {Empresa} from '../models/empresa';
 
@@ -7,13 +8,7 @@ import {Empresa} from '../models/empresa';
 export class EmpresaService {
   empresa: Empresa;
 
-  constructor() {
-    this.empresa = JSON.parse(localStorage.getItem('usuarioNegocio')) as Empresa;
-    if (this.empresa == null) {
-      return;
-    }
-    if (this.empresa.fotografia == null) {
-      this.empresa.fotografia = 'assets/img/user.png';
-    }
+  constructor( private authService: AuthService) {
+    this.empresa = this.authService.usuarioNegocio as Empresa;
   }
 }

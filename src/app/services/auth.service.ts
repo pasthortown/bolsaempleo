@@ -10,8 +10,8 @@ import { Empresa } from '../models/empresa';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  public user: Observable<firebase.User>;
-  private userDetails: firebase.User = null;
+  user: Observable<firebase.User>;
+  userDetails: firebase.User = null;
   rolActual: string;
   usuarioNegocio: any;
 
@@ -20,16 +20,9 @@ export class AuthService {
     private router: Router,
     private firebaseBDDService: FirebaseBDDService
   ) {
+    this.usuarioNegocio = new Postulante();
+    this.rolActual = '';
     this.user = _firebaseAuth.authState;
-    this.user.subscribe(user => {
-      if (user) {
-        this.userDetails = user;
-        // this.consultarUsuario(this.userDetails.email);
-      } else {
-        this.userDetails = null;
-        this.rolActual = null;
-      }
-    });
   }
 
   public obtenerUsuario(): any {
@@ -51,7 +44,9 @@ export class AuthService {
           empresas.forEach(item => {
             this.usuarioNegocio = item.payload.val() as Empresa;
             this.usuarioNegocio.id = item.key;
-            localStorage.setItem('usuarioNegocio', JSON.stringify(this.usuarioNegocio));
+            if (this.usuarioNegocio.fotografia == null) {
+              this.usuarioNegocio.fotografia = 'assets/img/user.png';
+            }
             return;
           });
           return;
@@ -66,7 +61,9 @@ export class AuthService {
               postulantes.forEach(item => {
                 this.usuarioNegocio = item.payload.val() as Postulante;
                 this.usuarioNegocio.id = item.key;
-                localStorage.setItem('usuarioNegocio', JSON.stringify(this.usuarioNegocio));
+                if (this.usuarioNegocio.fotografia == null) {
+                  this.usuarioNegocio.fotografia = 'assets/img/user.png';
+                }
                 return;
               });
               return;
@@ -97,7 +94,15 @@ export class AuthService {
     return this._firebaseAuth.auth
       .signInWithEmailAndPassword(email, password)
       .then(result => {
-        this.consultarUsuario(result.user.email);
+        this.user.subscribe(user => {
+          if (user) {
+            this.userDetails = user;
+            this.consultarUsuario(this.userDetails.email);
+          } else {
+            this.userDetails = null;
+            this.rolActual = null;
+          }
+        });
       });
   }
 

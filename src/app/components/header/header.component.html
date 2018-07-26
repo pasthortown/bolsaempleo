@@ -4,24 +4,24 @@
   </div>
   <div class="navbar-collapse">
     <ul class="navbar-nav mr-auto">
-      <li [hidden]="!estaLogueado" class="nav-item dropdown" ngbDropdown>
+      <li class="nav-item dropdown" ngbDropdown>
         <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
           <i>
-            <img src="{{fotoPerfil}}" class="rounded-circle" style="width: 70px; height: 70px;">
-          </i>&nbsp;{{nameOrEmail}}
+            <img src="{{authService.usuarioNegocio.fotografia}}" class="rounded-circle" style="width: 70px; height: 70px;">
+          </i>&nbsp;{{authService.displayNameOrEmail()}}
           <b class="caret"></b>
         </a>
         <div ngbDropdownMenu>
-          <a [hidden]="rol!='p'" class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
+          <a class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-book"></i>&nbsp;Mis Postulaciones
           </a>
-          <a [hidden]="rol!='p'" class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
+          <a class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-address-card-o"></i>&nbsp;Hoja de Vida
           </a>
-          <a [hidden]="rol!='e'" class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
+          <a class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-book"></i>&nbsp;Mis Ofertas Laborales
           </a>
-          <a [hidden]="rol!='e'" class="dropdown-item" [routerLink]="['/perfil-empresa']" [routerLinkActive]="['router-link-active']">
+          <a class="dropdown-item" [routerLink]="['/perfil-empresa']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-address-card-o"></i>&nbsp;Perfil
           </a>
           <a class="dropdown-item" (click)="cerrarSesion()">

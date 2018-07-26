@@ -15,24 +15,13 @@ export class HeaderComponent implements OnInit {
   fotoPerfil;
 
   constructor(public router: Router,
-    public authService: AuthService) { }
+    private authService: AuthService) { }
 
   ngOnInit() {
-    this.fotoPerfil = 'assets/img/user.png';
-    this.authService.user.subscribe(user => {
-      this.nameOrEmail = this.authService.displayNameOrEmail();
-      if (user) {
-        this.estaLogueado = true;
-        this.rol = this.authService.rol();
-        this.fotoPerfil = JSON.parse(localStorage.getItem('usuarioNegocio')).fotografia;
-        return;
-      }
-      this.estaLogueado = false;
-    });
+
   }
 
   cerrarSesion() {
-    localStorage.clear();
     this.authService.logout();
     this.router.navigate(['/postulantes']);
   }

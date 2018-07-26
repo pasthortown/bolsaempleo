@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   signInWithEmail() {
     this.authService.signInRegular(this.user.email, this.user.password)
       .then((res) => {
-        this.router.navigate(['postulantes']);
+        this.router.navigate(['/postulantes']);
       })
       .catch((err) => {
         swal({
