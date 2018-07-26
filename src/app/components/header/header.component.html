@@ -12,20 +12,23 @@
           <b class="caret"></b>
         </a>
         <div ngbDropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
+          <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-book"></i>&nbsp;Mis Postulaciones
           </a>
-          <a class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
+          <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-address-card-o"></i>&nbsp;Hoja de Vida
           </a>
-          <a class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
+          <a *ngIf="authService.rolActual=='e'" class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-book"></i>&nbsp;Mis Ofertas Laborales
           </a>
-          <a class="dropdown-item" [routerLink]="['/perfil-empresa']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-address-card-o"></i>&nbsp;Perfil
+          <a *ngIf="authService.rolActual=='e'" class="dropdown-item" [routerLink]="['/perfil-empresa']" [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-address-card-o"></i>&nbsp;Perfil de mi Empresa
           </a>
-          <a class="dropdown-item" (click)="cerrarSesion()">
+          <a *ngIf="authService.rolActual=='e' || authService.rolActual=='p'" class="dropdown-item" (click)="cerrarSesion()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
+          </a>
+          <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="dropdown-item" [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Iniciar Sesión
           </a>
         </div>
       </li>

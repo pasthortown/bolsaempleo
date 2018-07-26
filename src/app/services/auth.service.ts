@@ -22,7 +22,7 @@ export class AuthService {
   ) {
     this.usuarioNegocio = new Postulante();
     this.usuarioNegocio.fotografia = 'assets/img/user.png';
-    this.rolActual = '';
+    this.rolActual = 'ns';
     this.user = _firebaseAuth.authState;
   }
 
@@ -120,6 +120,7 @@ export class AuthService {
   logout() {
     this.usuarioNegocio = new Postulante();
     this.usuarioNegocio.fotografia = 'assets/img/user.png';
+    this.rolActual = 'ns';
     this._firebaseAuth.auth.signOut().then(res => this.router.navigate(['/']));
   }
 
@@ -177,8 +178,8 @@ export class AuthService {
       if (this.userDetails.email) {
         return this.userDetails.email;
       }
-      return '¡Sin nombre!';
+      return 'Usuario Anónimo';
     }
-    return 'Anónimo';
+    return 'Sesión no Iniciada';
   }
 }

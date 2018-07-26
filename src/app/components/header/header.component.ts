@@ -9,10 +9,6 @@ import { FirebaseBDDService } from '../../services/firebase-bdd.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  nameOrEmail = '';
-  estaLogueado = false;
-  rol = '';
-  fotoPerfil;
 
   constructor(public router: Router,
     public authService: AuthService) { }
