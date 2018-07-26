@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   fotoPerfil;
 
   constructor(public router: Router,
-    private authService: AuthService) { }
+    public authService: AuthService) { }
 
   ngOnInit() {
 
