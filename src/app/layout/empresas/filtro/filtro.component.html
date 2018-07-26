@@ -1,6 +1,6 @@
 <div class="row ml-2">
   <!--Menu lateral izquierdo Filtros-->
-  <div class="col-3">
+  <div class="col-3" id="main-header">
     <h6 class="bg-warning form-control">
       <i class="fa fa-filter" aria-hidden="true"></i>
       Filtros
@@ -61,60 +61,58 @@
     </div>
   </div>
   <!--Ofertas de trabajo-->
-  <div id="main-header">
-    <div class="col-9">
-      <div class="row">
-        <div class="col-8">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Buscar..." aria-label=""
-                   aria-describedby="basic-addon1">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="button">
-                <span class="fa fa-search"></span>&nbsp;Buscar
-              </button>
-            </div>
+  <div class="col-9">
+    <div class="row">
+      <div class="col-8">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Buscar..." aria-label=""
+                 aria-describedby="basic-addon1">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+              <span class="fa fa-search"></span>&nbsp;Buscar
+            </button>
           </div>
         </div>
-        <div class="col-12">
-          <div class="card m-2" *ngFor="let ofertaActual of ofertas">
-            <div class="card-body">
-              <div class="card-title">
-                <div class="row">
-                  <div class="col-8">
-                    <h3 class="col-12 text-left">{{ofertaActual.cargo}}</h3>
-                    <h5 class="col-12 text-left">{{ofertaActual.actividades}}</h5>
-                  </div>
-                  <div class="col-4 text-right">
-                    <table class="col-12">
-                      <tbody>
-                      <tr>
-                        <th>
-                          <i>Fecha de Anuncio:</i>&nbsp;
-                        </th>
-                        <td class="text-left">
-                          <strong style="color: silver;">
-                            <i>
-                              {{ofertaActual.inicioPublicacion.year
-                              + '/' + ofertaActual.inicioPublicacion.month
-                              + '/' + ofertaActual.inicioPublicacion.day
-                              }}
-                            </i></strong>
-                        </td>
-                      </tr>
-                      </tbody>
-                    </table>
-                  </div>
+      </div>
+      <div class="col-12">
+        <div class="card m-2" *ngFor="let ofertaActual of ofertas">
+          <div class="card-body">
+            <div class="card-title">
+              <div class="row">
+                <div class="col-8">
+                  <h3 class="col-12 text-left">{{ofertaActual.cargo}}</h3>
+                  <h5 class="col-12 text-left">{{ofertaActual.actividades}}</h5>
+                </div>
+                <div class="col-4 text-right">
+                  <table class="col-12">
+                    <tbody>
+                    <tr>
+                      <th>
+                        <i>Fecha de Anuncio:</i>&nbsp;
+                      </th>
+                      <td class="text-left">
+                        <strong style="color: silver;">
+                          <i>
+                            {{ofertaActual.inicioPublicacion.year
+                            + '/' + ofertaActual.inicioPublicacion.month
+                            + '/' + ofertaActual.inicioPublicacion.day
+                            }}
+                          </i></strong>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
-              <p class="card-text text-justify">
-                {{ofertaActual.ciudad}}
-              </p>
-              <div class="col-12 m-2 text-left">
-                <button type="submit" class="btn btn-primary"
-                        (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
-                  <span class="fa fa-info-circle"></span>&nbsp;Mas Información
-                </button>
-              </div>
+            </div>
+            <p class="card-text text-justify">
+              {{ofertaActual.ciudad}}
+            </p>
+            <div class="col-12 m-2 text-left">
+              <button type="submit" class="btn btn-primary"
+                      (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
+                <span class="fa fa-info-circle"></span>&nbsp;Mas Información
+              </button>
             </div>
           </div>
         </div>
