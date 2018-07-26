@@ -87,36 +87,27 @@ export class EmpresaComponent implements OnInit {
     if (!this.esValido()) {
       return;
     }
-
-    const resultado = this.firebaseBDDService.firebaseControllerEmpresas
-      .querySimple('correoElectronico', this.empresa.correoElectronico);
-
-    resultado.snapshotChanges().subscribe(items => {
-      this.authService.createUserWithEmailAndPassword(this.empresa.correoElectronico
-        , this.contrasena).then(x => {
-          this.empresaService.empresa = this.empresa;
-          this.firebaseBDDService.firebaseControllerEmpresas
-            .insertar(this.empresaService.empresa);
-          swal({
-            position: 'center',
-            type: 'success',
-            title: 'Registro de empresa',
-            text: 'Registro Satisfactorio',
-            showConfirmButton: false,
-            timer: 2000
-          });
-          this._router.navigate(['/postulantes']);
-        }).catch(error => {
-          swal({
-            position: 'center',
-            type: 'error',
-            title: 'Registro de empresa',
-            text: 'Se produjo un error',
-            showConfirmButton: false,
-            timer: 2000
-          });
-          console.log(error);
-        });
+    this.authService.createUserWithEmailAndPassword(this.empresa.correoElectronico, this.contrasena).then(x => {
+      this.empresaService.empresa = this.empresa;
+      this.firebaseBDDService.firebaseControllerEmpresas.insertar(this.empresaService.empresa);
+      swal({
+        position: 'center',
+        type: 'success',
+        title: 'Registro de empresa',
+        text: 'Registro Satisfactorio',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      this._router.navigate(['/login']);
+    }).catch(error => {
+      swal({
+        position: 'center',
+        type: 'error',
+        title: 'Registro de empresa',
+        text: 'Se produjo un error',
+        showConfirmButton: false,
+        timer: 2000
+      });
     });
   }
 }
