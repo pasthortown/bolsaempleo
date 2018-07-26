@@ -1,0 +1,292 @@
+<div id="curriculum" class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center">Hoja de Vida</h1>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-12 seccion">
+      <h3>Datos Personales</h3>
+    </div>
+  </div>
+
+  <!--Datos Personales-->
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <tr>
+          <td rowspan="6">
+            <img src="{{curriculum.fotografia}}" class="rounded-circle" width="150px" height="150px">
+          </td>
+        </tr>
+        <tr>
+          <th width="30%">
+            Nombre Completo:
+          </th>
+          <td width="70%">
+            {{curriculum.nombreCompleto}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Identificación:
+          </th>
+          <td>
+            {{curriculum.identificacion}}
+          </td>
+        </tr>
+        <tr>
+          <th class="text-left">
+            Fecha de Nacimiento:
+          </th>
+          <td>
+            {{curriculum.fechaDeNacimiento.day}} de {{meses[curriculum.fechaDeNacimiento.month-1]}} del
+            {{curriculum.fechaDeNacimiento.year}}
+          </td>
+        </tr>
+        <tr>
+          <th class="text-left">
+            Estado Civil:
+          </th>
+          <td>
+            {{curriculum.estadoCivil}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Nacionalidad:
+          </th>
+          <td>
+            {{curriculum.nacionalidad}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-hover">
+        <tr>
+          <th width="20%">
+            Teléfono:
+          </th>
+          <td width="80%">
+            {{curriculum.telefono}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Domicilio:
+          </th>
+          <td>
+            {{curriculum.direccion}}
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Correo Electrónico:
+          </th>
+          <td>
+            {{curriculum.correoElectronico}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <!--Fin Datos Personales-->
+
+  <!--Estudios Realizados-->
+  <div class="row mt-5">
+    <div class="col-12">
+      <h4 class="col-12 seccion">Estudios Realizados</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-sm">
+        <thead>
+        <th>Institución</th>
+        <th>Tipo de Título</th>
+        <th>Título</th>
+        <th>Fecha de Registro</th>
+        <th>Código de Registro SENESCYT</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of curriculum.estudiosRealizados">
+          <td>{{item.institucion}}</td>
+          <td>{{item.tipo_titulo}}</td>
+          <td>{{item.titulo}}</td>
+          <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
+          <td>{{item.codigoRegistroSENESCYT}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Fin Estudios Realizados-->
+
+  <!--Capacitación y Cursos-->
+  <div class="row mt-5">
+    <div class="col-12">
+      <h4 class="col-12 seccion">Capacitación y Cursos</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-sm">
+        <thead>
+        <th>Institución</th>
+        <th>Tipo de Evento</th>
+        <th>Nombre del Evento</th>
+        <th>Tipo de Certificado</th>
+        <th>Desde</th>
+        <th>Hasta</th>
+        <th>Horas</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of curriculum.capacitaciones">
+          <td>{{item.institucion}}</td>
+          <td>{{item.tipoEvento}}</td>
+          <td>{{item.nombreEvento}}</td>
+          <td>{{item.tipoCertificado}}</td>
+          <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+          <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
+          </td>
+          <td>{{item.horas}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Fin Capacitación y Cursos-->
+
+  <!--Idiomas-->
+  <div class="row mt-5">
+    <div class="col-12">
+      <h4 class="col-12 seccion">Idiomas</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-sm">
+        <thead>
+        <th>Idioma</th>
+        <th>Nivel Escrito</th>
+        <th>Nivel Hablado</th>
+        <th>Nivel Lectura</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of curriculum.idiomas">
+          <td>{{item.idioma}}</td>
+          <td>{{item.nivelEscrito}}</td>
+          <td>{{item.nivelHablado}}</td>
+          <td>{{item.nivelLectura}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Fin Idiomas-->
+
+  <!--Experiencia Profesional-->
+  <div class="row mt-5">
+    <div class="col-12">
+      <h4 class="col-12 seccion">Experiencia Profesional</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-sm">
+        <thead>
+        <th>Empleador</th>
+        <th>Cargo Desempeñado</th>
+        <th>Descripción del Cargo</th>
+        <th>Fecha de Inicio</th>
+        <th>Fecha de Salida</th>
+        <th>Actual</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of curriculum.experienciasLaborales">
+          <td>{{item.empleador}}</td>
+          <td>{{item.cargoDesempenado}}</td>
+          <td><p class="text-justify">{{item.descripcionCargo}}</p></td>
+          <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+          <td *ngIf="item.actualmenteVigente"></td>
+          <td *ngIf="!item.actualmenteVigente">
+            {{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
+          </td>
+          <td>
+            <div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span
+              class="badge badge-success">Actual</span>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Fin Experiencia Profesional-->
+
+  <!--Fortalezas-->
+  <div class="row mt-5">
+    <div class="col-12">
+      <h4 class="col-12 seccion">Fortalezas</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-sm">
+        <thead>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Nivel</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of curriculum.fortalezas">
+          <td>{{item.nombre}}</td>
+          <td>{{item.descripcion}}</td>
+          <td>{{item.nivel}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Fin Fortalezas-->
+  <!--Referencias Personales-->
+  <div class="row mt-5">
+    <div class="col-12">
+      <h4 class="col-12 seccion">Referencias Personales</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-sm">
+        <thead>
+        <th>Nombres y Apellidos</th>
+        <th>Cargo</th>
+        <th>Empresa</th>
+        <th>Teléfono</th>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of curriculum.referenciasPersonales">
+          <td>{{item.nombresApellidos}}</td>
+          <td>{{item.cargo}}</td>
+          <td>{{item.empresa}}</td>
+          <td>{{item.telefono}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!--Fin Referencias Personales-->
+
+
+  <div class="row">
+    <div class="col-12 m-2 text-center">
+      <button type="submit" class="btn btn-primary" (click)="imprimir()">
+        <span class="fa fa-print"></span>&nbsp;Imprimir
+      </button>
+    </div>
+  </div>
+</div>

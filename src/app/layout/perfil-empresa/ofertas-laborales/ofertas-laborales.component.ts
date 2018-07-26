@@ -62,11 +62,13 @@ export class OfertasLaboralesComponent implements OnInit {
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
-        if (editar) {
-          this.actualizar();
-        } else {
-          this.insertar();
-          this.agregarOferta();
+        if (resultAceptar === 'save') {
+          if (editar) {
+            this.actualizar();
+          } else {
+            this.insertar();
+            this.agregarOferta();
+          }
         }
       }), (resultCancel => {
 
@@ -103,7 +105,7 @@ export class OfertasLaboralesComponent implements OnInit {
     swal({
       position: 'center',
       type: 'success',
-      title: 'Insertar',
+      title: 'Oferta Creada',
       text: 'Registro exitoso!',
       showConfirmButton: false,
       timer: 2000
