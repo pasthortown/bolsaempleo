@@ -5,15 +5,20 @@
     </div>
   </div>
   <div class="row mt-5">
-    <div class="col-12 seccion">
+    <div class="col-10">
       <h3>Datos Personales</h3>
+    </div>
+    <div class="col-2">
+      <button type="submit" class="btn btn-primary" (click)="imprimir()">
+        <span class="fa fa-print"></span>&nbsp;Imprimir
+      </button>
     </div>
   </div>
 
   <!--Datos Personales-->
   <div class="row">
     <div class="col-12">
-      <table class="table">
+      <table class="table table-hover">
         <tr>
           <td rowspan="6">
             <img src="{{curriculum.fotografia}}" class="rounded-circle" width="150px" height="150px">
