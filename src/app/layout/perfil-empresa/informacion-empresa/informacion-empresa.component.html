@@ -7,7 +7,7 @@
             <div class="group-form">
               <input type="file" style="visibility: hidden; height: 0px" class="form-control btn" id="logo"
                      placeholder="logo" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
-              <img src="{{empresaService.empresa.fotografia}}" class="btn rounded-circle col-8" (click)="fileInput.click()">
+              <img src="{{empresaService.empresa.fotografia}}" class="col-8 m-3" (click)="fileInput.click()">
               <button type="button" class="btn btn-success form-control" (click)="insertar()">
                 <span class="fa fa-save"></span>&nbsp;Guardar Cambios
               </button>
