@@ -1,7 +1,6 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { FirebaseBDDService } from '../../services/firebase-bdd.service';
 
 @Component({
   selector: 'app-header',
