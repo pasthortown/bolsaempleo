@@ -15,7 +15,7 @@ export class HojaVidaComponent implements OnInit {
   constructor(private postulanteService: PostulanteService, private firebaseBDDService: FirebaseBDDService) { }
 
   ngOnInit() {
-    //this.postulanteService.postulante = this.authService.obtenerUsuario() as Postulante;
+
   }
 
   guardarCambios() {
@@ -26,7 +26,7 @@ export class HojaVidaComponent implements OnInit {
       type: 'success',
       title: 'Insertar',
       text: 'Registro exitoso!',
-      showConfirmButton: false,
+      showConfirmButton: true,
       timer: 2000
     });
   }
