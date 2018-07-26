@@ -21,6 +21,7 @@ export class AuthService {
     private firebaseBDDService: FirebaseBDDService
   ) {
     this.usuarioNegocio = new Postulante();
+    this.usuarioNegocio.fotografia = 'assets/img/user.png';
     this.rolActual = '';
     this.user = _firebaseAuth.authState;
   }
@@ -47,6 +48,7 @@ export class AuthService {
             if (this.usuarioNegocio.fotografia == null) {
               this.usuarioNegocio.fotografia = 'assets/img/user.png';
             }
+            this.router.navigate(['/']);
             return;
           });
           return;
@@ -64,6 +66,7 @@ export class AuthService {
                 if (this.usuarioNegocio.fotografia == null) {
                   this.usuarioNegocio.fotografia = 'assets/img/user.png';
                 }
+                this.router.navigate(['/']);
                 return;
               });
               return;
@@ -115,6 +118,8 @@ export class AuthService {
   }
 
   logout() {
+    this.usuarioNegocio = new Postulante();
+    this.usuarioNegocio.fotografia = 'assets/img/user.png';
     this._firebaseAuth.auth.signOut().then(res => this.router.navigate(['/']));
   }
 
