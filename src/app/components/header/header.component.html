@@ -48,11 +48,11 @@
         </div>
       </li>
       <li>
-        <a class="nav-link pretty-button" [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
+        <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link pretty-button" [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-user"></i>&nbsp;Iniciar Sesión
         </a>
       </li>
-      <li [hidden]="estaLogueado" class="nav-item dropdown pretty-button" ngbDropdown>
+      <li *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-item dropdown pretty-button" ngbDropdown>
         <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
           <i class="fa fa-fw fa-user"></i>&nbsp;Registrarse
         </a>
