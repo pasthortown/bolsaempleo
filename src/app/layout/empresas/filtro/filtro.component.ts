@@ -5,6 +5,7 @@ import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 import {Oferta} from '../../../models/oferta';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
+import {catalogos} from '../../../../environments/catalogos';
 
 @Component({
   selector: 'app-filtro',
@@ -29,33 +30,7 @@ export class FiltroComponent implements OnInit {
     this.oferta = new Oferta();
     this.ofertas = new Array<Oferta>();
     this.leerOfertas();
-    this.areas = [
-      {
-        id: 'a',
-        campo_amplio: 'Educación',
-        campos_especificos: [
-          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
-          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
-        ]
-      },
-      {
-        id: 'b',
-        campo_amplio: 'TICS',
-        campos_especificos: [
-          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
-          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
-        ]
-      },
-      {
-        id: 'c',
-        campo_amplio: 'Servicios',
-        campos_especificos: [
-          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
-          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
-        ]
-      },
-
-    ];
+    this.areas = catalogos.titulos;
   }
 
   leerOfertas() {
@@ -63,7 +38,7 @@ export class FiltroComponent implements OnInit {
     this.ofertaService.ofertas = [];
     this.firebaseBDDService.firebaseControllerOfertas.getAll('idEmpresa', '-LHim59xdYSFrG47QOhg')
       .snapshotChanges().subscribe(items => {
-      this.ofertaService.ofertas = [];
+      this.ofertas = [];
       items.forEach(element => {
         let itemLeido: Oferta;
         itemLeido = element.payload.val() as Oferta;

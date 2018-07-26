@@ -6,6 +6,7 @@ import {Oferta} from '../../../models/oferta';
 import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 import {Idioma} from '../../../models/idioma';
 import {OfertaService} from '../../../services/oferta.service';
+import {catalogos} from '../../../../environments/catalogos';
 
 @Component({
   selector: 'app-ofertas-laborales',
@@ -21,7 +22,7 @@ export class OfertasLaboralesComponent implements OnInit {
   srcFoto3: string;
   srcFoto4: string;
   areas: Array<any>;
-  camposEspecificios: Array<any>;
+  camposEspecificos: Array<any>;
   habilitarCamposEspecificos: boolean;
 
   constructor(private modalService: NgbModal, public ofertaService: OfertaService, private firebaseBDDService: FirebaseBDDService) {
@@ -35,33 +36,7 @@ export class OfertasLaboralesComponent implements OnInit {
     this.srcFoto3 = 'assets/img/prueba/empresa3.png';
     this.srcFoto4 = 'assets/img/prueba/empresa4.png';
     this.leerOfertas();
-    this.areas = [
-      {
-        id: 'a',
-        campo_amplio: 'Educación',
-        campos_especificos: [
-          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
-          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
-        ]
-      },
-      {
-        id: 'b',
-        campo_amplio: 'TICS',
-        campos_especificos: [
-          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
-          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
-        ]
-      },
-      {
-        id: 'c',
-        campo_amplio: 'Servicios',
-        campos_especificos: [
-          {nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'},
-          {nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'}
-        ]
-      },
-
-    ];
+    this.areas = catalogos.titulos;
   }
 
   CodificarArchivo(event) {
@@ -192,10 +167,14 @@ export class OfertasLaboralesComponent implements OnInit {
     });
   }
 
-  filtrarCamposEspecificos() {
+  filtrarCamposEspecificos(item) {
+    this.camposEspecificos = [];
     this.habilitarCamposEspecificos = true;
     this.areas.forEach(value => {
-
+      if (item == value.campo_amplio) {
+        console.log(value.campos_especificos);
+        this.camposEspecificos = value.campos_especificos;
+      }
     });
   }
 }
