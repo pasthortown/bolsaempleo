@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
@@ -52,7 +51,7 @@ export class AuthService {
           empresas.forEach(item => {
             this.usuarioNegocio = item.payload.val() as Empresa;
             this.usuarioNegocio.id = item.key;
-            console.log(this.usuarioNegocio);
+            localStorage.setItem('usuarioNegocio', JSON.stringify(this.usuarioNegocio));
             return;
           });
           return;
@@ -67,7 +66,7 @@ export class AuthService {
               postulantes.forEach(item => {
                 this.usuarioNegocio = item.payload.val() as Postulante;
                 this.usuarioNegocio.id = item.key;
-                console.log(this.usuarioNegocio);
+                localStorage.setItem('usuarioNegocio', JSON.stringify(this.usuarioNegocio));
                 return;
               });
               return;

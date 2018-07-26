@@ -8,5 +8,6 @@ export class EstudioRealizado {
 
   constructor() {
     this.tipo_titulo = '';
+    this.titulo = '';
   }
 }

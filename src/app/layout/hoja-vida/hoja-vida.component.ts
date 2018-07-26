@@ -12,15 +12,15 @@ import swal from 'sweetalert2';
 export class HojaVidaComponent implements OnInit {
   postulantes = [];
 
-  constructor(private auth: AuthService, private postulanteService: PostulanteService, private firebaseBDDService: FirebaseBDDService) { }
+  constructor(private postulanteService: PostulanteService, private firebaseBDDService: FirebaseBDDService) { }
 
   ngOnInit() {
-    console.log(this.auth.obtenerUsuario() as Postulante);
-    //this.postulanteService.postulante = this.auth.obtenerUsuario() as Postulante;
+    //this.postulanteService.postulante = this.authService.obtenerUsuario() as Postulante;
   }
 
   guardarCambios() {
-    // this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    localStorage.setItem('usuarioNegocio', JSON.stringify(this.postulanteService.postulante));
     swal({
       position: 'center',
       type: 'success',
