@@ -20,6 +20,7 @@
               <div *ngIf="area.total" class="text-dark"> ({{ area.total}})</div>
             </div>
           </a>
+
           <div id="{{area.id}}" class="card-body collapse" data-parent="#accordion">
             <div class="panel-body">
               <table class="table">
@@ -35,7 +36,7 @@
                     </ng-template>
 
                     <ng-template #elseBlockAreaEspecifica>
-                      <a href="javascript:void(0)" disabled>
+                      <a disabled>
                         {{areaEspecifica.nombre}}
                       </a>
                       <div class="text-dark"> (0)</div>

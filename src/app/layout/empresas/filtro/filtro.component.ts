@@ -143,6 +143,8 @@ export class FiltroComponent implements OnInit {
           items.forEach(element => {
             let itemLeido: Oferta;
             itemLeido = element.payload.val() as Oferta;
+            console.log(campoEspecifico.nombre);
+            console.log(itemLeido.campoEspecifico);
             if (campoEspecifico.nombre == itemLeido.campoEspecifico) {
               campoEspecifico.total = items.length;
             }

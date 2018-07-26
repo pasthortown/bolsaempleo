@@ -7,15 +7,12 @@ export const catalogos = {
       campos_especificos:
         [
           {
-            nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior',
-            total: 0
+            nombre: 'Asistente Pedagógico con nivel equivalente a Tecnólogo superior'
           },
           {
-            nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior',
-            total: 0
+            nombre: 'Asistente en Educación inclusiva con nivel equivalente a Tecnólogo superior'
           }
         ],
-      total: 0
     },
     {
       id: 'b',
