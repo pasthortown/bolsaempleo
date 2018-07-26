@@ -25,7 +25,7 @@ export class InformacionEmpresaComponent implements OnInit {
       const file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.srcFoto = 'data:' + file.type + ';base64,' + reader.result.split(',')[1];
+        this.empresaService.empresa.fotografia = 'data:' + file.type + ';base64,' + reader.result.split(',')[1];
       };
     }
   }
@@ -44,9 +44,8 @@ export class InformacionEmpresaComponent implements OnInit {
   }
 
   actualizar() {
-    this.empresaService.empresa.id = '-LHnYYcnqIEj4yUV4izj';
-
     this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
+    localStorage.setItem('usuarioNegocio', JSON.stringify(this.empresaService.empresa));
     swal({
       position: 'center',
       type: 'success',

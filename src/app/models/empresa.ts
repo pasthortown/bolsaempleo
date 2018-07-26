@@ -1,6 +1,5 @@
 export class Empresa {
   id: string;
-  logo: string;
   identificacion: string;
   razonSocial: string;
   naturaleza: string;

@@ -19,20 +19,6 @@ export class PerfilEmpresaComponent implements OnInit {
 
   ngOnInit() {
     this.contadorEmpresas = 0;
-    this.leer();
-  }
-
-  leer() {
-    this.empresaService.empresa.id = '-LHim59xdYSFrG47QOhg';
-    this.firebaseBDDService.firebaseControllerEmpresas.querySimple('id', this.empresaService.empresa.id)
-      .snapshotChanges().subscribe(items => {
-      items.forEach(element => {
-        let itemLeido: Empresa;
-        itemLeido = element.payload.val() as Empresa;
-        itemLeido.id = element.key;
-        this.empresaService.empresa = itemLeido;
-      });
-    });
   }
 
 }
