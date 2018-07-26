@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth.service';
 import { catalogos } from './../../../../environments/catalogos';
 import { FirebaseBDDService } from './../../../services/firebase-bdd.service';
 import { Postulante } from './../../../models/postulante';
@@ -22,7 +23,7 @@ export class FiltroComponent implements OnInit {
   @ViewChild('cuerpoHojaVida') cuerpoHojaVida: ElementRef;
   @ViewChild('pieHojaVida') pieHojaVida: ElementRef;
 
-  constructor(private modalService: NgbModal, private firebaseBDDService: FirebaseBDDService) {}
+  constructor(public authService: AuthService, private modalService: NgbModal, private firebaseBDDService: FirebaseBDDService) {}
 
   ngOnInit() {
     this.postulantes = [];
