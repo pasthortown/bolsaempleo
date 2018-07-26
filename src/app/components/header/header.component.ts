@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
     public authService: AuthService) { }
 
   ngOnInit() {
+    this.fotoPerfil = 'assets/img/user.png';
     this.authService.user.subscribe(user => {
       this.nameOrEmail = this.authService.displayNameOrEmail();
       if (user) {
@@ -27,7 +28,6 @@ export class HeaderComponent implements OnInit {
         return;
       }
       this.estaLogueado = false;
-      this.fotoPerfil = 'assets/img/user.png';
     });
   }
 
