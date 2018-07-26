@@ -1,12 +1,4 @@
 <div class="row ml-2">
-  <div class="col-2">
-
-  </div>
-  <div class="col-4">
-
-  </div>
-</div>
-<div class="row ml-2">
   <!--Menu lateral izquierdo Filtros-->
   <div class="col-3">
     <h6 class="bg-warning form-control">
@@ -15,78 +7,114 @@
     </h6>
     <div id="accordion" class="accordion" *ngFor="let area of areas">
       <div class="card mb-0 bg-ligth">
-        <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+area.id"
-           (click)="filtrarPorCampoAmplio(area)">
-          <a class="card-title">
-            {{area.campo_amplio}}
+
+        <div *ngIf="area.total; then thenBlock; else elseBlock"></div>
+
+        <ng-template #thenBlock>
+          <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+area.id"
+             (click)="filtrarPorCampoAmplio(area)">
+            <div class="input-group">
+              <a class="card-title">
+                {{area.campo_amplio }}
+              </a>
+              <div *ngIf="area.total" class="text-dark"> ({{ area.total}})</div>
+            </div>
           </a>
-        </a>
-        <div id="{{area.id}}" class="card-body collapse" data-parent="#accordion">
-          <div class="panel-body">
-            <table class="table">
-              <tr *ngFor="let areaEspecifica of area.campos_especificos">
-                <td>
-                  <a href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica)">{{areaEspecifica.nombre}}</a>
-                </td>
-              </tr>
-            </table>
+          <div id="{{area.id}}" class="card-body collapse" data-parent="#accordion">
+            <div class="panel-body">
+              <table class="table">
+                <tr *ngFor="let areaEspecifica of area.campos_especificos">
+                  <td>
+                    <div *ngIf="areaEspecifica.total; then thenBlockAreaEspecifica; else elseBlockAreaEspecifica"></div>
+
+                    <ng-template #thenBlockAreaEspecifica>
+                      <a href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica)">
+                        {{areaEspecifica.nombre}}
+                      </a>
+                      <div class="text-dark"> ({{ areaEspecifica.total}})</div>
+                    </ng-template>
+
+                    <ng-template #elseBlockAreaEspecifica>
+                      <a href="javascript:void(0)" disabled>
+                        {{areaEspecifica.nombre}}
+                      </a>
+                      <div class="text-dark"> (0)</div>
+                    </ng-template>
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
-        </div>
+        </ng-template>
+
+        <ng-template #elseBlock>
+          <a class="card-header collapsed" data-toggle="collapse" disabled>
+            <div class="input-group">
+              <a class="card-title">
+                {{area.campo_amplio }}
+              </a>
+              <div class="text-dark"> (0)</div>
+            </div>
+          </a>
+        </ng-template>
       </div>
     </div>
   </div>
   <!--Ofertas de trabajo-->
-  <div class="col-9">
-    <div class="row">
-      <div class="col-8">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Buscar..." aria-label="" aria-describedby="basic-addon1">
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-              <span class="fa fa-search"></span>&nbsp;Buscar
-            </button>
+  <div id="main-header">
+    <div class="col-9">
+      <div class="row">
+        <div class="col-8">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar..." aria-label=""
+                   aria-describedby="basic-addon1">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button">
+                <span class="fa fa-search"></span>&nbsp;Buscar
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-12">
-        <div class="card m-2" *ngFor="let ofertaActual of ofertas">
-          <div class="card-body">
-            <div class="card-title">
-              <div class="row">
-                <div class="col-8">
-                  <h3 class="col-12 text-left">{{ofertaActual.cargo}}</h3>
-                  <h5 class="col-12 text-left">{{ofertaActual.actividades}}</h5>
-                </div>
-                <div class="col-4 text-right">
-                  <table class="col-12">
-                    <tbody>
-                    <tr>
-                      <th>
-                        <i>Fecha de Anuncio:</i>&nbsp;
-                      </th>
-                      <td class="text-left">
-                        <strong style="color: silver;">
-                          <i>
-                            {{ofertaActual.inicioPublicacion.year
-                            + '/' + ofertaActual.inicioPublicacion.month
-                            + '/' + ofertaActual.inicioPublicacion.day
-                            }}
-                          </i></strong>
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
+        <div class="col-12">
+          <div class="card m-2" *ngFor="let ofertaActual of ofertas">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="row">
+                  <div class="col-8">
+                    <h3 class="col-12 text-left">{{ofertaActual.cargo}}</h3>
+                    <h5 class="col-12 text-left">{{ofertaActual.actividades}}</h5>
+                  </div>
+                  <div class="col-4 text-right">
+                    <table class="col-12">
+                      <tbody>
+                      <tr>
+                        <th>
+                          <i>Fecha de Anuncio:</i>&nbsp;
+                        </th>
+                        <td class="text-left">
+                          <strong style="color: silver;">
+                            <i>
+                              {{ofertaActual.inicioPublicacion.year
+                              + '/' + ofertaActual.inicioPublicacion.month
+                              + '/' + ofertaActual.inicioPublicacion.day
+                              }}
+                            </i></strong>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
-            <p class="card-text text-justify">
-              {{ofertaActual.ciudad}}
-            </p>
-            <div class="col-12 m-2 text-left">
-              <button type="submit" class="btn btn-primary"
-                      (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
-                <span class="fa fa-info-circle"></span>&nbsp;Mas Información
-              </button>
+              <p class="card-text text-justify">
+                {{ofertaActual.ciudad}}
+              </p>
+              <div class="col-12 m-2 text-left">
+                <button type="submit" class="btn btn-primary"
+                        (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
+                  <span class="fa fa-info-circle"></span>&nbsp;Mas Información
+                </button>
+              </div>
             </div>
           </div>
         </div>

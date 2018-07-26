@@ -30,7 +30,6 @@ export class EmpresasComponent implements OnInit {
     this.contarPostulantes();
   }
 
-
   contarEmpresas() {
     return this.firebaseBDDService.firebaseControllerEmpresas.leer().snapshotChanges().subscribe(items => {
       this.contadorEmpresas = items.length;
@@ -60,37 +59,4 @@ export class EmpresasComponent implements OnInit {
     });
   }
 
-  leer2() {
-    this.firebaseBDDService.firebaseControllerEmpresas.getAll('inicioPublicacion', 'as')
-      .snapshotChanges().subscribe(items => {
-      items.forEach(element => {
-        let itemLeido: Empresa;
-        itemLeido = element.payload.val() as Empresa;
-
-        /*itemLeido.oferta.forEach(value => {
-          this.ofertas2.push(value);
-          console.log('oferta');
-          console.log(this.ofertas2);
-        });
-*/
-      });
-    });
-  }
-
-  leer3() {
-    this.firebaseBDDService.firebaseControllerEmpresas.getAll('inicioPublicacion', 'asd')
-      .snapshotChanges().subscribe(items => {
-      items.forEach(element => {
-        let itemLeido: Empresa;
-        itemLeido = element.payload.val() as Empresa;
-
-        /*        itemLeido.oferta.forEach(value => {
-                  this.ofertas2.push(value);
-                  console.log('oferta');
-                  console.log(this.ofertas2);
-                });*/
-
-      });
-    });
-  }
 }

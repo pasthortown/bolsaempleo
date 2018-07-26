@@ -21,6 +21,7 @@ export class Oferta {
   ciudad: string;
   campoAmplio: string;
   campoEspecifico: string;
+  total: string;
 
   constructor() {
     this.tipoContrato = '';

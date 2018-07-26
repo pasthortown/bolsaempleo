@@ -8,7 +8,7 @@ import swal from 'sweetalert2';
 import {catalogos} from '../../../../environments/catalogos';
 
 @Component({
-  selector: 'app-filtro',
+  selector: 'app-filtro-ofertas',
   templateUrl: './filtro.component.html',
   styleUrls: ['./filtro.component.css']
 })
@@ -31,6 +31,8 @@ export class FiltroComponent implements OnInit {
     this.ofertas = new Array<Oferta>();
     this.leerOfertas();
     this.areas = catalogos.titulos;
+    this.contarOfertasPorCampoAmplio();
+    this.contarOfertasPorCampoEspecifico();
   }
 
   leerOfertas() {
@@ -39,12 +41,13 @@ export class FiltroComponent implements OnInit {
     this.firebaseBDDService.firebaseControllerOfertas.getAll('idEmpresa', '-LHim59xdYSFrG47QOhg')
       .snapshotChanges().subscribe(items => {
       this.ofertas = [];
+      let i = 1;
       items.forEach(element => {
         let itemLeido: Oferta;
         itemLeido = element.payload.val() as Oferta;
         itemLeido.id = element.key;
-        // this.ofertaService.ofertas.push(itemLeido);
         this.ofertas.push(itemLeido);
+
       });
     });
   }
@@ -111,6 +114,40 @@ export class FiltroComponent implements OnInit {
         let itemLeido: Oferta;
         itemLeido = element.payload.val() as Oferta;
         this.ofertas.push(itemLeido);
+      });
+    });
+  }
+
+  contarOfertasPorCampoAmplio() {
+    this.ofertas = [];
+    this.areas.forEach(value => {
+      this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoAmplio', value.campo_amplio)
+        .snapshotChanges().subscribe(items => {
+        items.forEach(element => {
+          let itemLeido: Oferta;
+          itemLeido = element.payload.val() as Oferta;
+          if (value.campo_amplio == itemLeido.campoAmplio) {
+            value.total = items.length;
+          }
+        });
+      });
+    });
+  }
+
+  contarOfertasPorCampoEspecifico() {
+    this.ofertas = [];
+    this.areas.forEach(value => {
+      value.campos_especificos.forEach(campoEspecifico => {
+        this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoEspecifico', campoEspecifico.nombre)
+          .snapshotChanges().subscribe(items => {
+          items.forEach(element => {
+            let itemLeido: Oferta;
+            itemLeido = element.payload.val() as Oferta;
+            if (campoEspecifico.nombre == itemLeido.campoEspecifico) {
+              campoEspecifico.total = items.length;
+            }
+          });
+        });
       });
     });
   }
