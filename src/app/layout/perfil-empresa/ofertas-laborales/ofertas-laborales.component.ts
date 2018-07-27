@@ -8,6 +8,8 @@ import {Idioma} from '../../../models/idioma';
 import {OfertaService} from '../../../services/oferta.service';
 import {catalogos} from '../../../../environments/catalogos';
 import {isUpperCase} from 'tslint/lib/utils';
+import {Postulacion} from '../../../models/postulacion';
+import {Postulante} from '../../../models/postulante';
 
 @Component({
   selector: 'app-ofertas-laborales',
@@ -18,6 +20,8 @@ export class OfertasLaboralesComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   oferta: Oferta;
   ofertas: Array<Oferta>;
+  postulantes: Array<Postulante>;
+  postulaciones: Array<Postulacion>;
   srcFoto1: string;
   srcFoto2: string;
   srcFoto3: string;
@@ -115,10 +119,11 @@ export class OfertasLaboralesComponent implements OnInit {
       }));
   }
 
-  openPostulantes(content) {
+  openPostulantes(content, oferta: Oferta) {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
+    this.leerPostulantes(oferta);
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
@@ -222,5 +227,18 @@ export class OfertasLaboralesComponent implements OnInit {
       errores = errores + ', Correo Electrónico';
     }
     return errores;
+  }
+
+  leerPostulantes(oferta: Oferta) {
+    this.postulaciones = [];
+    this.firebaseBDDService.firebaseControllerPostulaciones.filtroExacto('idOferta', oferta.id)
+      .snapshotChanges().subscribe(items => {
+      items.forEach(element => {
+        let itemLeido: Postulacion;
+        itemLeido = element.payload.val() as Postulacion;
+        itemLeido.id = element.key;
+        this.postulaciones.push(itemLeido);
+      });
+    });
   }
 }

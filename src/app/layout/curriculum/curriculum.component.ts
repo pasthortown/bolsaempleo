@@ -6,6 +6,7 @@ import {Postulante} from '../../models/postulante';
 import {AuthService} from '../../services/auth.service';
 import {Oferta} from '../../models/oferta';
 import {FirebaseBDDService} from '../../services/firebase-bdd.service';
+import {Postulacion} from '../../models/postulacion';
 
 @Component({
   selector: 'app-curriculum',
@@ -32,7 +33,7 @@ export class CurriculumComponent implements OnInit {
   }
 
   leerCurriculum() {
-    this.firebaseBDDService.firebaseControllerPostulantes.getAll('identificacion', '1720364049')
+    this.firebaseBDDService.firebaseControllerPostulantes.getAll('id', this.getId())
       .snapshotChanges().subscribe(items => {
       this.curriculum = null;
       items.forEach(element => {
@@ -64,4 +65,19 @@ export class CurriculumComponent implements OnInit {
   imprimir() {
     return xepOnline.Formatter.Format('curriculum', {render: 'download'});
   }
+
+  getQueryParams(name) {
+    const url = location.href;
+    name = name.replace(/[\[]/, '\\\[').replace(/[\]]/, '\\\]');
+    const regexS = '[\\?&]' + name + '=([^&#]*)';
+    const regex = new RegExp(regexS);
+    const results = regex.exec(url);
+    return results == null ? null : results[1];
+  }
+
+  getId(): string {
+    return this.getQueryParams('idPostulante');
+  }
+
+
 }
