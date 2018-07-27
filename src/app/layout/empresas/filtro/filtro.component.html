@@ -1,6 +1,6 @@
 <div class="row">
   <!--Menu lateral izquierdo Filtros-->
-  <div class="col-4">
+  <div class="col-3">
     <div class="row">
       <div class="col-12">
         <h6 class="bg-warning form-control">
@@ -71,7 +71,8 @@
     </div>
   </div>
   <!--Ofertas de trabajo-->
-  <div class="col-8">
+  <div class="col-9">
+    <!--Buscador-->
     <div class="row">
       <div class="col-12">
         <div class="input-group">
@@ -85,7 +86,8 @@
         </div>
       </div>
     </div>
-    <div class="row m-2">
+    <!--Etiquetas de Filtro-->
+    <div class="row mt-2">
       <div class="col-12">
         <div class="input-group">
           <div *ngIf="etiquetaPrincipal">
@@ -94,30 +96,28 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div *ngIf="etiquetaSecundaria">
-            <label class="bg-warning"> {{etiquetaSecundaria}}</label>
-            <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>
-    <!--Ofertas-->
-    <div class="row main-header">
+    <!--Grid de Ofertas-->
+    <div class="row" style="overflow: auto; height: 900px">
       <div class="col-12">
-        <div class="card m-2" *ngFor="let ofertaActual of ofertas">
+        <div class="card mt-1" *ngFor="let ofertaActual of ofertas" style="height: 310px">
           <div class="card-header">
             <div class="row">
-              <div class="col-7">
+              <div class="col-8">
                 <h6>
                   <a href="javascript:void(0)" class="col-12 text-left"
                      (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
                     {{ofertaActual.cargo}}
                   </a>
                 </h6>
+                <h6 class="text-muted">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  {{ofertaActual.canton + ', ' +ofertaActual.provincia}}
+                </h6>
               </div>
-              <div class="col-5 text-right">
+              <div class="col-4">
                 <table class="col-12">
                   <tbody>
                   <tr>
@@ -127,11 +127,13 @@
                     <td class="text-left text-muted">
                       <strong>
                         <i>
-                          {{ofertaActual.inicioPublicacion.year
+                          {{
+                          ofertaActual.inicioPublicacion.year
                           + '/' + ofertaActual.inicioPublicacion.month
                           + '/' + ofertaActual.inicioPublicacion.day
                           }}
-                        </i></strong>
+                        </i>
+                      </strong>
                     </td>
                   </tr>
                   <tr>
@@ -156,18 +158,12 @@
           <div class="card-body">
             <div class="row">
               <div class="col-12">
-                <h6 class="text-muted">{{ofertaActual.actividades}}</h6>
-                <h6 class="text-muted">
-                  <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  {{ofertaActual.canton + ', ' +ofertaActual.provincia}}
+                <h6 class="text-muted" style="overflow: auto;height: 80px">
+                  {{ofertaActual.actividades}}
                 </h6>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
                 <button class="btn btn-primary btn-sm pull-right"
                         (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
-                  <span class="fa fa-info-circle"></span>&nbsp;Mas Información
+                  <span class="fa fa-info-circle"></span>&nbsp;Más Información
                 </button>
               </div>
             </div>

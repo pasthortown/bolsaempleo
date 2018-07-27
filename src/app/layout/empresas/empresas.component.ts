@@ -17,6 +17,7 @@ export class EmpresasComponent implements OnInit {
   clasificacionEmpresas = ClasificacionEmpresas;
   contadorEmpresas: number;
   contadorPostulantes: number;
+  contadorOfertas: number;
 
   constructor(private modalService: NgbModal, public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService,
               public ofertaService: OfertaService) {
@@ -28,6 +29,7 @@ export class EmpresasComponent implements OnInit {
     this.leerOfertas();
     this.contarEmpresas();
     this.contarPostulantes();
+    this.contarOfertas();
   }
 
   contarEmpresas() {
@@ -40,6 +42,13 @@ export class EmpresasComponent implements OnInit {
   contarPostulantes() {
     return this.firebaseBDDService.firebaseControllerPostulantes.leer().snapshotChanges().subscribe(items => {
       this.contadorPostulantes = items.length;
+    });
+
+  }
+
+  contarOfertas() {
+    return this.firebaseBDDService.firebaseControllerOfertas.leer().snapshotChanges().subscribe(items => {
+      this.contadorOfertas = items.length;
     });
 
   }
