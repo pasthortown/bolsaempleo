@@ -6,6 +6,9 @@ import {Oferta} from '../../../models/oferta';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
 import {catalogos} from '../../../../environments/catalogos';
+import {Postulacion} from '../../../models/postulacion';
+import {AuthService} from '../../../services/auth.service';
+import {Postulante} from '../../../models/postulante';
 
 @Component({
   selector: 'app-filtro-ofertas',
@@ -14,6 +17,8 @@ import {catalogos} from '../../../../environments/catalogos';
 })
 export class FiltroComponent implements OnInit {
   oferta: Oferta;
+  postulacion: Postulacion;
+  postulante: Postulante;
   ofertas: Array<Oferta>;
   areas: Array<any>;
   etiquetaPrincipal: string;
@@ -25,11 +30,14 @@ export class FiltroComponent implements OnInit {
   constructor(private modalService: NgbModal,
               public empresaService: EmpresaService,
               private firebaseBDDService: FirebaseBDDService,
+              private authService: AuthService,
               public ofertaService: OfertaService) {
   }
 
   ngOnInit() {
+    this.postulante = this.authService.obtenerUsuario();
     this.oferta = new Oferta();
+    this.postulacion = new Postulacion();
     this.ofertas = new Array<Oferta>();
     this.leerOfertas();
     this.areas = catalogos.titulos;
@@ -58,21 +66,42 @@ export class FiltroComponent implements OnInit {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
-    if (editar) {
-      this.oferta = item;
-    } else {
-      this.oferta = new Oferta();
-    }
+    this.oferta = item;
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
-        if (!editar) {
-          // this.agregarOferta();
+        if (resultAceptar == 'aplicar') {
+          this.aplicarOferta(item);
         }
-        // this.actualizar();
+
       }), (resultCancel => {
 
       }));
+  }
+
+  aplicarOferta(oferta) {
+    this.postulacion.idPostulante = this.postulante.id;
+    this.postulacion.idOferta = oferta.id;
+
+    swal({
+      title: '¿Está seguro de Aplicar?',
+      text: oferta.cargo,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '<i class="fa fa-check" aria-hidden="true"></i>'
+    }).then((result) => {
+      if (result.value) {
+        this.firebaseBDDService.firebaseControllerPostulaciones.insertar(this.postulacion);
+        swal({
+          title: 'Oferta Aplicada',
+          text: 'Aplicación exitosa!',
+          type: 'success',
+          timer: 2000
+        });
+      }
+    });
   }
 
   borrarFiltro() {
