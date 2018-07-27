@@ -36,7 +36,7 @@ export class PostulacionesComponent implements OnInit {
   }
 
   getMisPostulaciones() {
-    this.firebaseBDDService.firebaseControllerPostulaciones.getAll('idPostulante', this.postulanteService.postulante.id).snapshotChanges().subscribe(items => {
+    this.firebaseBDDService.firebaseControllerPostulaciones.getId('idPostulante', this.postulanteService.postulante.id).snapshotChanges().subscribe(items => {
       items.forEach(element => {
         let itemLeido: Postulacion;
         itemLeido = element.payload.val() as Postulacion;
@@ -45,7 +45,7 @@ export class PostulacionesComponent implements OnInit {
         const postulacionDiccionario = new PostulacionDiccionario();
         postulacionDiccionario.fecha = itemLeido.fecha;
         postulacionDiccionario.id = itemLeido.id;
-        this.firebaseBDDService.firebaseControllerOfertas.getAll('id', itemLeido.idOferta).snapshotChanges().subscribe(itemsOfertas => {
+        this.firebaseBDDService.firebaseControllerOfertas.getId('id', itemLeido.idOferta).snapshotChanges().subscribe(itemsOfertas => {
           itemsOfertas.forEach(elementOferta => {
             let itemLeidoOferta: Oferta;
             itemLeidoOferta = elementOferta.payload.val() as Oferta;

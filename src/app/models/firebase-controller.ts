@@ -27,9 +27,15 @@ export class FirebaseController {
     });
   }
 
-  getAll(campo: string, valor: string) {
+  getId(campo: string, valor: string) {
     return this.firebase.list(this.coleccionBDD, ref => {
       return ref.orderByChild(campo).equalTo(valor);
+    });
+  }
+
+  getAll() {
+    return this.firebase.list(this.coleccionBDD, ref => {
+      return ref.orderByChild('idEmpresa').startAt('-');
     });
   }
 

@@ -38,28 +38,33 @@ export class FiltroComponent implements OnInit {
   ngOnInit() {
     this.criterioBusqueda = '';
     this.postulante = this.authService.obtenerUsuario();
-    this.oferta = new Oferta();
     this.postulacion = new Postulacion();
+    this.oferta = new Oferta();
+    this.areas = catalogos.titulos;
     this.ofertas = new Array<Oferta>();
     this.leerOfertas();
-    this.areas = catalogos.titulos;
     this.contarOfertasPorCampoAmplio();
     this.contarOfertasPorCampoEspecifico();
   }
 
   leerOfertas() {
-    this.ofertaService.ofertas = null;
-    this.ofertaService.ofertas = [];
-    this.firebaseBDDService.firebaseControllerOfertas.getAll('idEmpresa', '-LHim59xdYSFrG47QOhg')
+    this.ofertas = [];
+    this.firebaseBDDService.firebaseControllerOfertas.getAll()
       .snapshotChanges().subscribe(items => {
-      this.ofertas = [];
-      let i = 1;
+      if (items.length === 0) {
+        swal({
+          position: 'center',
+          type: 'info',
+          title: 'No existen Ofertas',
+          text: '',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }
       items.forEach(element => {
         let itemLeido: Oferta;
         itemLeido = element.payload.val() as Oferta;
-        itemLeido.id = element.key;
         this.ofertas.push(itemLeido);
-
       });
     });
   }
@@ -68,11 +73,12 @@ export class FiltroComponent implements OnInit {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
+    console.log(item);
     this.oferta = item;
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
-        if (resultAceptar == 'aplicar') {
+        if (resultAceptar === 'aplicar') {
           this.aplicarOferta(item);
         }
 
@@ -189,7 +195,7 @@ export class FiltroComponent implements OnInit {
         items.forEach(element => {
           let itemLeido: Oferta;
           itemLeido = element.payload.val() as Oferta;
-          if (value.campo_amplio == itemLeido.campoAmplio) {
+          if (value.campo_amplio === itemLeido.campoAmplio) {
             value.total = items.length;
           }
         });
@@ -208,7 +214,7 @@ export class FiltroComponent implements OnInit {
             itemLeido = element.payload.val() as Oferta;
             console.log(campoEspecifico.nombre);
             console.log(itemLeido.campoEspecifico);
-            if (campoEspecifico.nombre == itemLeido.campoEspecifico) {
+            if (campoEspecifico.nombre === itemLeido.campoEspecifico) {
               campoEspecifico.total = items.length;
             }
           });

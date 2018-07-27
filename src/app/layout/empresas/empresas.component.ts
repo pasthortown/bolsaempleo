@@ -26,7 +26,6 @@ export class EmpresasComponent implements OnInit {
   ngOnInit() {
     this.contadorEmpresas = 0;
     this.contadorPostulantes = 0;
-    this.leerOfertas();
     this.contarEmpresas();
     this.contarPostulantes();
     this.contarOfertas();
@@ -51,21 +50,6 @@ export class EmpresasComponent implements OnInit {
       this.contadorOfertas = items.length;
     });
 
-  }
-
-  leerOfertas() {
-    this.ofertaService.ofertas = null;
-    this.ofertaService.ofertas = [];
-    this.firebaseBDDService.firebaseControllerOfertas.getAll('idEmpresa', '-LHim59xdYSFrG47QOhg')
-      .snapshotChanges().subscribe(items => {
-      this.ofertaService.ofertas = [];
-      items.forEach(element => {
-        let itemLeido: Oferta;
-        itemLeido = element.payload.val() as Oferta;
-        itemLeido.id = element.key;
-        this.ofertaService.ofertas.push(itemLeido);
-      });
-    });
   }
 
 }

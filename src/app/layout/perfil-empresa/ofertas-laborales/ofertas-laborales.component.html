@@ -94,7 +94,7 @@
                 Provincia:
               </label>
               <select class="form-control" name="idCIudad" id="editProvincia" [(ngModel)]="oferta.provincia"
-                      (click)="filtrarCantones(oferta)">
+                      (click)="filtrarCantones(oferta)" (change)="filtrarCantones(oferta)">
                 <option value="">
                   SELECCIONE...
                 </option>
@@ -221,7 +221,8 @@
                 Campo Amplio:
               </label>
               <select class="form-control" id="campoAmplio"
-                      [(ngModel)]="oferta.campoAmplio" (click)="filtrarCamposEspecificos(oferta)">
+                      [(ngModel)]="oferta.campoAmplio" (click)="filtrarCamposEspecificos(oferta)"
+                      (change)="filtrarCamposEspecificos(oferta)">
                 <option value="">SELECCIONE...</option>
                 <option *ngFor="let campoAmplio of areas">
                   {{campoAmplio.campo_amplio}}
@@ -453,20 +454,19 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let postulacion of postulaciones">
+          <tr *ngFor="let postulante of postulantes">
             <td>
-              {{postulacion.id}}
+              {{postulante.nombreCompleto}}
             </td>
             <td>
-              {{postulacion.idOferta}}
+              {{postulante.telefono}}
             </td>
             <td>
-              {{postulacion.idPostulante}}
+              {{postulante.correoElectronico}}
             </td>
             <td class="text-center">
-              <a target="_blank" class="btn btn-info btn-sm" href="curriculum/">
+              <a target="_blank" class="btn btn-info btn-sm" href="curriculum?idPostulante={{postulante.id}}">
                 <i class="fa fa-address-card" aria-hidden="true"></i>
-                <input type="text" value="123" hidden>
               </a>
             </td>
           </tr>

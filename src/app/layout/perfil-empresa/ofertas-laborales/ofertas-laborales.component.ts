@@ -10,6 +10,8 @@ import {catalogos} from '../../../../environments/catalogos';
 import {isUpperCase} from 'tslint/lib/utils';
 import {Postulacion} from '../../../models/postulacion';
 import {Postulante} from '../../../models/postulante';
+import {Empresa} from '../../../models/empresa';
+import {AuthService} from '../../../services/auth.service';
 
 @Component({
   selector: 'app-ofertas-laborales',
@@ -18,6 +20,7 @@ import {Postulante} from '../../../models/postulante';
 })
 export class OfertasLaboralesComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
+  empresa: Empresa;
   oferta: Oferta;
   ofertas: Array<Oferta>;
   postulantes: Array<Postulante>;
@@ -33,10 +36,12 @@ export class OfertasLaboralesComponent implements OnInit {
   habilitarCamposEspecificos: boolean;
   habilitarCantones: boolean;
 
-  constructor(private modalService: NgbModal, public ofertaService: OfertaService, private firebaseBDDService: FirebaseBDDService) {
+  constructor(private modalService: NgbModal, public ofertaService: OfertaService, private firebaseBDDService: FirebaseBDDService,
+              private authService: AuthService) {
   }
 
   ngOnInit() {
+    this.empresa = this.authService.obtenerUsuario();
     this.habilitarCamposEspecificos = false;
     this.habilitarCantones = false;
     this.oferta = new Oferta();
@@ -70,22 +75,22 @@ export class OfertasLaboralesComponent implements OnInit {
     }
   }
 
-  openOfertaLaboral(content, item: Oferta, editar) {
+  openOfertaLaboral(content, oferta: Oferta, editar) {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
     if (editar) {
-      this.filtrarCamposEspecificos(item);
-      this.filtrarCantones(item);
-      this.oferta = item;
+      this.filtrarCamposEspecificos(oferta);
+      this.filtrarCantones(oferta);
+      this.oferta = oferta;
     } else {
-      // this.oferta = new Oferta();
+      this.oferta = new Oferta();
     }
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
-        const errores = this.validarCamposObligatorios(this.oferta);
-        if (errores == '') {
+        // const errores = this.validarCamposObligatorios(item);
+        if (true) {
           if (resultAceptar === 'save') {
             if (editar) {
               this.actualizar();
@@ -95,14 +100,14 @@ export class OfertasLaboralesComponent implements OnInit {
             }
           }
         } else {
-          swal({
+          /*swal({
             position: 'center',
             type: 'error',
             title: 'Los siguientes campos son requeridos:!',
             text: errores,
             showConfirmButton: true,
             timer: 15000
-          });
+          });*/
         }
       }), (resultCancel => {
 
@@ -123,7 +128,7 @@ export class OfertasLaboralesComponent implements OnInit {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
-    this.leerPostulantes(oferta);
+    this.leerPostulaciones(oferta);
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
@@ -134,7 +139,7 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   insertar() {
-    this.oferta.idEmpresa = '-LHim59xdYSFrG47QOhg';
+    this.oferta.idEmpresa = this.empresa.id;
     this.firebaseBDDService.firebaseControllerOfertas.insertar(this.oferta);
     swal({
       position: 'center',
@@ -193,13 +198,18 @@ export class OfertasLaboralesComponent implements OnInit {
   leerOfertas() {
     this.ofertaService.ofertas = null;
     this.ofertaService.ofertas = [];
-    this.firebaseBDDService.firebaseControllerOfertas.getAll('idEmpresa', '-LHim59xdYSFrG47QOhg')
+    this.firebaseBDDService.firebaseControllerOfertas.getAll()
       .snapshotChanges().subscribe(items => {
       this.ofertaService.ofertas = [];
       items.forEach(element => {
         let itemLeido: Oferta;
         itemLeido = element.payload.val() as Oferta;
-        itemLeido.id = element.key;
+        if (itemLeido.id === '0') {
+          console.log(itemLeido.cargo);
+          itemLeido.id = element.key;
+          this.firebaseBDDService.firebaseControllerOfertas.actualizar(itemLeido);
+        }
+
         this.ofertaService.ofertas.push(itemLeido);
       });
     });
@@ -229,7 +239,7 @@ export class OfertasLaboralesComponent implements OnInit {
     return errores;
   }
 
-  leerPostulantes(oferta: Oferta) {
+  leerPostulaciones(oferta: Oferta) {
     this.postulaciones = [];
     this.firebaseBDDService.firebaseControllerPostulaciones.filtroExacto('idOferta', oferta.id)
       .snapshotChanges().subscribe(items => {
@@ -239,6 +249,25 @@ export class OfertasLaboralesComponent implements OnInit {
         itemLeido.id = element.key;
         this.postulaciones.push(itemLeido);
       });
+      this.leerPostulantes();
     });
+  }
+
+  leerPostulantes() {
+    this.postulantes = [];
+    this.postulaciones.forEach(value => {
+      console.log(value.idPostulante);
+      this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('id', value.idPostulante)
+        .snapshotChanges().subscribe(items => {
+        items.forEach(element => {
+          console.log('entro');
+          let itemLeido: Postulante;
+          itemLeido = element.payload.val() as Postulante;
+          itemLeido.id = element.key;
+          this.postulantes.push(itemLeido);
+        });
+      });
+    });
+
   }
 }

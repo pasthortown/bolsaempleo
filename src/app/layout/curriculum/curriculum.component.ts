@@ -33,7 +33,7 @@ export class CurriculumComponent implements OnInit {
   }
 
   leerCurriculum() {
-    this.firebaseBDDService.firebaseControllerPostulantes.getAll('id', this.getId())
+    this.firebaseBDDService.firebaseControllerPostulantes.getId('id', this.getId())
       .snapshotChanges().subscribe(items => {
       this.curriculum = null;
       items.forEach(element => {

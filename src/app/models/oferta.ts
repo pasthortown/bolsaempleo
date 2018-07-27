@@ -25,6 +25,7 @@ export class Oferta {
   total: string;
 
   constructor() {
+    this.id = '0';
     this.tipoContrato = '';
     this.remuneracion = '';
     this.tiempoExperiencia = '';

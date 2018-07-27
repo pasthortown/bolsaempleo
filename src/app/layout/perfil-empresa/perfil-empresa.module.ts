@@ -7,6 +7,7 @@ import {CommonModule} from '@angular/common';
 import {InformacionEmpresaComponent} from './informacion-empresa/informacion-empresa.component';
 import {OfertasLaboralesComponent} from './ofertas-laborales/ofertas-laborales.component';
 import {EmpresaService} from '../../services/empresa.service';
+import {AuthService} from '../../services/auth.service';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import {EmpresaService} from '../../services/empresa.service';
     FormsModule
   ],
   declarations: [PerfilEmpresaComponent, InformacionEmpresaComponent, OfertasLaboralesComponent],
-  providers: [EmpresaService]
+  providers: [EmpresaService, AuthService]
 })
 export class PerfilEmpresaModule {
 }
