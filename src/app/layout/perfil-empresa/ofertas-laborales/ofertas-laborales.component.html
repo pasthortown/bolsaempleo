@@ -48,7 +48,7 @@
               <button class="btn btn-danger btn-sm ml-1" (click)="borrar(oferta)">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
-              <button class="btn btn-info btn-sm ml-1" (click)="openPostulantes(modalPostulantes)">
+              <button class="btn btn-info btn-sm ml-1" (click)="openPostulantes(modalPostulantes,oferta)">
                 <i class="fa fa-users" aria-hidden="true"></i>
               </button>
             </td>
@@ -453,23 +453,21 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let oferta of ofertaService.ofertas">
+          <tr *ngFor="let postulacion of postulaciones">
             <td>
-              {{oferta.actividades}}
+              {{postulacion.id}}
             </td>
             <td>
-              {{oferta.actividades}}
+              {{postulacion.idOferta}}
             </td>
             <td>
-              {{oferta.actividades}}
+              {{postulacion.idPostulante}}
             </td>
             <td class="text-center">
-              <form action="hoja-vida-pdf" method="post">
-                <a type="submit" target="_blank" class="btn btn-info btn-sm" href="curriculum">
-                  <i class="fa fa-address-card" aria-hidden="true"></i>
-                  <input type="text" value="123" hidden>
-                </a>
-              </form>
+              <a target="_blank" class="btn btn-info btn-sm" href="curriculum/">
+                <i class="fa fa-address-card" aria-hidden="true"></i>
+                <input type="text" value="123" hidden>
+              </a>
             </td>
           </tr>
           </tbody>
