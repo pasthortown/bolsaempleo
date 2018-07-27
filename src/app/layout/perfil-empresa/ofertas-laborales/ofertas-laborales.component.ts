@@ -7,6 +7,7 @@ import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 import {Idioma} from '../../../models/idioma';
 import {OfertaService} from '../../../services/oferta.service';
 import {catalogos} from '../../../../environments/catalogos';
+import {isUpperCase} from 'tslint/lib/utils';
 
 @Component({
   selector: 'app-ofertas-laborales',
@@ -22,14 +23,18 @@ export class OfertasLaboralesComponent implements OnInit {
   srcFoto3: string;
   srcFoto4: string;
   areas: Array<any>;
+  provincias: Array<any>;
+  cantones: Array<any>;
   camposEspecificos: Array<any>;
   habilitarCamposEspecificos: boolean;
+  habilitarCantones: boolean;
 
   constructor(private modalService: NgbModal, public ofertaService: OfertaService, private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
     this.habilitarCamposEspecificos = false;
+    this.habilitarCantones = false;
     this.oferta = new Oferta();
     this.srcFoto1 = 'assets/img/prueba/empresa1.png';
     this.srcFoto2 = 'assets/img/prueba/empresa2.png';
@@ -37,6 +42,17 @@ export class OfertasLaboralesComponent implements OnInit {
     this.srcFoto4 = 'assets/img/prueba/empresa4.png';
     this.leerOfertas();
     this.areas = catalogos.titulos;
+    this.provincias = catalogos.provincias;
+  }
+
+  filtrarCantones(item) {
+    this.cantones = [];
+    this.habilitarCantones = true;
+    this.provincias.forEach(value => {
+      if (item.provincia == value.provincia) {
+        this.cantones = value.cantones;
+      }
+    });
   }
 
   CodificarArchivo(event) {
@@ -55,20 +71,33 @@ export class OfertasLaboralesComponent implements OnInit {
       size: 'lg'
     };
     if (editar) {
+      this.filtrarCamposEspecificos(item);
       this.oferta = item;
     } else {
-      this.oferta = new Oferta();
+      // this.oferta = new Oferta();
     }
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
-        if (resultAceptar === 'save') {
-          if (editar) {
-            this.actualizar();
-          } else {
-            this.insertar();
-            this.agregarOferta();
+        const errores = this.validarCamposObligatorios(this.oferta);
+        if (errores == '') {
+          if (resultAceptar === 'save') {
+            if (editar) {
+              this.actualizar();
+            } else {
+              this.insertar();
+              this.agregarOferta();
+            }
           }
+        } else {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Los siguientes campos son requeridos:!',
+            text: errores,
+            showConfirmButton: true,
+            timer: 15000
+          });
         }
       }), (resultCancel => {
 
@@ -99,7 +128,6 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   insertar() {
-    // this.ofertaService.ofertas.idEmpresa = '-LHnYYcnqIEj4yUV4izj';
     this.oferta.idEmpresa = '-LHim59xdYSFrG47QOhg';
     this.firebaseBDDService.firebaseControllerOfertas.insertar(this.oferta);
     swal({
@@ -110,6 +138,7 @@ export class OfertasLaboralesComponent implements OnInit {
       showConfirmButton: false,
       timer: 2000
     });
+
   }
 
   agregarOferta() {
@@ -125,8 +154,8 @@ export class OfertasLaboralesComponent implements OnInit {
     swal({
       position: 'center',
       type: 'success',
-      title: 'Actualizar',
-      text: 'Actualización fue exitosa!',
+      title: 'Oferta Actualizada',
+      text: 'Actualización exitosa!',
       showConfirmButton: false,
       timer: 2000
     });
@@ -136,7 +165,7 @@ export class OfertasLaboralesComponent implements OnInit {
     const ofertas = [];
     swal({
       title: '¿Está seguro de Eliminar?',
-      text: 'Empleador',
+      text: 'Cargo: ' + item.cargo,
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
@@ -145,11 +174,12 @@ export class OfertasLaboralesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.firebaseBDDService.firebaseControllerOfertas.borrar(item);
-        swal(
-          'Eliminado!',
-          'Su registro fue eliminado.',
-          'success'
-        );
+        swal({
+          title: 'Oferta Eliminada',
+          text: 'Eliminación exitosa!',
+          type: 'success',
+          timer: 2000
+        });
       }
     });
   }
@@ -173,10 +203,23 @@ export class OfertasLaboralesComponent implements OnInit {
     this.camposEspecificos = [];
     this.habilitarCamposEspecificos = true;
     this.areas.forEach(value => {
-      if (item == value.campo_amplio) {
-        console.log(value.campos_especificos);
+      if (item.campoAmplio == value.campo_amplio) {
         this.camposEspecificos = value.campos_especificos;
       }
     });
+  }
+
+  validarCamposObligatorios(oferta: Oferta): string {
+    let errores = '';
+    if (oferta.codigo == null || oferta.codigo == '') {
+      errores = errores + 'Código';
+    }
+    if (oferta.contacto == null || oferta.contacto == '') {
+      errores = errores + ', Contacto';
+    }
+    if (oferta.correoElectronico == null || oferta.correoElectronico == '') {
+      errores = errores + ', Correo Electrónico';
+    }
+    return errores;
   }
 }

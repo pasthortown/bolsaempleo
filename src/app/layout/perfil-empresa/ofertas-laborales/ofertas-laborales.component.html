@@ -61,6 +61,7 @@
 </div>
 
 <ng-template #modalOfertaLaboral let-c="close" let-d="dismiss">
+
   <div class="modal-header">
     <h4 class="modal-title">
 
@@ -83,30 +84,37 @@
               <label for="editCodigo" class="col-form-label">
                 Código:
               </label>
-              <input class="form-control text-uppercase" name="codigo" id="editCodigo" [(ngModel)]="oferta.codigo"
-                     placeholder="Código de la oferta">
+              <input class="form-control text-uppercase" id="editCodigo" [(ngModel)]="oferta.codigo"
+                     placeholder="Código de la oferta" required>
             </div>
 
-            <!-- Cargo !-->
-            <div class="form-group">
-              <label for="editCargo" class="col-form-label ">
-                Cargo:
-              </label>
-              <input class="form-control text-uppercase" name="cargo" id="editCargo" [(ngModel)]="oferta.cargo"
-                     placeholder="Nomre del puesto de trabajo">
-            </div>
-
-            <!-- Ciudad !-->
+            <!-- Provincia !-->
             <div class="form-group ">
-              <label for="idCIudad" class="col-form-label">
-                Ciudad:
+              <label for="editProvincia" class="col-form-label">
+                Provincia:
               </label>
-              <select class="form-control" name="idCIudad" id="editCiudad" [(ngModel)]="oferta.ciudad">
+              <select class="form-control" name="idCIudad" id="editProvincia" [(ngModel)]="oferta.provincia"
+                      (click)="filtrarCantones(oferta)">
                 <option value="">
                   SELECCIONE...
                 </option>
-                <option value="Quito">
-                  Quito
+                <option *ngFor="let provincia of provincias">
+                  {{provincia.provincia}}
+                </option>
+              </select>
+            </div>
+
+            <!-- Canton !-->
+            <div class="form-group ">
+              <label for="editCanton" class="col-form-label">
+                Cantón:
+              </label>
+              <select class="form-control" name="idCIudad" id="editCanton" [(ngModel)]="oferta.canton">
+                <option value="">
+                  SELECCIONE...
+                </option>
+                <option *ngFor="let canton of cantones">
+                  {{canton.nombre}}
                 </option>
               </select>
             </div>
@@ -163,7 +171,7 @@
               <label for="editTelefonoFijo" class="col-form-label">
                 Teléfono Fijo:
               </label>
-              <input type="number" class="form-control" id="editTelefonoFijo" [(ngModel)]="oferta.telefonoFijo"
+              <input type="text" class="form-control" id="editTelefonoFijo" [(ngModel)]="oferta.telefonoFijo"
                      placeholder="Ej. 023545432">
             </div>
 
@@ -172,7 +180,7 @@
               <label for="editTelefonoCelular" class="col-form-label">
                 Teléfono Celular:
               </label>
-              <input type="number" class="form-control" id="editTelefonoCelular"
+              <input type="text" class="form-control" id="editTelefonoCelular"
                      [(ngModel)]="oferta.telefonoCelular" placeholder="Ej. 0987654321">
             </div>
 
@@ -183,8 +191,8 @@
               </label>
               <select class="form-control" id="editTipoContrato" [(ngModel)]="oferta.tipoContrato">
                 <option value="">SELECCIONE...</option>
-                <option value="Ocasional">Ocasional</option>
-                <option value="Tiempo Completo">Tiempo Completo</option>
+                <option value="TIEMPO COMPLETO">TIEMPO COMPLETO</option>
+                <option value="OCASIONAL">OCASIONAL</option>
               </select>
             </div>
           </div>
@@ -199,13 +207,21 @@
       <div class="card-body  m-1">
         <div class="row">
           <div class="col-lg-6">
+            <!-- Cargo !-->
+            <div class="form-group">
+              <label for="editCargo" class="col-form-label ">
+                Cargo:
+              </label>
+              <input class="form-control text-uppercase" name="cargo" id="editCargo" [(ngModel)]="oferta.cargo"
+                     placeholder="Nomre del puesto de trabajo">
+            </div>
             <!-- Campo Amplio !-->
             <div class="form-group ">
               <label for="campoAmplio" class="col-form-label">
                 Campo Amplio:
               </label>
               <select class="form-control" id="campoAmplio"
-                      [(ngModel)]="oferta.campoAmplio" (change)="filtrarCamposEspecificos(oferta.campoAmplio)">
+                      [(ngModel)]="oferta.campoAmplio" (click)="filtrarCamposEspecificos(oferta)">
                 <option value="">SELECCIONE...</option>
                 <option *ngFor="let campoAmplio of areas">
                   {{campoAmplio.campo_amplio}}
@@ -249,14 +265,7 @@
               <input type="number" min="1" class="form-control" id="numeroPuestos" [(ngModel)]="oferta.numeroPuestos"
                      placeholder="# de puestos a ofertar">
             </div>
-            <!-- Informacion Adicional !-->
-            <div class="form-group ">
-              <label for="informacionAdicional" class="col-form-label">
-                Información Adicional:
-              </label>
-              <textarea class="form-control text-uppercase" id="informacionAdicional"
-                        [(ngModel)]="oferta.informacionAdicional" placeholder="Información Adicional"></textarea>
-            </div>
+
           </div>
           <div class="col-lg-6">
             <!-- Remuneracion !-->
@@ -288,8 +297,9 @@
                 <option value="">SELECCIONE...</option>
                 <option value="MENOS DE 1 AÑO">MENOS DE 1 AÑO</option>
                 <option value="1 AÑO - 2 AÑOS">1 AÑO - 2 AÑOS</option>
-                <option value="2 AÑOS - 3 AÑOS">2 AÑOS - 3AÑOS</option>
-                <option value="MÁS DE 3 AÑOS">MÁS DE 3AÑOS</option>
+                <option value="2 AÑOS - 3 AÑOS">2 AÑOS - 3 AÑOS</option>
+                <option value="2 AÑOS - 3 AÑOS">3 AÑOS - 4 AÑOS</option>
+                <option value="MÁS DE 3 AÑOS">MÁS DE 4 AÑOS</option>
               </select>
             </div>
             <!-- Jornada !-->
@@ -311,19 +321,28 @@
               <textarea class="form-control text-uppercase" id="actividades" [(ngModel)]="oferta.actividades"
                         placeholder="Actividades que va a desarrollar en su puesto de trabajo"></textarea>
             </div>
+            <!-- Informacion Adicional !-->
+            <div class="form-group ">
+              <label for="informacionAdicional" class="col-form-label">
+                Información Adicional:
+              </label>
+              <textarea class="form-control text-uppercase" id="informacionAdicional"
+                        [(ngModel)]="oferta.informacionAdicional" placeholder="Información Adicional"></textarea>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-success btn-lg" title="Aplicar" (click)="c('save')">
-      <i class="fa fa-save" aria-hidden="true"> Guardar Cambios</i>
+    <button type="submit" class="btn btn-success btn-lg" title="Aplicar" (click)="c('save')">
+      <i class="fa fa-save" aria-hidden="true"> Guardar</i>
     </button>
     <button class="btn btn-danger btn-lg" title="Cancelar" (click)="c('close')">
       <i class="fa fa-close" aria-hidden="true"> Cancelar</i>
     </button>
   </div>
+
 </ng-template>
 
 <ng-template #modalFiltroOferta let-c="close" let-d="dismiss">

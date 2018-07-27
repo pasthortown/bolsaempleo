@@ -18,7 +18,8 @@ export class Oferta {
   informacionAdicional: string;
   numeroPuestos: number;
   nombreComercial: string;
-  ciudad: string;
+  provincia: string;
+  canton: string;
   campoAmplio: string;
   campoEspecifico: string;
   total: string;
@@ -30,7 +31,7 @@ export class Oferta {
     this.horasCapacitacion = '';
     this.jornada = '';
     this.tipoContrato = '';
-    this.ciudad = '';
+    this.provincia = '';
     this.campoAmplio = '';
     this.campoEspecifico = '';
   }
