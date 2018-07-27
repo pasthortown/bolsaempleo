@@ -23,7 +23,7 @@
                   <a class="card-title">
                     {{area.campo_amplio }}
                   </a>
-                  <div *ngIf="area.total" class="text-dark"> ({{ area.total}})</div>
+                  <div *ngIf="area.total" class="text-dark">&nbsp;({{ area.total}})</div>
                 </div>
               </a>
 
@@ -39,14 +39,14 @@
                           <a href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica)">
                             {{areaEspecifica.nombre}}
                           </a>
-                          <div class="text-dark"> ({{ areaEspecifica.total}})</div>
+                          <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
                         </ng-template>
 
                         <ng-template #elseBlockAreaEspecifica>
                           <a disabled>
                             {{areaEspecifica.nombre}}
                           </a>
-                          <div class="text-dark"> (0)</div>
+                          <div class="text-dark">&nbsp;(0)</div>
                         </ng-template>
                       </td>
                     </tr>
@@ -61,7 +61,7 @@
                   <a class="card-title">
                     {{area.campo_amplio }}
                   </a>
-                  <div class="text-dark"> (0)</div>
+                  <div class="text-dark">&nbsp;(0)</div>
                 </div>
               </a>
             </ng-template>
