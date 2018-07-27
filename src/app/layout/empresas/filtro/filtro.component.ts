@@ -31,7 +31,7 @@ export class FiltroComponent implements OnInit {
   constructor(private modalService: NgbModal,
               public empresaService: EmpresaService,
               private firebaseBDDService: FirebaseBDDService,
-              private authService: AuthService,
+              public authService: AuthService,
               public ofertaService: OfertaService) {
   }
 

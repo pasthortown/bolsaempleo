@@ -35,7 +35,7 @@ export class FirebaseController {
 
   getAll() {
     return this.firebase.list(this.coleccionBDD, ref => {
-      return ref.orderByChild('idEmpresa').startAt('-');
+      return ref;
     });
   }
 
