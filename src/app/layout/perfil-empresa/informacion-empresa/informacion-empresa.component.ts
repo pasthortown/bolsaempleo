@@ -45,7 +45,6 @@ export class InformacionEmpresaComponent implements OnInit {
 
   actualizar() {
     this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
-    localStorage.setItem('usuarioNegocio', JSON.stringify(this.empresaService.empresa));
     swal({
       position: 'center',
       type: 'success',
