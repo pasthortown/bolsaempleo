@@ -1,70 +1,79 @@
-<div class="row ml-2">
+<div class="row">
   <!--Menu lateral izquierdo Filtros-->
-  <div class="col-3" id="main-header">
-    <h6 class="bg-warning form-control">
-      <i class="fa fa-filter" aria-hidden="true"></i>
-      Filtros
-    </h6>
-    <div id="accordion" class="accordion" *ngFor="let area of areas">
-      <div class="card mb-0 bg-ligth">
+  <div class="col-4">
+    <div class="row">
+      <div class="col-12">
+        <h6 class="bg-warning form-control">
+          <i class="fa fa-filter" aria-hidden="true"></i>
+          Filtros
+        </h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 main-header">
+        <div id="accordion" class="accordion" *ngFor="let area of areas">
+          <div class="card mb-0 bg-ligth">
 
-        <div *ngIf="area.total; then thenBlock; else elseBlock"></div>
+            <div *ngIf="area.total; then thenBlock; else elseBlock"></div>
 
-        <ng-template #thenBlock>
-          <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+area.id"
-             (click)="filtrarPorCampoAmplio(area)">
-            <div class="input-group">
-              <a class="card-title">
-                {{area.campo_amplio }}
+            <ng-template #thenBlock>
+              <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+area.id"
+                 (click)="filtrarPorCampoAmplio(area.campo_amplio)">
+                <div class="input-group">
+                  <a class="card-title">
+                    {{area.campo_amplio }}
+                  </a>
+                  <div *ngIf="area.total" class="text-dark"> ({{ area.total}})</div>
+                </div>
               </a>
-              <div *ngIf="area.total" class="text-dark"> ({{ area.total}})</div>
-            </div>
-          </a>
 
-          <div id="{{area.id}}" class="card-body collapse" data-parent="#accordion">
-            <div class="panel-body">
-              <table class="table">
-                <tr *ngFor="let areaEspecifica of area.campos_especificos">
-                  <td>
-                    <div *ngIf="areaEspecifica.total; then thenBlockAreaEspecifica; else elseBlockAreaEspecifica"></div>
+              <div id="{{area.id}}" class="card-body collapse" data-parent="#accordion">
+                <div class="panel-body">
+                  <table class="table">
+                    <tr *ngFor="let areaEspecifica of area.campos_especificos">
+                      <td>
+                        <div
+                          *ngIf="areaEspecifica.total; then thenBlockAreaEspecifica; else elseBlockAreaEspecifica"></div>
 
-                    <ng-template #thenBlockAreaEspecifica>
-                      <a href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica)">
-                        {{areaEspecifica.nombre}}
-                      </a>
-                      <div class="text-dark"> ({{ areaEspecifica.total}})</div>
-                    </ng-template>
+                        <ng-template #thenBlockAreaEspecifica>
+                          <a href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica)">
+                            {{areaEspecifica.nombre}}
+                          </a>
+                          <div class="text-dark"> ({{ areaEspecifica.total}})</div>
+                        </ng-template>
 
-                    <ng-template #elseBlockAreaEspecifica>
-                      <a disabled>
-                        {{areaEspecifica.nombre}}
-                      </a>
-                      <div class="text-dark"> (0)</div>
-                    </ng-template>
-                  </td>
-                </tr>
-              </table>
-            </div>
+                        <ng-template #elseBlockAreaEspecifica>
+                          <a disabled>
+                            {{areaEspecifica.nombre}}
+                          </a>
+                          <div class="text-dark"> (0)</div>
+                        </ng-template>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </ng-template>
+
+            <ng-template #elseBlock>
+              <a class="card-header collapsed" data-toggle="collapse" disabled>
+                <div class="input-group">
+                  <a class="card-title">
+                    {{area.campo_amplio }}
+                  </a>
+                  <div class="text-dark"> (0)</div>
+                </div>
+              </a>
+            </ng-template>
           </div>
-        </ng-template>
-
-        <ng-template #elseBlock>
-          <a class="card-header collapsed" data-toggle="collapse" disabled>
-            <div class="input-group">
-              <a class="card-title">
-                {{area.campo_amplio }}
-              </a>
-              <div class="text-dark"> (0)</div>
-            </div>
-          </a>
-        </ng-template>
+        </div>
       </div>
     </div>
   </div>
   <!--Ofertas de trabajo-->
-  <div class="col-9">
+  <div class="col-8">
     <div class="row">
-      <div class="col-6">
+      <div class="col-12">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Buscar..." aria-label=""
                  aria-describedby="basic-addon1">
@@ -76,17 +85,39 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row m-2">
+      <div class="col-12">
+        <div class="input-group">
+          <div *ngIf="etiquetaPrincipal">
+            <label class="btn-warning">{{etiquetaPrincipal}}</label>
+            <button type="button" class="close" aria-label="Close" (click)="borrarFiltro()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div *ngIf="etiquetaSecundaria">
+            <label class="bg-warning"> {{etiquetaSecundaria}}</label>
+            <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Ofertas-->
+    <div class="row main-header">
       <div class="col-12">
         <div class="card m-2" *ngFor="let ofertaActual of ofertas">
           <div class="card-header">
             <div class="row">
-              <div class="col-9">
-                <a href="javascript:void(0)"   class="col-12 text-left" (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
-                  {{ofertaActual.cargo}}
-                </a>
+              <div class="col-7">
+                <h6>
+                  <a href="javascript:void(0)" class="col-12 text-left"
+                     (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
+                    {{ofertaActual.cargo}}
+                  </a>
+                </h6>
               </div>
-              <div class="col-3 text-right">
+              <div class="col-5 text-right">
                 <table class="col-12">
                   <tbody>
                   <tr>
@@ -125,16 +156,16 @@
           <div class="card-body">
             <div class="row">
               <div class="col-12">
-                <p class="text-left">{{ofertaActual.actividades}}</p>
-                <p class="text-muted">
+                <h6 class="text-muted">{{ofertaActual.actividades}}</h6>
+                <h6 class="text-muted">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
                   {{ofertaActual.canton + ', ' +ofertaActual.provincia}}
-                </p>
+                </h6>
               </div>
             </div>
             <div class="row">
               <div class="col-12">
-                <button class="btn btn-primary pull-right"
+                <button class="btn btn-primary btn-sm pull-right"
                         (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
                   <span class="fa fa-info-circle"></span>&nbsp;Mas Información
                 </button>
@@ -143,22 +174,22 @@
           </div>
           <div class="card-footer text-muted">
             <div class="input-group">
-              <p class="text-muted text-uppercase">
+              <h6 class="text-muted text-uppercase">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 {{ofertaActual.contacto}}
-              </p>
-              <p class="text-muted ml-4">
+              </h6>
+              <h6 class="text-muted ml-4">
                 <i class="fa fa-mobile-phone" aria-hidden="true"></i>
                 {{ofertaActual.telefonoCelular}}
-              </p>
-              <p class="text-muted ml-4">
+              </h6>
+              <h6 class="text-muted ml-4">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 {{ofertaActual.telefonoFijo}}
-              </p>
-              <p class="text-muted ml-4">
+              </h6>
+              <h6 class="text-muted ml-4">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 {{ofertaActual.correoElectronico}}
-              </p>
+              </h6>
             </div>
           </div>
         </div>

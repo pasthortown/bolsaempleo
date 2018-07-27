@@ -72,6 +72,7 @@ export class OfertasLaboralesComponent implements OnInit {
     };
     if (editar) {
       this.filtrarCamposEspecificos(item);
+      this.filtrarCantones(item);
       this.oferta = item;
     } else {
       // this.oferta = new Oferta();

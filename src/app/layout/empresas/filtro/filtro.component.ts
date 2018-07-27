@@ -16,6 +16,8 @@ export class FiltroComponent implements OnInit {
   oferta: Oferta;
   ofertas: Array<Oferta>;
   areas: Array<any>;
+  etiquetaPrincipal: string;
+  etiquetaSecundaria: string;
   campoAmplioSeleccionado: string;
   campoEspecificoSeleccionado: string;
   flag: string;
@@ -73,9 +75,15 @@ export class FiltroComponent implements OnInit {
       }));
   }
 
+  borrarFiltro() {
+    this.etiquetaPrincipal = '';
+    this.leerOfertas();
+  }
+
   filtrarPorCampoAmplio(filtro) {
     this.ofertas = [];
-    this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoAmplio', filtro.campo_amplio)
+    this.etiquetaPrincipal = filtro;
+    this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoAmplio', filtro)
       .snapshotChanges().subscribe(items => {
       if (items.length === 0) {
         swal({
@@ -97,6 +105,7 @@ export class FiltroComponent implements OnInit {
 
   filtrarPorCampoEspecifico(filtro) {
     this.ofertas = [];
+    this.etiquetaPrincipal = filtro.nombre;
     this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoEspecifico', filtro.nombre)
       .snapshotChanges().subscribe(items => {
 

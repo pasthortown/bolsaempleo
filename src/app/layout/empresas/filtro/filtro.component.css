@@ -1,6 +1,6 @@
-#main-header {
-  overflow:scroll;
-  height: 820px;
+.main-header {
+  overflow:auto;
+  height: 900px;
 
   width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
   left: 0px; /* Posicionamos la cabecera al lado izquierdo */
