@@ -198,7 +198,7 @@ export class OfertasLaboralesComponent implements OnInit {
   leerOfertas() {
     this.ofertaService.ofertas = null;
     this.ofertaService.ofertas = [];
-    this.firebaseBDDService.firebaseControllerOfertas.getAll()
+    this.firebaseBDDService.firebaseControllerOfertas.getId('idEmpresa', this.empresa.id)
       .snapshotChanges().subscribe(items => {
       this.ofertaService.ofertas = [];
       items.forEach(element => {
