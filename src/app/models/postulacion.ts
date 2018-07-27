@@ -1,6 +1,3 @@
-import {Oferta} from './oferta';
-import {Postulante} from './postulante';
-
 export class Postulacion {
   id: string;
   idOferta: string;
@@ -8,5 +5,6 @@ export class Postulacion {
   fecha: Date;
 
   constructor() {
+    this.fecha = new Date();
   }
 }
