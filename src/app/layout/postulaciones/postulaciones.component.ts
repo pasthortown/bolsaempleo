@@ -52,7 +52,7 @@ export class PostulacionesComponent implements OnInit {
             itemLeidoOferta.id = elementOferta.key;
             postulacionDiccionario.oferta = itemLeidoOferta;
 
-            this.firebaseBDDService.firebaseControllerEmpresas.getAll('id', itemLeidoOferta.idEmpresa).snapshotChanges().subscribe(itemsEmpresas => {
+            this.firebaseBDDService.firebaseControllerEmpresas.getId('id', itemLeidoOferta.idEmpresa).snapshotChanges().subscribe(itemsEmpresas => {
               itemsEmpresas.forEach(elementEmpresa => {
                 let itemLeidoEmpresa: Empresa;
                 itemLeidoEmpresa = elementEmpresa.payload.val() as Empresa;
