@@ -26,6 +26,7 @@ export class FiltroComponent implements OnInit {
   campoAmplioSeleccionado: string;
   campoEspecificoSeleccionado: string;
   flag: string;
+  criterioBusqueda: string;
 
   constructor(private modalService: NgbModal,
               public empresaService: EmpresaService,
@@ -35,6 +36,7 @@ export class FiltroComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.criterioBusqueda = '';
     this.postulante = this.authService.obtenerUsuario();
     this.oferta = new Oferta();
     this.postulacion = new Postulacion();
@@ -107,6 +109,29 @@ export class FiltroComponent implements OnInit {
   borrarFiltro() {
     this.etiquetaPrincipal = '';
     this.leerOfertas();
+  }
+
+  filtrarPorCargo() {
+    this.ofertas = [];
+    this.etiquetaPrincipal = this.criterioBusqueda;
+    this.firebaseBDDService.firebaseControllerOfertas.querySimple('cargo', this.criterioBusqueda)
+      .snapshotChanges().subscribe(items => {
+      if (items.length === 0) {
+        swal({
+          position: 'center',
+          type: 'info',
+          title: 'No existen Ofertas',
+          text: '',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }
+      items.forEach(element => {
+        let itemLeido: Oferta;
+        itemLeido = element.payload.val() as Oferta;
+        this.ofertas.push(itemLeido);
+      });
+    });
   }
 
   filtrarPorCampoAmplio(filtro) {

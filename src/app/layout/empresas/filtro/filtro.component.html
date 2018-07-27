@@ -77,9 +77,9 @@
       <div class="col-12">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Buscar..." aria-label=""
-                 aria-describedby="basic-addon1">
+                 aria-describedby="basic-addon1" [(ngModel)]="criterioBusqueda">
           <div class="input-group-append">
-            <button class="btn btn-info" type="button">
+            <button class="btn btn-info" type="button" (click)="filtrarPorCargo(criterioBusqueda)">
               <span class="fa fa-search"></span>&nbsp;Buscar
             </button>
           </div>
