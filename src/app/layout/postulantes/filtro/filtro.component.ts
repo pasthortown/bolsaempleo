@@ -1,11 +1,12 @@
-import { AuthService } from './../../../services/auth.service';
-import { catalogos } from './../../../../environments/catalogos';
-import { FirebaseBDDService } from './../../../services/firebase-bdd.service';
-import { Postulante } from './../../../models/postulante';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import {AuthService} from './../../../services/auth.service';
+import {catalogos} from './../../../../environments/catalogos';
+import {FirebaseBDDService} from './../../../services/firebase-bdd.service';
+import {Postulante} from './../../../models/postulante';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
+import {Oferta} from '../../../models/oferta';
 
 @Component({
   selector: 'app-filtro',
@@ -23,7 +24,8 @@ export class FiltroComponent implements OnInit {
   @ViewChild('cuerpoHojaVida') cuerpoHojaVida: ElementRef;
   @ViewChild('pieHojaVida') pieHojaVida: ElementRef;
 
-  constructor(public authService: AuthService, private modalService: NgbModal, private firebaseBDDService: FirebaseBDDService) {}
+  constructor(public authService: AuthService, private modalService: NgbModal, private firebaseBDDService: FirebaseBDDService) {
+  }
 
   ngOnInit() {
     this.postulantes = [];
@@ -31,6 +33,8 @@ export class FiltroComponent implements OnInit {
     this.postulanteSeleccionado = new Postulante();
     this.postulanteSeleccionado.nombreCompleto = '';
     this.filtro = catalogos.titulos;
+    this.contarOfertasPorCampoAmplio();
+    this.contarOfertasPorCampoEspecifico();
   }
 
   mostrarHojaVida(postulanteSeleccionado: Postulante) {
@@ -63,18 +67,55 @@ export class FiltroComponent implements OnInit {
 
   imprimir() {
     html2canvas(this.encabezadoHojaVida.nativeElement).then(canvasEncabezado => {
-        const encabezadoHojaDatosImg = canvasEncabezado.toDataURL('image/png');
-        html2canvas(this.cuerpoHojaVida.nativeElement).then(canvasCuerpo => {
-            const cuerpoHojaDatosImg = canvasCuerpo.toDataURL('image/png');
-            html2canvas(this.pieHojaVida.nativeElement).then(canvasPie => {
-                const pieHojaDatosImg = canvasPie.toDataURL('image/png');
-                const doc = new jsPDF();
-                doc.addImage(encabezadoHojaDatosImg, 'PNG', 10, 10, 190, 7);
-                doc.addImage(cuerpoHojaDatosImg, 'PNG', 30, 17, 160, 265);
-                doc.addImage(pieHojaDatosImg, 'PNG', 10, 288, 190, 7);
-                doc.save('CV_' + this.postulanteSeleccionado.identificacion + '.pdf');
-            });
+      const encabezadoHojaDatosImg = canvasEncabezado.toDataURL('image/png');
+      html2canvas(this.cuerpoHojaVida.nativeElement).then(canvasCuerpo => {
+        const cuerpoHojaDatosImg = canvasCuerpo.toDataURL('image/png');
+        html2canvas(this.pieHojaVida.nativeElement).then(canvasPie => {
+          const pieHojaDatosImg = canvasPie.toDataURL('image/png');
+          const doc = new jsPDF();
+          doc.addImage(encabezadoHojaDatosImg, 'PNG', 10, 10, 190, 7);
+          doc.addImage(cuerpoHojaDatosImg, 'PNG', 30, 17, 160, 265);
+          doc.addImage(pieHojaDatosImg, 'PNG', 10, 288, 190, 7);
+          doc.save('CV_' + this.postulanteSeleccionado.identificacion + '.pdf');
         });
+      });
+    });
+  }
+
+  contarOfertasPorCampoAmplio() {
+    this.filtro.forEach(value => {
+      this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('estudiosRealizados/0/tipo_titulo', value.campo_amplio)
+        .snapshotChanges().subscribe(items => {
+        items.forEach(element => {
+
+          let itemLeido: Postulante;
+          itemLeido = element.payload.val() as Postulante;
+          itemLeido.estudiosRealizados.forEach(estudiosRealizados => {
+            if (value.campo_amplio === estudiosRealizados.tipo_titulo) {
+              value.total = items.length;
+            }
+          });
+        });
+      });
+    });
+  }
+
+  contarOfertasPorCampoEspecifico() {
+    this.filtro.forEach(value => {
+      value.campos_especificos.forEach(campoEspecifico => {
+        this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('estudiosRealizados/0/titulo', campoEspecifico.nombre)
+          .snapshotChanges().subscribe(items => {
+          items.forEach(element => {
+            let itemLeido: Postulante;
+            itemLeido = element.payload.val() as Postulante;
+            itemLeido.estudiosRealizados.forEach(estudioRealizado => {
+              if (campoEspecifico.nombre === estudioRealizado.titulo) {
+                campoEspecifico.total = items.length;
+              }
+            });
+          });
+        });
+      });
     });
   }
 }

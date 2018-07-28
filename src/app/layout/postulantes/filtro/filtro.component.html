@@ -9,16 +9,25 @@
         <div id="accordion" class="accordion" *ngFor="let item of filtro">
           <div class="card mb-0">
             <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
-              <a class="card-title">
-                {{item.campo_amplio}}
-              </a>
+              <span class="row">
+                <span class="col-10">
+                  <a class="card-title">{{item.campo_amplio }}</a>
+                </span>
+                <span class="col-2"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
+              </span>
             </a>
             <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
               <div class="panel-body">
                 <table class="table">
                   <tr *ngFor="let areaEspecifica of item.campos_especificos">
-                    <td>
-                      <a href="javascript:void(0)" (click)="filtrarPorTitulo(areaEspecifica.nombre)">{{areaEspecifica.nombre}}</a>
+                    <td width="80%">
+                      <a href="javascript:void(0)" (click)="filtrarPorTitulo(areaEspecifica.nombre)">
+                        {{areaEspecifica.nombre}}
+                      </a>
+
+                    </td>
+                    <td width="20%">
+                      <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
                     </td>
                   </tr>
                 </table>
@@ -51,16 +60,16 @@
                   <h5 class="col-12 text-left mt-3">Estudios Realizados</h5>
                   <table class="table table-sm">
                     <thead>
-                      <th>Institución</th>
-                      <th>Tipo de Título</th>
-                      <th>Título</th>
+                    <th>Institución</th>
+                    <th>Tipo de Título</th>
+                    <th>Título</th>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of postulanteActual.estudiosRealizados">
-                        <td>{{item.institucion}}</td>
-                        <td>{{item.tipo_titulo}}</td>
-                        <td>{{item.titulo}}</td>
-                      </tr>
+                    <tr *ngFor="let item of postulanteActual.estudiosRealizados">
+                      <td>{{item.institucion}}</td>
+                      <td>{{item.tipo_titulo}}</td>
+                      <td>{{item.titulo}}</td>
+                    </tr>
                     </tbody>
                   </table>
                 </div>
@@ -68,18 +77,18 @@
                   <h5 class="col-12 text-left mt-3">Idiomas</h5>
                   <table class="table table-sm">
                     <thead>
-                      <th>Idioma</th>
-                      <th>Nivel Escrito</th>
-                      <th>Nivel Hablado</th>
-                      <th>Nivel Lectura</th>
+                    <th>Idioma</th>
+                    <th>Nivel Escrito</th>
+                    <th>Nivel Hablado</th>
+                    <th>Nivel Lectura</th>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of postulanteActual.idiomas">
-                        <td>{{item.idioma}}</td>
-                        <td>{{item.nivelEscrito}}</td>
-                        <td>{{item.nivelHablado}}</td>
-                        <td>{{item.nivelLectura}}</td>
-                      </tr>
+                    <tr *ngFor="let item of postulanteActual.idiomas">
+                      <td>{{item.idioma}}</td>
+                      <td>{{item.nivelEscrito}}</td>
+                      <td>{{item.nivelHablado}}</td>
+                      <td>{{item.nivelLectura}}</td>
+                    </tr>
                     </tbody>
                   </table>
                 </div>
@@ -87,21 +96,22 @@
                   <h5 class="col-12 text-left mt-3">Capacitaciones y Certificaciones</h5>
                   <table class="table table-sm">
                     <thead>
-                      <th>Nombre del Evento</th>
-                      <th>Horas</th>
+                    <th>Nombre del Evento</th>
+                    <th>Horas</th>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let item of postulanteActual.capacitaciones">
-                        <td>{{item.nombreEvento}}</td>
-                        <td>{{item.horas}}</td>
-                      </tr>
+                    <tr *ngFor="let item of postulanteActual.capacitaciones">
+                      <td>{{item.nombreEvento}}</td>
+                      <td>{{item.horas}}</td>
+                    </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
             <div class="col-12 m-2 text-left">
-              <button *ngIf="authService.rolActual=='e'" type="submit" class="btn btn-primary" (click)="mostrarHojaVida(postulanteActual)">
+              <button *ngIf="authService.rolActual=='e'" type="submit" class="btn btn-primary"
+                      (click)="mostrarHojaVida(postulanteActual)">
                 <span class="fa fa-info-circle"></span>&nbsp;Mas Información
               </button>
             </div>
@@ -119,11 +129,12 @@
   <div class="modal-body">
     <div class="col-12">
       <div class="col-12 mt-2 mb-2">
-        <div class="col-12" style="background: white; border: 1px #D3D3D3 solid; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
+        <div class="col-12"
+             style="background: white; border: 1px #D3D3D3 solid; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
           <div class="col-12 mt-4" #encabezadoHojaVida>
             <div class="row">
               <div class="col-12 text-right">
-                  <img src="assets/img/logo-saber-hacer_2.png" style="height: 75px; width: auto;">
+                <img src="assets/img/logo-saber-hacer_2.png" style="height: 75px; width: auto;">
               </div>
             </div>
           </div>
@@ -186,7 +197,9 @@
                       Fecha de Nacimiento:
                     </th>
                     <td>
-                      {{postulanteSeleccionado.fechaDeNacimiento.day}} de {{meses[postulanteSeleccionado.fechaDeNacimiento.month-1]}} del {{postulanteSeleccionado.fechaDeNacimiento.year}}
+                      {{postulanteSeleccionado.fechaDeNacimiento.day}} de
+                      {{meses[postulanteSeleccionado.fechaDeNacimiento.month-1]}} del
+                      {{postulanteSeleccionado.fechaDeNacimiento.year}}
                     </td>
                   </tr>
                   <tr>
@@ -234,20 +247,20 @@
               <div class="col-12">
                 <table class="table table-sm">
                   <thead>
-                    <th>Institución</th>
-                    <th>Tipo de Título</th>
-                    <th>Título</th>
-                    <th>Fecha de Registro</th>
-                    <th>Código de Registro SENESCYT</th>
+                  <th>Institución</th>
+                  <th>Tipo de Título</th>
+                  <th>Título</th>
+                  <th>Fecha de Registro</th>
+                  <th>Código de Registro SENESCYT</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.estudiosRealizados">
-                      <td>{{item.institucion}}</td>
-                      <td>{{item.tipo_titulo}}</td>
-                      <td>{{item.titulo}}</td>
-                      <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
-                      <td>{{item.codigoRegistroSENESCYT}}</td>
-                    </tr>
+                  <tr *ngFor="let item of postulanteSeleccionado.estudiosRealizados">
+                    <td>{{item.institucion}}</td>
+                    <td>{{item.tipo_titulo}}</td>
+                    <td>{{item.titulo}}</td>
+                    <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
+                    <td>{{item.codigoRegistroSENESCYT}}</td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -261,24 +274,26 @@
               <div class="col-12">
                 <table class="table table-sm">
                   <thead>
-                    <th>Institución</th>
-                    <th>Tipo de Evento</th>
-                    <th>Nombre del Evento</th>
-                    <th>Tipo de Certificado</th>
-                    <th>Desde</th>
-                    <th>Hasta</th>
-                    <th>Horas</th>
+                  <th>Institución</th>
+                  <th>Tipo de Evento</th>
+                  <th>Nombre del Evento</th>
+                  <th>Tipo de Certificado</th>
+                  <th>Desde</th>
+                  <th>Hasta</th>
+                  <th>Horas</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.capacitaciones">
-                      <td>{{item.institucion}}</td>
-                      <td>{{item.tipoEvento}}</td>
-                      <td>{{item.nombreEvento}}</td>
-                      <td>{{item.tipoCertificado}}</td>
-                      <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
-                      <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
-                      <td>{{item.horas}}</td>
-                    </tr>
+                  <tr *ngFor="let item of postulanteSeleccionado.capacitaciones">
+                    <td>{{item.institucion}}</td>
+                    <td>{{item.tipoEvento}}</td>
+                    <td>{{item.nombreEvento}}</td>
+                    <td>{{item.tipoCertificado}}</td>
+                    <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+                    <td>
+                      {{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
+                    </td>
+                    <td>{{item.horas}}</td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -292,18 +307,18 @@
               <div class="col-12">
                 <table class="table table-sm">
                   <thead>
-                    <th>Idioma</th>
-                    <th>Nivel Escrito</th>
-                    <th>Nivel Hablado</th>
-                    <th>Nivel Lectura</th>
+                  <th>Idioma</th>
+                  <th>Nivel Escrito</th>
+                  <th>Nivel Hablado</th>
+                  <th>Nivel Lectura</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.idiomas">
-                      <td>{{item.idioma}}</td>
-                      <td>{{item.nivelEscrito}}</td>
-                      <td>{{item.nivelHablado}}</td>
-                      <td>{{item.nivelLectura}}</td>
-                    </tr>
+                  <tr *ngFor="let item of postulanteSeleccionado.idiomas">
+                    <td>{{item.idioma}}</td>
+                    <td>{{item.nivelEscrito}}</td>
+                    <td>{{item.nivelHablado}}</td>
+                    <td>{{item.nivelLectura}}</td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -317,23 +332,28 @@
               <div class="col-12">
                 <table class="table table-sm">
                   <thead>
-                    <th>Empleador</th>
-                    <th>Cargo Desempeñado</th>
-                    <th>Descripción del Cargo</th>
-                    <th>Fecha de Inicio</th>
-                    <th>Fecha de Salida</th>
-                    <th>Actual</th>
+                  <th>Empleador</th>
+                  <th>Cargo Desempeñado</th>
+                  <th>Descripción del Cargo</th>
+                  <th>Fecha de Inicio</th>
+                  <th>Fecha de Salida</th>
+                  <th>Actual</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.experienciasLaborales">
-                      <td>{{item.empleador}}</td>
-                      <td>{{item.cargoDesempenado}}</td>
-                      <td><p class="text-justify">{{item.descripcionCargo}}</p></td>
-                      <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
-                      <td *ngIf="item.actualmenteVigente"></td>
-                      <td *ngIf="!item.actualmenteVigente">{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
-                      <td><div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span class="badge badge-success">Actual</span> </div></td>
-                    </tr>
+                  <tr *ngFor="let item of postulanteSeleccionado.experienciasLaborales">
+                    <td>{{item.empleador}}</td>
+                    <td>{{item.cargoDesempenado}}</td>
+                    <td><p class="text-justify">{{item.descripcionCargo}}</p></td>
+                    <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+                    <td *ngIf="item.actualmenteVigente"></td>
+                    <td *ngIf="!item.actualmenteVigente">
+                      {{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
+                    </td>
+                    <td>
+                      <div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span class="badge badge-success">Actual</span>
+                      </div>
+                    </td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -347,16 +367,16 @@
               <div class="col-12">
                 <table class="table table-sm">
                   <thead>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Nivel</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Nivel</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.fortalezas">
-                      <td>{{item.nombre}}</td>
-                      <td>{{item.descripcion}}</td>
-                      <td>{{item.nivel}}</td>
-                    </tr>
+                  <tr *ngFor="let item of postulanteSeleccionado.fortalezas">
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.descripcion}}</td>
+                    <td>{{item.nivel}}</td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -370,18 +390,18 @@
               <div class="col-12">
                 <table class="table table-sm">
                   <thead>
-                    <th>Nombres y Apellidos</th>
-                    <th>Cargo</th>
-                    <th>Empresa</th>
-                    <th>Teléfono</th>
+                  <th>Nombres y Apellidos</th>
+                  <th>Cargo</th>
+                  <th>Empresa</th>
+                  <th>Teléfono</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.referenciasPersonales">
-                      <td>{{item.nombresApellidos}}</td>
-                      <td>{{item.cargo}}</td>
-                      <td>{{item.empresa}}</td>
-                      <td>{{item.telefono}}</td>
-                    </tr>
+                  <tr *ngFor="let item of postulanteSeleccionado.referenciasPersonales">
+                    <td>{{item.nombresApellidos}}</td>
+                    <td>{{item.cargo}}</td>
+                    <td>{{item.empresa}}</td>
+                    <td>{{item.telefono}}</td>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -395,7 +415,8 @@
             </div>
           </div>
         </div>
-      </div>`
+      </div>
+      `
     </div>
   </div>
   <div class="modal-footer">
