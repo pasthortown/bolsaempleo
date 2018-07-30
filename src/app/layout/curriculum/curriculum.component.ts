@@ -29,13 +29,13 @@ export class CurriculumComponent implements OnInit {
 
   ngOnInit() {
     this.curriculum = new Postulante();
+    this.curriculum.fechaDeNacimiento = {year: 2018, month: 9, day: 8};
     this.leerCurriculum();
   }
 
   leerCurriculum() {
     this.firebaseBDDService.firebaseControllerPostulantes.getId('id', this.getId())
       .snapshotChanges().subscribe(items => {
-      this.curriculum = null;
       items.forEach(element => {
         let itemLeido: Postulante;
         itemLeido = element.payload.val() as Postulante;

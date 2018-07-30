@@ -28,6 +28,7 @@ export class FiltroComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.authService.usuarioNegocio);
     this.postulantes = [];
     this.filtroDirecto();
     this.postulanteSeleccionado = new Postulante();
