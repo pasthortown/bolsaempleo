@@ -1,120 +1,128 @@
-<div class="col-12">
-  <div class="row mt-4">
-    <div class="col-4">
-      <h6 class="bg-warning form-control">
-        <i class="fa fa-filter" aria-hidden="true"></i>
-        Filtrar Por
-      </h6>
-      <div class="card col-12">
+<div class="row">
+  <div class="col-3">
+    <div class="row">
+      <div class="col-12">
+        <h6 class="bg-warning form-control">
+          <i class="fa fa-filter" aria-hidden="true"></i>
+          Filtros
+        </h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 main-header">
         <div id="accordion" class="accordion" *ngFor="let item of filtro">
-          <div class="card mb-0">
-            <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
-              <span class="row">
-                <span class="col-10">
-                  <a class="card-title">{{item.campo_amplio }}</a>
+          <div class="card mb-0 bg-ligth">
+            <div class="card mb-0">
+              <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
+                <span class="row">
+                  <span class="col-10">
+                    <a class="card-title">{{item.campo_amplio }}</a>
+                  </span>
+                  <span class="col-2"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
                 </span>
-                <span class="col-2"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
-              </span>
-            </a>
-            <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
-              <div class="panel-body">
-                <table class="table">
-                  <tr *ngFor="let areaEspecifica of item.campos_especificos">
-                    <td width="80%">
-                      <a href="javascript:void(0)" (click)="filtrarPorTitulo(areaEspecifica.nombre)">
-                        {{areaEspecifica.nombre}}
-                      </a>
+              </a>
+              <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
+                <div class="panel-body">
+                  <table class="table">
+                    <tr *ngFor="let areaEspecifica of item.campos_especificos">
+                      <td width="80%">
+                        <a href="javascript:void(0)" (click)="filtrarPorTitulo(areaEspecifica.nombre)">
+                          {{areaEspecifica.nombre}}
+                        </a>
 
-                    </td>
-                    <td width="20%">
-                      <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
-                    </td>
-                  </tr>
-                </table>
+                      </td>
+                      <td width="20%">
+                        <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-8">
-      <div class="row">
-        <div class="input-group mb-3">
+  </div>
+  <div class="col-9">
+    <div class="row">
+      <div class="col-12">
+        <div class="input-group">
           <input type="text" class="form-control" placeholder="Búsqueda" [(ngModel)]="criterioBusqueda">
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button" (click)="filtroDirecto()">
+            <button class="btn btn-info" type="button" (click)="filtroDirecto()">
               <span class="fa fa-search"></span>&nbsp;Buscar
             </button>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 card mt-2" *ngFor="let postulanteActual of postulantes">
-          <div class="card-body">
-            <div class="card-title">
-              <div class="row">
-                <div class="col-12">
-                  <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
-                </div>
-                <div class="col-12">
-                  <h5 class="col-12 text-left mt-3">Estudios Realizados</h5>
-                  <table class="table table-sm">
-                    <thead>
-                    <th>Institución</th>
-                    <th>Tipo de Título</th>
-                    <th>Título</th>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let item of postulanteActual.estudiosRealizados">
-                      <td>{{item.institucion}}</td>
-                      <td>{{item.tipo_titulo}}</td>
-                      <td>{{item.titulo}}</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-12">
-                  <h5 class="col-12 text-left mt-3">Idiomas</h5>
-                  <table class="table table-sm">
-                    <thead>
-                    <th>Idioma</th>
-                    <th>Nivel Escrito</th>
-                    <th>Nivel Hablado</th>
-                    <th>Nivel Lectura</th>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let item of postulanteActual.idiomas">
-                      <td>{{item.idioma}}</td>
-                      <td>{{item.nivelEscrito}}</td>
-                      <td>{{item.nivelHablado}}</td>
-                      <td>{{item.nivelLectura}}</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-12">
-                  <h5 class="col-12 text-left mt-3">Capacitaciones y Certificaciones</h5>
-                  <table class="table table-sm">
-                    <thead>
-                    <th>Nombre del Evento</th>
-                    <th>Horas</th>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let item of postulanteActual.capacitaciones">
-                      <td>{{item.nombreEvento}}</td>
-                      <td>{{item.horas}}</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
+    </div>
+    <div class="row">
+      <div class="col-12 card mt-2" *ngFor="let postulanteActual of postulantes">
+        <div class="card-body">
+          <div class="card-title">
+            <div class="row">
+              <div class="col-12">
+                <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
+              </div>
+              <div class="col-12">
+                <h5 class="col-12 text-left mt-3">Estudios Realizados</h5>
+                <table class="table table-sm">
+                  <thead>
+                  <th>Institución</th>
+                  <th>Tipo de Título</th>
+                  <th>Título</th>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of postulanteActual.estudiosRealizados">
+                    <td>{{item.institucion}}</td>
+                    <td>{{item.tipo_titulo}}</td>
+                    <td>{{item.titulo}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-12">
+                <h5 class="col-12 text-left mt-3">Idiomas</h5>
+                <table class="table table-sm">
+                  <thead>
+                  <th>Idioma</th>
+                  <th>Nivel Escrito</th>
+                  <th>Nivel Hablado</th>
+                  <th>Nivel Lectura</th>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of postulanteActual.idiomas">
+                    <td>{{item.idioma}}</td>
+                    <td>{{item.nivelEscrito}}</td>
+                    <td>{{item.nivelHablado}}</td>
+                    <td>{{item.nivelLectura}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-12">
+                <h5 class="col-12 text-left mt-3">Capacitaciones y Certificaciones</h5>
+                <table class="table table-sm">
+                  <thead>
+                  <th>Nombre del Evento</th>
+                  <th>Horas</th>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of postulanteActual.capacitaciones">
+                    <td>{{item.nombreEvento}}</td>
+                    <td>{{item.horas}}</td>
+                  </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-            <div class="col-12 m-2 text-left">
-              <button *ngIf="authService.rolActual=='e'" type="submit" class="btn btn-primary"
-                      (click)="mostrarHojaVida(postulanteActual)">
-                <span class="fa fa-info-circle"></span>&nbsp;Mas Información
-              </button>
-            </div>
+          </div>
+          <div class="col-12 m-2 text-left">
+            <button *ngIf="authService.rolActual=='e'" type="submit" class="btn btn-primary"
+                    (click)="mostrarHojaVida(postulanteActual)">
+              <span class="fa fa-info-circle"></span>&nbsp;Mas Información
+            </button>
           </div>
         </div>
       </div>

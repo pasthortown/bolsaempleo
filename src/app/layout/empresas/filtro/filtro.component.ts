@@ -190,6 +190,7 @@ export class FiltroComponent implements OnInit {
   contarOfertasPorCampoAmplio() {
     this.ofertas = [];
     this.areas.forEach(value => {
+      value.total = 0;
       this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoAmplio', value.campo_amplio)
         .snapshotChanges().subscribe(items => {
         items.forEach(element => {
@@ -206,6 +207,7 @@ export class FiltroComponent implements OnInit {
   contarOfertasPorCampoEspecifico() {
     this.ofertas = [];
     this.areas.forEach(value => {
+      value.total = 0;
       value.campos_especificos.forEach(campoEspecifico => {
         this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoEspecifico', campoEspecifico.nombre)
           .snapshotChanges().subscribe(items => {
