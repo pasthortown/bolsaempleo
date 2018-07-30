@@ -76,6 +76,7 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   openOfertaLaboral(content, oferta: Oferta, editar) {
+    const errores = this.validarCamposObligatorios(this.oferta);
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
@@ -86,10 +87,10 @@ export class OfertasLaboralesComponent implements OnInit {
     } else {
       this.oferta = new Oferta();
     }
+
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
-        // const errores = this.validarCamposObligatorios(item);
         if (true) {
           if (resultAceptar === 'save') {
             if (editar) {
@@ -100,14 +101,6 @@ export class OfertasLaboralesComponent implements OnInit {
             }
           }
         } else {
-          /*swal({
-            position: 'center',
-            type: 'error',
-            title: 'Los siguientes campos son requeridos:!',
-            text: errores,
-            showConfirmButton: true,
-            timer: 15000
-          });*/
         }
       }), (resultCancel => {
 
@@ -226,16 +219,12 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   validarCamposObligatorios(oferta: Oferta): string {
-    let errores = '';
+    let errores = 'save';
     if (oferta.codigo == null || oferta.codigo == '') {
       errores = errores + 'Código';
     }
-    if (oferta.contacto == null || oferta.contacto == '') {
-      errores = errores + ', Contacto';
-    }
-    if (oferta.correoElectronico == null || oferta.correoElectronico == '') {
-      errores = errores + ', Correo Electrónico';
-    }
+    // if (oferta.contacto == null || oferta.contacto == '') {errores = errores + ', Contacto';}
+    // if (oferta.correoElectronico == null || oferta.correoElectronico == '') {errores = errores + ', Correo Electrónico';}
     return errores;
   }
 
