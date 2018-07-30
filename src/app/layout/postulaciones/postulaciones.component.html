@@ -4,7 +4,7 @@
 <div class="row mt-2">
   <div class="col-12">
     <div class="card m-2" *ngFor="let postulacion of misPostulaciones">
-      <div class="card-body">
+      <div *ngIf="postulacion.oferta != null" class="card-body">
         <div class="card-title">
           <!--Grid Ofertas-->
           <div class="row" style="overflow: auto">
