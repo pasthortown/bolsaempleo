@@ -6,47 +6,349 @@
     <div class="card m-2" *ngFor="let postulacion of misPostulaciones">
       <div class="card-body">
         <div class="card-title">
-         <div class="row">
-           <div class="col-8">
-              <h3 class="col-12 text-left">{{postulacion.empresa.nombreComercial}}</h3>
-              <h5 class="col-12 text-left">{{postulacion.oferta.cargo}}</h5>
-           </div>
-           <div class="col-4 text-right">
-              <table class="col-12">
-                <tbody>
-                  <tr>
-                    <th>
-                      <i>Fecha de Aplicación:</i>&nbsp;
-                    </th>
-                    <td class="text-left">
-                      <strong style="color: silver;"><i>dsds</i></strong>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>
-                      <i>Fecha de Anuncio:</i>&nbsp;
-                    </th>
-                    <td class="text-left">
-                      <strong style="color: silver;"><i>2018/7/19</i></strong>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-           </div>
-         </div>
-        </div>
-        <p class="card-text text-justify">
-          {{postulacion.oferta.actividades}}
-        </p>
-        <div class="col-12 m-2 text-left">
-          <button type="submit" class="btn btn-primary" (click)="open(content)">
-            <span class="fa fa-info-circle"></span>&nbsp;Mas Información
-          </button>
+          <!--Grid Ofertas-->
+          <div class="row" style="overflow: auto">
+            <div class="col-12">
+              <div class="card mt-1" style="height: 310px">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col-8">
+                      <h6>
+                        <a href="javascript:void(0)" class="col-12 text-left"
+                           (click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">
+                          {{postulacion.oferta.cargo}}
+                        </a>
+                      </h6>
+                      <h6 class="text-muted">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        {{postulacion.oferta.canton + ', ' +postulacion.oferta.provincia}}
+                      </h6>
+                    </div>
+                    <div class="col-4">
+                      <table class="col-12">
+                        <tbody>
+                        <tr>
+                          <th>
+                            <i>Inicio Publicación:</i>&nbsp;
+                          </th>
+                          <td class="text-left text-muted">
+                            <strong>
+                              <i>
+                                {{
+                                postulacion.oferta.inicioPublicacion.year
+                                + '/' + postulacion.oferta.inicioPublicacion.month
+                                + '/' + postulacion.oferta.inicioPublicacion.day
+                                }}
+                              </i>
+                            </strong>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>
+                            <i>Fin Publicación:</i>&nbsp;
+                          </th>
+                          <td class="text-left text-muted">
+                            <strong>
+                              <i>
+                                {{postulacion.oferta.finPublicacion.year
+                                + '/' + postulacion.oferta.finPublicacion.month
+                                + '/' + postulacion.oferta.finPublicacion.day
+                                }}
+                              </i></strong>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12">
+                      <h6 class="text-muted" style="overflow: auto;height: 80px">
+                        {{postulacion.oferta.actividades}}
+                      </h6>
+                      <button class="btn btn-primary btn-sm pull-right"
+                              (click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">
+                        <span class="fa fa-info-circle"></span>&nbsp;Más Información
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer text-muted">
+                  <div class="input-group">
+                    <h6 class="text-muted text-uppercase">
+                      <i class="fa fa-user" aria-hidden="true"></i>
+                      {{postulacion.oferta.contacto}}
+                    </h6>
+                    <h6 class="text-muted ml-4">
+                      <i class="fa fa-mobile-phone" aria-hidden="true"></i>
+                      {{postulacion.oferta.telefonoCelular}}
+                    </h6>
+                    <h6 class="text-muted ml-4">
+                      <i class="fa fa-phone" aria-hidden="true"></i>
+                      {{postulacion.oferta.telefonoFijo}}
+                    </h6>
+                    <h6 class="text-muted ml-4">
+                      <i class="fa fa-envelope" aria-hidden="true"></i>
+                      {{postulacion.oferta.correoElectronico}}
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<ng-template #content let-c="close" let-d="dismiss">
-  <app-detalle-oferta-laboral></app-detalle-oferta-laboral>
+<ng-template #modalOfertaLaboral let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-lg">
+    <div class="card">
+      <div class="card-header bg-primary">
+        <h3 class="text-white">Oferta Laboral</h3>
+
+      </div>
+      <div class="card-body m-1">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Codigo !-->
+            <div class="form-group">
+              <label for="editCodigo" class="col-form-label">
+                <b>Código:</b>
+              </label>
+              <label class="form-control text-uppercase" id="editCodigo">
+                {{oferta.codigo}}
+              </label>
+            </div>
+
+            <!-- Provincia !-->
+            <div class="form-group ">
+              <label for="editProvincia" class="col-form-label">
+                <b>Provincia:</b>
+              </label>
+              <label class="form-control" id="editProvincia">
+                {{oferta.provincia}}
+              </label>
+            </div>
+
+            <!-- Canton !-->
+            <div class="form-group ">
+              <label for="editCanton" class="col-form-label">
+                <b>Cantón:</b>
+              </label>
+              <label class="form-control" id="editCanton">{{oferta.canton}}</label>
+            </div>
+
+            <!-- Inicio Publicacion !-->
+            <div class="form-group datepicker-input">
+              <label for="editInicioPublicacion" class="col-form-label">
+                <b>Inicio Publicación:</b>
+              </label>
+              <!--<input class="form-control" id="editInicioPublicacion" name="dp" ngbDatepicker-->
+              <!--[(ngModel)]="oferta.inicioPublicacion" readonly>-->
+            </div>
+
+            <!-- Fin Publicacion !-->
+            <div class="form-group datepicker-input">
+              <label for="editFinPublicacion" class="col-form-label">
+                <b>Fin Publicación:</b>
+              </label>
+              <!--<input [(ngModel)]="oferta.finPublicacion" class="form-control" id="editFinPublicacion" name="dp"-->
+              <!--ngbDatepicker #d2="ngbDatepicker" disabled>-->
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!-- Contacto !-->
+            <div class="form-group">
+              <label for="editContacto" class="col-form-label">
+                <b>Contacto:</b>
+              </label>
+              <label class="form-control text-uppercase" id="editContacto">
+                {{oferta.contacto}}
+              </label>
+            </div>
+
+            <!-- Correo Electronico !-->
+            <div class="form-group ">
+              <label for="editCorreoElectronico" class="col-form-label">
+                <b>Correo:</b>
+              </label>
+              <label class="form-control text-lowercase" id="editCorreoElectronico">
+                {{oferta.correoElectronico}}
+              </label>
+            </div>
+
+            <!-- Telefono Fijo !-->
+            <div class="form-group ">
+              <label for="editTelefonoFijo" class="col-form-label">
+                <b>Teléfono Fijo:</b>
+              </label>
+              <label class="form-control" id="editTelefonoFijo">
+                {{oferta.telefonoFijo}}
+              </label>
+            </div>
+
+            <!-- Telefono Celular !-->
+            <div class="form-group ">
+              <label for="editTelefonoCelular" class="col-form-label">
+                <b>Teléfono Celular:</b>
+              </label>
+              <label class="form-control" id="editTelefonoCelular">
+                {{oferta.telefonoCelular}}
+              </label>
+            </div>
+
+            <!-- Tipo Contrato !-->
+            <div class="form-group ">
+              <label for="editTipoContrato" class="col-form-label">
+                <b>Tipo Contrato:</b>
+              </label>
+              <label class="form-control" id="editTipoContrato">
+                {{oferta.tipoContrato}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="card">
+      <div class="card-header bg-info">
+        <h3 class="text-white">Perfil del Cargo</h3>
+      </div>
+      <div class="card-body  m-1">
+        <!-- Cargo !-->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label for="editCargo" class="col-form-label ">
+                <b>Cargo:</b>
+              </label>
+              <label class="form-control text-uppercase" name="cargo" id="editCargo" style="overflow: auto;">
+                {{oferta.cargo}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <!-- Camp Amplio y Especifico !-->
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group ">
+              <label for="campoAmplio" class="col-form-label">
+                <b>Campo Amplio:</b>
+              </label>
+              <label class="form-control" id="campoAmplio" style="overflow: auto;height: 75px">
+                {{oferta.campoAmplio}}
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group ">
+              <label for="campoEspecifico" class="col-form-label">
+                <b>Campo Específico:</b>
+              </label>
+              <label class="form-control" id="campoEspecifico" style="overflow: auto;height: 75px">
+                {{oferta.campoEspecifico}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- Jornada !-->
+          <div class="col-3">
+            <div class="form-group ">
+              <label for="jornada" class="col-form-label">
+                <b>Jornada:</b>
+              </label>
+              <label class="form-control" id="jornada">
+                {{oferta.jornada}}
+              </label>
+            </div>
+          </div>
+          <!-- Numero de Puestos !-->
+          <div class="col-3">
+            <div class="form-group ">
+              <label for="numeroPuestos" class="col-form-label">
+                <b>Puestos:</b>
+              </label>
+              <label class="form-control" id="numeroPuestos">
+                {{oferta.numeroPuestos}}
+              </label>
+            </div>
+          </div>
+          <!-- Remuneracion !-->
+          <div class="col-3">
+            <div class="form-group ">
+              <label for="remuneracion" class="col-form-label">
+                <b>Remuneración:</b>
+              </label>
+              <label class="form-control" id="remuneracion">
+                {{oferta.remuneracion}}
+              </label>
+            </div>
+          </div>
+          <!-- Tiempo Experiencia!-->
+          <div class="col-3">
+            <div class="form-group ">
+              <label for="experiencia" class="col-form-label">
+                <b>Tiempo Experiencia:</b>
+              </label>
+              <label class="form-control" id="experiencia">
+                {{oferta.tiempoExperiencia}}
+              </label>
+            </div>
+          </div>
+          <!-- Horas de Capacitacion !-->
+          <div class="col-6">
+            <div class="form-group ">
+              <label for="horasCapacitacion" class="col-form-label">
+                <b>Horas de Capacitación:</b>
+              </label>
+              <label class="form-control" id="horasCapacitacion">
+                {{oferta.horasCapacitacion}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <!-- Actividades !-->
+            <div class="form-group ">
+              <label for="actividades" class="col-form-label">
+                <b>Actividades:</b>
+              </label>
+              <label class="form-control text-uppercase" id="actividades" style="overflow: auto;height: 120px">
+                {{oferta.actividades}}
+              </label>
+            </div>
+            <!-- Informacion Adicional !-->
+            <div class="form-group ">
+              <label for="informacionAdicional" class="col-form-label">
+                <b>Información Adicional:</b>
+              </label>
+              <label class="form-control text-uppercase texto" id="informacionAdicional"
+                     style="overflow: auto;height: 120px">
+                {{oferta.informacionAdicional}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary btn-lg" title="Cerrar" (click)="c('close')">
+      <i class="fa fa-close" aria-hidden="true"> Cerrar</i>
+    </button>
+  </div>
 </ng-template>

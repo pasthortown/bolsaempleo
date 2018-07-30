@@ -11,60 +11,35 @@
     </div>
     <div class="row">
       <div class="col-12 main-header">
-        <div id="accordion" class="accordion" *ngFor="let area of areas">
+        <div id="accordion" class="accordion" *ngFor="let item of areas">
           <div class="card mb-0 bg-ligth">
-
-            <div *ngIf="area.total; then thenBlock; else elseBlock"></div>
-
-            <ng-template #thenBlock>
-              <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+area.id"
-                 (click)="filtrarPorCampoAmplio(area.campo_amplio)">
-                <div class="input-group">
-                  <a class="card-title">
-                    {{area.campo_amplio }}
-                  </a>
-                  <div *ngIf="area.total" class="text-dark">&nbsp;({{ area.total}})</div>
-                </div>
+            <div class="card mb-0">
+              <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
+                <span class="row">
+                  <span class="col-10">
+                    <a class="card-title">{{item.campo_amplio }}</a>
+                  </span>
+                  <span class="col-2"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
+                </span>
               </a>
-
-              <div id="{{area.id}}" class="card-body collapse" data-parent="#accordion">
+              <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
                 <div class="panel-body">
                   <table class="table">
-                    <tr *ngFor="let areaEspecifica of area.campos_especificos">
-                      <td>
-                        <div
-                          *ngIf="areaEspecifica.total; then thenBlockAreaEspecifica; else elseBlockAreaEspecifica"></div>
+                    <tr *ngFor="let areaEspecifica of item.campos_especificos">
+                      <td width="80%">
+                        <a href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica.nombre)">
+                          {{areaEspecifica.nombre}}
+                        </a>
 
-                        <ng-template #thenBlockAreaEspecifica>
-                          <a href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica)">
-                            {{areaEspecifica.nombre}}
-                          </a>
-                          <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
-                        </ng-template>
-
-                        <ng-template #elseBlockAreaEspecifica>
-                          <a disabled>
-                            {{areaEspecifica.nombre}}
-                          </a>
-                          <div class="text-dark">&nbsp;(0)</div>
-                        </ng-template>
+                      </td>
+                      <td width="20%">
+                        <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
                       </td>
                     </tr>
                   </table>
                 </div>
               </div>
-            </ng-template>
-
-            <ng-template #elseBlock>
-              <a class="card-header collapsed" data-toggle="collapse" disabled>
-                <div class="input-group">
-                  <a class="card-title">
-                    {{area.campo_amplio }}
-                  </a>
-                  <div class="text-dark">&nbsp;(0)</div>
-                </div>
-              </a>
-            </ng-template>
+            </div>
           </div>
         </div>
       </div>

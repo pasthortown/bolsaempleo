@@ -1,13 +1,13 @@
-import { PostulacionDiccionario } from './../../models/miPostulacionDiccionario';
-import { Empresa } from '../../models/empresa';
-import { AuthService } from '../../services/auth.service';
-import { FirebaseBDDService } from '../../services/firebase-bdd.service';
-import { Postulacion } from '../../models/postulacion';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Component, OnInit } from '@angular/core';
-import { Postulante } from '../../models/postulante';
-import { PostulanteService } from '../../services/postulante.service';
-import { Oferta } from '../../models/oferta';
+import {PostulacionDiccionario} from './../../models/miPostulacionDiccionario';
+import {Empresa} from '../../models/empresa';
+import {AuthService} from '../../services/auth.service';
+import {FirebaseBDDService} from '../../services/firebase-bdd.service';
+import {Postulacion} from '../../models/postulacion';
+import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+import {Component, OnInit} from '@angular/core';
+import {Postulante} from '../../models/postulante';
+import {PostulanteService} from '../../services/postulante.service';
+import {Oferta} from '../../models/oferta';
 
 @Component({
   selector: 'app-postulaciones',
@@ -17,22 +17,25 @@ import { Oferta } from '../../models/oferta';
 export class PostulacionesComponent implements OnInit {
   misPostulacionesFB: Array<Postulacion> = [];
   misPostulaciones: Array<PostulacionDiccionario> = [];
+  oferta: Oferta;
 
-  constructor(private authService: AuthService, private postulanteService: PostulanteService, private modalService: NgbModal, private firebaseBDDService: FirebaseBDDService) { }
+  constructor(private authService: AuthService, private postulanteService: PostulanteService, private modalService: NgbModal, private firebaseBDDService: FirebaseBDDService) {
+  }
 
   ngOnInit() {
     this.postulanteService.postulante = this.authService.usuarioNegocio as Postulante;
+    this.oferta = new Oferta();
     this.getMisPostulaciones();
   }
 
   open(content) {
     this.modalService.open(content)
-    .result
-    .then((resultModal => {
+      .result
+      .then((resultModal => {
 
-    }), (resultCancel => {
+      }), (resultCancel => {
 
-    }));
+      }));
   }
 
   getMisPostulaciones() {
@@ -63,7 +66,45 @@ export class PostulacionesComponent implements OnInit {
           });
         });
         this.misPostulaciones.push(postulacionDiccionario);
+        console.log(this.misPostulaciones);
       });
     });
+  }
+
+  openOfertaLaboral(content, oferta: Oferta, editar) {
+    const logoutScreenOptions: NgbModalOptions = {
+      size: 'lg'
+    };
+    if (editar) {
+      this.oferta = oferta;
+    } else {
+      this.oferta = new Oferta();
+    }
+    this.modalService.open(content, logoutScreenOptions)
+      .result
+      .then((resultAceptar => {
+        // const errores = this.validarCamposObligatorios(item);
+        if (true) {
+          if (resultAceptar === 'save') {
+            if (editar) {
+              //        this.actualizar();
+            } else {
+              //      this.insertar();
+              //    this.agregarOferta();
+            }
+          }
+        } else {
+          /*swal({
+            position: 'center',
+            type: 'error',
+            title: 'Los siguientes campos son requeridos:!',
+            text: errores,
+            showConfirmButton: true,
+            timer: 15000
+          });*/
+        }
+      }), (resultCancel => {
+
+      }));
   }
 }
