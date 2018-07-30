@@ -23,7 +23,7 @@ export class CurriculumComponent implements OnInit {
 
   constructor(
     public postulanteService: PostulanteService,
-    private authService: AuthService,
+    public authService: AuthService,
     private firebaseBDDService: FirebaseBDDService) {
   }
 
@@ -63,7 +63,10 @@ export class CurriculumComponent implements OnInit {
   }
 
   imprimir() {
-    return xepOnline.Formatter.Format('curriculum', {render: 'download'});
+    return xepOnline.Formatter.Format('curriculum', {
+      render: 'download',
+      filename: 'CV - ' + this.curriculum.nombreCompleto.toLocaleUpperCase() + ' (' + this.curriculum.identificacion + ')'
+    });
   }
 
   getQueryParams(name) {

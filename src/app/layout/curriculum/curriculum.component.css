@@ -46,3 +46,7 @@
   /* symbol for "collapsed" panels */
   content: "\f067";
 }
+
+h4{
+  font-weight: bold;
+}
