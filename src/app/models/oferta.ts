@@ -3,8 +3,8 @@ export class Oferta {
   idEmpresa: string;
   codigo: string;
   cargo: string;
-  inicioPublicacion: Date;
-  finPublicacion: Date;
+  inicioPublicacion: any;
+  finPublicacion: any;
   tipoContrato: string;
   contacto: string;
   correoElectronico: string;

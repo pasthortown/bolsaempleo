@@ -154,8 +154,9 @@
               <label for="editInicioPublicacion" class="col-form-label">
                 <b>Inicio Publicación:</b>
               </label>
-              <!--<input class="form-control" id="editInicioPublicacion" name="dp" ngbDatepicker-->
-              <!--[(ngModel)]="oferta.inicioPublicacion" readonly>-->
+              <div class="form-control">
+                {{oferta.inicioPublicacion.year + '/' + oferta.inicioPublicacion.month + '/' + oferta.inicioPublicacion.day }}
+              </div>
             </div>
 
             <!-- Fin Publicacion !-->
@@ -163,8 +164,9 @@
               <label for="editFinPublicacion" class="col-form-label">
                 <b>Fin Publicación:</b>
               </label>
-              <!--<input [(ngModel)]="oferta.finPublicacion" class="form-control" id="editFinPublicacion" name="dp"-->
-              <!--ngbDatepicker #d2="ngbDatepicker" disabled>-->
+              <div class="form-control">
+                {{oferta.finPublicacion.year + '/' + oferta.finPublicacion.month + '/' + oferta.finPublicacion.day }}
+              </div>
             </div>
           </div>
           <div class="col-lg-6">
