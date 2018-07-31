@@ -93,6 +93,19 @@ export class OfertasLaboralesComponent implements OnInit {
       .then((resultAceptar => {
         if (true) {
           if (resultAceptar === 'save') {
+            let fechaInicio = new Date(this.oferta.inicioPublicacion.year + '/' + this.oferta.inicioPublicacion.month + '/' + this.oferta.inicioPublicacion.day);
+            let fechaFin = new Date(this.oferta.finPublicacion.year + '/' + this.oferta.finPublicacion.month + '/' + this.oferta.finPublicacion.day);
+            if (fechaFin < fechaInicio) {
+              swal({
+                position: 'center',
+                type: 'warning',
+                title: 'Datos Incorrectos',
+                text: 'Hay un error en las fechas ingresadas.',
+                showConfirmButton: false,
+                timer: 2000
+              });
+              return;
+            }
             if (editar) {
               this.actualizar();
             } else {
