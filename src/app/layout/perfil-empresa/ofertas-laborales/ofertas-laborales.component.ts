@@ -98,9 +98,11 @@ export class OfertasLaboralesComponent implements OnInit {
             }
             if (editar) {
               this.actualizar();
+              this.ordenarPorAntiguedad(true);
             } else {
               this.insertar();
               this.agregarOferta();
+              this.ordenarPorAntiguedad(true);
             }
           }
         } else {
@@ -110,8 +112,26 @@ export class OfertasLaboralesComponent implements OnInit {
       }));
   }
 
-  ordenarPorAntiguedad() {
-
+  ordenarPorAntiguedad(descendente: boolean) {
+    this.ofertaService.ofertas.sort((n1, n2) => {
+      const fechaInicio = new Date(n1.inicioPublicacion.year + '/' + n1.inicioPublicacion.month + '/' + n1.inicioPublicacion.day);
+      const fechaFin = new Date(n2.inicioPublicacion.year + '/' + n2.inicioPublicacion.month + '/' + n2.inicioPublicacion.day);
+      if (fechaFin > fechaInicio) {
+        if ( descendente ) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+      if (fechaFin < fechaInicio) {
+        if ( descendente ) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+      return 0;
+    });
   }
 
   compararFechas(fechaMenor: any, fechaMayor: any): boolean {
