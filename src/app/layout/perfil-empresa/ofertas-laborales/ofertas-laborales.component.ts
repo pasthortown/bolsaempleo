@@ -98,12 +98,11 @@ export class OfertasLaboralesComponent implements OnInit {
             }
             if (editar) {
               this.actualizar();
-              this.ordenarPorAntiguedad(true);
             } else {
               this.insertar();
               this.agregarOferta();
-              this.ordenarPorAntiguedad(true);
             }
+            this.ordenarPorAntiguedad(true);
           }
         } else {
         }
