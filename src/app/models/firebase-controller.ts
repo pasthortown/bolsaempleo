@@ -38,7 +38,7 @@ export class FirebaseController {
       return ref;
     });
   }
-
+  
   insertar(objeto: any) {
     this.coleccion.push(objeto);
   }

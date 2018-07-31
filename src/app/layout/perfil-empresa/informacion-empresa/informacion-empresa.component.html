@@ -8,10 +8,10 @@
               <input type="file" style="visibility: hidden; height: 0px" class="form-control btn" id="logo"
                      placeholder="logo" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
               <button class="btn btn-light" >
-              <img src="{{empresaService.empresa.fotografia}}" class="col-8 m-3"
+              <img src="{{empresaService.empresa.fotografia}}" class="rounded-circle" width="100px" height="100px"
                    (click)="fileInput.click()">
               </button>
-              <button type="button" class="btn btn-success form-control" (click)="insertar()">
+              <button type="button" class="btn btn-success form-control mt-2" (click)="insertar()">
                 <span class="fa fa-save"></span>&nbsp;Guardar Cambios
               </button>
             </div>

@@ -48,9 +48,9 @@ export class FiltroComponent implements OnInit {
   }
 
   leerOfertas() {
-    this.ofertas = [];
     this.firebaseBDDService.firebaseControllerOfertas.getAll()
       .snapshotChanges().subscribe(items => {
+      this.ofertas = [];
       if (items.length === 0) {
         swal({
           position: 'center',
@@ -165,8 +165,8 @@ export class FiltroComponent implements OnInit {
 
   filtrarPorCampoEspecifico(filtro) {
     this.ofertas = [];
-    this.etiquetaPrincipal = filtro.nombre;
-    this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoEspecifico', filtro.nombre)
+    this.etiquetaPrincipal = filtro;
+    this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoEspecifico', filtro)
       .snapshotChanges().subscribe(items => {
 
       if (items.length === 0) {
