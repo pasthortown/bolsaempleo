@@ -93,17 +93,7 @@ export class OfertasLaboralesComponent implements OnInit {
       .then((resultAceptar => {
         if (true) {
           if (resultAceptar === 'save') {
-            let fechaInicio = new Date(this.oferta.inicioPublicacion.year + '/' + this.oferta.inicioPublicacion.month + '/' + this.oferta.inicioPublicacion.day);
-            let fechaFin = new Date(this.oferta.finPublicacion.year + '/' + this.oferta.finPublicacion.month + '/' + this.oferta.finPublicacion.day);
-            if (fechaFin < fechaInicio) {
-              swal({
-                position: 'center',
-                type: 'warning',
-                title: 'Datos Incorrectos',
-                text: 'Hay un error en las fechas ingresadas.',
-                showConfirmButton: false,
-                timer: 2000
-              });
+            if (!this.compararFechas(this.oferta.inicioPublicacion, this.oferta.finPublicacion)) {
               return;
             }
             if (editar) {
@@ -118,6 +108,27 @@ export class OfertasLaboralesComponent implements OnInit {
       }), (resultCancel => {
 
       }));
+  }
+
+  ordenarPorAntiguedad() {
+
+  }
+
+  compararFechas(fechaMenor: any, fechaMayor: any): boolean {
+    const fechaInicio = new Date(fechaMenor.year + '/' + fechaMenor.month + '/' + fechaMenor.day);
+    const fechaFin = new Date(fechaMayor.year + '/' + fechaMayor.month + '/' + fechaMayor.day);
+    if (fechaFin < fechaInicio) {
+      swal({
+        position: 'center',
+        type: 'warning',
+        title: 'Datos Incorrectos',
+        text: 'Hay un error en las fechas ingresadas.',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return false;
+    }
+    return true;
   }
 
   openFiltro(content) {
