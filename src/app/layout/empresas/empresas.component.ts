@@ -14,7 +14,6 @@ import {catalogos} from '../../../environments/catalogos';
   styleUrls: ['./empresas.component.css']
 })
 export class EmpresasComponent implements OnInit {
-  clasificacionEmpresas = ClasificacionEmpresas;
   contadorEmpresas: number;
   contadorPostulantes: number;
   contadorOfertas: number;
@@ -33,21 +32,21 @@ export class EmpresasComponent implements OnInit {
   }
 
   contarEmpresas() {
-    return this.firebaseBDDService.firebaseControllerEmpresas.leer().snapshotChanges().subscribe(items => {
+    return this.firebaseBDDService.firebaseControllerEmpresas.getAll().snapshotChanges().subscribe(items => {
       this.contadorEmpresas = items.length;
     });
 
   }
 
   contarPostulantes() {
-    return this.firebaseBDDService.firebaseControllerPostulantes.leer().snapshotChanges().subscribe(items => {
+    return this.firebaseBDDService.firebaseControllerPostulantes.getAll().snapshotChanges().subscribe(items => {
       this.contadorPostulantes = items.length;
     });
 
   }
 
   contarOfertas() {
-    return this.firebaseBDDService.firebaseControllerOfertas.leer().snapshotChanges().subscribe(items => {
+    return this.firebaseBDDService.firebaseControllerOfertas.getAll().snapshotChanges().subscribe(items => {
       this.contadorOfertas = items.length;
     });
 

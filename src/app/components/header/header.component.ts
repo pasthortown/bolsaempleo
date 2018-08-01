@@ -1,6 +1,7 @@
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import {FirebaseBDDService} from '../../services/firebase-bdd.service';
 
 @Component({
   selector: 'app-header',
@@ -8,15 +9,41 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  contadorEmpresas: number;
+  contadorPostulantes: number;
+  contadorOfertas: number;
 
   constructor(public router: Router,
-    public authService: AuthService) { }
+              public authService: AuthService,
+              private firebaseBDDService: FirebaseBDDService) {
+  }
 
   ngOnInit() {
-
+    this.contarEmpresas();
+    this.contarPostulantes();
+    this.contarOfertas();
   }
 
   cerrarSesion() {
     this.authService.logout();
   }
-}
+
+  contarEmpresas() {
+    return this.firebaseBDDService.firebaseControllerEmpresas.getAll().snapshotChanges().subscribe(items => {
+      this.contadorEmpresas = items.length;
+    });
+
+  }
+
+  contarPostulantes() {
+    return this.firebaseBDDService.firebaseControllerPostulantes.getAll().snapshotChanges().subscribe(items => {
+      this.contadorPostulantes = items.length;
+    });
+
+  }
+
+  contarOfertas() {
+    return this.firebaseBDDService.firebaseControllerOfertas.getAll().snapshotChanges().subscribe(items => {
+      this.contadorOfertas = items.length;
+    });
+  }
