@@ -13,12 +13,13 @@ export class EstudiosRealizadosComponent implements OnInit {
   estudioRealizado: EstudioRealizado;
   filtro: Array<any>;
   tipo_titulo: Array<any>;
-
+  instituciones: Array<any>;
   constructor(private modalService: NgbModal, public postulanteService: PostulanteService) { }
 
   ngOnInit() {
     this.estudioRealizado = new EstudioRealizado();
     this.filtro = catalogos.titulos;
+    this.instituciones = catalogos.instituciones;
   }
 
   open(content, item: EstudioRealizado, editar) {

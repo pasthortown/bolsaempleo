@@ -1,7 +1,8 @@
-import { ReferenciaPersonal } from './../../../models/referenciaPersonal';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PostulanteService } from './../../../services/postulante.service';
-import { Component, OnInit } from '@angular/core';
+import {ReferenciaPersonal} from './../../../models/referenciaPersonal';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {PostulanteService} from './../../../services/postulante.service';
+import {Component, OnInit} from '@angular/core';
+import {catalogos} from '../../../../environments/catalogos';
 
 @Component({
   selector: 'app-referencias-personales',
@@ -10,34 +11,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReferenciasPersonalesComponent implements OnInit {
   referenciaPersonal: ReferenciaPersonal;
+  instituciones: Array<any>;
 
-  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) { }
+  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) {
+  }
 
   ngOnInit() {
     this.referenciaPersonal = new ReferenciaPersonal();
+    this.instituciones = catalogos.instituciones;
   }
 
   open(content, item: ReferenciaPersonal, editar) {
-    if ( editar ) {
+    if (editar) {
       this.referenciaPersonal = item;
     } else {
       this.referenciaPersonal = new ReferenciaPersonal();
     }
     this.modalService.open(content)
-    .result
-    .then((resultModal => {
-      if ( resultModal === 'save' ) {
-        if ( !editar ) {
-          this.agregar();
+      .result
+      .then((resultModal => {
+        if (resultModal === 'save') {
+          if (!editar) {
+            this.agregar();
+          }
         }
-      }
-    }), (resultCancel => {
+      }), (resultCancel => {
 
-    }));
+      }));
   }
 
   agregar() {
-    if ( this.postulanteService.postulante.referenciasPersonales == null ) {
+    if (this.postulanteService.postulante.referenciasPersonales == null) {
       this.postulanteService.postulante.referenciasPersonales = [];
     }
     this.postulanteService.postulante.referenciasPersonales.push(this.referenciaPersonal);

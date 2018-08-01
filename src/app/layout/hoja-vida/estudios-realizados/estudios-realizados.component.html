@@ -50,7 +50,10 @@
       <div class="col-12">
         <div class="form-group">
           <label for="institucion">Institución</label>
-          <input type="text" [(ngModel)]="estudioRealizado.institucion" class="form-control" id="institucion" placeholder="Institución">
+          <select type="text" [(ngModel)]="estudioRealizado.institucion" class="form-control" id="institucion">
+            <option value="">SELECCIONE...</option>
+            <option value="" *ngFor="let institucion of instituciones">{{institucion.nombre}}</option>
+          </select>
         </div>
       </div>
       <div class="col-12 mt-2">

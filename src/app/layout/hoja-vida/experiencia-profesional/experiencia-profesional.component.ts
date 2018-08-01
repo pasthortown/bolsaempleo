@@ -1,7 +1,7 @@
-import { ExperienciaLaboral } from './../../../models/experiencia-laboral';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PostulanteService } from './../../../services/postulante.service';
-import { Component, OnInit } from '@angular/core';
+import {ExperienciaLaboral} from './../../../models/experiencia-laboral';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {PostulanteService} from './../../../services/postulante.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-experiencia-profesional',
@@ -11,33 +11,34 @@ import { Component, OnInit } from '@angular/core';
 export class ExperienciaProfesionalComponent implements OnInit {
   experienciaLaboral: ExperienciaLaboral;
 
-  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) { }
+  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) {
+  }
 
   ngOnInit() {
     this.experienciaLaboral = new ExperienciaLaboral();
   }
 
   open(content, item: ExperienciaLaboral, editar) {
-    if ( editar ) {
+    if (editar) {
       this.experienciaLaboral = item;
     } else {
       this.experienciaLaboral = new ExperienciaLaboral();
     }
     this.modalService.open(content)
-    .result
-    .then((resultModal => {
-      if ( resultModal === 'save' ) {
-        if ( !editar ) {
-          this.agregar();
+      .result
+      .then((resultModal => {
+        if (resultModal === 'save') {
+          if (!editar) {
+            this.agregar();
+          }
         }
-      }
-    }), (resultCancel => {
+      }), (resultCancel => {
 
-    }));
+      }));
   }
 
   agregar() {
-    if ( this.postulanteService.postulante.experienciasLaborales == null ) {
+    if (this.postulanteService.postulante.experienciasLaborales == null) {
       this.postulanteService.postulante.experienciasLaborales = [];
     }
     this.postulanteService.postulante.experienciasLaborales.push(this.experienciaLaboral);
@@ -52,5 +53,12 @@ export class ExperienciaProfesionalComponent implements OnInit {
       }
     });
     this.postulanteService.postulante.experienciasLaborales = experiencias;
+  }
+
+  validarFechaFinTrabajo() {
+    if (this.experienciaLaboral) {
+      this.experienciaLaboral.motivoSalida = '';
+      this.experienciaLaboral.fechaFinalizacion = null;
+    }
   }
 }
