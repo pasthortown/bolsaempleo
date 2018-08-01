@@ -45,7 +45,6 @@
     </div>
   </div>
   <div class="col-9">
-
     <div class="row">
       <div class="col-12">
         <div class="input-group">
@@ -58,10 +57,23 @@
         </div>
       </div>
     </div>
+    <!--Etiquetas de Filtro-->
+    <div class="row mt-2">
+      <div class="col-12">
+        <div class="input-group">
+          <div *ngIf="etiquetaPrincipal">
+            <label class="btn-warning">{{etiquetaPrincipal}}</label>
+            <button type="button" class="close" aria-label="Close" (click)="borrarFiltro()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row" style="overflow: auto">
-      <div class="col-12 mt-2">
-        <div class="card" *ngFor="let postulanteActual of postulantes">
-          <div class="card-body">
+      <div class="col-12">
+        <div class="card  mt-2" *ngFor="let postulanteActual of postulantes">
+          <div class="card-body mt-1">
             <div class="card-title">
               <div class="row">
                 <div class="col-12">

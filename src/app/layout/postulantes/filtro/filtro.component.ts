@@ -7,6 +7,7 @@ import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
 import {Oferta} from '../../../models/oferta';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-filtro',
@@ -16,6 +17,7 @@ import {Oferta} from '../../../models/oferta';
 export class FiltroComponent implements OnInit {
   filtro: Array<any>;
   criterioBusqueda = '';
+  etiquetaPrincipal: string;
   tipo_titulo: Array<any>;
   postulantes: Array<Postulante>;
   postulanteSeleccionado: Postulante;
@@ -33,8 +35,6 @@ export class FiltroComponent implements OnInit {
     this.postulanteSeleccionado = new Postulante();
     this.postulanteSeleccionado.nombreCompleto = '';
     this.filtro = catalogos.titulos;
-    this.contarOfertasPorCampoAmplio();
-    this.contarOfertasPorCampoEspecifico();
   }
 
   mostrarHojaVida(postulanteSeleccionado: Postulante) {
@@ -43,8 +43,19 @@ export class FiltroComponent implements OnInit {
 
   filtrarPorTitulo(areaEspecifica: string) {
     this.postulantes = [];
+    this.etiquetaPrincipal = areaEspecifica;
     this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('estudiosRealizados/0/titulo', areaEspecifica)
       .snapshotChanges().subscribe(items => {
+      if (items.length === 0) {
+        swal({
+          position: 'center',
+          type: 'info',
+          title: 'No contamos con el Talento Humano Requerido',
+          text: '',
+          showConfirmButton: false,
+          timer: 3000
+        });
+      }
       items.forEach(element => {
         let itemLeido: Postulante;
         itemLeido = element.payload.val() as Postulante;
@@ -53,15 +64,31 @@ export class FiltroComponent implements OnInit {
     });
   }
 
+  borrarFiltro() {
+    this.etiquetaPrincipal = '';
+    this.filtroDirecto();
+  }
   filtroDirecto() {
     this.postulantes = [];
     this.firebaseBDDService.firebaseControllerPostulantes.querySimple('estudiosRealizados/0/titulo', this.criterioBusqueda)
       .snapshotChanges().subscribe(items => {
+      if (items.length === 0) {
+        swal({
+          position: 'center',
+          type: 'info',
+          title: 'No existen Ofertas',
+          text: '',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }
       items.forEach(element => {
         let itemLeido: Postulante;
         itemLeido = element.payload.val() as Postulante;
         this.postulantes.push(itemLeido);
       });
+      this.contarOfertasPorCampoAmplio(this.postulantes);
+      this.contarOfertasPorCampoEspecifico(this.postulantes);
     });
   }
 
@@ -82,7 +109,20 @@ export class FiltroComponent implements OnInit {
     });
   }
 
-  contarOfertasPorCampoAmplio() {
+  contarOfertasPorCampoAmplio(postulantes: Array<Postulante>) {
+    this.filtro.forEach(area => {
+      area.total = 0;
+    });
+    postulantes.forEach(postulante => {
+      this.filtro.forEach(area => {
+        postulante.estudiosRealizados.forEach(estudiosRealizados => {
+          if (estudiosRealizados.tipo_titulo === area.campo_amplio) {
+            area.total = area.total + 1;
+          }
+        });
+      });
+    });
+    /*
     this.filtro.forEach(value => {
       value.total = 0;
       this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('estudiosRealizados/0/tipo_titulo', value.campo_amplio)
@@ -98,9 +138,27 @@ export class FiltroComponent implements OnInit {
         });
       });
     });
+    */
   }
 
-  contarOfertasPorCampoEspecifico() {
+  contarOfertasPorCampoEspecifico(postulantes: Array<Postulante>) {
+    this.filtro.forEach(area => {
+      area.campos_especificos.forEach(areaEspecifica => {
+        areaEspecifica.total = 0;
+      });
+    });
+    postulantes.forEach(postulante => {
+      this.filtro.forEach(area => {
+        postulante.estudiosRealizados.forEach(estudiosRealizados => {
+          area.campos_especificos.forEach(areaEspecifica => {
+            if (estudiosRealizados.titulo === areaEspecifica.nombre) {
+              areaEspecifica.total = areaEspecifica.total + 1;
+            }
+          });
+        });
+      });
+    });
+    /*
     this.filtro.forEach(value => {
       value.total = 0;
       value.campos_especificos.forEach(campoEspecifico => {
@@ -119,5 +177,6 @@ export class FiltroComponent implements OnInit {
         });
       });
     });
+    */
   }
 }

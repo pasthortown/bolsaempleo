@@ -43,8 +43,7 @@ export class FiltroComponent implements OnInit {
     this.areas = catalogos.titulos;
     this.ofertas = new Array<Oferta>();
     this.leerOfertas();
-    this.contarOfertasPorCampoAmplio();
-    this.contarOfertasPorCampoEspecifico();
+    // this.contarOfertasPorCampoEspecifico();
   }
 
   leerOfertas() {
@@ -66,6 +65,8 @@ export class FiltroComponent implements OnInit {
         itemLeido = element.payload.val() as Oferta;
         this.ofertas.push(itemLeido);
       });
+      this.contarOfertasPorCampoAmplio(this.ofertas);
+      this.contarOfertasPorCampoEspecifico(this.ofertas);
     });
   }
 
@@ -187,7 +188,18 @@ export class FiltroComponent implements OnInit {
     });
   }
 
-  contarOfertasPorCampoAmplio() {
+  contarOfertasPorCampoAmplio(ofertas: Array<Oferta>) {
+    this.areas.forEach(area => {
+      area.total = 0;
+    });
+    ofertas.forEach(oferta => {
+      this.areas.forEach(area => {
+        if (oferta.campoAmplio === area.campo_amplio) {
+          area.total = area.total + 1;
+        }
+      });
+    });
+    /*
     this.ofertas = [];
     this.areas.forEach(value => {
       value.total = 0;
@@ -202,9 +214,26 @@ export class FiltroComponent implements OnInit {
         });
       });
     });
+    */
   }
 
-  contarOfertasPorCampoEspecifico() {
+  contarOfertasPorCampoEspecifico(ofertas: Array<Oferta>) {
+    this.areas.forEach(area => {
+      area.campos_especificos.forEach(areaEspecifica => {
+        areaEspecifica.total = 0;
+      });
+    });
+    ofertas.forEach(oferta => {
+      this.areas.forEach(area => {
+        area.campos_especificos.forEach(areaEspecifica => {
+          if (oferta.campoEspecifico === areaEspecifica.nombre) {
+            areaEspecifica.total = areaEspecifica.total + 1;
+          }
+        });
+      });
+    });
+
+    /*
     this.ofertas = [];
     this.areas.forEach(value => {
       value.campos_especificos.forEach(campoEspecifico => {
@@ -221,5 +250,6 @@ export class FiltroComponent implements OnInit {
         });
       });
     });
+    */
   }
 }
