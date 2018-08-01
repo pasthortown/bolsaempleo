@@ -42,12 +42,35 @@ export class EstudiosRealizadosComponent implements OnInit {
     }));
   }
 
+  ordenarPorAntiguedad(descendente: boolean) {
+    this.postulanteService.postulante.estudiosRealizados.sort((n1, n2) => {
+      const fechaInicio = new Date(n1.fechaRegistro.year + '/' + n1.fechaRegistro.month + '/' + n1.fechaRegistro.day);
+      const fechaFin = new Date(n2.fechaRegistro.year + '/' + n2.fechaRegistro.month + '/' + n2.fechaRegistro.day);
+      if (fechaFin > fechaInicio) {
+        if (descendente) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+      if (fechaFin < fechaInicio) {
+        if (descendente) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+      return 0;
+    });
+  }
+
   agregar() {
     if ( this.postulanteService.postulante.estudiosRealizados == null ) {
       this.postulanteService.postulante.estudiosRealizados = [];
     }
     this.postulanteService.postulante.estudiosRealizados.push(this.estudioRealizado);
     this.estudioRealizado = new EstudioRealizado();
+    this.ordenarPorAntiguedad(true);
   }
 
   borrar(item: EstudioRealizado) {

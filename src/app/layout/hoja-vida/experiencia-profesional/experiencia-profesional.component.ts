@@ -38,12 +38,35 @@ export class ExperienciaProfesionalComponent implements OnInit {
       }));
   }
 
+  ordenarPorAntiguedad(descendente: boolean) {
+    this.postulanteService.postulante.experienciasLaborales.sort((n1, n2) => {
+      const fechaInicio = new Date(n1.fechaInicio.year + '/' + n1.fechaInicio.month + '/' + n1.fechaInicio.day);
+      const fechaFin = new Date(n2.fechaInicio.year + '/' + n2.fechaInicio.month + '/' + n2.fechaInicio.day);
+      if (fechaFin > fechaInicio) {
+        if (descendente) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+      if (fechaFin < fechaInicio) {
+        if (descendente) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+      return 0;
+    });
+  }
+
   agregar() {
     if (this.postulanteService.postulante.experienciasLaborales == null) {
       this.postulanteService.postulante.experienciasLaborales = [];
     }
     this.postulanteService.postulante.experienciasLaborales.push(this.experienciaLaboral);
     this.experienciaLaboral = new ExperienciaLaboral();
+    this.ordenarPorAntiguedad(true);
   }
 
   borrar(item: ExperienciaLaboral) {

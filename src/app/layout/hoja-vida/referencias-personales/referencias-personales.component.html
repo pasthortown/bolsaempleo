@@ -51,11 +51,7 @@
       <div class="col-12">
         <div class="form-group">
           <label for="empresa">Institución</label>
-          <select type="text" [(ngModel)]="referenciaPersonal.institucion" class="form-control" id="empresa"
-                  placeholder="Empresa">
-            <option value="">SELECCIONE...</option>
-            <option value="" *ngFor="let institucion of instituciones">{{institucion.nombre}}</option>
-          </select>
+          <input type="text" [(ngModel)]="referenciaPersonal.institucion" class="form-control" id="institucion" placeholder="Institución">
         </div>
       </div>
       <div class="col-12">

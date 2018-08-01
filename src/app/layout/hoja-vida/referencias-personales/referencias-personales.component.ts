@@ -2,7 +2,6 @@ import {ReferenciaPersonal} from './../../../models/referenciaPersonal';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PostulanteService} from './../../../services/postulante.service';
 import {Component, OnInit} from '@angular/core';
-import {catalogos} from '../../../../environments/catalogos';
 
 @Component({
   selector: 'app-referencias-personales',
@@ -18,7 +17,6 @@ export class ReferenciasPersonalesComponent implements OnInit {
 
   ngOnInit() {
     this.referenciaPersonal = new ReferenciaPersonal();
-    this.instituciones = catalogos.instituciones;
   }
 
   open(content, item: ReferenciaPersonal, editar) {
