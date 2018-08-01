@@ -2,6 +2,7 @@ import {ExperienciaLaboral} from './../../../models/experiencia-laboral';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PostulanteService} from './../../../services/postulante.service';
 import {Component, OnInit} from '@angular/core';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-experiencia-profesional',
@@ -60,5 +61,22 @@ export class ExperienciaProfesionalComponent implements OnInit {
       this.experienciaLaboral.motivoSalida = '';
       this.experienciaLaboral.fechaFinalizacion = null;
     }
+  }
+
+  compararFechas(fechaMenor: any, fechaMayor: any): boolean {
+    const fechaInicio = new Date(fechaMenor.year + '/' + fechaMenor.month + '/' + fechaMenor.day);
+    const fechaFin = new Date(fechaMayor.year + '/' + fechaMayor.month + '/' + fechaMayor.day);
+    if (fechaFin < fechaInicio) {
+      swal({
+        position: 'center',
+        type: 'warning',
+        title: 'Datos Incorrectos',
+        text: 'Hay un error en las fechas ingresadas.',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      return false;
+    }
+    return true;
   }
 }

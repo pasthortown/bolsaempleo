@@ -10,6 +10,11 @@
       </div>
       <div class="row">
         <div class="col-12 m-3 text-center">
+          <a target="_blank" class="btn btn-primary" href="curriculum?idPostulante={{this.postulanteService.postulante.id}}">
+            <i class="fa fa-print" aria-hidden="true"> Imprimir CV</i>
+          </a>
+        </div>
+        <div class="col-12 m-3 text-center">
           <img src="{{postulanteService.postulante.fotografia}}" class="rounded-circle col-8" (click)="fileInput.click()">
         </div>
       </div>
