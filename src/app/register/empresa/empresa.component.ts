@@ -51,10 +51,10 @@ export class EmpresaComponent implements OnInit {
       swal({
         position: 'center',
         type: 'warning',
-        title: 'Validación',
-        text: 'Datos incompletos',
+        title: 'Datos incompletos',
+        text: 'Validación',
         showConfirmButton: false,
-        timer: 2000
+        timer: 3000
       });
       return false;
     }
@@ -62,10 +62,10 @@ export class EmpresaComponent implements OnInit {
       swal({
         position: 'center',
         type: 'warning',
-        title: 'Validación',
-        text: 'Contraseña no coincide con la confirmación',
+        title: 'Las contraseñas no coincide',
+        text: 'Validación',
         showConfirmButton: false,
-        timer: 2000
+        timer: 3000
       });
       return false;
     }
@@ -73,8 +73,8 @@ export class EmpresaComponent implements OnInit {
       swal({
         position: 'center',
         type: 'warning',
-        title: 'Validación',
-        text: 'Contraseña debe ser más compleja',
+        title: 'La contraseña debe ser más compleja',
+        text: 'Validación',
         showConfirmButton: false,
         timer: 2000
       });
