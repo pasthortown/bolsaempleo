@@ -41,6 +41,9 @@ export class CurriculumComponent implements OnInit {
         itemLeido = element.payload.val() as Postulante;
         itemLeido.id = element.key;
         this.curriculum = itemLeido;
+        this.ordenarPorAntiguedadCapacitaciones(true);
+        this.ordenarPorAntiguedadEstudiosRealizados(true);
+        this.ordenarPorAntiguedadExperienciasLaborales(true);
       });
     });
   }
@@ -82,5 +85,69 @@ export class CurriculumComponent implements OnInit {
     return this.getQueryParams('idPostulante');
   }
 
+  ordenarPorAntiguedadExperienciasLaborales(descendente: boolean) {
+    this.curriculum.experienciasLaborales.sort((n1, n2) => {
+      const fechaInicio = new Date(n1.fechaInicio.year + '/' + n1.fechaInicio.month + '/' + n1.fechaInicio.day);
+      const fechaFin = new Date(n2.fechaInicio.year + '/' + n2.fechaInicio.month + '/' + n2.fechaInicio.day);
+      if (fechaFin > fechaInicio) {
+        if (descendente) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+      if (fechaFin < fechaInicio) {
+        if (descendente) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+      return 0;
+    });
+  }
 
+  ordenarPorAntiguedadCapacitaciones(descendente: boolean) {
+    this.curriculum.capacitaciones.sort((n1, n2) => {
+      const fechaInicio = new Date(n1.fechaInicio.year + '/' + n1.fechaInicio.month + '/' + n1.fechaInicio.day);
+      const fechaFin = new Date(n2.fechaInicio.year + '/' + n2.fechaInicio.month + '/' + n2.fechaInicio.day);
+      if (fechaFin > fechaInicio) {
+        if (descendente) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+      if (fechaFin < fechaInicio) {
+        if (descendente) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+      return 0;
+    });
+  }
+
+  ordenarPorAntiguedadEstudiosRealizados(descendente: boolean) {
+    this.curriculum.estudiosRealizados.sort((n1, n2) => {
+      const fechaInicio = new Date(n1.fechaRegistro.year + '/' + n1.fechaRegistro.month + '/' + n1.fechaRegistro.day);
+      const fechaFin = new Date(n2.fechaRegistro.year + '/' + n2.fechaRegistro.month + '/' + n2.fechaRegistro.day);
+      if (fechaFin > fechaInicio) {
+        if (descendente) {
+          return 1;
+        } else {
+          return -1;
+        }
+      }
+      if (fechaFin < fechaInicio) {
+        if (descendente) {
+          return -1;
+        } else {
+          return 1;
+        }
+      }
+      return 0;
+    });
+  }
 }
