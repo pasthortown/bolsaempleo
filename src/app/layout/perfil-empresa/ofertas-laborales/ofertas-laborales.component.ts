@@ -116,14 +116,14 @@ export class OfertasLaboralesComponent implements OnInit {
       const fechaInicio = new Date(n1.inicioPublicacion.year + '/' + n1.inicioPublicacion.month + '/' + n1.inicioPublicacion.day);
       const fechaFin = new Date(n2.inicioPublicacion.year + '/' + n2.inicioPublicacion.month + '/' + n2.inicioPublicacion.day);
       if (fechaFin > fechaInicio) {
-        if ( descendente ) {
+        if (descendente) {
           return 1;
         } else {
           return -1;
         }
       }
       if (fechaFin < fechaInicio) {
-        if ( descendente ) {
+        if (descendente) {
           return -1;
         } else {
           return 1;
@@ -245,7 +245,6 @@ export class OfertasLaboralesComponent implements OnInit {
           itemLeido.id = element.key;
           this.firebaseBDDService.firebaseControllerOfertas.actualizar(itemLeido);
         }
-
         this.ofertaService.ofertas.push(itemLeido);
       });
     });
@@ -302,4 +301,5 @@ export class OfertasLaboralesComponent implements OnInit {
     });
 
   }
+
 }
