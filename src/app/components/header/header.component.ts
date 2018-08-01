@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
   contadorEmpresas: number;
   contadorPostulantes: number;
   contadorOfertas: number;
+  totalOfertas: number;
 
   constructor(public router: Router,
               public authService: AuthService,
@@ -47,3 +48,6 @@ export class HeaderComponent implements OnInit {
       this.contadorOfertas = items.length;
     });
   }
+
+
+}
