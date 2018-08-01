@@ -2,6 +2,8 @@ import {Router} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {FirebaseBDDService} from '../../services/firebase-bdd.service';
+import {Oferta} from '../../models/oferta';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -48,6 +50,5 @@ export class HeaderComponent implements OnInit {
       this.contadorOfertas = items.length;
     });
   }
-
 
 }
