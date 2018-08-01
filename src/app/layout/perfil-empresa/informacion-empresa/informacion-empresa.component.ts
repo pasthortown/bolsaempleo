@@ -16,6 +16,7 @@ export class InformacionEmpresaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.empresaService.empresa.naturaleza = '';
     this.srcFoto = 'assets/img/prueba/descarga.jpg';
   }
 

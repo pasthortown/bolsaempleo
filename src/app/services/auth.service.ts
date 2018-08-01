@@ -48,7 +48,7 @@ export class AuthService {
             if (this.usuarioNegocio.fotografia == null) {
               this.usuarioNegocio.fotografia = 'assets/img/user.png';
             }
-            this.router.navigate(['/']);
+            this.router.navigate(['postulantes']);
             return;
           });
           return;
@@ -66,7 +66,7 @@ export class AuthService {
                 if (this.usuarioNegocio.fotografia == null) {
                   this.usuarioNegocio.fotografia = 'assets/img/user.png';
                 }
-                this.router.navigate(['/']);
+                this.router.navigate(['empresas']);
                 return;
               });
               return;

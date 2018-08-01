@@ -21,11 +21,11 @@
           </a>
           <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/hoja-vida']"
              [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-address-card-o"></i>&nbsp;Hoja de Vida
+            <i class="fa fa-fw fa-address-card"></i>&nbsp;Hoja de Vida
           </a>
           <a *ngIf="authService.rolActual=='e'" class="dropdown-item" [routerLink]="['/perfil-empresa']"
              [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-address-card-o"></i>&nbsp;Perfil de mi Empresa
+            <i class="fa fa-fw fa-address-card"></i>&nbsp;Perfil de mi Empresa
           </a>
           <a *ngIf="authService.rolActual=='e' || authService.rolActual=='p'" class="dropdown-item"
              (click)="cerrarSesion()">
@@ -61,11 +61,11 @@
       <li *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-item dropdown pretty-button"
           ngbDropdown>
         <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
-          <i class="fa fa-fw fa-user"></i>&nbsp;Registrarse
+          <i class="fa fa-fw fa-address-book"></i>&nbsp;Regístrate
         </a>
         <div ngbDropdownMenu>
           <a class="dropdown-item" routerLink="/persona">
-            <i class="fa fa-fw fa-user"></i>&nbsp;Postulantes
+            <i class="fa fa-fw fa-users"></i>&nbsp;Postulantes
           </a>
           <a class="dropdown-item" routerLink="/empresa">
             <i class="fa fa-fw fa-building"></i>&nbsp;Empresas

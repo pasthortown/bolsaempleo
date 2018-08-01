@@ -1,8 +1,11 @@
 .top-banner-div {
   padding-top: 50px;
   margin-bottom: 10px;
-  height: 250px;
+  height: 100px;
   background-position: bottom center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+.titulo{
+  margin-top: -50px;
 }

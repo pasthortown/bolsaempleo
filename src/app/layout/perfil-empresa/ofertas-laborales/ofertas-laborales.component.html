@@ -26,7 +26,7 @@
               Actividades
             </th>
             <th width="10%" scope="col" class="text-center">
-              <i class="fa fa-wrench fa-lg" aria-hidden="true"></i>
+              Opciones
             </th>
           </tr>
           </thead>
@@ -168,7 +168,7 @@
               </label>
               <input type="email" class="form-control text-lowercase" id="editCorreoElectronico"
 
-                     [(ngModel)]="oferta.correoElectronico" placeholder="Correo Electrónico">
+                     [(ngModel)]="oferta.correoElectronico" placeholder="contacto@midominio.com">
             </div>
 
             <!-- Telefono Fijo !-->
@@ -267,15 +267,6 @@
                 <option value="MÁS DE 200">MÁS DE 200</option>
               </select>
             </div>
-            <!-- Numero de Puestos !-->
-            <div class="form-group ">
-              <label for="numeroPuestos" class="col-form-label">
-                Puestos:
-              </label>
-              <input type="number" min="1" class="form-control" id="numeroPuestos" [(ngModel)]="oferta.numeroPuestos"
-                     placeholder="# de puestos a ofertar">
-            </div>
-
           </div>
           <div class="col-lg-6">
             <!-- Remuneracion !-->
@@ -306,11 +297,12 @@
 
                       placeholder="Tiempo de Experiencia">
                 <option value="">SELECCIONE...</option>
+                <option value="NINGUNO">NINGUNO</option>
                 <option value="MENOS DE 1 AÑO">MENOS DE 1 AÑO</option>
                 <option value="1 AÑO - 2 AÑOS">1 AÑO - 2 AÑOS</option>
                 <option value="2 AÑOS - 3 AÑOS">2 AÑOS - 3 AÑOS</option>
-                <option value="2 AÑOS - 3 AÑOS">3 AÑOS - 4 AÑOS</option>
-                <option value="MÁS DE 3 AÑOS">MÁS DE 4 AÑOS</option>
+                <option value="3 AÑOS - 4 AÑOS">3 AÑOS - 4 AÑOS</option>
+                <option value="MÁS DE 4 AÑOS">MÁS DE 4 AÑOS</option>
               </select>
             </div>
             <!-- Jornada !-->
@@ -325,21 +317,33 @@
                 <option value="PARCIAL">PARCIAL</option>
               </select>
             </div>
+            <!-- Numero de Puestos !-->
+            <div class="form-group ">
+              <label for="numeroPuestos" class="col-form-label">
+                Puestos:
+              </label>
+              <input type="number" min="1" class="form-control" id="numeroPuestos" [(ngModel)]="oferta.numeroPuestos"
+                     placeholder="# DE PUESTOS DE TRABAJO">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
             <!-- Actividades !-->
             <div class="form-group ">
               <label for="actividades" class="col-form-label">
                 Actividades:
               </label>
-              <textarea class="form-control text-uppercase" id="actividades" [(ngModel)]="oferta.actividades"
+              <textarea class="form-control text-uppercase" rows="5" id="actividades" [(ngModel)]="oferta.actividades"
 
-                        placeholder="Actividades que va a desarrollar en su puesto de trabajo"></textarea>
+                        placeholder="ACTIVIDADES QUE VA A REALIZAR EN EL PUESTO DE TRABAJO"></textarea>
             </div>
             <!-- Informacion Adicional !-->
             <div class="form-group ">
               <label for="informacionAdicional" class="col-form-label">
                 Información Adicional:
               </label>
-              <textarea class="form-control text-uppercase" id="informacionAdicional"
+              <textarea class="form-control text-uppercase" rows="5" id="informacionAdicional"
 
                         [(ngModel)]="oferta.informacionAdicional" placeholder="Información Adicional"></textarea>
             </div>
@@ -461,7 +465,7 @@
               Correo Electrónico
             </th>
             <th width="10%" scope="col" class="text-center">
-              <i class="fa fa-wrench fa-lg" aria-hidden="true"></i>
+              Opciones
             </th>
           </tr>
           </thead>
@@ -482,7 +486,6 @@
               </a>
             </td>
           </tr>
-          </tbody>
         </table>
       </div>
     </div>
