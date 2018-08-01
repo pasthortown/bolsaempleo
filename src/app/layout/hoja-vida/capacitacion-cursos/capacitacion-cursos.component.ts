@@ -15,6 +15,7 @@ export class CapacitacionCursosComponent implements OnInit {
 
   ngOnInit() {
     this.capacitacion = new Capacitacion();
+    this.ordenarPorAntiguedad(true);
   }
 
   open(content, item: Capacitacion, editar) {

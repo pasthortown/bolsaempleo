@@ -26,9 +26,15 @@
               <td>{{item.empleador}}</td>
               <td>{{item.cargoDesempenado}}</td>
               <td>{{item.descripcionCargo}}</td>
-              <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
               <td>
-                {{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
+                <div>
+                  {{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}
+                </div>
+              </td>
+              <td>
+                <div *ngIf="item.fechaFinalizacion != null">
+                  {{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
+                </div>
               </td>
               <td>
                 <div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span

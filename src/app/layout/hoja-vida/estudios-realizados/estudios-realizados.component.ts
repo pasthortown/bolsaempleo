@@ -20,6 +20,7 @@ export class EstudiosRealizadosComponent implements OnInit {
     this.estudioRealizado = new EstudioRealizado();
     this.filtro = catalogos.titulos;
     this.instituciones = catalogos.instituciones;
+    this.ordenarPorAntiguedad(true);
   }
 
   open(content, item: EstudioRealizado, editar) {

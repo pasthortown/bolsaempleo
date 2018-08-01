@@ -17,6 +17,7 @@ export class ExperienciaProfesionalComponent implements OnInit {
 
   ngOnInit() {
     this.experienciaLaboral = new ExperienciaLaboral();
+    this.ordenarPorAntiguedad(true);
   }
 
   open(content, item: ExperienciaLaboral, editar) {
@@ -64,6 +65,11 @@ export class ExperienciaProfesionalComponent implements OnInit {
     if (this.postulanteService.postulante.experienciasLaborales == null) {
       this.postulanteService.postulante.experienciasLaborales = [];
     }
+    if (this.experienciaLaboral.fechaFinalizacion !== null) {
+      if ( !this.compararFechas(this.experienciaLaboral.fechaInicio, this.experienciaLaboral.fechaFinalizacion) ) {
+        return;
+      }
+    }
     this.postulanteService.postulante.experienciasLaborales.push(this.experienciaLaboral);
     this.experienciaLaboral = new ExperienciaLaboral();
     this.ordenarPorAntiguedad(true);
@@ -80,10 +86,8 @@ export class ExperienciaProfesionalComponent implements OnInit {
   }
 
   validarFechaFinTrabajo() {
-    if (this.experienciaLaboral) {
-      this.experienciaLaboral.motivoSalida = '';
-      this.experienciaLaboral.fechaFinalizacion = null;
-    }
+    this.experienciaLaboral.motivoSalida = '';
+    this.experienciaLaboral.fechaFinalizacion = null;
   }
 
   compararFechas(fechaMenor: any, fechaMayor: any): boolean {
