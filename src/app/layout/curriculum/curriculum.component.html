@@ -1,14 +1,14 @@
+<div class="row">
+  <div class="col-12 m-2 text-center">
+    <button type="submit" class="btn btn-primary" (click)="imprimir()">
+      <span class="fa fa-print"></span>&nbsp;Imprimir CV
+    </button>
+  </div>
+</div>
 <div id="curriculum" class="container">
   <div class="row">
     <div class="col-12">
       <h1 class="text-center">CURRICULUM VITAE</h1>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 m-2 text-center">
-      <button type="submit" class="btn btn-primary" (click)="imprimir()">
-        <span class="fa fa-print"></span>&nbsp;Imprimir CV
-      </button>
     </div>
   </div>
   <div class="row">
@@ -34,36 +34,28 @@
           </td>
         </tr>
         <tr>
-          <th>
+          <th width="30%">
             Identificación:
           </th>
-          <td>
+          <td width="70%">
             {{curriculum.identificacion}}
           </td>
         </tr>
         <tr>
-          <th class="text-left">
+          <th width="30%">
             Fecha de Nacimiento:
           </th>
-          <td>
+          <td width="70%">
             {{curriculum.fechaDeNacimiento.day}} de {{meses[curriculum.fechaDeNacimiento.month-1]}} del
             {{curriculum.fechaDeNacimiento.year}}
           </td>
         </tr>
         <tr>
-          <th class="text-left">
+          <th width="30%">
             Estado Civil:
           </th>
-          <td>
+          <td width="70%">
             {{curriculum.estadoCivil}}
-          </td>
-        </tr>
-        <tr>
-          <th>
-            Nacionalidad:
-          </th>
-          <td>
-            {{curriculum.nacionalidad}}
           </td>
         </tr>
       </table>
@@ -72,6 +64,14 @@
   <div class="row">
     <div class="col-12">
       <table class="table">
+        <tr>
+          <th>
+            Nacionalidad:
+          </th>
+          <td>
+            {{curriculum.nacionalidad}}
+          </td>
+        </tr>
         <tr>
           <th width="20%">
             Teléfono:
@@ -96,6 +96,14 @@
             {{curriculum.correoElectronico}}
           </td>
         </tr>
+        <tr>
+          <th width="30%" rowspan="7">
+            Acerca de Mí:
+          </th>
+          <td width="70%">
+            {{curriculum.acercaDeMi}}
+          </td>
+        </tr>
       </table>
     </div>
   </div>
@@ -111,16 +119,14 @@
     <div class="col-12">
       <table class="table table-sm">
         <thead>
-        <th>Institución</th>
-        <th>Tipo de Título</th>
-        <th>Título</th>
-        <th>Fecha de Registro</th>
-        <th>Código de Registro SENESCYT</th>
+        <th width="25%">Institución</th>
+        <th width="45%">Título</th>
+        <th width="15%">Fecha de Registro</th>
+        <th width="15%">Cód. Reg. SENESCYT</th>
         </thead>
         <tbody>
         <tr *ngFor="let item of curriculum.estudiosRealizados">
           <td>{{item.institucion}}</td>
-          <td>{{item.tipo_titulo}}</td>
           <td>{{item.titulo}}</td>
           <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
           <td>{{item.codigoRegistroSENESCYT}}</td>
@@ -285,11 +291,11 @@
     </div>
   </div>
   <!--Fin Referencias Personales-->
-  <div class="row">
-    <div class="col-12 m-2 text-center">
-      <button type="submit" class="btn btn-primary" (click)="imprimir()">
-        <span class="fa fa-print"></span>&nbsp;Imprimir CV
-      </button>
-    </div>
+</div>
+<div class="row">
+  <div class="col-12 m-2 text-center">
+    <button type="submit" class="btn btn-primary" (click)="imprimir()">
+      <span class="fa fa-print"></span>&nbsp;Imprimir CV
+    </button>
   </div>
 </div>

@@ -84,10 +84,16 @@
             <div class="row">
               <div class="col-8">
                 <h6>
-                  <a href="javascript:void(0)" class="col-12 text-left"
-                     (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
+                  <div *ngIf="authService.rolActual=='p';then thenBlock else elseBLock"></div>
+                  <ng-template #thenBlock>
+                    <a href="javascript:void(0)" *ngIf="authService.rolActual=='p'"
+                       (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
+                      {{ofertaActual.cargo}}
+                    </a>
+                  </ng-template>
+                  <ng-template #elseBLock>
                     {{ofertaActual.cargo}}
-                  </a>
+                  </ng-template>
                 </h6>
                 <h6 class="text-muted">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>

@@ -15,14 +15,12 @@
             <thead class="table-active">
             <th>Nombre</th>
             <th>Descripción</th>
-            <th>Nivel</th>
             <th width="100px">Opciones</th>
             </thead>
             <tbody>
             <tr *ngFor="let item of postulanteService.postulante.fortalezas">
               <td>{{item.nombre}}</td>
               <td>{{item.descripcion}}</td>
-              <td>{{item.nivel}}</td>
               <td>
                 <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span
                   class="fa fa-edit"></span></button>
@@ -51,9 +49,9 @@
           <label for="nombre">Nombre</label>
           <select type="text" [(ngModel)]="fortaleza.nombre" class="form-control" id="nombre" placeholder="Nombre">
             <option value="">SELECCIONE...</option>
-            <option value="">ARTES</option>
-            <option value="">DEPORTES</option>
-            <option value="">BAILE</option>
+            <option value="ARTES">ARTES</option>
+            <option value="DEPORTES">DEPORTES</option>
+            <option value="BAILE">BAILE</option>
           </select>
         </div>
       </div>
@@ -61,7 +59,7 @@
         <div class="form-group">
           <label for="descripcion">Descripción</label>
           <textarea type="text" [(ngModel)]="fortaleza.descripcion" class="form-control" id="descripcion" rows="10"
-                    placeholder="Descripción"></textarea>
+                    placeholder="Un Deporte: Tengo varios El fútbol, gimnasio, la natación y el rugby."></textarea>
         </div>
       </div>
     </div>
