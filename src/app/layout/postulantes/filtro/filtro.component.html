@@ -45,6 +45,7 @@
     </div>
   </div>
   <div class="col-9">
+
     <div class="row">
       <div class="col-12">
         <div class="input-group">
@@ -57,71 +58,73 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 card mt-2" *ngFor="let postulanteActual of postulantes">
-        <div class="card-body">
-          <div class="card-title">
-            <div class="row">
-              <div class="col-12">
-                <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
-              </div>
-              <div class="col-12">
-                <h5 class="col-12 text-left mt-3">Estudios Realizados</h5>
-                <table class="table table-sm">
-                  <thead>
-                  <th>Institución</th>
-                  <th>Tipo de Título</th>
-                  <th>Título</th>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let item of postulanteActual.estudiosRealizados">
-                    <td>{{item.institucion}}</td>
-                    <td>{{item.tipo_titulo}}</td>
-                    <td>{{item.titulo}}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="col-12">
-                <h5 class="col-12 text-left mt-3">Idiomas</h5>
-                <table class="table table-sm">
-                  <thead>
-                  <th>Idioma</th>
-                  <th>Nivel Escrito</th>
-                  <th>Nivel Hablado</th>
-                  <th>Nivel Lectura</th>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let item of postulanteActual.idiomas">
-                    <td>{{item.idioma}}</td>
-                    <td>{{item.nivelEscrito}}</td>
-                    <td>{{item.nivelHablado}}</td>
-                    <td>{{item.nivelLectura}}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="col-12">
-                <h5 class="col-12 text-left mt-3">Capacitaciones y Certificaciones</h5>
-                <table class="table table-sm">
-                  <thead>
-                  <th>Nombre del Evento</th>
-                  <th>Horas</th>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let item of postulanteActual.capacitaciones">
-                    <td>{{item.nombreEvento}}</td>
-                    <td>{{item.horas}}</td>
-                  </tr>
-                  </tbody>
-                </table>
+    <div class="row" style="overflow: auto">
+      <div class="col-12 mt-2">
+        <div class="card" *ngFor="let postulanteActual of postulantes">
+          <div class="card-body">
+            <div class="card-title">
+              <div class="row">
+                <div class="col-12">
+                  <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
+                </div>
+                <div class="col-12">
+                  <h5 class="col-12 text-left mt-3">Estudios Realizados</h5>
+                  <table class="table table-sm">
+                    <thead>
+                    <th>Institución</th>
+                    <th>Tipo de Título</th>
+                    <th>Título</th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of postulanteActual.estudiosRealizados">
+                      <td>{{item.institucion}}</td>
+                      <td>{{item.tipo_titulo}}</td>
+                      <td>{{item.titulo}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-12">
+                  <h5 class="col-12 text-left mt-3">Idiomas</h5>
+                  <table class="table table-sm">
+                    <thead>
+                    <th>Idioma</th>
+                    <th>Nivel Escrito</th>
+                    <th>Nivel Hablado</th>
+                    <th>Nivel Lectura</th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of postulanteActual.idiomas">
+                      <td>{{item.idioma}}</td>
+                      <td>{{item.nivelEscrito}}</td>
+                      <td>{{item.nivelHablado}}</td>
+                      <td>{{item.nivelLectura}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-12">
+                  <h5 class="col-12 text-left mt-3">Capacitaciones y Certificaciones</h5>
+                  <table class="table table-sm">
+                    <thead>
+                    <th>Nombre del Evento</th>
+                    <th>Horas</th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of postulanteActual.capacitaciones">
+                      <td>{{item.nombreEvento}}</td>
+                      <td>{{item.horas}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-12 m-2 text-left">
-            <a *ngIf="authService.rolActual=='e'" target="_blank" class="btn btn-info btn-sm" href="curriculum?idPostulante={{postulanteActual.id}}">
-              <span class="fa fa-info-circle"></span>&nbsp;Mas Información
-            </a>
+            <div class="col-12 m-2 text-left">
+              <a *ngIf="authService.rolActual=='e'" target="_blank" class="btn btn-info btn-sm" href="curriculum?idPostulante={{postulanteActual.id}}">
+                <span class="fa fa-info-circle"></span>&nbsp;Mas Información
+              </a>
+            </div>
           </div>
         </div>
       </div>
