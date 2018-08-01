@@ -122,8 +122,8 @@
             <label class="form-check-label btn" for="actualmenteTrabajoAqui" [ngClass]="{'btn-primary':
                    experienciaLaboral.actualmenteVigente,'btn-danger':!experienciaLaboral.actualmenteVigente}"
             (click)="validarFechaFinTrabajo()">
-              <i *ngIf="experienciaLaboral.actualmenteVigente" class="fa fa-check" aria-hidden="true"></i>
-              Actualmente trabajo aquí
+              <i *ngIf="experienciaLaboral.actualmenteVigente" class="fa fa-check" aria-hidden="true"> Actualmente trabajo aquí</i>
+              <i *ngIf="!experienciaLaboral.actualmenteVigente" class="fa fa-question" aria-hidden="true"> Actualmente trabajo aquí</i>
             </label>
           </div>
         </div>
