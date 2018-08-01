@@ -26,6 +26,7 @@ export class EmpresasComponent implements OnInit {
   ngOnInit() {
     this.contadorEmpresas = 0;
     this.contadorPostulantes = 0;
+    this.contadorOfertas = 0;
     this.contarEmpresas();
     this.contarPostulantes();
     this.contarOfertas();
