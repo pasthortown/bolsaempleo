@@ -9,15 +9,15 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12 main-header">
+      <div class="col-12">
         <div id="accordion" class="accordion" *ngFor="let item of filtro">
           <div class="card">
             <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
                 <span class="row">
-                  <span class="col-10">
+                  <span class="col-lg-10 col-sm-12">
                     <a class="card-title">{{item.campo_amplio }}</a>
                   </span>
-                  <span class="col-2"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
+                  <span class="col-lg-2 col-sm-12"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
                 </span>
             </a>
             <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">

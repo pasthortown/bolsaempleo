@@ -4,10 +4,11 @@
       <img src="assets/img/institutos.png" height="90px"/>
     </a>
   </div>
-  <div class="navbar-collapse">
-    <ul class="navbar-nav mr-auto">
+  <div class="navbar-collapse" >
+    <!--Menu de Mi perfil-->
+    <ul class="navbar-nav mr-auto" *ngIf="authService.rolActual=='p' || authService.rolActual=='e'">
       <li class="nav-item dropdown" ngbDropdown>
-        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
+        <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
           <i>
             <img src="{{authService.usuarioNegocio.fotografia}}" class="rounded-circle"
                  style="width: 70px; height: 70px;">
@@ -38,35 +39,11 @@
         </div>
       </li>
     </ul>
-    <!--<ul class="navbar-nav mr-auto">-->
-      <!--<div class="row" style="color:white;">-->
-        <!--<div class="col-4">-->
-          <!--<h3>-->
-            <!--<i class="fa fa-building mb-2"> {{contadorEmpresas}}</i>-->
-          <!--</h3>-->
-          <!--<h6> EMPRESAS REGISTRADAS</h6>-->
-        <!--</div>-->
-        <!--<div class="col-4">-->
-          <!--<h3>-->
-            <!--<i class="fa fa-users mb-2">-->
-              <!--{{contadorPostulantes}}-->
-            <!--</i>-->
-          <!--</h3>-->
-          <!--<h6>PROFESIONALES VINCULADOS</h6>-->
-        <!--</div>-->
-        <!--<div class="col-4">-->
-          <!--<h3>-->
-            <!--<i class="fa fa-briefcase mb-2">-->
-              <!--{{contadorOfertas}}-->
-            <!--</i>-->
-          <!--</h3>-->
-          <!--<h6>OFERTAS LABORALES</h6>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</ul>-->
-    <ul class="navbar-nav ml-auto">
+    <!--Menus de Buscar, Iniciar Sesion y Registrate-->
+    <ul class="navbar ml-auto">
+      <!--Buscar-->
       <li class="nav-item dropdown pretty-button" ngbDropdown>
-        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
+        <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
           <i class="fa fa-fw fa-search"></i>&nbsp;Buscador
         </a>
         <div ngbDropdownMenu>
@@ -78,15 +55,17 @@
           </a>
         </div>
       </li>
-      <li>
-        <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link pretty-button"
+      <!--Iniciar Sesion-->
+      <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
+        <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
            [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-sign-in"></i>&nbsp;Iniciar Sesión
         </a>
       </li>
-      <li *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-item dropdown pretty-button"
+      <!--Registrate-->
+      <li *ngIf="authService.rolActual!='e' && authService.rolActual!='p'" class="nav-item dropdown pretty-button"
           ngbDropdown>
-        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
+        <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
           <i class="fa fa-fw fa-address-book"></i>&nbsp;Regístrate
         </a>
         <div ngbDropdownMenu>

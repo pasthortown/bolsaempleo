@@ -10,15 +10,15 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-12 main-header">
+      <div class="col-12">
         <div id="accordion" class="accordion" *ngFor="let item of areas">
           <div class="card">
             <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
                 <span class="row" (click)="filtrarPorCampoAmplio(item.campo_amplio)">
-                  <span class="col-10">
+                  <span class="col-lg-10 col-sm-12">
                     <a class="card-title">{{item.campo_amplio }}</a>
                   </span>
-                  <span class="col-2"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
+                  <span class="col-lg-2 col-sm-12"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
                 </span>
             </a>
             <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
@@ -80,7 +80,7 @@
         <div class="card mt-1" *ngFor="let ofertaActual of ofertas" style="height: 310px">
           <div class="card-header">
             <div class="row">
-              <div class="col-8">
+              <div class="col-8 col-sm-12">
                 <h6>
                   <div *ngIf="authService.rolActual=='p';then thenBlock else elseBLock"></div>
                   <ng-template #thenBlock>
@@ -98,7 +98,7 @@
                   {{ofertaActual.canton + ', ' +ofertaActual.provincia}}
                 </h6>
               </div>
-              <div class="col-4">
+              <div class="col-4 col-sm-12">
                 <table class="col-12">
                   <tbody>
                   <tr>
