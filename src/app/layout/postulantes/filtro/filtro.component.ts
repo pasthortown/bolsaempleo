@@ -3,10 +3,9 @@ import {catalogos} from './../../../../environments/catalogos';
 import {FirebaseBDDService} from './../../../services/firebase-bdd.service';
 import {Postulante} from './../../../models/postulante';
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
-import {Oferta} from '../../../models/oferta';
 import swal from 'sweetalert2';
 
 @Component({
@@ -21,6 +20,10 @@ export class FiltroComponent implements OnInit {
   tipo_titulo: Array<any>;
   postulantes: Array<Postulante>;
   postulanteSeleccionado: Postulante;
+  campo = 'estudiosRealizados/0/tipo_titulo';
+  pagina = 0;
+  registrosPorPagina = 2;
+  totalPaginas = 1;
   meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   @ViewChild('encabezadoHojaVida') encabezadoHojaVida: ElementRef;
   @ViewChild('cuerpoHojaVida') cuerpoHojaVida: ElementRef;
@@ -31,10 +34,51 @@ export class FiltroComponent implements OnInit {
 
   ngOnInit() {
     this.postulantes = [];
-    this.filtroDirecto();
+    this.paginacion(true);
+    this.getTotalPaginas();
     this.postulanteSeleccionado = new Postulante();
     this.postulanteSeleccionado.nombreCompleto = '';
     this.filtro = catalogos.titulos;
+  }
+
+  getTotalPaginas() {
+    const postulantes = [];
+    this.firebaseBDDService.firebaseControllerPostulantes.getAll().snapshotChanges().subscribe(items => {
+      this.totalPaginas = Math.ceil(items.length / this.registrosPorPagina);
+      items.forEach(element => {
+        let itemLeido: Postulante;
+        itemLeido = element.payload.val() as Postulante;
+        postulantes.push(itemLeido);
+      });
+      this.contarOfertasPorCampoAmplio(postulantes);
+      this.contarOfertasPorCampoEspecifico(postulantes);
+    });
+  }
+
+  paginacion(siguiente: boolean) {
+    if (siguiente) {
+      if ( this.pagina === this.totalPaginas ) {
+        return;
+      } else {
+        this.pagina ++;
+      }
+    } else {
+      if ( this.pagina === 1 ) {
+        return;
+      } else {
+        this.pagina --;
+      }
+    }
+    this.postulantes = [];
+    this.firebaseBDDService.firebaseControllerPostulantes.getPagina(this.pagina, this.registrosPorPagina, this.campo).snapshotChanges().subscribe(items => {
+      let i = (this.pagina - 1) * this.registrosPorPagina;
+      while ( i < items.length ) {
+        let itemLeido: Postulante;
+        itemLeido = items[i].payload.val() as Postulante;
+        this.postulantes.push(itemLeido);
+        i++;
+      }
+    });
   }
 
   mostrarHojaVida(postulanteSeleccionado: Postulante) {
@@ -68,6 +112,7 @@ export class FiltroComponent implements OnInit {
     this.etiquetaPrincipal = '';
     this.filtroDirecto();
   }
+
   filtroDirecto() {
     this.postulantes = [];
     this.firebaseBDDService.firebaseControllerPostulantes.querySimple('estudiosRealizados/0/titulo', this.criterioBusqueda)
@@ -87,8 +132,6 @@ export class FiltroComponent implements OnInit {
         itemLeido = element.payload.val() as Postulante;
         this.postulantes.push(itemLeido);
       });
-      this.contarOfertasPorCampoAmplio(this.postulantes);
-      this.contarOfertasPorCampoEspecifico(this.postulantes);
     });
   }
 
@@ -115,30 +158,15 @@ export class FiltroComponent implements OnInit {
     });
     postulantes.forEach(postulante => {
       this.filtro.forEach(area => {
-        postulante.estudiosRealizados.forEach(estudiosRealizados => {
-          if (estudiosRealizados.tipo_titulo === area.campo_amplio) {
-            area.total = area.total + 1;
-          }
-        });
-      });
-    });
-    /*
-    this.filtro.forEach(value => {
-      value.total = 0;
-      this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('estudiosRealizados/0/tipo_titulo', value.campo_amplio)
-        .snapshotChanges().subscribe(items => {
-        items.forEach(element => {
-          let itemLeido: Postulante;
-          itemLeido = element.payload.val() as Postulante;
-          itemLeido.estudiosRealizados.forEach(estudiosRealizados => {
-            if (value.campo_amplio === estudiosRealizados.tipo_titulo) {
-              value.total = items.length;
+        if ( postulante.estudiosRealizados != null ) {
+          postulante.estudiosRealizados.forEach(estudiosRealizados => {
+            if (estudiosRealizados.tipo_titulo === area.campo_amplio) {
+              area.total = area.total + 1;
             }
           });
-        });
+        }
       });
     });
-    */
   }
 
   contarOfertasPorCampoEspecifico(postulantes: Array<Postulante>) {
@@ -149,34 +177,16 @@ export class FiltroComponent implements OnInit {
     });
     postulantes.forEach(postulante => {
       this.filtro.forEach(area => {
-        postulante.estudiosRealizados.forEach(estudiosRealizados => {
-          area.campos_especificos.forEach(areaEspecifica => {
-            if (estudiosRealizados.titulo === areaEspecifica.nombre) {
-              areaEspecifica.total = areaEspecifica.total + 1;
-            }
-          });
-        });
-      });
-    });
-    /*
-    this.filtro.forEach(value => {
-      value.total = 0;
-      value.campos_especificos.forEach(campoEspecifico => {
-        campoEspecifico.total = 0;
-        this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('estudiosRealizados/0/titulo', campoEspecifico.nombre)
-          .snapshotChanges().subscribe(items => {
-          items.forEach(element => {
-            let itemLeido: Postulante;
-            itemLeido = element.payload.val() as Postulante;
-            itemLeido.estudiosRealizados.forEach(estudioRealizado => {
-              if (campoEspecifico.nombre === estudioRealizado.titulo) {
-                campoEspecifico.total = items.length;
+        if ( postulante.estudiosRealizados != null ) {
+          postulante.estudiosRealizados.forEach(estudiosRealizados => {
+            area.campos_especificos.forEach(areaEspecifica => {
+              if (estudiosRealizados.titulo === areaEspecifica.nombre) {
+                areaEspecifica.total = areaEspecifica.total + 1;
               }
             });
           });
-        });
+        }
       });
     });
-    */
   }
 }
