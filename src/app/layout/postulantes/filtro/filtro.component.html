@@ -11,32 +11,30 @@
     <div class="row">
       <div class="col-12 main-header">
         <div id="accordion" class="accordion" *ngFor="let item of filtro">
-          <div class="card mb-0 bg-ligth">
-            <div class="card mb-0">
-              <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
+          <div class="card">
+            <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
                 <span class="row">
                   <span class="col-10">
                     <a class="card-title">{{item.campo_amplio }}</a>
                   </span>
                   <span class="col-2"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
                 </span>
-              </a>
-              <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
-                <div class="panel-body">
-                  <table class="table">
-                    <tr *ngFor="let areaEspecifica of item.campos_especificos">
-                      <td width="80%">
-                        <a href="javascript:void(0)" (click)="filtrarPorTitulo(areaEspecifica.nombre)">
-                          {{areaEspecifica.nombre}}
-                        </a>
+            </a>
+            <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
+              <div class="panel-body">
+                <table class="table">
+                  <tr *ngFor="let areaEspecifica of item.campos_especificos">
+                    <td width="80%">
+                      <a href="javascript:void(0)" (click)="filtrarPorTitulo(areaEspecifica.nombre)">
+                        {{areaEspecifica.nombre}}
+                      </a>
 
-                      </td>
-                      <td width="20%">
-                        <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                    </td>
+                    <td width="20%">
+                      <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
+                    </td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
@@ -133,7 +131,8 @@
               </div>
             </div>
             <div class="col-12 m-2 text-left">
-              <a *ngIf="authService.rolActual=='e'" target="_blank" class="btn btn-info btn-sm" href="curriculum?idPostulante={{postulanteActual.id}}">
+              <a *ngIf="authService.rolActual=='e'" target="_blank" class="btn btn-info btn-sm"
+                 href="curriculum?idPostulante={{postulanteActual.id}}">
                 <span class="fa fa-info-circle"></span>&nbsp;Mas Información
               </a>
             </div>

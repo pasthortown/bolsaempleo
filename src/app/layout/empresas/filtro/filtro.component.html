@@ -12,34 +12,32 @@
     <div class="row">
       <div class="col-12 main-header">
         <div id="accordion" class="accordion" *ngFor="let item of areas">
-          <div class="card mb-0">
-            <div class="card mb-0">
-              <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
+          <div class="card">
+            <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
                 <span class="row" (click)="filtrarPorCampoAmplio(item.campo_amplio)">
                   <span class="col-10">
                     <a class="card-title">{{item.campo_amplio }}</a>
                   </span>
                   <span class="col-2"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
                 </span>
-              </a>
-              <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
-                <div class="panel-body">
-                  <table class="table">
-                    <div *ngFor="let areaEspecifica of item.campos_especificos">
-                      <!--<tr *ngIf="areaEspecifica.total">-->
-                      <tr>
-                        <td width="80%">
-                          <a href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica.nombre)">
-                            {{areaEspecifica.nombre}}
-                          </a>
-                        </td>
-                        <td width="20%">
-                          <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
-                        </td>
-                      </tr>
-                    </div>
-                  </table>
-                </div>
+            </a>
+            <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
+              <div class="panel-body">
+                <table class="table">
+                  <div *ngFor="let areaEspecifica of item.campos_especificos">
+                    <!--<tr *ngIf="areaEspecifica.total">-->
+                    <tr>
+                      <td width="80%">
+                        <a href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica.nombre)">
+                          {{areaEspecifica.nombre}}
+                        </a>
+                      </td>
+                      <td width="20%">
+                        <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
+                      </td>
+                    </tr>
+                  </div>
+                </table>
               </div>
             </div>
           </div>

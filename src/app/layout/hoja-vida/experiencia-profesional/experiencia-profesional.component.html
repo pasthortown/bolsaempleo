@@ -18,6 +18,7 @@
             <th>Descripción del Cargo</th>
             <th>Fecha de Inicio</th>
             <th>Fecha de Salida</th>
+            <th>Motivo de Salida</th>
             <th>Actual</th>
             <th width="100px">Opciones</th>
             </thead>
@@ -36,6 +37,7 @@
                   {{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
                 </div>
               </td>
+              <td>{{item.motivoSalida}}</td>
               <td>
                 <div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span
                   class="badge badge-success">Actual</span></div>

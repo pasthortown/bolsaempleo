@@ -1,43 +1,45 @@
 <div class="top-banner-div" style="background-image: url(assets/img/welcome-bg.png);">
   <h1 class="col-12 text-left titulo" style="color:white; font-size: 70px; font-weight: 700;">BOLSA DE EMPLEO</h1>
 </div>
-<div class="container">
-  <div class="row bg-light rounded">
-    <div class="col-4 text-center">
-      <h3>
-        {{contadorEmpresas}}
-        <i class="fa fa-building mb-2"></i>
-      </h3>
-      <h6> EMPRESAS REGISTRADAS</h6>
-    </div>
-    <div class="col-4 text-center">
-      <h3>
-        {{contadorPostulantes}}
-        <i class="fa fa-users mb-2"></i>
-      </h3>
-      <h6>PROFESIONALES VINCULADOS</h6>
-    </div>
-    <div class="col-4 text-center">
-      <h3>
-        {{contadorOfertas}}
-        <i class="fa fa-briefcase mb-2"></i>
-      </h3>
-      <h6>OFERTAS LABORALES</h6>
-    </div>
-  </div>
-</div>
-<div class="m-3">
-  <div class="row">
-    <div class="col-12 mt-4">
-      <div class="row">
-        <div class="col-1"></div>
-        <div class="col-5 text-right">
-          <img class="col-9" src="assets/img/CONTRATANDO.png">
+<!--Primero Bloque-->
+<div class="row">
+  <div class="col-10 offset-1">
+    <div class="card">
+      <div class="card-title">
+        <div class="bg-light rounded">
+          <div class="row">
+            <div class="col-4 text-center">
+              <h3>
+                {{contadorEmpresas}}
+                <i class="fa fa-building mb-2"></i>
+              </h3>
+              <h6> EMPRESAS REGISTRADAS</h6>
+            </div>
+            <div class="col-4 text-center">
+              <h3>
+                {{contadorPostulantes}}
+                <i class="fa fa-users mb-2"></i>
+              </h3>
+              <h6>PROFESIONALES VINCULADOS</h6>
+            </div>
+            <div class="col-4 text-center">
+              <h3>
+                {{contadorOfertas}}
+                <i class="fa fa-briefcase mb-2"></i>
+              </h3>
+              <h6>OFERTAS LABORALES</h6>
+            </div>
+          </div>
         </div>
-        <div class="col-5">
-          <div class="col-9">
-            <h1 style="color: #5b32b4;font-size: 48px;">Ofertas de Trabajo</h1>
-            <p class="text-justify">
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-5 text-left">
+            <img src="assets/img/CONTRATANDO.png" width="350px" height="350px">
+          </div>
+          <div class="col-7 text-left">
+            <h1 class="text-center" style="color: #5b32b4;font-size: 48px;">Ofertas Laborales</h1>
+            <p class="text-justify text-muted">
               Las instituciones públicas y/o privadas demandan profesionales con excelencia académica, valores
               humanísticos, morales y éticos, basados en una formación de calidad y calidez acordes al Plan Nacional del
               Buen Vivir.
@@ -47,12 +49,15 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12">
-      <app-filtro-ofertas></app-filtro-ofertas>
-    </div>
-  </div>
-  <div class="col-12 mt-4">
+</div>
+<!--Segundo Bloque-->
+<div class="m-5">
+  <app-filtro-ofertas></app-filtro-ofertas>
+</div>
+<!--Tercer Bloque-->
+<div class="m-5">
+  <!--Video-->
+  <div class="col-12">
     <div class="container">
       <div class="video-area">
         <video class="col-12" controls>
@@ -61,11 +66,12 @@
       </div>
     </div>
   </div>
+  <!--Contadores-->
   <div class="col-12" style="background-color: #5b32b4; margin-top: -150px; height: 400px;">
     <div class="col-12" style="height: 200px;">
     </div>
     <div class="col-12">
-      <div class="row" style="color:white;">
+      <div class="row text-white">
         <div class="col-4">
           <div class="row">
             <div class="col-4">
@@ -120,7 +126,8 @@
       </div>
     </div>
   </div>
-  <div class="col-12 mt-4">
+  <!--YaviracTec-->
+  <div class="col-12">
     <h1 class="col-12- text-center" style="color: #5b32b4; font-size: 72px; font-weight: 700;">YaviracTec</h1>
   </div>
 </div>
