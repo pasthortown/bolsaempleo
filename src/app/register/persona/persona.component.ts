@@ -5,6 +5,7 @@ import { PostulanteService } from '../../services/postulante.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
+import {catalogos} from '../../../environments/catalogos';
 
 @Component({
   selector: 'app-persona',
@@ -15,6 +16,7 @@ export class PersonaComponent implements OnInit {
   postulante: Postulante;
   contrasena: string;
   confirmacion: string;
+  nacionalidades: Array<any>;
 
   constructor(private postulanteService: PostulanteService,
     private firebaseBDDService: FirebaseBDDService,
@@ -22,6 +24,7 @@ export class PersonaComponent implements OnInit {
     private _router: Router) { }
 
   ngOnInit() {
+    this.nacionalidades = catalogos.nacionalidades;
     this.postulante = new Postulante();
   }
 

@@ -23,8 +23,9 @@
                 <select class="form-control" name="nacionalidad" id="nacionalidad"
                         [(ngModel)]="postulante.nacionalidad">
                   <option value="">SELECCIONE...</option>
-                  <option value="ECUATORIANA">ECUATORIANA</option>
-                  <option value="OTRA">OTRA</option>
+                  <option value="{{nacionalidad.descripcion}}" *ngFor="let nacionalidad of nacionalidades">
+                    {{nacionalidad.descripcion}}
+                  </option>
                 </select>
               </div>
             </div>
