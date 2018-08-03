@@ -14,9 +14,9 @@
         <div id="accordion" class="accordion" *ngFor="let item of areas">
           <div class="card">
             <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
-                <span class="row campo-amplio" (click)="filtrarPorCampoAmplio(item.campo_amplio)">
+                <span class="row" (click)="filtrarPorCampoAmplio(item.campo_amplio)">
                   <span class="col-lg-9 col-sm-12">
-                    <a class="card-title titulo1">{{item.campo_amplio }}</a>
+                    <a class="card-title campo-amplio">{{item.campo_amplio }}</a>
                   </span>
                   <span class="col-lg-3 col-sm-12 text-dark">
                     &nbsp;({{ item.total}})
@@ -30,12 +30,13 @@
                     <!--<tr *ngIf="areaEspecifica.total">-->
                     <tr>
                       <td width="80%">
-                        <a class="campo_especifico" href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica.nombre)">
+                        <a class="campo_especifico" href="javascript:void(0)"
+                           (click)="filtrarPorCampoEspecifico(areaEspecifica.nombre)">
                           {{areaEspecifica.nombre}}
                         </a>
                       </td>
                       <td width="20%">
-                        <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
+                        <span class=" campo_especifico text-dark">&nbsp;({{ areaEspecifica.total}})</span>
                       </td>
                     </tr>
                   </div>
@@ -105,32 +106,29 @@
                   <tbody>
                   <tr>
                     <th>
-                      <i class="titulo2">Inicio Publicación:</i>&nbsp;
+                      <i class="titulo1">Inicio Publicación:</i>&nbsp;
                     </th>
                     <td class="texto text-left text-muted">
-                      <strong>
-                        <i>
-                          {{
-                          ofertaActual.inicioPublicacion.year
-                          + '/' + ofertaActual.inicioPublicacion.month
-                          + '/' + ofertaActual.inicioPublicacion.day
-                          }}
-                        </i>
-                      </strong>
+                      <i>
+                        {{
+                        ofertaActual.inicioPublicacion.year
+                        + '/' + ofertaActual.inicioPublicacion.month
+                        + '/' + ofertaActual.inicioPublicacion.day
+                        }}
+                      </i>
                     </td>
                   </tr>
                   <tr>
                     <th>
-                      <i class="titulo2">Fin Publicación:</i>&nbsp;
+                      <i class="titulo1">Fin Publicación:</i>&nbsp;
                     </th>
                     <td class="text-left text-muted">
-                      <strong>
-                        <i class="texto">
-                          {{ofertaActual.finPublicacion.year
-                          + '/' + ofertaActual.finPublicacion.month
-                          + '/' + ofertaActual.finPublicacion.day
-                          }}
-                        </i></strong>
+                      <i class="texto">
+                        {{ofertaActual.finPublicacion.year
+                        + '/' + ofertaActual.finPublicacion.month
+                        + '/' + ofertaActual.finPublicacion.day
+                        }}
+                      </i>
                     </td>
                   </tr>
                   </tbody>
@@ -432,38 +430,38 @@
 </ng-template>
 
 <!--<div class="card-footer text-muted">-->
-  <!--<div class="row">-->
-  <!--<div class="col-lg-6 col-sm-12">-->
-  <!--<div class="row">-->
-  <!--<div class="col-lg-6 col-sm-6">-->
-  <!--<h6 class="text-muted text-uppercase">-->
-  <!--<i class="fa fa-user" aria-hidden="true"></i>-->
-  <!--{{ofertaActual.contacto}}-->
-  <!--</h6>-->
-  <!--</div>-->
-  <!--<div class="col-lg-6 col-sm-6">-->
-  <!--<h6 class="text-muted">-->
-  <!--<i class="fa fa-mobile-phone" aria-hidden="true"></i>-->
-  <!--{{ofertaActual.telefonoCelular}}-->
-  <!--</h6>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="col-lg-6 col-sm-12">-->
-  <!--<div class="row">-->
-  <!--<div class="col-lg-6 col-sm-6">-->
-  <!--<h6 class="text-muted">-->
-  <!--<i class="fa fa-phone" aria-hidden="true"></i>-->
-  <!--{{ofertaActual.telefonoFijo}}-->
-  <!--</h6>-->
-  <!--</div>-->
-  <!--<div class="col-lg-6 col-sm-6">-->
-  <!--<h6 class="text-muted">-->
-  <!--<i class="fa fa-envelope" aria-hidden="true"></i>-->
-  <!--{{ofertaActual.correoElectronico}}-->
-  <!--</h6>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
+<!--<div class="row">-->
+<!--<div class="col-lg-6 col-sm-12">-->
+<!--<div class="row">-->
+<!--<div class="col-lg-6 col-sm-6">-->
+<!--<h6 class="text-muted text-uppercase">-->
+<!--<i class="fa fa-user" aria-hidden="true"></i>-->
+<!--{{ofertaActual.contacto}}-->
+<!--</h6>-->
+<!--</div>-->
+<!--<div class="col-lg-6 col-sm-6">-->
+<!--<h6 class="text-muted">-->
+<!--<i class="fa fa-mobile-phone" aria-hidden="true"></i>-->
+<!--{{ofertaActual.telefonoCelular}}-->
+<!--</h6>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-lg-6 col-sm-12">-->
+<!--<div class="row">-->
+<!--<div class="col-lg-6 col-sm-6">-->
+<!--<h6 class="text-muted">-->
+<!--<i class="fa fa-phone" aria-hidden="true"></i>-->
+<!--{{ofertaActual.telefonoFijo}}-->
+<!--</h6>-->
+<!--</div>-->
+<!--<div class="col-lg-6 col-sm-6">-->
+<!--<h6 class="text-muted">-->
+<!--<i class="fa fa-envelope" aria-hidden="true"></i>-->
+<!--{{ofertaActual.correoElectronico}}-->
+<!--</h6>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
 <!--</div>-->

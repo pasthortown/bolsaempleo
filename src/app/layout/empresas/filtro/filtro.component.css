@@ -5,11 +5,11 @@
 
 .titulo1{
   font-family: Serif;
-  font-size: 15px;
+  font-size: 14px;
 }
 .titulo2{
   font-family: Serif;
-  font-size: 12px;
+  font-size: 10px;
 }
 card{
   height: 75px
@@ -19,11 +19,11 @@ card-body{
   height: 75px
 }
 .campo-amplio{
-  font-family: "Arial Black";
+  font-family: sans-serif;
   font-size: 12px;
 }
 
 .campo_especifico{
-  font-family: "Comic Sans MS";
-  font-size: 11px;
+  font-family: "Calibri Light";
+  font-size: 12px;
 }
