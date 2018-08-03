@@ -27,7 +27,10 @@ export class FiltroComponent implements OnInit {
   campoEspecificoSeleccionado: string;
   flag: string;
   criterioBusqueda: string;
-
+  pagina = 0;
+  registrosPorPagina = 2;
+  totalPaginas = 1;
+  campo = 'estudiosRealizados/0/tipo_titulo';
   constructor(private modalService: NgbModal,
               public empresaService: EmpresaService,
               private firebaseBDDService: FirebaseBDDService,
@@ -42,8 +45,50 @@ export class FiltroComponent implements OnInit {
     this.oferta = new Oferta();
     this.areas = catalogos.titulos;
     this.ofertas = new Array<Oferta>();
-    this.leerOfertas();
+    this.paginacion(true);
+    this.getTotalPaginas();
+    // this.leerOfertas();
     // this.contarOfertasPorCampoEspecifico();
+  }
+
+  getTotalPaginas() {
+    const ofertas = [];
+    this.firebaseBDDService.firebaseControllerOfertas.getAll().snapshotChanges().subscribe(items => {
+      this.totalPaginas = Math.ceil(items.length / this.registrosPorPagina);
+      items.forEach(element => {
+        let itemLeido: Oferta;
+        itemLeido = element.payload.val() as Oferta;
+        ofertas.push(itemLeido);
+      });
+      this.contarOfertasPorCampoAmplio(ofertas);
+      this.contarOfertasPorCampoEspecifico(ofertas);
+    });
+  }
+
+  paginacion(siguiente: boolean) {
+    if (siguiente) {
+      if ( this.pagina === this.totalPaginas ) {
+        return;
+      } else {
+        this.pagina ++;
+      }
+    } else {
+      if ( this.pagina === 1 ) {
+        return;
+      } else {
+        this.pagina --;
+      }
+    }
+    this.ofertas = [];
+    this.firebaseBDDService.firebaseControllerOfertas.getPagina(this.pagina, this.registrosPorPagina, this.campo).snapshotChanges().subscribe(items => {
+      let i = (this.pagina - 1) * this.registrosPorPagina;
+      while ( i < items.length ) {
+        let itemLeido: Oferta;
+        itemLeido = items[i].payload.val() as Oferta;
+        this.ofertas.push(itemLeido);
+        i++;
+      }
+    });
   }
 
   leerOfertas() {
@@ -65,8 +110,6 @@ export class FiltroComponent implements OnInit {
         itemLeido = element.payload.val() as Oferta;
         this.ofertas.push(itemLeido);
       });
-      this.contarOfertasPorCampoAmplio(this.ofertas);
-      this.contarOfertasPorCampoEspecifico(this.ofertas);
     });
   }
 

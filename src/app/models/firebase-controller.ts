@@ -11,7 +11,7 @@ export class FirebaseController {
 
   leer() {
     return this.coleccion = this.firebase.list(this.coleccionBDD, ref => {
-      return ref.orderByChild('estudiosRealizados/0/tipo_titulo').limitToFirst(5);
+      return ref;
     });
   }
 
@@ -38,7 +38,13 @@ export class FirebaseController {
       return ref;
     });
   }
-  
+
+  getPagina(pagina: number, registrosPorPagina: number, campo: string) {
+    return this.coleccion = this.firebase.list(this.coleccionBDD, ref => {
+      return ref.orderByChild(campo).limitToFirst(registrosPorPagina * pagina);
+    });
+  }
+
   insertar(objeto: any) {
     this.coleccion.push(objeto);
   }
