@@ -3,7 +3,7 @@
   <div class="col-3">
     <div class="row">
       <div class="col-12">
-        <h6 class="bg-warning form-control">
+        <h6 class="bg-warning form-control titulo1">
           <i class="fa fa-filter" aria-hidden="true"></i>
           Filtros
         </h6>
@@ -14,11 +14,13 @@
         <div id="accordion" class="accordion" *ngFor="let item of areas">
           <div class="card">
             <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
-                <span class="row" (click)="filtrarPorCampoAmplio(item.campo_amplio)">
-                  <span class="col-lg-10 col-sm-12">
-                    <a class="card-title">{{item.campo_amplio }}</a>
+                <span class="row campo-amplio" (click)="filtrarPorCampoAmplio(item.campo_amplio)">
+                  <span class="col-lg-9 col-sm-12">
+                    <a class="card-title titulo1">{{item.campo_amplio }}</a>
                   </span>
-                  <span class="col-lg-2 col-sm-12"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
+                  <span class="col-lg-3 col-sm-12 text-dark">
+                    &nbsp;({{ item.total}})
+                  </span>
                 </span>
             </a>
             <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
@@ -28,7 +30,7 @@
                     <!--<tr *ngIf="areaEspecifica.total">-->
                     <tr>
                       <td width="80%">
-                        <a href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica.nombre)">
+                        <a class="campo_especifico" href="javascript:void(0)" (click)="filtrarPorCampoEspecifico(areaEspecifica.nombre)">
                           {{areaEspecifica.nombre}}
                         </a>
                       </td>
@@ -76,36 +78,36 @@
     </div>
     <!--Grid de Ofertas-->
     <div class="row" style="overflow: auto">
-      <div class="col-12">
-        <div class="card mb-2" *ngFor="let ofertaActual of ofertas" style="height: 310px">
+      <div class="col-lg-12">
+        <div class="card mb-2" *ngFor="let ofertaActual of ofertas">
           <div class="card-header">
             <div class="row">
-              <div class="col-lg-8 col-sm-12">
+              <div class="col-lg-9 col-sm-12">
                 <h6>
                   <div *ngIf="authService.rolActual=='p';then thenBlock else elseBLock"></div>
                   <ng-template #thenBlock>
-                    <a href="javascript:void(0)" *ngIf="authService.rolActual=='p'"
+                    <a class="titulo1" href="javascript:void(0)" *ngIf="authService.rolActual=='p'"
                        (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
                       {{ofertaActual.cargo}}
                     </a>
                   </ng-template>
                   <ng-template #elseBLock>
-                    {{ofertaActual.cargo}}
+                    <h6 class="titulo1" style="color: #007bff">{{ofertaActual.cargo}}</h6>
                   </ng-template>
                 </h6>
-                <h6 class="text-muted">
+                <h6 class="text-muted texto">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
                   {{ofertaActual.canton + ', ' +ofertaActual.provincia}}
                 </h6>
               </div>
-              <div class="col-lg-4 col-sm-12">
-                <table class="col-12">
+              <div class="col-lg-3 col-sm-12">
+                <table>
                   <tbody>
                   <tr>
                     <th>
-                      <i>Inicio Publicación:</i>&nbsp;
+                      <i class="titulo2">Inicio Publicación:</i>&nbsp;
                     </th>
-                    <td class="text-left text-muted">
+                    <td class="texto text-left text-muted">
                       <strong>
                         <i>
                           {{
@@ -119,11 +121,11 @@
                   </tr>
                   <tr>
                     <th>
-                      <i>Fin Publicación:</i>&nbsp;
+                      <i class="titulo2">Fin Publicación:</i>&nbsp;
                     </th>
                     <td class="text-left text-muted">
                       <strong>
-                        <i>
+                        <i class="texto">
                           {{ofertaActual.finPublicacion.year
                           + '/' + ofertaActual.finPublicacion.month
                           + '/' + ofertaActual.finPublicacion.day
@@ -138,50 +140,18 @@
           </div>
           <div class="card-body">
             <div class="row">
-              <div class="col-12">
-                <h6 class="text-muted" style="overflow: auto;height: 80px">
+              <div class="col-lg-12">
+                <p class="text-muted texto" style="overflow: auto;">
                   {{ofertaActual.actividades}}
-                </h6>
+                </p>
                 <button class="btn btn-primary btn-sm pull-right" *ngIf="authService.rolActual=='p'"
                         (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
                   <span class="fa fa-info-circle"></span>&nbsp;Más Información
                 </button>
-              </div>
-            </div>
-          </div>
-          <div class="card-footer text-muted">
-            <div class="row">
-              <div class="col-lg-6 col-sm-12">
-                <div class="row">
-                  <div class="col-lg-6 col-sm-6">
-                    <h6 class="text-muted text-uppercase">
-                      <i class="fa fa-user" aria-hidden="true"></i>
-                      {{ofertaActual.contacto}}
-                    </h6>
-                  </div>
-                  <div class="col-lg-6 col-sm-6">
-                    <h6 class="text-muted">
-                      <i class="fa fa-mobile-phone" aria-hidden="true"></i>
-                      {{ofertaActual.telefonoCelular}}
-                    </h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 col-sm-12">
-                <div class="row">
-                  <div class="col-lg-6 col-sm-6">
-                    <h6 class="text-muted">
-                      <i class="fa fa-phone" aria-hidden="true"></i>
-                      {{ofertaActual.telefonoFijo}}
-                    </h6>
-                  </div>
-                  <div class="col-lg-6 col-sm-6">
-                    <h6 class="text-muted">
-                      <i class="fa fa-envelope" aria-hidden="true"></i>
-                      {{ofertaActual.correoElectronico}}
-                    </h6>
-                  </div>
-                </div>
+                <button class="btn btn-primary btn-sm pull-right" *ngIf="authService.rolActual!=='p'"
+                        (click)="validarSesion()">
+                  <span class="fa fa-info-circle"></span>&nbsp;Más Información
+                </button>
               </div>
             </div>
           </div>
@@ -460,3 +430,40 @@
     </button>
   </div>
 </ng-template>
+
+<!--<div class="card-footer text-muted">-->
+  <!--<div class="row">-->
+  <!--<div class="col-lg-6 col-sm-12">-->
+  <!--<div class="row">-->
+  <!--<div class="col-lg-6 col-sm-6">-->
+  <!--<h6 class="text-muted text-uppercase">-->
+  <!--<i class="fa fa-user" aria-hidden="true"></i>-->
+  <!--{{ofertaActual.contacto}}-->
+  <!--</h6>-->
+  <!--</div>-->
+  <!--<div class="col-lg-6 col-sm-6">-->
+  <!--<h6 class="text-muted">-->
+  <!--<i class="fa fa-mobile-phone" aria-hidden="true"></i>-->
+  <!--{{ofertaActual.telefonoCelular}}-->
+  <!--</h6>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<div class="col-lg-6 col-sm-12">-->
+  <!--<div class="row">-->
+  <!--<div class="col-lg-6 col-sm-6">-->
+  <!--<h6 class="text-muted">-->
+  <!--<i class="fa fa-phone" aria-hidden="true"></i>-->
+  <!--{{ofertaActual.telefonoFijo}}-->
+  <!--</h6>-->
+  <!--</div>-->
+  <!--<div class="col-lg-6 col-sm-6">-->
+  <!--<h6 class="text-muted">-->
+  <!--<i class="fa fa-envelope" aria-hidden="true"></i>-->
+  <!--{{ofertaActual.correoElectronico}}-->
+  <!--</h6>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

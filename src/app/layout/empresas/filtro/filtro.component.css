@@ -1,0 +1,29 @@
+.texto{
+  font-family: Serif;
+  font-size: 12px;
+}
+
+.titulo1{
+  font-family: Serif;
+  font-size: 15px;
+}
+.titulo2{
+  font-family: Serif;
+  font-size: 12px;
+}
+card{
+  height: 75px
+}
+
+card-body{
+  height: 75px
+}
+.campo-amplio{
+  font-family: "Arial Black";
+  font-size: 12px;
+}
+
+.campo_especifico{
+  font-family: "Comic Sans MS";
+  font-size: 11px;
+}

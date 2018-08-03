@@ -9,6 +9,10 @@ import {catalogos} from '../../../../environments/catalogos';
 import {Postulacion} from '../../../models/postulacion';
 import {AuthService} from '../../../services/auth.service';
 import {Postulante} from '../../../models/postulante';
+import {Router} from '@angular/router';
+import {PostulacionDiccionario} from '../../../models/miPostulacionDiccionario';
+import {Empresa} from '../../../models/empresa';
+import {PostulanteService} from '../../../services/postulante.service';
 
 @Component({
   selector: 'app-filtro-ofertas',
@@ -17,6 +21,8 @@ import {Postulante} from '../../../models/postulante';
 })
 export class FiltroComponent implements OnInit {
   oferta: Oferta;
+  misPostulacionesFB: Array<Postulacion> = [];
+  misPostulaciones: Array<PostulacionDiccionario> = [];
   postulacion: Postulacion;
   postulante: Postulante;
   ofertas: Array<Oferta>;
@@ -28,13 +34,16 @@ export class FiltroComponent implements OnInit {
   flag: string;
   criterioBusqueda: string;
   pagina = 0;
-  registrosPorPagina = 2;
+  registrosPorPagina = 10;
   totalPaginas = 1;
   campo = 'estudiosRealizados/0/tipo_titulo';
+
   constructor(private modalService: NgbModal,
               public empresaService: EmpresaService,
+              private postulanteService: PostulanteService,
               private firebaseBDDService: FirebaseBDDService,
               public authService: AuthService,
+              private router: Router,
               public ofertaService: OfertaService) {
   }
 
@@ -47,6 +56,9 @@ export class FiltroComponent implements OnInit {
     this.ofertas = new Array<Oferta>();
     this.paginacion(true);
     this.getTotalPaginas();
+    if (this.postulante != null) {
+      this.validarOfertasConPostulaciones();
+    }
     // this.leerOfertas();
     // this.contarOfertasPorCampoEspecifico();
   }
@@ -67,22 +79,22 @@ export class FiltroComponent implements OnInit {
 
   paginacion(siguiente: boolean) {
     if (siguiente) {
-      if ( this.pagina === this.totalPaginas ) {
+      if (this.pagina === this.totalPaginas) {
         return;
       } else {
-        this.pagina ++;
+        this.pagina++;
       }
     } else {
-      if ( this.pagina === 1 ) {
+      if (this.pagina === 1) {
         return;
       } else {
-        this.pagina --;
+        this.pagina--;
       }
     }
     this.ofertas = [];
     this.firebaseBDDService.firebaseControllerOfertas.getPagina(this.pagina, this.registrosPorPagina, this.campo).snapshotChanges().subscribe(items => {
       let i = (this.pagina - 1) * this.registrosPorPagina;
-      while ( i < items.length ) {
+      while (i < items.length) {
         let itemLeido: Oferta;
         itemLeido = items[i].payload.val() as Oferta;
         this.ofertas.push(itemLeido);
@@ -294,5 +306,41 @@ export class FiltroComponent implements OnInit {
       });
     });
     */
+  }
+
+  validarSesion() {
+    swal({
+      title: 'Para ver más Información tiene que iniciar sesión como Postulante',
+      text: '',
+      type: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '<i class="fa fa-sign-in" aria-hidden="true"> Iniciar Sesión</i>'
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigate(['login']);
+      }
+    });
+  }
+
+  getMisPostulaciones(): Array<Postulacion> {
+    this.firebaseBDDService.firebaseControllerPostulaciones.getId('idPostulante', this.postulante.id)
+      .snapshotChanges().subscribe(items => {
+      items.forEach(element => {
+        let itemLeido: Postulacion;
+        itemLeido = element.payload.val() as Postulacion;
+        itemLeido.id = element.key;
+        // Como puedo usar this.misPostulacionesFB porque cuando la quiero usar en validarOfertasConPostulaciones() me sale que esta vacia
+        // lo mismo pasa con las ofertas this.ofertas cuando la quiero usar me dice que esta vacia, entido yo que es porque es asincronica la conexion
+        this.misPostulacionesFB.push(itemLeido);
+      });
+      return this.misPostulacionesFB;
+    });
+    return null;
+  }
+
+  validarOfertasConPostulaciones() {
+    console.log(this.getMisPostulaciones());
   }
 }
