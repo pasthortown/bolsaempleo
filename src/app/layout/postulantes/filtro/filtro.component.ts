@@ -115,7 +115,7 @@ export class FiltroComponent implements OnInit {
 
   filtroDirecto() {
     this.postulantes = [];
-    this.firebaseBDDService.firebaseControllerPostulantes.querySimple('estudiosRealizados/0/titulo', this.criterioBusqueda)
+    this.firebaseBDDService.firebaseControllerPostulantes.querySimple('estudiosRealizados/0/titulo', this.criterioBusqueda.toUpperCase())
       .snapshotChanges().subscribe(items => {
       if (items.length === 0) {
         swal({
