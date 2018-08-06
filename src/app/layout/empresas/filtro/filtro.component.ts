@@ -27,6 +27,7 @@ export class FiltroComponent implements OnInit {
   postulacion: Postulacion;
   postulante: Postulante;
   ofertas: Array<Oferta>;
+  ofertasAux: Array<Oferta>;
   areas: Array<any>;
   etiquetaPrincipal: string;
   etiquetaSecundaria: string;
@@ -57,6 +58,7 @@ export class FiltroComponent implements OnInit {
     this.ofertas = new Array<Oferta>();
     this.paginacion(true);
     this.getTotalPaginas();
+    this.validarOfertasConPostulaciones();
     if (this.postulante != null) {
       this.getMisPostulaciones();
     }
@@ -287,25 +289,6 @@ export class FiltroComponent implements OnInit {
         });
       });
     });
-
-    /*
-    this.ofertas = [];
-    this.areas.forEach(value => {
-      value.campos_especificos.forEach(campoEspecifico => {
-        this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoEspecifico', campoEspecifico.nombre)
-          .snapshotChanges().subscribe(items => {
-          campoEspecifico.total = 0;
-          items.forEach(element => {
-            let itemLeido: Oferta;
-            itemLeido = element.payload.val() as Oferta;
-            if (campoEspecifico.nombre === itemLeido.campoEspecifico) {
-              campoEspecifico.total = items.length;
-            }
-          });
-        });
-      });
-    });
-    */
   }
 
   validarSesion() {
@@ -333,7 +316,20 @@ export class FiltroComponent implements OnInit {
     });
   }
 
+<<<<<<< HEAD
   aplicada(idOferta: string) {
     return (idOferta in this.ofertasAplicadas);
+=======
+  validarOfertasConPostulaciones() {
+    this.leerOfertas();
+  }
+
+  leerOfertasAux() {
+    this.firebaseBDDService.firebaseControllerOfertas.getAll()
+      .snapshotChanges()
+      .forEach(items => {
+        console.log(items);
+      });
+>>>>>>> 9cced92c0bdb3609e06f91be2a224fc9094c1915
   }
 }

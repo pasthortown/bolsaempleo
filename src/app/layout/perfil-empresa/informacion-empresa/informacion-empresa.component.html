@@ -11,7 +11,7 @@
                 <img src="{{empresaService.empresa.fotografia}}" class="rounded-circle" width="100px" height="100px"
                      (click)="fileInput.click()" title="100 X 100">
               </button>
-              <button type="button" class="btn btn-success form-control mt-2" (click)="insertar()">
+              <button type="button" class="btn btn-success form-control mt-2" (click)="actualizar()">
                 <span class="fa fa-save"></span>&nbsp;Guardar Cambios
               </button>
             </div>
@@ -38,9 +38,9 @@
               <label for="naturaleza">Naturaleza:</label>
               <select class="form-control" id="naturaleza" [(ngModel)]="empresaService.empresa.naturaleza">
                 <option value="" selected>SELECCIONE...</option>
-                <option value="Pública">Pública</option>
-                <option value="Privada">Privada</option>
-                <option value="Mixta">Mixta</option>
+                <option value="PÚBLICA">PÚBLICA</option>
+                <option value="PRIVADA">PRIVADA</option>
+                <option value="MIXTA">MIXTA</option>
               </select>
             </div>
             <!--Actividad Economica-->

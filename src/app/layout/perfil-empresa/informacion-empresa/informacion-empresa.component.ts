@@ -16,7 +16,6 @@ export class InformacionEmpresaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.empresaService.empresa.naturaleza = '';
     this.srcFoto = 'assets/img/prueba/descarga.jpg';
   }
 
@@ -31,25 +30,12 @@ export class InformacionEmpresaComponent implements OnInit {
     }
   }
 
-
-  insertar() {
-    this.firebaseBDDService.firebaseControllerEmpresas.insertar(this.empresaService.empresa);
-    swal({
-      position: 'center',
-      type: 'success',
-      title: 'Actualizar',
-      text: 'Actualización fue exitosa!',
-      showConfirmButton: false,
-      timer: 2000
-    });
-  }
-
   actualizar() {
     this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
     swal({
       position: 'center',
       type: 'success',
-      title: 'Actualizar',
+      title: 'Datos Personales',
       text: 'Actualización fue exitosa!',
       showConfirmButton: false,
       timer: 2000
