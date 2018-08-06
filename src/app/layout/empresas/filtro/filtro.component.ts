@@ -178,7 +178,7 @@ export class FiltroComponent implements OnInit {
   filtrarPorCargo() {
     this.ofertas = [];
     this.etiquetaPrincipal = this.criterioBusqueda;
-    this.firebaseBDDService.firebaseControllerOfertas.querySimple('cargo', this.criterioBusqueda)
+    this.firebaseBDDService.firebaseControllerOfertas.querySimple('cargo', this.criterioBusqueda.toUpperCase())
       .snapshotChanges().subscribe(items => {
       if (items.length === 0) {
         swal({
