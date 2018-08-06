@@ -41,7 +41,7 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.empresa = this.authService.obtenerUsuario();
+    this.empresa = this.authService.usuarioNegocio as Empresa;
     this.habilitarCamposEspecificos = false;
     this.habilitarCantones = false;
     this.oferta = new Oferta();

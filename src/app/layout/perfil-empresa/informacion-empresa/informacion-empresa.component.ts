@@ -2,6 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmpresaService} from '../../../services/empresa.service';
 import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 import swal from 'sweetalert2';
+import {Empresa} from '../../../models/empresa';
+import {AuthService} from '../../../services/auth.service';
+import {Oferta} from '../../../models/oferta';
 
 @Component({
   selector: 'app-informacion-empresa',
@@ -11,12 +14,18 @@ import swal from 'sweetalert2';
 export class InformacionEmpresaComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   srcFoto: string;
+  empresa: Empresa;
 
-  constructor(public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService) {
+  constructor(public empresaService: EmpresaService,
+              private authService: AuthService,
+              private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
+    this.empresa = new Empresa();
     this.srcFoto = 'assets/img/prueba/descarga.jpg';
+    this.empresaService.empresa = this.authService.usuarioNegocio as Empresa;
+    this.leerEmpresa();
   }
 
   CodificarArchivo(event) {
@@ -30,8 +39,10 @@ export class InformacionEmpresaComponent implements OnInit {
     }
   }
 
-  actualizar() {
-    this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
+  actualizar(e) {
+     e.stopPropagation();
+     e.preventDefault();
+    this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresa);
     swal({
       position: 'center',
       type: 'success',
@@ -42,5 +53,13 @@ export class InformacionEmpresaComponent implements OnInit {
     });
   }
 
-
+  leerEmpresa() {
+    this.firebaseBDDService.firebaseControllerEmpresas.getId('id', this.empresaService.empresa.id)
+      .snapshotChanges().subscribe(items => {
+      this.empresa = new Empresa();
+      items.forEach(element => {
+        this.empresa = element.payload.val() as Empresa;
+      });
+    });
+  }
 }
