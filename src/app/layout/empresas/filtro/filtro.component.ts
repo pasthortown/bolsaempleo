@@ -58,7 +58,6 @@ export class FiltroComponent implements OnInit {
     this.ofertas = new Array<Oferta>();
     this.paginacion(true);
     this.getTotalPaginas();
-    this.validarOfertasConPostulaciones();
     if (this.postulante != null) {
       this.getMisPostulaciones();
     }
@@ -316,20 +315,7 @@ export class FiltroComponent implements OnInit {
     });
   }
 
-<<<<<<< HEAD
   aplicada(idOferta: string) {
     return (idOferta in this.ofertasAplicadas);
-=======
-  validarOfertasConPostulaciones() {
-    this.leerOfertas();
-  }
-
-  leerOfertasAux() {
-    this.firebaseBDDService.firebaseControllerOfertas.getAll()
-      .snapshotChanges()
-      .forEach(items => {
-        console.log(items);
-      });
->>>>>>> 9cced92c0bdb3609e06f91be2a224fc9094c1915
   }
 }
