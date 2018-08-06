@@ -22,6 +22,7 @@ import {PostulanteService} from '../../../services/postulante.service';
 export class FiltroComponent implements OnInit {
   oferta: Oferta;
   misPostulacionesFB: Array<Postulacion> = [];
+  ofertasAplicadas = [];
   misPostulaciones: Array<PostulacionDiccionario> = [];
   postulacion: Postulacion;
   postulante: Postulante;
@@ -57,7 +58,7 @@ export class FiltroComponent implements OnInit {
     this.paginacion(true);
     this.getTotalPaginas();
     if (this.postulante != null) {
-      this.validarOfertasConPostulaciones();
+      this.getMisPostulaciones();
     }
     // this.leerOfertas();
     // this.contarOfertasPorCampoEspecifico();
@@ -129,7 +130,6 @@ export class FiltroComponent implements OnInit {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
-    console.log(item);
     this.oferta = item;
     this.modalService.open(content, logoutScreenOptions)
       .result
@@ -324,23 +324,16 @@ export class FiltroComponent implements OnInit {
     });
   }
 
-  getMisPostulaciones(): Array<Postulacion> {
+  getMisPostulaciones() {
     this.firebaseBDDService.firebaseControllerPostulaciones.getId('idPostulante', this.postulante.id)
       .snapshotChanges().subscribe(items => {
       items.forEach(element => {
-        let itemLeido: Postulacion;
-        itemLeido = element.payload.val() as Postulacion;
-        itemLeido.id = element.key;
-        // Como puedo usar this.misPostulacionesFB porque cuando la quiero usar en validarOfertasConPostulaciones() me sale que esta vacia
-        // lo mismo pasa con las ofertas this.ofertas cuando la quiero usar me dice que esta vacia, entido yo que es porque es asincronica la conexion
-        this.misPostulacionesFB.push(itemLeido);
+        this.ofertasAplicadas.push(element.key);
       });
-      return this.misPostulacionesFB;
     });
-    return null;
   }
 
-  validarOfertasConPostulaciones() {
-    console.log(this.getMisPostulaciones());
+  aplicada(idOferta: string) {
+    return (idOferta in this.ofertasAplicadas);
   }
 }
