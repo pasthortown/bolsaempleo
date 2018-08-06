@@ -26,6 +26,7 @@ export class FiltroComponent implements OnInit {
   postulacion: Postulacion;
   postulante: Postulante;
   ofertas: Array<Oferta>;
+  ofertasAux: Array<Oferta>;
   areas: Array<any>;
   etiquetaPrincipal: string;
   etiquetaSecundaria: string;
@@ -56,6 +57,7 @@ export class FiltroComponent implements OnInit {
     this.ofertas = new Array<Oferta>();
     this.paginacion(true);
     this.getTotalPaginas();
+    this.validarOfertasConPostulaciones();
     if (this.postulante != null) {
       this.validarOfertasConPostulaciones();
     }
@@ -341,6 +343,14 @@ export class FiltroComponent implements OnInit {
   }
 
   validarOfertasConPostulaciones() {
-    console.log(this.getMisPostulaciones());
+    this.leerOfertas();
+  }
+
+  leerOfertasAux() {
+    this.firebaseBDDService.firebaseControllerOfertas.getAll()
+      .snapshotChanges()
+      .forEach(items => {
+        console.log(items);
+      });
   }
 }

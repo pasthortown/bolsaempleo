@@ -180,7 +180,7 @@ export class OfertasLaboralesComponent implements OnInit {
     swal({
       position: 'center',
       type: 'success',
-      title: 'Oferta Creada',
+      title: 'Oferta Laboral',
       text: 'Registro exitoso!',
       showConfirmButton: false,
       timer: 2000
@@ -201,7 +201,7 @@ export class OfertasLaboralesComponent implements OnInit {
     swal({
       position: 'center',
       type: 'success',
-      title: 'Oferta Actualizada',
+      title: 'Oferta',
       text: 'Actualización exitosa!',
       showConfirmButton: false,
       timer: 2000
@@ -222,7 +222,7 @@ export class OfertasLaboralesComponent implements OnInit {
       if (result.value) {
         this.firebaseBDDService.firebaseControllerOfertas.borrar(item);
         swal({
-          title: 'Oferta Eliminada',
+          title: 'Oferta',
           text: 'Eliminación exitosa!',
           type: 'success',
           timer: 2000
@@ -232,8 +232,7 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   leerOfertas() {
-    this.ofertaService.ofertas = null;
-    this.ofertaService.ofertas = [];
+    console.log(this.empresa.id);
     this.firebaseBDDService.firebaseControllerOfertas.getId('idEmpresa', this.empresa.id)
       .snapshotChanges().subscribe(items => {
       this.ofertaService.ofertas = [];
@@ -246,6 +245,7 @@ export class OfertasLaboralesComponent implements OnInit {
           this.firebaseBDDService.firebaseControllerOfertas.actualizar(itemLeido);
         }
         this.ofertaService.ofertas.push(itemLeido);
+        console.log(this.ofertaService);
       });
     });
   }
