@@ -1,5 +1,5 @@
 <div class="top-banner-div" style="background-image: url(assets/img/welcome-bg.png);">
-  <h1 class="col-12 text-left" style="color:white; font-size: 70px; font-weight: 700;">HOJA DE VIDA</h1>
+  <h1 class="col-12 text-left titulo" style="color:white; font-size: 70px; font-weight: 700;">HOJA DE VIDA</h1>
 </div>
 <div class="col-12 mt-2">
   <ngb-tabset>
@@ -33,20 +33,15 @@
         <app-fortalezas></app-fortalezas>
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="7. Referencias Personales" id="tab7">
+    <ngb-tab title="7. Referencias Profesionales" id="tab7">
       <ng-template ngbTabContent>
         <app-referencias-personales></app-referencias-personales>
-      </ng-template>
-    </ngb-tab>
-    <ngb-tab title="8. PDF" id="tab8">
-      <ng-template ngbTabContent>
-        <app-pdf></app-pdf>
       </ng-template>
     </ngb-tab>
   </ngb-tabset>
 </div>
 <div class="col-12 m-2 text-center">
-  <button type="submit" class="btn btn-success" (click)="guardarCambios()">
+  <button class="btn btn-success" type="button" (click)="guardarCambios()">
     <span class="fa fa-save"></span>&nbsp;Guardar Cambios
   </button>
 </div>

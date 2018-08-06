@@ -25,34 +25,17 @@ export class InformacionEmpresaComponent implements OnInit {
       const file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.srcFoto = 'data:' + file.type + ';base64,' + reader.result.split(',')[1];
+        this.empresaService.empresa.fotografia = 'data:' + file.type + ';base64,' + reader.result.split(',')[1];
       };
     }
   }
 
-
-  insertar() {
-    this.firebaseBDDService.firebaseControllerEmpresas.insertar(this.empresaService.empresa);
-    swal({
-      position: 'center',
-      type: 'success',
-      title: 'Actualizar',
-      text: 'Actualización fue exitosa!',
-      showConfirmButton: false,
-      timer: 2000
-    });
-  }
-
   actualizar() {
-    this.empresaService.empresa.id = '-LHnYYcnqIEj4yUV4izj';
-    if (this.empresaService.empresa.oferta == null) {
-      this.empresaService.empresa.oferta = [];
-    }
     this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
     swal({
       position: 'center',
       type: 'success',
-      title: 'Actualizar',
+      title: 'Datos Personales',
       text: 'Actualización fue exitosa!',
       showConfirmButton: false,
       timer: 2000

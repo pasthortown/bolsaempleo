@@ -7,6 +7,8 @@ export class EstudioRealizado {
   codigoRegistroSENESCYT: string;
 
   constructor() {
+    this.institucion = '';
     this.tipo_titulo = '';
+    this.titulo = '';
   }
 }

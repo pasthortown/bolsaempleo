@@ -1,6 +1,6 @@
 [
   {
-campo_amplio: "AZUAY", campos_especificos: [	
+provincia: "AZUAY", cantones: [
 	{nombre: "CUENCA"},
 	{nombre: "GIRÓN"},
 	{nombre: "GUALACEO"},
@@ -17,7 +17,9 @@ campo_amplio: "AZUAY", campos_especificos: [
 	{nombre: "GUACHAPALA"},
 	{nombre: "CAMILO PONCE ENRÍQUEZ"}
 	]
-campo_amplio: "BOLIVAR", campos_especificos: [
+  },
+  {
+provincia: "BOLIVAR", cantones: [
 	{nombre: "GUARANDA"},
 	{nombre: "CHILLANES"},
 	{nombre: "CHIMBO"},
@@ -26,7 +28,9 @@ campo_amplio: "BOLIVAR", campos_especificos: [
 	{nombre: "CALUMA"},
 	{nombre: "LAS NAVES"}
 	]
-campo_amplio: "CAÑAR", campos_especificos: [
+  },
+  {
+provincia: "CAÑAR", cantones: [
 	{nombre: "AZOGUES"},
 	{nombre: "BIBLIÁN"},
 	{nombre: "CAÑAR"},
@@ -35,7 +39,9 @@ campo_amplio: "CAÑAR", campos_especificos: [
 	{nombre: "DÉLEG"},
 	{nombre: "SUSCAL"}
 	]
-campo_amplio: "CARCHI", campos_especificos: [
+  },
+  {
+provincia: "CARCHI", cantones: [
 	{nombre: "TULCÁN"},
 	{nombre: "BOLÍVAR"},
 	{nombre: "ESPEJO"},
@@ -43,7 +49,9 @@ campo_amplio: "CARCHI", campos_especificos: [
 	{nombre: "MONTÚFAR"},
 	{nombre: "SAN PEDRO DE HUACA"}
 	]
-campo_amplio: "COTOPAXI", campos_especificos: [
+  },
+  {
+provincia: "COTOPAXI", cantones: [
 	{nombre: "LATACUNGA"},
 	{nombre: "LA MANÁ"},
 	{nombre: "PANGUA"},
@@ -52,7 +60,9 @@ campo_amplio: "COTOPAXI", campos_especificos: [
 	{nombre: "SAQUISILÍ"},
 	{nombre: "SIGCHOS"}
 	]
-campo_amplio: "CHIMBORAZO", campos_especificos: [
+  },
+  {
+provincia: "CHIMBORAZO", cantones: [
 	{nombre: "RIOBAMBA"},
 	{nombre: "ALAUSI"},
 	{nombre: "COLTA"},
@@ -64,7 +74,9 @@ campo_amplio: "CHIMBORAZO", campos_especificos: [
 	{nombre: "PENIPE"},
 	{nombre: "CUMANDÁ"}
 	]
-campo_amplio: "EL ORO", campos_especificos: [
+  },
+  {
+provincia: "EL ORO", cantones: [
 	{nombre: "MACHALA"},
 	{nombre: "ARENILLAS"},
 	{nombre: "ATAHUALPA"},
@@ -80,7 +92,9 @@ campo_amplio: "EL ORO", campos_especificos: [
 	{nombre: "ZARUMA"},
 	{nombre: "LAS LAJAS"}
 	]
-campo_amplio: "ESMERALDAS", campos_especificos: [
+  },
+  {
+provincia: "ESMERALDAS", cantones: [
 	{nombre: "ESMERALDAS"},
 	{nombre: "ELOY ALFARO"},
 	{nombre: "MUISNE"},
@@ -90,7 +104,9 @@ campo_amplio: "ESMERALDAS", campos_especificos: [
 	{nombre: "RIOVERDE"},
 	{nombre: "LA CONCORDIA"}
 	]
-campo_amplio: "GUAYAS", campos_especificos: [
+  },
+  {
+provincia: "GUAYAS", cantones: [
 	{nombre: "GUAYAQUIL"},
 	{nombre: "ALFREDO BAQUERIZO MORENO (JUJÁN)"},
 	{nombre: "BALAO"},
@@ -117,7 +133,9 @@ campo_amplio: "GUAYAS", campos_especificos: [
 	{nombre: "GENERAL ANTONIO ELIZALDE"},
 	{nombre: "ISIDRO AYORA"}
 	]
-campo_amplio: "IMBABURA", campos_especificos: [
+  },
+  {
+provincia: "IMBABURA", cantones: [
 	{nombre: "IBARRA"},
 	{nombre: "ANTONIO ANTE"},
 	{nombre: "COTACACHI"},
@@ -125,7 +143,9 @@ campo_amplio: "IMBABURA", campos_especificos: [
 	{nombre: "PIMAMPIRO"},
 	{nombre: "SAN MIGUEL DE URCUQUÍ"}
 	]
-campo_amplio: "LOJA", campos_especificos: [
+  },
+  {
+provincia: "LOJA", cantones: [
 	{nombre: "LOJA"},
 	{nombre: "CALVAS"},
 	{nombre: "CATAMAYO"},
@@ -143,7 +163,9 @@ campo_amplio: "LOJA", campos_especificos: [
 	{nombre: "QUILANGA"},
 	{nombre: "OLMEDO"}
 	]
-campo_amplio: "LOS RIOS", campos_especificos: [
+  },
+  {
+provincia: "LOS RIOS", cantones: [
 	{nombre: "BABAHOYO"},
 	{nombre: "BABA"},
 	{nombre: "MONTALVO"},
@@ -158,7 +180,9 @@ campo_amplio: "LOS RIOS", campos_especificos: [
 	{nombre: "MOCACHE"},
 	{nombre: "QUINSALOMA"}
 	]
-campo_amplio: "MANABI", campos_especificos: [
+  },
+  {
+provincia: "MANABI", cantones: [
 	{nombre: "PORTOVIEJO"},
 	{nombre: "BOLÍVAR"},
 	{nombre: "CHONE"},
@@ -182,7 +206,9 @@ campo_amplio: "MANABI", campos_especificos: [
 	{nombre: "JARAMIJÓ"},
 	{nombre: "SAN VICENTE"}
 	]
-campo_amplio: "MORONA SANTIAGO", campos_especificos: [
+  },
+  {
+provincia: "MORONA SANTIAGO", cantones: [
 	{nombre: "MORONA"},
 	{nombre: "GUALAQUIZA"},
 	{nombre: "LIMÓN INDANZA"},
@@ -196,20 +222,26 @@ campo_amplio: "MORONA SANTIAGO", campos_especificos: [
 	{nombre: "PABLO SEXTO"},
 	{nombre: "TIWINTZA"}
 	]
-campo_amplio: "NAPO", campos_especificos: [
+  },
+  {
+provincia: "NAPO", cantones: [
 	{nombre: "TENA"},
 	{nombre: "ARCHIDONA"},
 	{nombre: "EL CHACO"},
 	{nombre: "QUIJOS"},
 	{nombre: "ARLOS JULIO AROSEMENA TOLA"}
 	]
-campo_amplio: "PASTAZA", campos_especificos: [
+  },
+  {
+provincia: "PASTAZA", cantones: [
 	{nombre: "PASTAZA"},
 	{nombre: "MERA"},
 	{nombre: "SANTA CLARA"},
 	{nombre: "ARAJUNO"}
 	]
-campo_amplio: "PICHINCHA", campos_especificos: [
+  },
+  {
+provincia: "PICHINCHA", cantones: [
 	{nombre: "QUITO"},
 	{nombre: "CAYAMBE"},
 	{nombre: "MEJIA"},
@@ -219,7 +251,9 @@ campo_amplio: "PICHINCHA", campos_especificos: [
 	{nombre: "PEDRO VICENTE MALDONADO"},
 	{nombre: "PUERTO QUITO"}
 	]
-campo_amplio: "TUNGURAHUA", campos_especificos: [
+  },
+  {
+provincia: "TUNGURAHUA", cantones: [
 	{nombre: "AMBATO"},
 	{nombre: "BAÑOS DE AGUA SANTA"},
 	{nombre: "CEVALLOS"},
@@ -230,7 +264,9 @@ campo_amplio: "TUNGURAHUA", campos_especificos: [
 	{nombre: "SANTIAGO DE PÍLLARO"},
 	{nombre: "TISALEO"}
 	]
-campo_amplio: "ZAMORA CHINCHIPE", campos_especificos: [
+  },
+  {
+provincia: "ZAMORA CHINCHIPE", cantones: [
 	{nombre: "ZAMORA"},
 	{nombre: "CHINCHIPE"},
 	{nombre: "NANGARITZA"},
@@ -241,12 +277,16 @@ campo_amplio: "ZAMORA CHINCHIPE", campos_especificos: [
 	{nombre: "PALANDA"},
 	{nombre: "PAQUISHA"}
 	]
-campo_amplio: "GALAPAGOS", campos_especificos: [
+  },
+  {
+provincia: "GALAPAGOS", cantones: [
 	{nombre: "SAN CRISTÓBAL"},
 	{nombre: "ISABELA"},
 	{nombre: "SANTA CRUZ"}
 	]
-campo_amplio: "SUCUMBIOS", campos_especificos: [
+  },
+  {
+provincia: "SUCUMBIOS", cantones: [
 	{nombre: "LAGO AGRIO"},
 	{nombre: "GONZALO PIZARRO"},
 	{nombre: "PUTUMAYO"},
@@ -255,25 +295,33 @@ campo_amplio: "SUCUMBIOS", campos_especificos: [
 	{nombre: "CASCALES"},
 	{nombre: "CUYABENO"}
 	]
-campo_amplio: "ORELLANA", campos_especificos: [
+  },
+  {
+provincia: "ORELLANA", cantones: [
 	{nombre: "ORELLANA"},
 	{nombre: "AGUARICO"},
 	{nombre: "LA JOYA DE LOS SACHAS"},
 	{nombre: "LORETO"}
 	]
-campo_amplio: "SANTO DOMINGO DE LOS TSACHILAS", campos_especificos: [
+  },
+  {
+provincia: "SANTO DOMINGO DE LOS TSACHILAS", cantones: [
 	{nombre: "SANTO DOMINGO"}
 	]
-campo_amplio: "SANTA ELENA", campos_especificos: [
+  },
+  {
+provincia: "SANTA ELENA", cantones: [
 	{nombre: "SANTA ELENA"},
 	{nombre: "LA LIBERTAD"},
 	{nombre: "SALINAS"}
 	]
-campo_amplio: "ZONAS NO DELIMITADAS", campos_especificos: [
+  },
+  {
+provincia: "ZONAS NO DELIMITADAS", cantones: [
 	{nombre: "LAS GOLONDRINAS"},
 	{nombre: "MANGA DEL CURA"},
 	{nombre: "EL PIEDRERO"}
 	]
-    
-  },
+
+  }
 ]

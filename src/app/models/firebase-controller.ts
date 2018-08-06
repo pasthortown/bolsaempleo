@@ -1,4 +1,4 @@
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import {AngularFireDatabase, AngularFireList} from 'angularfire2/database';
 
 export class FirebaseController {
   coleccion: AngularFireList<any>;
@@ -11,7 +11,7 @@ export class FirebaseController {
 
   leer() {
     return this.coleccion = this.firebase.list(this.coleccionBDD, ref => {
-      return ref.orderByChild('estudiosRealizados/0/tipo_titulo').limitToFirst(5);
+      return ref;
     });
   }
 
@@ -27,9 +27,21 @@ export class FirebaseController {
     });
   }
 
-  getAll(campo: string) {
+  getId(campo: string, valor: string) {
     return this.firebase.list(this.coleccionBDD, ref => {
-      return ref.orderByChild(campo);
+      return ref.orderByChild(campo).equalTo(valor);
+    });
+  }
+
+  getAll() {
+    return this.firebase.list(this.coleccionBDD, ref => {
+      return ref;
+    });
+  }
+
+  getPagina(pagina: number, registrosPorPagina: number, campo: string) {
+    return this.coleccion = this.firebase.list(this.coleccionBDD, ref => {
+      return ref.orderByChild(campo).limitToFirst(registrosPorPagina * pagina);
     });
   }
 
@@ -44,4 +56,5 @@ export class FirebaseController {
   borrar(objeto: any) {
     this.coleccion.remove(objeto.id);
   }
+
 }

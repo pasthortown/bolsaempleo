@@ -2,6 +2,10 @@ export class ReferenciaPersonal {
   id: string;
   nombresApellidos: string;
   cargo: string;
-  empresa: string;
+  institucion: string;
   telefono: string;
+
+  constructor() {
+    this.institucion = '';
+  }
 }

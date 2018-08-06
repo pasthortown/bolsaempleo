@@ -1,7 +1,9 @@
+import { Postulante } from './../../models/postulante';
+import { AuthService } from './../../services/auth.service';
 import { FirebaseBDDService } from './../../services/firebase-bdd.service';
 import { Component, OnInit } from '@angular/core';
 import { PostulanteService } from '../../services/postulante.service';
-import { Postulante } from '../../models/postulante';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-hoja-vida',
@@ -10,23 +12,22 @@ import { Postulante } from '../../models/postulante';
 })
 export class HojaVidaComponent implements OnInit {
   postulantes = [];
-  id = '-LHiW7NRVSatQPsGYfZk';
 
-  constructor(private postulanteService: PostulanteService, private firebaseBDDService: FirebaseBDDService) { }
+  constructor(private authService: AuthService, private postulanteService: PostulanteService, private firebaseBDDService: FirebaseBDDService) { }
 
   ngOnInit() {
-    this.firebaseBDDService.firebaseControllerPostulantes.querySimple('id', this.id).snapshotChanges().subscribe(items => {
-      items.forEach(element => {
-        let itemLeido: Postulante;
-        itemLeido = element.payload.val() as Postulante;
-        itemLeido.id = element.key;
-        this.postulanteService.postulante = itemLeido;
-      });
-    });
+    this.postulanteService.postulante = this.authService.usuarioNegocio as Postulante;
   }
 
   guardarCambios() {
-    this.postulanteService.postulante.id = this.id;
     this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Insertar',
+      text: 'Registro exitoso!',
+      showConfirmButton: true,
+      timer: 2000
+    });
   }
 }

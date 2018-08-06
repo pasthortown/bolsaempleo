@@ -1,435 +1,161 @@
-<div class="col-12">
-  <div class="row mt-4">
-    <div class="col-4">
-      <h6 class="bg-warning form-control">
-        <i class="fa fa-filter" aria-hidden="true"></i>
-        Filtrar Por
-      </h6>
-      <div class="card col-12">
-        <div class="col-12 mt-2">
-          <div class="form-group">
-            <label>Tipo de Título</label>
-            <select class="form-control" [(ngModel)]="tipoTituloSeleccionado" (change)="mostrarTitulos()">
-              <option value="" selected>Seleccione...</option>
-              <option *ngFor="let item of filtro" value="{{item.campo_amplio}}">{{item.campo_amplio}}</option>
-            </select>
-          </div>
-        </div>
-        <div *ngIf="tipo_titulo!=null" class="col-12">
-          <div class="form-group">
-            <label>Título</label>
-            <select class="form-control" [(ngModel)]="tituloSeleccionado" (change)="filtrarPorTitulo()">
-              <option value="" selected>Seleccione...</option>
-              <option *ngFor="let item of tipo_titulo" value="{{item.nombre}}">{{item.nombre}}</option>
-            </select>
+<div class="row">
+  <div class="col-3">
+    <div class="row">
+      <div class="col-12">
+        <h6 class="bg-warning form-control">
+          <i class="fa fa-filter" aria-hidden="true"></i>
+          Filtros
+        </h6>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div id="accordion" class="accordion" *ngFor="let item of filtro">
+          <div class="card">
+            <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
+                <span class="row">
+                  <span class="col-lg-10 col-sm-12">
+                    <a class="card-title">{{item.campo_amplio }}</a>
+                  </span>
+                  <span class="col-lg-2 col-sm-12"><div class="text-dark">&nbsp;({{ item.total}})</div></span>
+                </span>
+            </a>
+            <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
+              <div class="panel-body">
+                <table class="table">
+                  <tr *ngFor="let areaEspecifica of item.campos_especificos">
+                    <td width="80%">
+                      <a href="javascript:void(0)" (click)="filtrarPorTitulo(areaEspecifica.nombre)">
+                        {{areaEspecifica.nombre}}
+                      </a>
+
+                    </td>
+                    <td width="20%">
+                      <div class="text-dark">&nbsp;({{ areaEspecifica.total}})</div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-8">
-      <div class="row">
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Búsqueda" [(ngModel)]="criterioBusqueda">
+  </div>
+  <div class="col-9">
+    <div class="row">
+      <div class="col-12">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="criterioBusqueda">
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button" (click)="filtroDirecto()">
+            <button class="btn btn-info" type="button" (click)="filtroDirecto()">
               <span class="fa fa-search"></span>&nbsp;Buscar
             </button>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 card mt-2" *ngFor="let postulanteActual of postulantes">
-          <div class="card-body">
+    </div>
+    <!--Etiquetas de Filtro-->
+    <div class="row mt-2">
+      <div class="col-12">
+        <div class="input-group">
+          <div *ngIf="etiquetaPrincipal">
+            <label class="btn-warning">{{etiquetaPrincipal}}</label>
+            <button type="button" class="close" aria-label="Close" (click)="borrarFiltro()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="overflow: auto">
+      <div class="col-12">
+        <div class="card  mt-2" *ngFor="let postulanteActual of postulantes">
+          <div class="card-body mt-1">
             <div class="card-title">
               <div class="row">
                 <div class="col-12">
                   <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
                 </div>
                 <div class="col-12">
+                  <h5 class="col-12 text-left mt-3">Estudios Realizados</h5>
                   <table class="table table-sm">
                     <thead>
-                      <th>Institución</th>
-                      <th>Tipo de Título</th>
-                      <th>Título</th>
-                      <th>Fecha de Registro</th>
-                      <th>Código de Registro SENESCYT</th>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let item of postulanteActual.estudiosRealizados">
-                        <td>{{item.institucion}}</td>
-                        <td>{{item.tipo_titulo}}</td>
-                        <td>{{item.titulo}}</td>
-                        <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
-                        <td>{{item.codigoRegistroSENESCYT}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="col-12">
-              <table class="col-12 table-sm">
-                <tr>
-                  <th class="text-right">
-                    Identificación:
-                  </th>
-                  <td>
-                    {{postulanteActual.identificacion}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Estado Civil:
-                  </th>
-                  <td>
-                    {{postulanteActual.estadoCivil}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Fecha de Nacimiento:
-                  </th>
-                  <td>
-                    {{postulanteActual.fechaDeNacimiento.day}} de {{meses[postulanteActual.fechaDeNacimiento.month-1]}} del {{postulanteActual.fechaDeNacimiento.year}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Nacionalidad:
-                  </th>
-                  <td>
-                    {{postulanteActual.nacionalidad}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Domicilio:
-                  </th>
-                  <td>
-                    {{postulanteActual.direccion}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Correo Electrónico:
-                  </th>
-                  <td>
-                    {{postulanteActual.correoElectronico}}
-                  </td>
-                </tr>
-                <tr>
-                  <th class="text-right">
-                    Teléfono:
-                  </th>
-                  <td>
-                    {{postulanteActual.telefono}}
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <div class="col-12 m-2 text-left">
-              <button type="submit" class="btn btn-primary" (click)="mostrarHojaVida(postulanteActual)">
-                <span class="fa fa-info-circle"></span>&nbsp;Mas Información
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="col-12 mt-2" *ngIf="postulanteSeleccionado.nombreCompleto!=''">
-  <div class="modal-header">
-
-  </div>
-  <div class="modal-body">
-    <div class="col-12">
-      <div class="col-12 mt-2 mb-2">
-        <div class="col-12" style="background: white; border: 1px #D3D3D3 solid; box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);">
-          <div class="col-12 mt-4" #encabezadoHojaVida>
-            <div class="row">
-              <div class="col-12 text-right">
-                  <img src="assets/img/logo-saber-hacer_2.png" style="height: 75px; width: auto;">
-              </div>
-            </div>
-          </div>
-          <div class="col-12" #cuerpoHojaVida>
-            <div class="row">
-              <div class="col-12">
-                <h3 class="col-12 text-center">Hoja de Vida</h3>
-              </div>
-            </div>
-            <div class="row mt-5">
-              <div class="col-12">
-                <h4 class="col-12 seccion">Datos Personales</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-1"></div>
-              <div class="col-4">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 mt-3 text-center">
-                    <img src="{{postulanteSeleccionado.fotografia}}" class="rounded-circle col-8">
-                  </div>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="col-12" style="height: 40px;"></div>
-                <table class="col-12 table-sm">
-                  <tr>
-                    <th class="text-right">
-                      Nombre Completo:
-                    </th>
-                    <td>
-                      {{postulanteSeleccionado.nombreCompleto}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-right">
-                      Identificación:
-                    </th>
-                    <td>
-                      {{postulanteSeleccionado.identificacion}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-right">
-                      Estado Civil:
-                    </th>
-                    <td>
-                      {{postulanteSeleccionado.estadoCivil}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-right">
-                      Fecha de Nacimiento:
-                    </th>
-                    <td>
-                      {{postulanteSeleccionado.fechaDeNacimiento.day}} de {{meses[postulanteSeleccionado.fechaDeNacimiento.month-1]}} del {{postulanteSeleccionado.fechaDeNacimiento.year}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-right">
-                      Nacionalidad:
-                    </th>
-                    <td>
-                      {{postulanteSeleccionado.nacionalidad}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-right">
-                      Domicilio:
-                    </th>
-                    <td>
-                      {{postulanteSeleccionado.direccion}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-right">
-                      Correo Electrónico:
-                    </th>
-                    <td>
-                      {{postulanteSeleccionado.correoElectronico}}
-                    </td>
-                  </tr>
-                  <tr>
-                    <th class="text-right">
-                      Teléfono:
-                    </th>
-                    <td>
-                      {{postulanteSeleccionado.telefono}}
-                    </td>
-                  </tr>
-                </table>
-              </div>
-              <div class="col-1"></div>
-            </div>
-            <div class="row mt-5">
-              <div class="col-12">
-                <h4 class="col-12 seccion">Estudios Realizados</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <table class="table table-sm">
-                  <thead>
                     <th>Institución</th>
                     <th>Tipo de Título</th>
                     <th>Título</th>
-                    <th>Fecha de Registro</th>
-                    <th>Código de Registro SENESCYT</th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.estudiosRealizados">
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of postulanteActual.estudiosRealizados">
                       <td>{{item.institucion}}</td>
                       <td>{{item.tipo_titulo}}</td>
                       <td>{{item.titulo}}</td>
-                      <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
-                      <td>{{item.codigoRegistroSENESCYT}}</td>
                     </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="row mt-5">
-              <div class="col-12">
-                <h4 class="col-12 seccion">Capacitación y Cursos</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <table class="table table-sm">
-                  <thead>
-                    <th>Institución</th>
-                    <th>Tipo de Evento</th>
-                    <th>Nombre del Evento</th>
-                    <th>Tipo de Certificado</th>
-                    <th>Desde</th>
-                    <th>Hasta</th>
-                    <th>Horas</th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.capacitaciones">
-                      <td>{{item.institucion}}</td>
-                      <td>{{item.tipoEvento}}</td>
-                      <td>{{item.nombreEvento}}</td>
-                      <td>{{item.tipoCertificado}}</td>
-                      <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
-                      <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
-                      <td>{{item.horas}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="row mt-5">
-              <div class="col-12">
-                <h4 class="col-12 seccion">Idiomas</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <table class="table table-sm">
-                  <thead>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-12">
+                  <h5 class="col-12 text-left mt-3">Idiomas</h5>
+                  <table class="table table-sm">
+                    <thead>
                     <th>Idioma</th>
                     <th>Nivel Escrito</th>
                     <th>Nivel Hablado</th>
                     <th>Nivel Lectura</th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.idiomas">
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of postulanteActual.idiomas">
                       <td>{{item.idioma}}</td>
                       <td>{{item.nivelEscrito}}</td>
                       <td>{{item.nivelHablado}}</td>
                       <td>{{item.nivelLectura}}</td>
                     </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="row mt-5">
-              <div class="col-12">
-                <h4 class="col-12 seccion">Experiencia Profesional</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <table class="table table-sm">
-                  <thead>
-                    <th>Empleador</th>
-                    <th>Cargo Desempeñado</th>
-                    <th>Descripción del Cargo</th>
-                    <th>Fecha de Inicio</th>
-                    <th>Fecha de Salida</th>
-                    <th>Actual</th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.experienciasLaborales">
-                      <td>{{item.empleador}}</td>
-                      <td>{{item.cargoDesempenado}}</td>
-                      <td><p class="text-justify">{{item.descripcionCargo}}</p></td>
-                      <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
-                      <td *ngIf="item.actualmenteVigente"></td>
-                      <td *ngIf="!item.actualmenteVigente">{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
-                      <td><div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span class="badge badge-success">Actual</span> </div></td>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-12">
+                  <h5 class="col-12 text-left mt-3">Capacitaciones y Certificaciones</h5>
+                  <table class="table table-sm">
+                    <thead>
+                    <th>Nombre del Evento</th>
+                    <th>Horas</th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of postulanteActual.capacitaciones">
+                      <td>{{item.nombreEvento}}</td>
+                      <td>{{item.horas}}</td>
                     </tr>
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-            <div class="row mt-5">
-              <div class="col-12">
-                <h4 class="col-12 seccion">Fortalezas</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <table class="table table-sm">
-                  <thead>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Nivel</th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.fortalezas">
-                      <td>{{item.nombre}}</td>
-                      <td>{{item.descripcion}}</td>
-                      <td>{{item.nivel}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="row mt-5">
-              <div class="col-12">
-                <h4 class="col-12 seccion">Referencias Personales</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12">
-                <table class="table table-sm">
-                  <thead>
-                    <th>Nombres y Apellidos</th>
-                    <th>Cargo</th>
-                    <th>Empresa</th>
-                    <th>Teléfono</th>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of postulanteSeleccionado.referenciasPersonales">
-                      <td>{{item.nombresApellidos}}</td>
-                      <td>{{item.cargo}}</td>
-                      <td>{{item.empresa}}</td>
-                      <td>{{item.telefono}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="col-12" #pieHojaVida>
-            <div class="row">
-              <div class="col-12">
-
-              </div>
+            <div class="col-12 m-2 text-left">
+              <a *ngIf="authService.rolActual=='e'" target="_blank" class="btn btn-info btn-sm"
+                 href="curriculum?idPostulante={{postulanteActual.id}}">
+                <span class="fa fa-info-circle"></span>&nbsp;Mas Información
+              </a>
             </div>
           </div>
         </div>
-      </div>`
+      </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <div class="col-12 m-2 text-center">
-      <button type="submit" class="btn btn-primary" (click)="imprimir()">
-        <span class="fa fa-print"></span>&nbsp;Imprimir
-      </button>
+    <div class="row mt-3">
+      <div class="col-12">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)" tabindex="-1" (click)="paginacion(false)">Previous</a>
+            </li>
+            <li class="page-item disabled">
+              <a class="page-link" href="javascript:void(0)">{{pagina}} de {{totalPaginas}}</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)" (click)="paginacion(true)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </div>

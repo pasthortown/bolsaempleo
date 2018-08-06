@@ -5,6 +5,7 @@ import { PostulanteService } from '../../services/postulante.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
+import {catalogos} from '../../../environments/catalogos';
 
 @Component({
   selector: 'app-persona',
@@ -12,9 +13,10 @@ import swal from 'sweetalert2';
   styleUrls: ['./persona.component.css']
 })
 export class PersonaComponent implements OnInit {
-  postulante = new Postulante();
+  postulante: Postulante;
   contrasena: string;
   confirmacion: string;
+  nacionalidades: Array<any>;
 
   constructor(private postulanteService: PostulanteService,
     private firebaseBDDService: FirebaseBDDService,
@@ -22,10 +24,11 @@ export class PersonaComponent implements OnInit {
     private _router: Router) { }
 
   ngOnInit() {
+    this.nacionalidades = catalogos.nacionalidades;
+    this.postulante = new Postulante();
   }
 
   estaCompleto(): boolean {
-    // TODO : validar con HTML5 en la interfaz gráfica faltan otros campos obligatorios
     if (!this.postulante.correoElectronico || !this.contrasena) {
       return false;
     }
@@ -33,11 +36,9 @@ export class PersonaComponent implements OnInit {
   }
 
   sonIguales(): boolean {
-    // TODO : validar con HTML5 en la interfaz gráfica
     if (!this.postulante || !this.contrasena) {
       return false;
     }
-    // TODO : validar con HTML5 en la interfaz gráfica
     if (this.confirmacion !== this.contrasena) {
       return false;
     }
@@ -45,14 +46,9 @@ export class PersonaComponent implements OnInit {
   }
 
   esCompleja(): boolean {
-    // TODO : esta validación se realiza en el SERVIDOR this.contrasena
     return true;
   }
 
-  hayDuplicados(): boolean {
-    // TODO : verificar valores duplicados en la base de datos: identificacion, correo, razon social
-    return false;
-  }
   esValido(): boolean {
     if (!this.estaCompleto()) {
       swal({
@@ -87,17 +83,6 @@ export class PersonaComponent implements OnInit {
       });
       return false;
     }
-    if (this.hayDuplicados()) {
-      swal({
-        position: 'center',
-        type: 'warning',
-        title: 'Validación',
-        text: 'Hay datos duplicados',
-        showConfirmButton: false,
-        timer: 2000
-      });
-      return false;
-    }
     return true;
   }
 
@@ -105,48 +90,27 @@ export class PersonaComponent implements OnInit {
     if (!this.esValido()) {
       return;
     }
-
-    const resultado = this.firebaseBDDService.firebaseControllerPostulantes
-      .querySimple('correoElectronico', this.postulante.correoElectronico);
-
-    resultado.snapshotChanges().subscribe(items => {
-      if (items.length > 0) {
-        swal({
-          position: 'center',
-          type: 'warning',
-          title: 'Validación',
-          text: 'Correo duplicado',
-          showConfirmButton: false,
-          timer: 2000
-        });
-        return false;
-      }
-
-      this.authService.createUserWithEmailAndPassword(this.postulante.correoElectronico
-        , this.contrasena).then(x => {
-          this.postulanteService.postulante = this.postulante;
-          this.firebaseBDDService.firebaseControllerPostulantes
-            .insertar(this.postulanteService.postulante);
-            swal({
-              position: 'center',
-              type: 'success',
-              title: 'Registro de postulante',
-              text: 'Todo bien',
-              showConfirmButton: false,
-              timer: 2000
-            });
-          this._router.navigate(['postulantes']);
-        }).catch(error => {
-          swal({
-            position: 'center',
-            type: 'error',
-            title: 'Registro de postulante',
-            text: 'Se produjo un error',
-            showConfirmButton: false,
-            timer: 2000
-          });
-          console.log(error);
-        });
+    this.authService.createUserWithEmailAndPassword(this.postulante.correoElectronico, this.contrasena).then(x => {
+    this.postulanteService.postulante = this.postulante;
+    this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
+      swal({
+        position: 'center',
+        type: 'success',
+        title: 'Registro de postulante',
+        text: 'Registro Satisfactorio',
+        showConfirmButton: false,
+        timer: 2000
+      });
+      this._router.navigate(['/login']);
+    }).catch(error => {
+      swal({
+        position: 'center',
+        type: 'error',
+        title: 'Registro de postulante',
+        text: 'Se produjo un error',
+        showConfirmButton: false,
+        timer: 2000
+      });
     });
   }
 }

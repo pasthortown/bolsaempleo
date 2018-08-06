@@ -1,64 +1,85 @@
 <nav class="navbar navbar-expand-lg fixed-top headerSecction">
   <div class="navbar-brand">
-    <img src="assets/img/institutos.png" height="90px"/>
+    <a href="postulantes">
+      <img src="assets/img/institutos.png" height="90px"/>
+    </a>
   </div>
-  <div class="navbar-collapse">
-    <ul class="navbar-nav mr-auto">
-      <li [hidden]="!estaLogueado" class="nav-item dropdown" ngbDropdown>
-        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
-          <i><img src="{{fotoPerfil}}" class="rounded-circle" style="width: 70px; height: 70px;"></i>&nbsp;{{nameOrEmail}}<b class="caret"></b>
+  <div class="navbar-collapse" >
+    <!--Menu de Mi perfil-->
+    <ul class="navbar-nav mr-auto" *ngIf="authService.rolActual=='p' || authService.rolActual=='e'">
+      <li class="nav-item dropdown" ngbDropdown>
+        <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
+          <i>
+            <img src="{{authService.usuarioNegocio.fotografia}}" class="rounded-circle"
+                 style="width: 70px; height: 70px;">
+          </i>&nbsp;{{authService.displayNameOrEmail()}}
+          <b class="caret"></b>
         </a>
         <div ngbDropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/postulaciones']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Postulaciones
+          <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/postulaciones']"
+             [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-book"></i>&nbsp;Mis Postulaciones
           </a>
-          <a class="dropdown-item" [routerLink]="['/ofertas-laborales']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Mis Ofertas Laborales
+          <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/hoja-vida']"
+             [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-address-card"></i>&nbsp;Hoja de Vida
           </a>
-          <a class="dropdown-item" [routerLink]="['/hoja-vida']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Hoja de Vida
+          <a *ngIf="authService.rolActual=='e'" class="dropdown-item" [routerLink]="['/perfil-empresa']"
+             [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-address-card"></i>&nbsp;Perfil de mi Empresa
           </a>
-          <a class="dropdown-item" [routerLink]="['/perfil']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Perfil
-          </a>
-          <a class="dropdown-item" (click)="cerrarSesion()">
+          <a *ngIf="authService.rolActual=='e' || authService.rolActual=='p'" class="dropdown-item"
+             (click)="cerrarSesion()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
+          </a>
+          <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="dropdown-item"
+             [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-sign-in"></i>&nbsp;Iniciar Sesión
           </a>
         </div>
       </li>
     </ul>
-    <ul class="navbar-nav ml-auto">
+    <!--Menus de Buscar, Iniciar Sesion y Registrate-->
+    <ul class="navbar ml-auto">
+      <!--Buscar-->
       <li class="nav-item dropdown pretty-button" ngbDropdown>
-        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
-          <i class="fa fa-fw fa-user"></i>&nbsp;Buscador
+        <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
+          <i class="fa fa-fw fa-search"></i>&nbsp;Buscador
         </a>
-        <div ngbDropdownMenu >
+        <div ngbDropdownMenu>
           <a class="dropdown-item" [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Talento Humano
+            <i class="fa fa-fw fa-users"></i>&nbsp;Talento Humano
           </a>
           <a class="dropdown-item" [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Ofertas Laborales
+            <i class="fa fa-fw fa-briefcase"></i>&nbsp;Ofertas Laborales
           </a>
         </div>
       </li>
-      <li>
-        <a class="nav-link pretty-button" [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
-          <i class="fa fa-fw fa-user"></i>&nbsp;Iniciar Sesión
+      <!--Iniciar Sesion-->
+      <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
+        <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
+           [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
+          <i class="fa fa-fw fa-sign-in"></i>&nbsp;Iniciar Sesión
         </a>
       </li>
-      <li class="nav-item dropdown pretty-button" ngbDropdown>
-        <a href="javascript:void(0)" class="nav-link" ngbDropdownToggle style="color:white;">
-          <i class="fa fa-fw fa-user"></i>&nbsp;Registrarse
+      <!--Registrate-->
+      <li *ngIf="authService.rolActual!='e' && authService.rolActual!='p'" class="nav-item dropdown pretty-button"
+          ngbDropdown>
+        <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
+          <i class="fa fa-fw fa-address-book"></i>&nbsp;Regístrate
         </a>
-        <div ngbDropdownMenu >
+        <div ngbDropdownMenu>
           <a class="dropdown-item" routerLink="/persona">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Postulante
+            <i class="fa fa-fw fa-users"></i>&nbsp;Postulantes
           </a>
           <a class="dropdown-item" routerLink="/empresa">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Empresas
+            <i class="fa fa-fw fa-building"></i>&nbsp;Empresas
           </a>
         </div>
       </li>
     </ul>
   </div>
 </nav>
+<script>
+
+</script>

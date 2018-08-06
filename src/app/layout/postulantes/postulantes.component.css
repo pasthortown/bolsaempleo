@@ -1,7 +1,7 @@
 .top-banner-div {
   padding-top: 50px;
   margin-bottom: 10px;
-  height: 250px;
+  height: 150px;
   background-position: bottom center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -36,4 +36,7 @@
   background-image: none;
   background-color: #c2b2e4;
   border-color: #fb397d;
+}
+.titulo{
+  margin-top: -50px;
 }

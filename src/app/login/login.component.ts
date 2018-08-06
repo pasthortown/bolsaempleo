@@ -26,16 +26,16 @@ export class LoginComponent implements OnInit {
   signInWithEmail() {
     this.authService.signInRegular(this.user.email, this.user.password)
       .then((res) => {
-        this.router.navigate(['postulantes']);
+
       })
       .catch((err) => {
         swal({
           position: 'center',
           type: 'warning',
-          title: 'Ingreso a la aplicación',
-          text: 'Se produjo un error al validar las credenciales',
+          title: 'Usuario y/o Contraseña Incorrectos',
+          text: 'Se produjo un error al validar sus credenciales',
           showConfirmButton: false,
-          timer: 2000
+          timer: 3000
         });
         console.log('error: ' + err);
       });

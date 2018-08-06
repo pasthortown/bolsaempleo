@@ -7,4 +7,9 @@ export class ExperienciaLaboral {
   fechaInicio: any;
   fechaFinalizacion: any;
   actualmenteVigente: boolean;
+  motivoSalida: string;
+
+  constructor() {
+    this.motivoSalida = '';
+  }
 }

@@ -1,6 +1,6 @@
 <div [@routerTransition] class="login-page">
   <div class="row">
-    <div class="col-12" style="margin-top:20px;">
+    <div class="col-12" style="margin-top:5px;">
       <div class="form-group">
         <form name="userform" method="post" #formCtrl="ngForm">
           <div class="row">
@@ -8,7 +8,7 @@
             <div class="col-xs-12 col-sm-10 col-md-8 col-lg-6">
               <div class="form-group text-center pretty-form">
                 <div class="form-group">
-                  <img src="assets/img/bolsa-trabajo.png" class="img-responsive col-5" />
+                  <img src="assets/img/bolsa-trabajo.png" class="img-responsive col-4">
                 </div>
                 <div class="form-group">
                   <h3 class="col-12 text-center"><strong>Iniciar Sesión</strong></h3>
@@ -16,12 +16,14 @@
                 <div class="form-group">
                   <div class="form-content">
                     <div class="form-group row">
-                      <input type="text" class="form-control input-underline input-lg" id="email" [(ngModel)]="user.email" name="email" placeholder="Correo Electrónico"
-                        required>
+                      <input type="text" class="form-control input-underline input-lg" id="email"
+                             [(ngModel)]="user.email" name="email" placeholder="Correo Electrónico"
+                             required>
                     </div>
                     <div class="form-group row">
-                      <input type="password" class="form-control input-underline input-lg" name="clave" id="clave" [(ngModel)]="user.password"
-                        placeholder="Contraseña" required>
+                      <input type="password" class="form-control input-underline input-lg" name="clave" id="clave"
+                             [(ngModel)]="user.password"
+                             placeholder="Contraseña" required>
                     </div>
                     <div class="form-group text-right">
                       <a routerLink="/reset">¿Olvidaste tu contraseña?</a>
@@ -37,8 +39,9 @@
                 </div>
                 <div class="form-group">
                   <div class="col_2"></div>
-                  <button type="submit" class="col-8 btn btn-primary mr-1" (click)="signInWithEmail()" [disabled]="formCtrl.form.invalid">
-                    Ingresar
+                  <button type="submit" class="col-8 btn btn-primary mr-1" (click)="signInWithEmail()"
+                          [disabled]="formCtrl.form.invalid">
+                    <i class="fa fa-fw fa-sign-in"></i>&nbsp;Ingresar
                   </button>
                 </div>
               </div>

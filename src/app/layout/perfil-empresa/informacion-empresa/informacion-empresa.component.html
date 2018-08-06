@@ -1,14 +1,17 @@
-<div class="row">
-  <div class="col-12 mt-2 card">
-    <div class="row mt-3">
+<div class="card mt-1">
+  <div class="card-body">
+    <div class="row mt-1">
       <div class="col-2">
         <div class="row">
           <div class="col-12 mt-3 text-center">
             <div class="group-form">
               <input type="file" style="visibility: hidden; height: 0px" class="form-control btn" id="logo"
                      placeholder="logo" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
-              <img src="{{srcFoto}}" class="btn rounded-circle col-8" (click)="fileInput.click()">
-              <button type="button" class="btn btn-success form-control" (click)="insertar()">
+              <button class="btn btn-light">
+                <img src="{{empresaService.empresa.fotografia}}" class="rounded-circle" width="100px" height="100px"
+                     (click)="fileInput.click()" title="100 X 100">
+              </button>
+              <button type="button" class="btn btn-success form-control mt-2" (click)="actualizar()">
                 <span class="fa fa-save"></span>&nbsp;Guardar Cambios
               </button>
             </div>
@@ -21,68 +24,68 @@
             <!--Identificacion-->
             <div class="form-group">
               <label for="identificacion">Indentificación:</label>
-              <input type="text" class="form-control" id="identificacion" placeholder="RUC o Cédula"
+              <input type="text" class="form-control" id="identificacion" placeholder="RUC O CÉDULA"
                      [(ngModel)]="empresaService.empresa.identificacion">
-            </div>
-            <!--Razon Social-->
-            <div class="form-group">
-              <label for="razonSocial">Razón Social:</label>
-              <input type="text" class="form-control" id="razonSocial" placeholder="Razón Social"
-                     [(ngModel)]="empresaService.empresa.razonSocial">
             </div>
             <!--Nombre Comercial-->
             <div class="form-group">
               <label for="nombreComercial">Nombre Comercial:</label>
-              <input type="text" class="form-control" id="nombreComercial" placeholder="Nombre Comercial"
+              <input type="text" class="form-control" id="nombreComercial" placeholder="NOMBRE COMERCIAL"
                      [(ngModel)]="empresaService.empresa.nombreComercial">
-            </div>
-            <!--Actividad Economica-->
-            <div class="form-group">
-              <label for="actividadEconomica">Actividad Económica:</label>
-              <input type="text" class="form-control" id="actividadEconomica" placeholder="Actividad Económica"
-                     [(ngModel)]="empresaService.empresa.actividadEconomica">
             </div>
             <!--Naturaleza-->
             <div class="form-group">
               <label for="naturaleza">Naturaleza:</label>
               <select class="form-control" id="naturaleza" [(ngModel)]="empresaService.empresa.naturaleza">
-                <option value="" selected>Seleccione...</option>
-                <option value="PÚBLICA">Pública</option>
-                <option value="PRIVADA">Privada</option>
-                <option value="MIXTA">Mixta</option>
+                <option value="" selected>SELECCIONE...</option>
+                <option value="PÚBLICA">PÚBLICA</option>
+                <option value="PRIVADA">PRIVADA</option>
+                <option value="MIXTA">MIXTA</option>
               </select>
+            </div>
+            <!--Actividad Economica-->
+            <div class="form-group">
+              <label for="actividadEconomica">Actividad Económica:</label>
+              <textarea rows="5" type="text" [(ngModel)]="empresaService.empresa.actividadEconomica"
+                        class="form-control"
+                        id="actividadEconomica"
+                        placeholder="ACTIVIDAD ECONÓMICA"></textarea>
             </div>
           </div>
           <div class="col-6">
-            <!--Direccion-->
-            <div class="form-group">
-              <label for="direccion">Dirección:</label>
-              <input type="text" class="form-control" id="direccion" placeholder="Dirección"
-                     [(ngModel)]="empresaService.empresa.direccion">
-            </div>
             <!--Pagina Web-->
             <div class="form-group">
               <label for="paginaWeb">Página Web:</label>
-              <input type="text" class="form-control" id="paginaWeb" placeholder="Página Web"
+              <input type="text" class="form-control" id="paginaWeb" placeholder="Ej. www.midominio.com"
                      [(ngModel)]="empresaService.empresa.paginaWeb">
             </div>
             <!--Correo Electronico-->
             <div class="form-group">
               <label for="correoElectronico">Correo Electrónico:</label>
-              <input type="email" class="form-control" id="correoElectronico" placeholder="Correo Electrónico"
+              <input type="email" class="form-control" id="correoElectronico" placeholder="contacto@midominio.com"
                      [(ngModel)]="empresaService.empresa.correoElectronico">
             </div>
             <!--Telefono Celular-->
             <div class="form-group">
-              <label for="telefonoCelular">Teléfono Celular:</label>
-              <input type="text" class="form-control" id="telefonoCelular" placeholder="Teléfono Celular"
-                     [(ngModel)]="empresaService.empresa.telefonoCelular">
+              <div class="row">
+                <div class="col-6">
+                  <label for="telefonoCelular">Teléfono Celular:</label>
+                  <input type="text" class="form-control" id="telefonoCelular" placeholder="Ej. 0987654321"
+                         [(ngModel)]="empresaService.empresa.telefonoCelular">
+                </div>
+                <div class="col-6">
+                  <label for="telefonoFijo">Teléfono Fijo:</label>
+                  <input type="text" class="form-control" id="telefonoFijo" placeholder="Ej. 0234567890"
+                         [(ngModel)]="empresaService.empresa.telefonoFijo">
+                </div>
+              </div>
             </div>
-            <!--Telefono Fijo-->
+            <!--Direccion-->
             <div class="form-group">
-              <label for="telefonoFijo">Teléfono Fijo:</label>
-              <input type="text" class="form-control" id="telefonoFijo" placeholder="Teléfono Fijo"
-                     [(ngModel)]="empresaService.empresa.telefonoFijo">
+              <label for="direccion">Dirección:</label>
+              <textarea rows="5" type="text" [(ngModel)]="empresaService.empresa.direccion" class="form-control"
+                        id="direccion"
+                        placeholder="Provincia, Cantón, Calle Principal, Calle Secundaria, número de casa"></textarea>
             </div>
           </div>
         </div>

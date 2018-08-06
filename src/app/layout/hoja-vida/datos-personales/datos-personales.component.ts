@@ -1,5 +1,6 @@
-import { PostulanteService } from './../../../services/postulante.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {PostulanteService} from './../../../services/postulante.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {catalogos} from '../../../../environments/catalogos';
 
 @Component({
   selector: 'app-datos-personales',
@@ -9,10 +10,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class DatosPersonalesComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   srcFoto: string;
+  nacionalidades: Array<any>;
 
-  constructor(public postulanteService: PostulanteService) { }
+  constructor(public postulanteService: PostulanteService) {
+  }
 
   ngOnInit() {
+    this.nacionalidades = catalogos.nacionalidades;
   }
 
   CodificarArchivo(event) {

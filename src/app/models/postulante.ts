@@ -1,9 +1,9 @@
-import { ReferenciaPersonal } from './referenciaPersonal';
-import { Fortaleza } from './fortaleza';
-import { Idioma } from './idioma';
-import { ExperienciaLaboral } from './experiencia-laboral';
-import { Capacitacion } from './capacitacion';
-import { EstudioRealizado } from './estudio-realizado';
+import {ReferenciaPersonal} from './referenciaPersonal';
+import {Fortaleza} from './fortaleza';
+import {Idioma} from './idioma';
+import {ExperienciaLaboral} from './experiencia-laboral';
+import {Capacitacion} from './capacitacion';
+import {EstudioRealizado} from './estudio-realizado';
 
 export class Postulante {
   id: string;
@@ -12,10 +12,11 @@ export class Postulante {
   nacionalidad: string;
   identificacion: string;
   estadoCivil: string;
-  fechaDeNacimiento: Date;
+  fechaDeNacimiento: any;
   correoElectronico: string;
   telefono: string;
   direccion: string;
+  acercaDeMi: string;
   estudiosRealizados: Array<EstudioRealizado>;
   capacitaciones: Array<Capacitacion>;
   experienciasLaborales: Array<ExperienciaLaboral>;
@@ -24,6 +25,7 @@ export class Postulante {
   referenciasPersonales: Array<ReferenciaPersonal>;
 
   constructor() {
+    this.nacionalidad = '';
     this.estadoCivil = '';
     this.estudiosRealizados = [];
     this.capacitaciones = [];

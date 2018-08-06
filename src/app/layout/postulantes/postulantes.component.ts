@@ -7,21 +7,39 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./postulantes.component.css']
 })
 export class PostulantesComponent implements OnInit {
-  contadorPersonas: number;
+  contadorPostulantes: number;
   contadorEmpresas: number;
+  contadorOfertas: number;
 
   constructor(private firebaseBDDService: FirebaseBDDService) { }
 
   ngOnInit() {
-    this.contadorPersonas = 0;
     this.contadorEmpresas = 0;
+    this.contadorPostulantes = 0;
+    this.contadorOfertas = 0;
+    this.contarEmpresas();
+    this.contarPostulantes();
+    this.contarOfertas();
+  }
 
-    this.firebaseBDDService.firebaseControllerPostulantes.leer().snapshotChanges().subscribe(items => {
-      this.contadorPersonas = items.length;
-    });
-
-    this.firebaseBDDService.firebaseControllerEmpresas.leer().snapshotChanges().subscribe(items => {
+  contarEmpresas() {
+    return this.firebaseBDDService.firebaseControllerEmpresas.getAll().snapshotChanges().subscribe(items => {
       this.contadorEmpresas = items.length;
     });
+
+  }
+
+  contarPostulantes() {
+    return this.firebaseBDDService.firebaseControllerPostulantes.getAll().snapshotChanges().subscribe(items => {
+      this.contadorPostulantes = items.length;
+    });
+
+  }
+
+  contarOfertas() {
+    return this.firebaseBDDService.firebaseControllerOfertas.getAll().snapshotChanges().subscribe(items => {
+      this.contadorOfertas = items.length;
+    });
+
   }
 }
