@@ -1,8 +1,9 @@
-import { EmpresaRoutingModule } from './empresa-routing.module';
-import { EmpresaComponent } from './empresa.component';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {EmpresaRoutingModule} from './empresa-routing.module';
+import {EmpresaComponent} from './empresa.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {LoaderComponent} from '../../components/loader/loader.component';
 
 @NgModule({
   imports: [
@@ -10,6 +11,7 @@ import { FormsModule } from '@angular/forms';
     EmpresaRoutingModule,
     FormsModule
   ],
-  declarations: [EmpresaComponent]
+  declarations: [EmpresaComponent, LoaderComponent]
 })
-export class EmpresaModule { }
+export class EmpresaModule {
+}
