@@ -39,10 +39,8 @@ export class InformacionEmpresaComponent implements OnInit {
     }
   }
 
-  actualizar(e) {
-     e.stopPropagation();
-     e.preventDefault();
-    this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresa);
+  actualizar() {
+    this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
     swal({
       position: 'center',
       type: 'success',

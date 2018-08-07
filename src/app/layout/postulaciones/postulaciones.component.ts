@@ -63,8 +63,8 @@ export class PostulacionesComponent implements OnInit {
               });
             });
           });
+          this.misPostulaciones.push(postulacionDiccionario);
         });
-        this.misPostulaciones.push(postulacionDiccionario);
       });
     });
   }
