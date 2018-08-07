@@ -39,7 +39,7 @@ export class PostulacionesComponent implements OnInit {
   }
 
   getMisPostulaciones() {
-    this.firebaseBDDService.firebaseControllerPostulaciones.getId('idPostulante', this.postulanteService.postulante.id).snapshotChanges().subscribe(items => {
+    this.firebaseBDDService.firebaseControllerPostulaciones.filtroExacto('idPostulante', this.postulanteService.postulante.id).snapshotChanges().subscribe(items => {
       items.forEach(element => {
         let itemLeido: Postulacion;
         itemLeido = element.payload.val() as Postulacion;
@@ -48,13 +48,13 @@ export class PostulacionesComponent implements OnInit {
         const postulacionDiccionario = new PostulacionDiccionario();
         postulacionDiccionario.fecha = itemLeido.fecha;
         postulacionDiccionario.id = itemLeido.id;
-        this.firebaseBDDService.firebaseControllerOfertas.getId('id', itemLeido.idOferta).snapshotChanges().subscribe(itemsOfertas => {
+        this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('id', itemLeido.idOferta).snapshotChanges().subscribe(itemsOfertas => {
           itemsOfertas.forEach(elementOferta => {
             let itemLeidoOferta: Oferta;
             itemLeidoOferta = elementOferta.payload.val() as Oferta;
             itemLeidoOferta.id = elementOferta.key;
             postulacionDiccionario.oferta = itemLeidoOferta;
-            this.firebaseBDDService.firebaseControllerEmpresas.getId('id', itemLeidoOferta.idEmpresa).snapshotChanges().subscribe(itemsEmpresas => {
+            this.firebaseBDDService.firebaseControllerEmpresas.filtroExacto('id', itemLeidoOferta.idEmpresa).snapshotChanges().subscribe(itemsEmpresas => {
               itemsEmpresas.forEach(elementEmpresa => {
                 let itemLeidoEmpresa: Empresa;
                 itemLeidoEmpresa = elementEmpresa.payload.val() as Empresa;
