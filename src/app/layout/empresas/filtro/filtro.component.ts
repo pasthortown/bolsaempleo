@@ -36,7 +36,7 @@ export class FiltroComponent implements OnInit {
   flag: string;
   criterioBusqueda: string;
   pagina = 0;
-  registrosPorPagina = 10;
+  registrosPorPagina = 5;
   totalPaginas = 1;
   campo = 'estudiosRealizados/0/tipo_titulo';
 
@@ -94,7 +94,9 @@ export class FiltroComponent implements OnInit {
       }
     }
     this.ofertas = [];
-    this.firebaseBDDService.firebaseControllerOfertas.getPagina(this.pagina, this.registrosPorPagina, this.campo).snapshotChanges().subscribe(items => {
+    this.firebaseBDDService.firebaseControllerOfertas.getPagina(this.pagina, this.registrosPorPagina, this.campo)
+      .snapshotChanges()
+      .subscribe(items => {
       let i = (this.pagina - 1) * this.registrosPorPagina;
       while (i < items.length) {
         let itemLeido: Oferta;
