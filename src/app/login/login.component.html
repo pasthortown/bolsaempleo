@@ -1,4 +1,7 @@
 <div [@routerTransition] class="login-page">
+  <div *ngIf="isLoading">
+  <app-loader></app-loader>
+  </div>
   <div class="row">
     <div class="col-12" style="margin-top:5px;">
       <div class="form-group">

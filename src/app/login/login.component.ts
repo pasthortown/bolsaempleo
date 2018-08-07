@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { routerTransition } from '../router.animations';
-import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {routerTransition} from '../router.animations';
+import {Router} from '@angular/router';
+import {AuthService} from '../services/auth.service';
 import swal from 'sweetalert2';
 
 @Component({
@@ -17,8 +17,10 @@ export class LoginComponent implements OnInit {
   };
   usuario: firebase.User;
   mostrarMensajeError = false;
+  isLoading = true;
 
-  constructor(public router: Router, public authService: AuthService) { }
+  constructor(public router: Router, public authService: AuthService) {
+  }
 
   ngOnInit() {
   }
