@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Postulante } from '../../models/postulante';
-import { FirebaseBDDService } from './../../services/firebase-bdd.service';
-import { PostulanteService } from '../../services/postulante.service';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Postulante} from '../../models/postulante';
+import {FirebaseBDDService} from './../../services/firebase-bdd.service';
+import {PostulanteService} from '../../services/postulante.service';
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
 import swal from 'sweetalert2';
 import {catalogos} from '../../../environments/catalogos';
 
@@ -17,15 +17,20 @@ export class PersonaComponent implements OnInit {
   contrasena: string;
   confirmacion: string;
   nacionalidades: Array<any>;
+  estadosCiviles: Array<any>;
+  sexos: Array<any>;
 
   constructor(private postulanteService: PostulanteService,
-    private firebaseBDDService: FirebaseBDDService,
-    public authService: AuthService,
-    private _router: Router) { }
+              private firebaseBDDService: FirebaseBDDService,
+              public authService: AuthService,
+              private _router: Router) {
+  }
 
   ngOnInit() {
     this.nacionalidades = catalogos.nacionalidades;
     this.postulante = new Postulante();
+    this.estadosCiviles = catalogos.estadosCiviles;
+    this.sexos = catalogos.sexos;
   }
 
   estaCompleto(): boolean {
@@ -90,19 +95,23 @@ export class PersonaComponent implements OnInit {
     if (!this.esValido()) {
       return;
     }
-    this.authService.createUserWithEmailAndPassword(this.postulante.correoElectronico, this.contrasena).then(x => {
-    this.postulanteService.postulante = this.postulante;
-    this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
-      swal({
-        position: 'center',
-        type: 'success',
-        title: 'Registro de postulante',
-        text: 'Registro Satisfactorio',
-        showConfirmButton: false,
-        timer: 2000
-      });
-      this._router.navigate(['/login']);
-    }).catch(error => {
+    this.postulante.nombreCompleto.toUpperCase();
+    this.postulante.correoElectronico.toLowerCase();
+    this.postulante.direccion.toUpperCase();
+    this.authService.createUserWithEmailAndPassword(this.postulante.correoElectronico, this.contrasena)
+      .then(x => {
+        this.postulanteService.postulante = this.postulante;
+        this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
+        swal({
+          position: 'center',
+          type: 'success',
+          title: 'Registro de postulante',
+          text: 'Registro Satisfactorio',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        this._router.navigate(['/login']);
+      }).catch(error => {
       swal({
         position: 'center',
         type: 'error',

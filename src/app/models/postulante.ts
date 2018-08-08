@@ -17,6 +17,7 @@ export class Postulante {
   telefono: string;
   direccion: string;
   acercaDeMi: string;
+  sexo: string;
   estudiosRealizados: Array<EstudioRealizado>;
   capacitaciones: Array<Capacitacion>;
   experienciasLaborales: Array<ExperienciaLaboral>;
@@ -25,6 +26,7 @@ export class Postulante {
   referenciasPersonales: Array<ReferenciaPersonal>;
 
   constructor() {
+    this.sexo = '';
     this.nacionalidad = '';
     this.estadoCivil = '';
     this.estudiosRealizados = [];

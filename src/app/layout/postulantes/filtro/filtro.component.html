@@ -75,11 +75,11 @@
         <div class="card  mt-2" *ngFor="let postulanteActual of postulantes">
           <div class="card-body mt-1">
             <div class="card-title">
-              <div class="row">
+              <div class="row  texto">
                 <div class="col-12">
-                  <h3 class="col-12 text-left">{{postulanteActual.nombreCompleto}}</h3>
+                  <h3 class="col-12 text-left text-uppercase">{{postulanteActual.nombreCompleto}}</h3>
                 </div>
-                <div class="col-12 texto">
+                <div class="col-12">
                   <h5 class="col-12 text-left mt-3">Estudios Realizados</h5>
                   <table class="table table-sm">
                     <thead>
@@ -107,10 +107,10 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let item of postulanteActual.idiomas">
-                      <td>{{item.idioma}}</td>
-                      <td>{{item.nivelEscrito}}</td>
-                      <td>{{item.nivelHablado}}</td>
-                      <td>{{item.nivelLectura}}</td>
+                      <td class="text-uppercase">{{item.idioma}}</td>
+                      <td class="text-uppercase">{{item.nivelEscrito}}</td>
+                      <td class="text-uppercase">{{item.nivelHablado}}</td>
+                      <td class="text-uppercase">{{item.nivelLectura}}</td>
                     </tr>
                     </tbody>
                   </table>
@@ -124,7 +124,7 @@
                     </thead>
                     <tbody>
                     <tr *ngFor="let item of postulanteActual.capacitaciones">
-                      <td>{{item.nombreEvento}}</td>
+                      <td class="text-uppercase">{{item.nombreEvento}}</td>
                       <td>{{item.horas}}</td>
                     </tr>
                     </tbody>
@@ -133,9 +133,9 @@
               </div>
             </div>
             <div class="col-12 m-2 text-left">
-              <a *ngIf="authService.rolActual=='e'" target="_blank" class="btn btn-info btn-sm"
+              <a *ngIf="authService.rolActual=='e'" target="_blank" class="btn btn-primary btn-sm text-uppercase text-right"
                  href="curriculum?idPostulante={{postulanteActual.id}}">
-                <span class="fa fa-info-circle"></span>&nbsp;Mas Información
+                <span class="fa fa-info-circle"></span>&nbsp;Más Información
               </a>
             </div>
           </div>

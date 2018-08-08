@@ -176,6 +176,12 @@ export class OfertasLaboralesComponent implements OnInit {
 
   insertar() {
     this.oferta.idEmpresa = this.empresa.id;
+    this.oferta.codigo = this.oferta.codigo.toUpperCase();
+    this.oferta.contacto = this.oferta.contacto.toUpperCase();
+    this.oferta.correoElectronico = this.oferta.correoElectronico.toUpperCase();
+    this.oferta.cargo = this.oferta.cargo.toUpperCase();
+    this.oferta.actividades = this.oferta.actividades.toUpperCase();
+    this.oferta.informacionAdicional = this.oferta.informacionAdicional.toUpperCase();
     this.firebaseBDDService.firebaseControllerOfertas.insertar(this.oferta);
     swal({
       position: 'center',
@@ -185,7 +191,6 @@ export class OfertasLaboralesComponent implements OnInit {
       showConfirmButton: false,
       timer: 2000
     });
-
   }
 
   agregarOferta() {
@@ -197,6 +202,12 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   actualizar() {
+    this.oferta.codigo = this.oferta.codigo.toUpperCase();
+    this.oferta.contacto = this.oferta.contacto.toUpperCase();
+    this.oferta.correoElectronico = this.oferta.correoElectronico.toUpperCase();
+    this.oferta.cargo = this.oferta.cargo.toUpperCase();
+    this.oferta.actividades = this.oferta.actividades.toUpperCase();
+    this.oferta.informacionAdicional = this.oferta.informacionAdicional.toUpperCase();
     this.firebaseBDDService.firebaseControllerOfertas.actualizar(this.oferta);
     swal({
       position: 'center',

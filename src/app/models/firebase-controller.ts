@@ -29,7 +29,7 @@ export class FirebaseController {
 
   getId(campo: string, valor: string) {
     return this.firebase.list(this.coleccionBDD, ref => {
-      return ref.orderByChild(campo).equalTo(valor).limitToFirst(1);
+      return ref.orderByChild(campo).equalTo(valor);
     });
   }
 

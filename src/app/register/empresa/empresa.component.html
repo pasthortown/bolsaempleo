@@ -1,127 +1,130 @@
 <div class="top-banner-div" style="background-image: url(assets/img/welcome-bg.png);">
-  <h1 class="col-12 text-left titulo" style="color:white; font-size: 70px; font-weight: 700;">REGÍSTRATE</h1>
+  <h1 class="col-12 text-left titulo" style="color:white; font-size: 70px; font-weight: 700;">EMPRESA</h1>
 </div>
 <div class="container">
   <div class="card">
     <div class="card-body">
-      <div class="row">
-        <div class="col-lg-6">
-          <!-- Identificacion !-->
-          <div class="form-group">
-            <div class="row">
-              <div class="col-6">
-                <label for="identificacion" class="col-form-label">
-                  Identificación:
-                </label>
-                <input class="form-control" name="identificacion" id="identificacion" required
-                       [(ngModel)]="empresa.identificacion" placeholder="Ej. 1234567890001">
-              </div>
-              <div class="col-6">
-                <label for="naturaleza" class="col-form-label">
-                  Naturaleza:
-                </label>
-                <select class="form-control" name="naturaleza" id="naturaleza" [(ngModel)]="empresa.naturaleza">
-                  <option value="" selected>SELECCIONE...</option>
-                  <option value="PÚBLICA">PÚBLICA</option>
-                  <option value="PRIVADA">PRIVADA</option>
-                  <option value="MIXTA">MIXTA</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <!-- Nombre Comercial !-->
-          <div class="form-group">
-            <label for="nombreComercial" class="col-form-label">
-              Nombre Comercial:
-            </label>
-            <input type="text" class="form-control" name="nombreComercial" id="nombreComercial"
-                   [(ngModel)]="empresa.nombreComercial">
-          </div>
-          <!-- Contraseña !-->
-          <div class="form-group">
-            <div class="row">
-              <div class="col-6">
-                <label for="contrasena" class="col-form-label">
-                  Contraseña:
-                </label>
-                <input type="password" class="form-control" name="contrasena" id="contrasena" [(ngModel)]="contrasena">
-              </div>
-              <div class="col-6">
-                <label for="confirmar" class="col-form-label">
-                  Repetir Contraseña:
-                </label>
-                <input type="password" class="form-control" name="confirmar" id="confirmar" [(ngModel)]="confirmacion">
+      <form name="empresaform" method="post" #formCtrl="ngForm">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Identificacion !-->
+            <div class="form-group">
+              <div class="row">
+                <div class="col-6">
+                  <label for="identificacion" class="col-form-label">
+                    <b class="text-danger">*</b> Identificación:
+                  </label>
+                  <input class="form-control" name="identificacion" id="identificacion" required
+                         [(ngModel)]="empresa.identificacion" placeholder="Ej. 1234567890001">
+                </div>
+                <div class="col-6">
+                  <label for="naturaleza" class="col-form-label">
+                    Naturaleza:
+                  </label>
+                  <select class="form-control" name="naturaleza" id="naturaleza" [(ngModel)]="empresa.naturaleza" required>
+                    <option value="" selected>SELECCIONE...</option>
+                    <option value="PÚBLICA">PÚBLICA</option>
+                    <option value="PRIVADA">PRIVADA</option>
+                    <option value="MIXTA">MIXTA</option>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- Actividad Economica !-->
-          <div class="form-group">
-            <label for="actividadEconomica" class="col-form-label">
-              Actividad Comercial:
-            </label>
-            <textarea rows="3" class="form-control" name="actividadEconomica" id="actividadEconomica"
-                      [(ngModel)]="empresa.actividadEconomica"></textarea>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <!-- Telefono Celular y Fijo !-->
-          <div class="form-group">
-            <div class="row">
-              <div class="col-6">
-                <label for="telefonoCelular" class="col-form-label">
-                  Teléfono celular:
-                </label>
-                <input type="tel" class="form-control" name="telefonoCelular" id="telefonoCelular"
-                       [(ngModel)]="empresa.telefonoCelular" placeholder="Ej. 0987654321">
-              </div>
-              <div class="col-6">
-                <label for="telefonoFijo" class="col-form-label">
-                  Teléfono fijo:
-                </label>
-                <input type="tel" class="form-control" name="telefonoFijo" id="telefonoFijo"
-                       [(ngModel)]="empresa.telefonoFijo" placeholder="Ej. 0234567890">
+            <!-- Nombre Comercial !-->
+            <div class="form-group">
+              <label for="nombreComercial" class="col-form-label">
+                <b class="text-danger">*</b> Nombre Comercial:
+              </label>
+              <input type="text" class="form-control text-uppercase" name="nombreComercial" id="nombreComercial"
+                     [(ngModel)]="empresa.nombreComercial" required>
+            </div>
+            <!-- Contraseña !-->
+            <div class="form-group">
+              <div class="row">
+                <div class="col-6">
+                  <label for="contrasena" class="col-form-label">
+                    <b class="text-danger">*</b> Contraseña:
+                  </label>
+                  <input type="password" class="form-control" name="contrasena" id="contrasena"
+                         [(ngModel)]="contrasena" required>
+                </div>
+                <div class="col-6">
+                  <label for="confirmar" class="col-form-label">
+                    <b class="text-danger">*</b> Repetir Contraseña:
+                  </label>
+                  <input type="password" class="form-control" name="confirmar" id="confirmar"
+                         [(ngModel)]="confirmacion" required>
+                </div>
               </div>
             </div>
+            <!-- Actividad Economica !-->
+            <div class="form-group">
+              <label for="actividadEconomica" class="col-form-label">
+                <b class="text-danger">*</b> Actividad Comercial:
+              </label>
+              <textarea rows="3" class="form-control text-uppercase" name="actividadEconomica" id="actividadEconomica"
+                        [(ngModel)]="empresa.actividadEconomica" required></textarea>
+            </div>
           </div>
-          <!-- Correo Electronico !-->
-          <div class="form-group">
-            <label for="correoElectronico" class="col-form-label">
-              Correo Electrónico:
-            </label>
-            <input type="email" class="form-control text-lowercase" name="correoElectronico" id="correoElectronico"
-                   [(ngModel)]="empresa.correoElectronico" placeholder="Ej. contacto@midominio.com">
-          </div>
-          <!-- Pagina Web !-->
-          <div class="form-group">
-            <label for="paginaWeb" class="col-form-label">
-              Página web:
-            </label>
-            <input class="form-control text-lowercase" name="paginaWeb" id="paginaWeb" [(ngModel)]="empresa.paginaWeb"
-                   placeholder="Ej. www.midominio.com">
-          </div>
-          <!-- Dirección -->
-          <div class="form-group">
-            <label for="direccion" class="col-form-label">
-              Dirección:
-            </label>
-            <textarea rows="3" class="form-control" name="direccion" id="direccion"
-                      placeholder="EJ. PROVINCIA, CANTÓN, CALLE PRINCIPAL, CALLE SECUNDARIA, NÚMERO DE CASA"
-                      [(ngModel)]="empresa.direccion"></textarea>
+          <div class="col-lg-6">
+            <!-- Telefono Celular y Fijo !-->
+            <div class="form-group">
+              <div class="row">
+                <div class="col-6">
+                  <label for="telefonoCelular" class="col-form-label">
+                    Teléfono celular:
+                  </label>
+                  <input type="tel" class="form-control" name="telefonoCelular" id="telefonoCelular"
+                         [(ngModel)]="empresa.telefonoCelular" placeholder="Ej. 0987654321">
+                </div>
+                <div class="col-6">
+                  <label for="telefonoFijo" class="col-form-label">
+                    <b class="text-danger">*</b> Teléfono fijo:
+                  </label>
+                  <input type="tel" class="form-control" name="telefonoFijo" id="telefonoFijo"
+                         [(ngModel)]="empresa.telefonoFijo" placeholder="Ej. 0234567890" required>
+                </div>
+              </div>
+            </div>
+            <!-- Correo Electronico !-->
+            <div class="form-group">
+              <label for="correoElectronico" class="col-form-label">
+                <b class="text-danger">*</b> Correo Electrónico:
+              </label>
+              <input type="email" class="form-control text-lowercase" name="correoElectronico" id="correoElectronico"
+                     [(ngModel)]="empresa.correoElectronico" placeholder="Ej. contacto@midominio.com" required>
+            </div>
+            <!-- Pagina Web !-->
+            <div class="form-group">
+              <label for="paginaWeb" class="col-form-label">
+                Página web:
+              </label>
+              <input class="form-control text-lowercase" name="paginaWeb" id="paginaWeb" [(ngModel)]="empresa.paginaWeb"
+                     placeholder="Ej. www.midominio.com">
+            </div>
+            <!-- Dirección -->
+            <div class="form-group">
+              <label for="direccion" class="col-form-label">
+                <b class="text-danger">*</b> Dirección:
+              </label>
+              <textarea rows="3" class="form-control text-uppercase" name="direccion" id="direccion"
+                        placeholder="EJ. PROVINCIA, CANTÓN, CALLE PRINCIPAL, CALLE SECUNDARIA, NÚMERO DE CASA"
+                        [(ngModel)]="empresa.direccion" required></textarea>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-2">
-          <div *ngIf="isLoading">
-            <app-loader></app-loader>
+        <div class="row">
+          <div class="col-lg-4 col-sm-12">
+            <button type="submit" class="col-8 btn btn-primary mr-1" (click)="registrar()"
+                    [disabled]="formCtrl.form.invalid">
+              <i class="fa fa-fw fa-sign-in"></i>&nbsp;Regístrate
+            </button>
+          </div>
+          <div class="col-lg-8 col-sm-12">
+            <h6 class="text-right text-danger"><b>* </b>Todos los campos son obligatorios</h6>
           </div>
         </div>
-        <div class="col-4 offset-2">
-          <button class="btn btn-primary btn-lg form-control" (click)="registrar()">
-            Regístrate
-          </button>
-        </div>
-      </div>
+      </form>
     </div>
   </div>
 </div>

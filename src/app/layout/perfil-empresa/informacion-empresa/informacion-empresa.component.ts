@@ -40,6 +40,11 @@ export class InformacionEmpresaComponent implements OnInit {
   }
 
   actualizar() {
+    this.empresaService.empresa.nombreComercial = this.empresaService.empresa.nombreComercial.toUpperCase();
+    this.empresaService.empresa.paginaWeb = this.empresaService.empresa.paginaWeb.toLowerCase();
+    this.empresaService.empresa.correoElectronico = this.empresaService.empresa.correoElectronico.toLowerCase();
+    this.empresaService.empresa.direccion = this.empresaService.empresa.direccion.toUpperCase();
+    this.empresaService.empresa.actividadEconomica = this.empresaService.empresa.actividadEconomica.toUpperCase();
     this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
     swal({
       position: 'center',
@@ -60,4 +65,5 @@ export class InformacionEmpresaComponent implements OnInit {
       });
     });
   }
+
 }

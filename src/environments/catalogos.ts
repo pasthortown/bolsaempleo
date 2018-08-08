@@ -942,6 +942,17 @@ export const catalogos = {
     {descripcion: 'URUGUAYA'},
     {descripcion: 'VENEZOLANA'},
     {descripcion: 'VIETNAMITA'}
-  ]
+  ],
 
+  estadosCiviles: [
+    {descripcion: 'CASADO (A)'},
+    {descripcion: 'DIVORCIADO (A)'},
+    {descripcion: 'SOLTERO (A)'},
+    {descripcion: 'UNIÓN DE HECHO'},
+    {descripcion: 'VIUDO (A)'}
+  ],
+  sexos: [
+    {descripcion: 'HOMBRE'},
+    {descripcion: 'MUJER'}
+  ]
 };

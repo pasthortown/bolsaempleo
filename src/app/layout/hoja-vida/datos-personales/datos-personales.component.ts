@@ -11,12 +11,15 @@ export class DatosPersonalesComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   srcFoto: string;
   nacionalidades: Array<any>;
-
+  estadosCiviles: Array<any>;
+  sexos: Array<any>;
   constructor(public postulanteService: PostulanteService) {
   }
 
   ngOnInit() {
     this.nacionalidades = catalogos.nacionalidades;
+    this.estadosCiviles = catalogos.estadosCiviles;
+    this.sexos= catalogos.sexos;
   }
 
   CodificarArchivo(event) {
