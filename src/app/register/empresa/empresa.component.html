@@ -21,7 +21,8 @@
                   <label for="naturaleza" class="col-form-label">
                     Naturaleza:
                   </label>
-                  <select class="form-control" name="naturaleza" id="naturaleza" [(ngModel)]="empresa.naturaleza" required>
+                  <select class="form-control" name="naturaleza" id="naturaleza" [(ngModel)]="empresa.naturaleza"
+                          required>
                     <option value="" selected>SELECCIONE...</option>
                     <option value="PÚBLICA">PÚBLICA</option>
                     <option value="PRIVADA">PRIVADA</option>
@@ -114,14 +115,12 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-4 col-sm-12">
-            <button type="submit" class="col-8 btn btn-primary mr-1" (click)="registrar()"
+          <div class="col-lg-12 col-sm-12">
+            <button type="submit" class="btn btn-primary mr-1" (click)="registrar()"
                     [disabled]="formCtrl.form.invalid">
-              <i class="fa fa-fw fa-sign-in"></i>&nbsp;Regístrate
+              Regístrate
             </button>
-          </div>
-          <div class="col-lg-8 col-sm-12">
-            <h6 class="text-right text-danger"><b>* </b>Todos los campos son obligatorios</h6>
+            <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
           </div>
         </div>
       </form>
