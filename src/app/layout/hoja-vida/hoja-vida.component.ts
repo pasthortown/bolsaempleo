@@ -13,7 +13,10 @@ import swal from 'sweetalert2';
 export class HojaVidaComponent implements OnInit {
   postulantes = [];
 
-  constructor(private authService: AuthService, private postulanteService: PostulanteService, private firebaseBDDService: FirebaseBDDService) { }
+  constructor(
+    private authService: AuthService,
+    private postulanteService: PostulanteService,
+    private firebaseBDDService: FirebaseBDDService) { }
 
   ngOnInit() {
     this.postulanteService.postulante = this.authService.usuarioNegocio as Postulante;

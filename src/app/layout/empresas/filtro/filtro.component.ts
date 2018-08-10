@@ -97,14 +97,14 @@ export class FiltroComponent implements OnInit {
     this.firebaseBDDService.firebaseControllerOfertas.getPagina(this.pagina, this.registrosPorPagina, this.campo)
       .snapshotChanges()
       .subscribe(items => {
-      let i = (this.pagina - 1) * this.registrosPorPagina;
-      while (i < items.length) {
-        let itemLeido: Oferta;
-        itemLeido = items[i].payload.val() as Oferta;
-        this.ofertas.push(itemLeido);
-        i++;
-      }
-    });
+        let i = (this.pagina - 1) * this.registrosPorPagina;
+        while (i < items.length) {
+          let itemLeido: Oferta;
+          itemLeido = items[i].payload.val() as Oferta;
+          this.ofertas.push(itemLeido);
+          i++;
+        }
+      });
   }
 
   leerOfertas() {
@@ -300,10 +300,16 @@ export class FiltroComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#28a745',
       cancelButtonColor: '#3085d6',
-      confirmButtonText: '<i class="fa fa-sign-in" aria-hidden="true"> Iniciar Sesión</i>'
+      confirmButtonText: '<i class="fa fa-sign-in" aria-hidden="true"> Iniciar Sesión</i>',
+      cancelButtonText: '<i class="fa fa-address-book" aria-hidden="true"> Regístrate</i>'
     }).then((result) => {
       if (result.value) {
         this.router.navigate(['login']);
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        this.router.navigate(['persona']);
       }
     });
   }

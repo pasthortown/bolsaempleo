@@ -1,6 +1,8 @@
 import {PostulanteService} from './../../../services/postulante.service';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {catalogos} from '../../../../environments/catalogos';
+import swal from 'sweetalert2';
+import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 
 @Component({
   selector: 'app-datos-personales',
@@ -13,13 +15,15 @@ export class DatosPersonalesComponent implements OnInit {
   nacionalidades: Array<any>;
   estadosCiviles: Array<any>;
   sexos: Array<any>;
-  constructor(public postulanteService: PostulanteService) {
+
+  constructor(public postulanteService: PostulanteService,
+              private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
     this.nacionalidades = catalogos.nacionalidades;
     this.estadosCiviles = catalogos.estadosCiviles;
-    this.sexos= catalogos.sexos;
+    this.sexos = catalogos.sexos;
   }
 
   CodificarArchivo(event) {
@@ -31,5 +35,17 @@ export class DatosPersonalesComponent implements OnInit {
         this.postulanteService.postulante.fotografia = 'data:' + file.type + ';base64,' + reader.result.split(',')[1];
       };
     }
+  }
+
+  actualizar() {
+    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Datos Personales',
+      text: 'Registro exitoso!',
+      showConfirmButton: true,
+      timer: 2000
+    });
   }
 }

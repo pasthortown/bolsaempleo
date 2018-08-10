@@ -4,7 +4,6 @@ import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 import swal from 'sweetalert2';
 import {Empresa} from '../../../models/empresa';
 import {AuthService} from '../../../services/auth.service';
-import {Oferta} from '../../../models/oferta';
 
 @Component({
   selector: 'app-informacion-empresa',

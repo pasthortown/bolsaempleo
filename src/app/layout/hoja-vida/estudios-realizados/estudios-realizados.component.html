@@ -13,23 +13,25 @@
         <div class="col-12">
           <table class="table table-bordered table-hover">
             <thead class="table-active">
-              <th width="25%">Institución</th>
-              <th width="45%">Título</th>
-              <th width="15%">Fecha de Registro</th>
-              <th width="15%">Cód. de Reg. SENESCYT</th>
-              <th width="100px">Opciones</th>
+            <th width="25%">Institución</th>
+            <th width="45%">Título</th>
+            <th width="15%">Fecha de Registro</th>
+            <th width="15%">Cód. de Reg. SENESCYT</th>
+            <th width="100px">Opciones</th>
             </thead>
             <tbody>
-              <tr *ngFor="let item of postulanteService.postulante.estudiosRealizados">
-                <td>{{item.institucion}}</td>
-                <td>{{item.titulo}}</td>
-                <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
-                <td>{{item.codigoRegistroSENESCYT}}</td>
-                <td>
-                  <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span class="fa fa-edit"></span></button>
-                  <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
-                </td>
-              </tr>
+            <tr *ngFor="let item of postulanteService.postulante.estudiosRealizados">
+              <td>{{item.institucion}}</td>
+              <td>{{item.titulo}}</td>
+              <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
+              <td>{{item.codigoRegistroSENESCYT}}</td>
+              <td>
+                <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span
+                  class="fa fa-edit"></span></button>
+                <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span>
+                </button>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -38,65 +40,75 @@
   </div>
 </div>
 <ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <div class="row">
-      <h4 class="col-12 text-center">Estudio Realizado</h4>
+  <form name="empresaform" method="post" #formCtrl="ngForm">
+    <div class="modal-header">
+      <div class="row">
+        <h4 class="col-12 text-center" name="titulo">Estudio Realizado</h4>
+      </div>
     </div>
-  </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group">
-          <label for="institucion">Institución</label>
-          <select type="text" [(ngModel)]="estudioRealizado.institucion" class="form-control" id="institucion">
-            <option value="">SELECCIONE...</option>
-            <option value="{{institucion.nombre}}" *ngFor="let institucion of instituciones">{{institucion.nombre}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12 mt-2">
-        <div class="form-group">
-          <label>Tipo de Título</label>
-          <select class="form-control" [(ngModel)]="estudioRealizado.tipo_titulo" (change)="mostrar()">
-            <option value="" selected>Seleccione...</option>
-            <option *ngFor="let item of filtro" value="{{item.campo_amplio}}">{{item.campo_amplio}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label>Título</label>
-          <select class="form-control" [(ngModel)]="estudioRealizado.titulo">
-            <option value="" selected>Seleccione...</option>
-            <option *ngFor="let item of tipo_titulo" value="{{item.nombre}}">{{item.nombre}}</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="fechaRegistro">Fecha de Registro</label>
-          <div class="input-group datepicker-input">
-            <input class="form-control" [(ngModel)]="estudioRealizado.fechaRegistro" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
-            <button class="input-group-addon" (click)="d.toggle()" type="button">
-              <span class="fa fa-calendar"></span>
-            </button>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="institucion">
+              <b class="text-danger">*</b> Institución:
+            </label>
+            <select type="text" [(ngModel)]="estudioRealizado.institucion" class="form-control" id="institucion"
+                    name="institucion" required>
+              <option value="">SELECCIONE...</option>
+              <option value="{{institucion.nombre}}" *ngFor="let institucion of instituciones">{{institucion.nombre}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>
+              <b class="text-danger">*</b> Tipo de Título:
+            </label>
+            <select class="form-control" [(ngModel)]="estudioRealizado.tipo_titulo" (change)="mostrar()" id="tipoTitulo"
+                    name="tipoTitulo" required>
+              <option value="" selected>SELECCIONE...</option>
+              <option *ngFor="let item of filtro" value="{{item.campo_amplio}}">{{item.campo_amplio}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>
+              <b class="text-danger">*</b> Título:
+            </label>
+            <select class="form-control" [(ngModel)]="estudioRealizado.titulo" id="titulo" name="titulo" required>
+              <option value="" selected>Seleccione...</option>
+              <option *ngFor="let item of tipo_titulo" value="{{item.nombre}}">{{item.nombre}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="dp">
+              Fecha de Registro:
+            </label>
+            <div class="input-group datepicker-input">
+              <input class="form-control" [(ngModel)]="estudioRealizado.fechaRegistro" placeholder="yyyy-mm-dd"
+                     id="dp" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker">
+              <button class="input-group-addon" (click)="d.toggle()" type="button">
+                <span class="fa fa-calendar"></span>
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="codigoRegistro">
+              Código de Registro SENESCYT:
+            </label>
+            <input type="text" [(ngModel)]="estudioRealizado.codigoRegistroSENESCYT" class="form-control"
+                   id="codigoRegistro" name="codigoRegistro" placeholder="Código de Registro SENESCYT">
           </div>
         </div>
       </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="codigoRegistro">Código de Registro SENESCYT</label>
-          <input type="text" [(ngModel)]="estudioRealizado.codigoRegistroSENESCYT" class="form-control" id="codigoRegistro" placeholder="Código de Registro SENESCYT">
-        </div>
-      </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-success" (click)="c('save')">
-      <span class="fa fa-check"></span>&nbsp;Aceptar
-    </button>
-    <button class="btn btn-danger" (click)="c('close')">
-      <span class="fa fa-close"></span>&nbsp;Cancelar
-    </button>
-  </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
+        <span class="fa fa-check"></span>&nbsp;Aceptar
+      </button>
+      <button class="btn btn-danger" (click)="c('close')">
+        <span class="fa fa-close"></span>&nbsp;Cancelar
+      </button>
+      <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
+    </div>
+  </form>
 </ng-template>

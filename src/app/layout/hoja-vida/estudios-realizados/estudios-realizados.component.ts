@@ -1,8 +1,10 @@
-import { catalogos } from './../../../../environments/catalogos';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PostulanteService } from './../../../services/postulante.service';
-import { Component, OnInit } from '@angular/core';
-import { EstudioRealizado } from '../../../models/estudio-realizado';
+import {catalogos} from './../../../../environments/catalogos';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {PostulanteService} from './../../../services/postulante.service';
+import {Component, OnInit} from '@angular/core';
+import {EstudioRealizado} from '../../../models/estudio-realizado';
+import swal from 'sweetalert2';
+import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 
 @Component({
   selector: 'app-estudios-realizados',
@@ -14,7 +16,10 @@ export class EstudiosRealizadosComponent implements OnInit {
   filtro: Array<any>;
   tipo_titulo: Array<any>;
   instituciones: Array<any>;
-  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) { }
+
+  constructor(private modalService: NgbModal, public postulanteService: PostulanteService,
+              private firebaseBDDService: FirebaseBDDService) {
+  }
 
   ngOnInit() {
     this.estudioRealizado = new EstudioRealizado();
@@ -24,49 +29,54 @@ export class EstudiosRealizadosComponent implements OnInit {
   }
 
   open(content, item: EstudioRealizado, editar) {
-    if ( editar ) {
+    if (editar) {
       this.estudioRealizado = item;
       this.mostrar();
     } else {
       this.estudioRealizado = new EstudioRealizado();
     }
     this.modalService.open(content)
-    .result
-    .then((resultModal => {
-      if ( resultModal === 'save' ) {
-        if ( !editar ) {
-          this.agregar();
+      .result
+      .then((resultModal => {
+        if (resultModal === 'save') {
+          if (!editar) {
+            this.agregar();
+            this.actualizar();
+          } else {
+            this.actualizar();
+          }
         }
-      }
-    }), (resultCancel => {
+      }), (resultCancel => {
 
-    }));
+      }));
   }
 
   ordenarPorAntiguedad(descendente: boolean) {
-    this.postulanteService.postulante.estudiosRealizados.sort((n1, n2) => {
-      const fechaInicio = new Date(n1.fechaRegistro.year + '/' + n1.fechaRegistro.month + '/' + n1.fechaRegistro.day);
-      const fechaFin = new Date(n2.fechaRegistro.year + '/' + n2.fechaRegistro.month + '/' + n2.fechaRegistro.day);
-      if (fechaFin > fechaInicio) {
-        if (descendente) {
-          return 1;
-        } else {
-          return -1;
+    if (this.postulanteService.postulante.estudiosRealizados.length > 0) {
+      this.postulanteService.postulante.estudiosRealizados.sort((n1, n2) => {
+        const fechaInicio = new Date(n1.fechaRegistro.year + '/' + n1.fechaRegistro.month + '/' + n1.fechaRegistro.day);
+        const fechaFin = new Date(n2.fechaRegistro.year + '/' + n2.fechaRegistro.month + '/' + n2.fechaRegistro.day);
+        if (fechaFin > fechaInicio) {
+          if (descendente) {
+            return 1;
+          } else {
+            return -1;
+          }
         }
-      }
-      if (fechaFin < fechaInicio) {
-        if (descendente) {
-          return -1;
-        } else {
-          return 1;
+        if (fechaFin < fechaInicio) {
+          if (descendente) {
+            return -1;
+          } else {
+            return 1;
+          }
         }
-      }
-      return 0;
-    });
+        return 0;
+      });
+    }
   }
 
   agregar() {
-    if ( this.postulanteService.postulante.estudiosRealizados == null ) {
+    if (this.postulanteService.postulante.estudiosRealizados == null) {
       this.postulanteService.postulante.estudiosRealizados = [];
     }
     this.postulanteService.postulante.estudiosRealizados.push(this.estudioRealizado);
@@ -75,13 +85,32 @@ export class EstudiosRealizadosComponent implements OnInit {
   }
 
   borrar(item: EstudioRealizado) {
-    const estudios = [];
-    this.postulanteService.postulante.estudiosRealizados.forEach(element => {
-      if (element !== item) {
-        estudios.push(element);
+    swal({
+      title: '¿Está seguro de Eliminar?',
+      text: item.titulo,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
+    }).then((result) => {
+      if (result.value) {
+        const estudios = [];
+        this.postulanteService.postulante.estudiosRealizados.forEach(element => {
+          if (element !== item) {
+            estudios.push(element);
+          }
+        });
+        this.postulanteService.postulante.estudiosRealizados = estudios;
+        this.actualizar();
+        swal({
+          title: 'Oferta',
+          text: 'Eliminación exitosa!',
+          type: 'success',
+          timer: 2000
+        });
       }
     });
-    this.postulanteService.postulante.estudiosRealizados = estudios;
   }
 
   mostrar() {
@@ -93,6 +122,18 @@ export class EstudiosRealizadosComponent implements OnInit {
       if (element.campo_amplio === this.estudioRealizado.tipo_titulo) {
         this.tipo_titulo = element.campos_especificos;
       }
+    });
+  }
+
+  actualizar() {
+    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Estudio Realizado',
+      text: 'Registro exitoso!',
+      showConfirmButton: true,
+      timer: 2000
     });
   }
 }

@@ -1,118 +1,158 @@
 <div class="card mt-1">
   <div class="card-body">
-    <div class="row">
-      <div class="col-3">
-        <div class="form-group">
-          <img src="{{postulanteService.postulante.fotografia}}" title="Seleccione su Foto"
-               class="form-control rounded-circle col-4 offset-4  btn"
-               (click)="fileInput.click()" width="150px" height="120px">
-        </div>
-        <!--Acerca de Mi-->
-        <div class="form-group text-center">
-          <label for="acercaDeMi" class="bg-info form-control text-white">¿Quién Soy?</label>
-          <textarea rows="5" type="text" [(ngModel)]="postulanteService.postulante.acercaDeMi" class="form-control"
-                    id="acercaDeMi"
-                    placeholder="Escriba una descripción acerca de usted"></textarea>
-        </div>
-        <div class="form-group">
-          <a target="_blank" class="form-control btn btn-primary"
-             href="curriculum?idPostulante={{this.postulanteService.postulante.id}}">
-            <i class="fa fa-id-badge" aria-hidden="true"> VER CV</i>
-          </a>
-        </div>
-        <input type="file" style="visibility: hidden; height: 0px" class="form-control" id="foto"
-               placeholder="Fotografía" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
-      </div>
-      <div class="col-9">
-        <div class="row">
-          <div class="col-6">
-            <!--Identificacion-->
-            <div class="form-group">
-              <label for="identificacion">Identificación:</label>
-              <input type="text" [(ngModel)]="postulanteService.postulante.identificacion" class="form-control"
-                     id="identificacion" placeholder="Cédula">
-            </div>
-            <!--Nombres Completos-->
-            <div class="form-group">
-              <label for="nombreCompleto">Nombre Completo:</label>
-              <input type="text" [(ngModel)]="postulanteService.postulante.nombreCompleto" class="form-control"
-                     id="nombreCompleto" placeholder="Apellidos y Nombres">
-            </div>
-            <!--Nacionalidad-->
-            <div class="form-group">
-              <div class="row">
-                <div class="col-lg-6">
-                  <label for="nacionalidad">Nacionalidad:</label>
-                  <select type="text" [(ngModel)]="postulanteService.postulante.nacionalidad" class="form-control"
-                          id="nacionalidad" placeholder="Nacionalidad">
-                    <option value="">SELECCIONE...</option>
-                    <option value="{{nacionalidad.descripcion}}" *ngFor="let nacionalidad of nacionalidades">
-                      {{nacionalidad.descripcion}}
-                    </option>
-                  </select>
-                </div>
-                <div class="col-lg-6">
-                  <label for="sexo">
-                    Sexo:
-                  </label>
-                  <select [(ngModel)]="postulanteService.postulante.sexo" class="form-control" id="sexo">
-                    <option value="" selected>SELECCIONE...</option>
-                    <option value="{{sexo.descripcion}}" *ngFor="let sexo of sexos">
-                      {{sexo.descripcion}}
-                    </option>
-                  </select>
-                </div>
+    <form name="datosPersnalesform" method="post" #formCtrl="ngForm">
+      <div class="row">
+        <div class="col-3">
+          <div class="form-group">
+            <a target="_blank" class="form-control btn btn-primary"
+               href="curriculum?idPostulante={{this.postulanteService.postulante.id}}">
+              <i class="fa fa-id-badge" aria-hidden="true"> VER CV</i>
+            </a>
+          </div>
+          <div class="form-group">
+            <img src="{{postulanteService.postulante.fotografia}}" title="Seleccione su Foto"
+                 class="form-control rounded-circle col-4 offset-4  btn"
+                 (click)="fileInput.click()" width="150px" height="120px">
+          </div>
+          <div class="group-form">
+            <div class="row">
+              <div class="col-lg-12 col-sm-12">
+                <button type="submit" class="col-lg-12 btn btn-success mr-1" (click)="actualizar()"
+                        [disabled]="formCtrl.form.invalid">
+                  <i class="fa fa-fw fa-save"></i>&nbsp;ACtualizar
+                </button>
               </div>
             </div>
-            <!--Estado Civil-->
-            <div class="form-group">
-              <div class="row">
-                <div class="col-6">
-                  <label for="estadoCivil">Estado Civil:</label>
-                  <select [(ngModel)]="postulanteService.postulante.estadoCivil" class="form-control" id="estadoCivil"
-                          name="estadoCivil">
-                    <option value="" selected>SELECCIONE...</option>
-                    <option value="{{estadoCivil.descripcion}}" *ngFor="let estadoCivil of estadosCiviles">
-                      {{estadoCivil.descripcion}}
-                    </option>
-                  </select>
+            <div class="row">
+              <div class="col-lg-12 col-sm-12">
+                <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
+              </div>
+            </div>
+          </div>
+          <!--Acerca de Mi-->
+          <div class="form-group text-center">
+            <label for="acercaDeMi" class="bg-info form-control text-white">¿Quién Soy?</label>
+            <textarea rows="5" type="text" [(ngModel)]="postulanteService.postulante.acercaDeMi"
+                      class="form-control text-uppercase" id="acercaDeMi" name="acerdaDeMi"
+                      placeholder="Escriba una descripción acerca de usted"></textarea>
+          </div>
+          <input type="file" style="visibility: hidden; height: 0px" class="form-control" id="foto"
+                 placeholder="Fotografía" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
+        </div>
+        <div class="col-9">
+          <div class="row">
+            <div class="col-6">
+              <!--Identificacion-->
+              <div class="form-group">
+                <label for="identificacion">
+                  <b class="text-danger">*</b> Identificación:
+                </label>
+                <input type="text" [(ngModel)]="postulanteService.postulante.identificacion" class="form-control"
+                       id="identificacion" name="identificacion" placeholder="Cédula" required>
+              </div>
+              <!--Nombres Completos-->
+              <div class="form-group">
+                <label for="nombreCompleto">
+                  <b class="text-danger">*</b> Nombre Completo:
+                </label>
+                <input type="text" [(ngModel)]="postulanteService.postulante.nombreCompleto"
+                       class="form-control text-uppercase"
+                       id="nombreCompleto" name="nombreCompleto" placeholder="Apellidos y Nombres" required>
+              </div>
+              <!--Nacionalidad-->
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label for="nacionalidad">
+                      <b class="text-danger">*</b> Nacionalidad:
+                    </label>
+                    <select type="text" [(ngModel)]="postulanteService.postulante.nacionalidad" class="form-control"
+                            id="nacionalidad" name="nacionalidad" placeholder="Nacionalidad" required>
+                      <option value="">SELECCIONE...</option>
+                      <option value="{{nacionalidad.descripcion}}" *ngFor="let nacionalidad of nacionalidades">
+                        {{nacionalidad.descripcion}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-lg-6">
+                    <label for="sexo">
+                      <b class="text-danger">*</b> Sexo:
+                    </label>
+                    <select [(ngModel)]="postulanteService.postulante.sexo" class="form-control" id="sexo" name="sexo"
+                            required>
+                      <option value="" selected>SELECCIONE...</option>
+                      <option value="{{sexo.descripcion}}" *ngFor="let sexo of sexos">
+                        {{sexo.descripcion}}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                <div class="col-6">
-                  <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-                  <div class="input-group datepicker-input">
-                    <input [(ngModel)]="postulanteService.postulante.fechaDeNacimiento" class="form-control"
-                           placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
-                    <button class="input-group-addon" (click)="d.toggle()" type="button">
-                      <span class="fa fa-calendar"></span>
-                    </button>
+              </div>
+              <!--Estado Civil-->
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-6">
+                    <label for="estadoCivil">
+                      <b class="text-danger">*</b> Estado Civil:
+                    </label>
+                    <select [(ngModel)]="postulanteService.postulante.estadoCivil" class="form-control" id="estadoCivil"
+                            name="estadoCivil" required>
+                      <option value="" selected>SELECCIONE...</option>
+                      <option value="{{estadoCivil.descripcion}}" *ngFor="let estadoCivil of estadosCiviles">
+                        {{estadoCivil.descripcion}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-6">
+                    <label for="fechaNacimiento">
+                      <b class="text-danger">*</b> Fecha de Nacimiento:
+                    </label>
+                    <div class="input-group datepicker-input">
+                      <input [(ngModel)]="postulanteService.postulante.fechaDeNacimiento" class="form-control"
+                             placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" required>
+                      <button class="input-group-addon" (click)="d.toggle()" type="button">
+                        <span class="fa fa-calendar"></span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-6">
-            <!--Correo Electronico-->
-            <div class="form-group">
-              <label for="correoElectronico">Correo Electrónico:</label>
-              <input type="email" [(ngModel)]="postulanteService.postulante.correoElectronico" class="form-control"
-                     id="correoElectronico" placeholder="Ej. contacto@midominio.com">
-            </div>
-            <!--Telefono-->
-            <div class="form-group">
-              <label for="telefono">Teléfono:</label>
-              <input type="text" [(ngModel)]="postulanteService.postulante.telefono" class="form-control" id="telefono"
-                     placeholder="Teléfono">
-            </div>
-            <!--Direccion-->
-            <div class="form-group">
-              <label for="domicilio">Dirección de Domicilio:</label>
-              <textarea rows="5" type="text" [(ngModel)]="postulanteService.postulante.direccion" class="form-control"
-                        id="domicilio"
-                        placeholder="EJ. PROVINCIA, CANTÓN, CALLE PRINCIPAL, CALLE SECUNDARIA, NÚMERO DE CASA"></textarea>
+            <div class="col-6">
+              <!--Correo Electronico-->
+              <div class="form-group">
+                <label for="correoElectronico">
+                  <b class="text-danger">*</b> Correo Electrónico:
+                </label>
+                <input type="email" [(ngModel)]="postulanteService.postulante.correoElectronico"
+                       class="form-control text-lowercase"
+                       id="correoElectronico" name="correoElectronico" placeholder="Ej. contacto@midominio.com"
+                       required>
+              </div>
+              <!--Telefono-->
+              <div class="form-group">
+                <label for="telefono">
+                  <b class="text-danger">*</b> Teléfono:
+                </label>
+                <input type="text" [(ngModel)]="postulanteService.postulante.telefono" class="form-control"
+                       id="telefono"
+                       name="telefono" placeholder="Teléfono" required>
+              </div>
+              <!--Direccion-->
+              <div class="form-group">
+                <label for="domicilio">
+                  <b class="text-danger">*</b> Dirección de Domicilio:
+                </label>
+                <textarea rows="5" type="text" [(ngModel)]="postulanteService.postulante.direccion"
+                          class="form-control text-uppercase"
+                          id="domicilio" name="domicilio"
+                          placeholder="EJ. PROVINCIA, CANTÓN, CALLE PRINCIPAL, CALLE SECUNDARIA, NÚMERO DE CASA"
+                          required></textarea>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   </div>
 </div>
