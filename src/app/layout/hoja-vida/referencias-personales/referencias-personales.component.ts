@@ -2,6 +2,9 @@ import {ReferenciaPersonal} from './../../../models/referenciaPersonal';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PostulanteService} from './../../../services/postulante.service';
 import {Component, OnInit} from '@angular/core';
+import swal from 'sweetalert2';
+import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
+import {EstudioRealizado} from '../../../models/estudio-realizado';
 
 @Component({
   selector: 'app-referencias-personales',
@@ -12,7 +15,10 @@ export class ReferenciasPersonalesComponent implements OnInit {
   referenciaPersonal: ReferenciaPersonal;
   instituciones: Array<any>;
 
-  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) {
+  constructor(
+    private modalService: NgbModal,
+    public postulanteService: PostulanteService,
+    private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
@@ -47,12 +53,44 @@ export class ReferenciasPersonalesComponent implements OnInit {
   }
 
   borrar(item: ReferenciaPersonal) {
-    const referencias = [];
-    this.postulanteService.postulante.referenciasPersonales.forEach(element => {
-      if (element !== item) {
-        referencias.push(element);
+    swal({
+      title: '¿Está seguro de Eliminar?',
+      text: item.cargo,
+      type: 'warning',
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
+    }).then((result) => {
+      if (result.value) {
+        const referencias = [];
+        this.postulanteService.postulante.referenciasPersonales.forEach(element => {
+          if (element !== item) {
+            referencias.push(element);
+          }
+        });
+        this.postulanteService.postulante.referenciasPersonales = referencias;
+        this.actualizar();
+        swal({
+          title: 'Oferta',
+          text: 'Eliminación exitosa!',
+          type: 'success',
+          timer: 2000
+        });
       }
     });
-    this.postulanteService.postulante.referenciasPersonales = referencias;
+  }
+
+  actualizar() {
+    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Estudio Realizado',
+      text: 'Registro exitoso!',
+      showConfirmButton: true,
+      timer: 2000
+    });
   }
 }

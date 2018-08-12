@@ -58,92 +58,112 @@
 </div>
 
 <ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <div class="row">
-      <h4 class="col-12 text-center">Experiencia Profesional</h4>
+  <form name="capacitacionform" method="post" #formCtrl="ngForm">
+    <div class="modal-header">
+      <div class="row">
+        <h4 class="col-12 text-center">Experiencia Profesional</h4>
+      </div>
     </div>
-  </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group">
-          <label for="empleador">Empleador</label>
-          <input type="text" [(ngModel)]="experienciaLaboral.empleador" class="form-control" id="empleador"
-                 placeholder="Empleador">
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="cargo">Cargo Desempeñado</label>
-          <input type="text" [(ngModel)]="experienciaLaboral.cargoDesempenado" class="form-control" id="cargo"
-                 placeholder="Cargo Desempeñado">
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="nombreEvento">Descripción del Cargo</label>
-          <input type="text" [(ngModel)]="experienciaLaboral.descripcionCargo" class="form-control" id="nombreEvento"
-                 placeholder="Descripción del Cargo">
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="fechaRegistro">Fecha de Inicio</label>
-          <div class="input-group datepicker-input">
-            <input class="form-control" [(ngModel)]="experienciaLaboral.fechaInicio" placeholder="yyyy-mm-dd" name="dp"
-                   ngbDatepicker #di="ngbDatepicker">
-            <button class="input-group-addon" (click)="di.toggle()" type="button">
-              <span class="fa fa-calendar"></span>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-12">
-        <div *ngIf="!experienciaLaboral.actualmenteVigente">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12">
           <div class="form-group">
-            <label for="fechaRegistro">Fecha de Finalización</label>
-            <div class="input-group datepicker-input">
-              <input class="form-control" [(ngModel)]="experienciaLaboral.fechaFinalizacion" placeholder="yyyy-mm-dd"
-                     name="dp" ngbDatepicker #d="ngbDatepicker">
-              <button class="input-group-addon" (click)="d.toggle()" type="button">
-                <span class="fa fa-calendar"></span>
-              </button>
+            <label for="empleador">
+              <b class="text-danger">*</b> Empleador:
+            </label>
+            <input type="text" [(ngModel)]="experienciaLaboral.empleador" class="form-control" id="empleador"
+                   name="empleador" placeholder="Empleador" required>
+          </div>
+          <div class="form-group">
+            <label for="cargo">
+              <b class="text-danger">*</b> Cargo Desempeñado:
+            </label>
+            <input type="text" [(ngModel)]="experienciaLaboral.cargoDesempenado" class="form-control" id="cargo"
+                   name="cargo"
+                   placeholder="Cargo Desempeñado" required>
+          </div>
+          <div class="form-group">
+            <label for="nombreEvento">
+              <b class="text-danger">*</b> Descripción del Cargo:
+            </label>
+            <input type="text" [(ngModel)]="experienciaLaboral.descripcionCargo" class="form-control" id="nombreEvento"
+                   name="nombreEvento" placeholder="Descripción del Cargo" required>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-lg-6">
+                <label for="fechaRegistro">
+                  <b class="text-danger">*</b> Fecha de Inicio:
+                </label>
+                <div class="input-group datepicker-input">
+                  <input [(ngModel)]="experienciaLaboral.fechaInicio" class="form-control"
+                         placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" required>
+                  <button class="input-group-addon" (click)="d.toggle()" type="button">
+                    <span class="fa fa-calendar"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div *ngIf="!experienciaLaboral.actualmenteVigente">
+                  <div class="form-group">
+                    <label for="fechaRegistro">
+                      <b class="text-danger">*</b> Fecha de Finalización:
+                    </label>
+                    <div class="input-group datepicker-input">
+                      <input class="form-control" [(ngModel)]="experienciaLaboral.fechaFinalizacion"
+                             placeholder="yyyy-mm-dd"
+                             name="dp" ngbDatepicker #d="ngbDatepicker" required>
+                      <button class="input-group-addon" (click)="d.toggle()" type="button">
+                        <span class="fa fa-calendar"></span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="form-group">
-            <label for="motivoSalida">Motivo Salida</label>
-            <select id="motivoSalida" class="form-control" [(ngModel)]="experienciaLaboral.motivoSalida">
-              <option value="">SELECCIONE...</option>
-              <option value="CRECIMIENTO PROFESIONAL">CRECIMIENTO PROFESIONAL</option>
-              <option value="DESPIDOS Y SALIDAS PACTADAS">DESPIDOS Y SALIDAS PACTADAS</option>
-              <option value="MAL AMBIENTE">MAL AMBIENTE</option>
-              <option value="MEJORA DE CONDICIONES LABORALES">MEJORA DE CONDICIONES LABORALES</option>
-              <option value="SITUACIÓN INCÓMODA">SITUACIÓN INCÓMODA</option>
-              <option value="SOBRECARGA LABORAL">SOBRECARGA LABORAL</option>
-            </select>
+            <div *ngIf="!experienciaLaboral.actualmenteVigente">
+              <label for="motivoSalida">
+                <b class="text-danger">*</b> Motivo Salida:
+              </label>
+              <select id="motivoSalida" class="form-control" [(ngModel)]="experienciaLaboral.motivoSalida"
+                      name="motivoSalida" required>
+                <option value="">SELECCIONE...</option>
+                <option value="CRECIMIENTO PROFESIONAL">CRECIMIENTO PROFESIONAL</option>
+                <option value="DESPIDOS Y SALIDAS PACTADAS">DESPIDOS Y SALIDAS PACTADAS</option>
+                <option value="MAL AMBIENTE">MAL AMBIENTE</option>
+                <option value="MEJORA DE CONDICIONES LABORALES">MEJORA DE CONDICIONES LABORALES</option>
+                <option value="SITUACIÓN INCÓMODA">SITUACIÓN INCÓMODA</option>
+                <option value="SOBRECARGA LABORAL">SOBRECARGA LABORAL</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <input type="checkbox" [(ngModel)]="experienciaLaboral.actualmenteVigente" class="form-check-input"
-                 id="actualmenteTrabajoAqui" hidden>
-          <div class="form-group text-center">
-            <label class="form-check-label btn" for="actualmenteTrabajoAqui" [ngClass]="{'btn-primary':
+          <div class="form-group">
+            <input type="checkbox" [(ngModel)]="experienciaLaboral.actualmenteVigente" class="form-check-input"
+                   id="actualmenteTrabajoAqui" name="actualmenteTrabajoAqui" hidden>
+            <div class="form-group text-center">
+              <label class="form-check-label btn" for="actualmenteTrabajoAqui" [ngClass]="{'btn-primary':
                    experienciaLaboral.actualmenteVigente,'btn-danger':!experienciaLaboral.actualmenteVigente}"
-            (click)="validarFechaFinTrabajo()">
-              <i *ngIf="experienciaLaboral.actualmenteVigente" class="fa fa-check" aria-hidden="true"> Actualmente trabajo aquí</i>
-              <i *ngIf="!experienciaLaboral.actualmenteVigente" class="fa fa-question" aria-hidden="true"> Actualmente trabajo aquí</i>
-            </label>
+                     (click)="validarFechaFinTrabajo()">
+                <i *ngIf="experienciaLaboral.actualmenteVigente" class="fa fa-check" aria-hidden="true"> Actualmente
+                  trabajo aquí</i>
+                <i *ngIf="!experienciaLaboral.actualmenteVigente" class="fa fa-question" aria-hidden="true"> Actualmente
+                  trabajo aquí</i>
+              </label>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-success" (click)="c('save')">
-      <span class="fa fa-check"></span>&nbsp;Aceptar
-    </button>
-    <button class="btn btn-danger" (click)="c('close')">
-      <span class="fa fa-close"></span>&nbsp;Cancelar
-    </button>
-  </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
+        <span class="fa fa-check"></span>&nbsp;Aceptar
+      </button>
+      <button class="btn btn-danger" (click)="c('close')">
+        <span class="fa fa-close"></span>&nbsp;Cancelar
+      </button>
+      <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
+    </div>
+  </form>
 </ng-template>

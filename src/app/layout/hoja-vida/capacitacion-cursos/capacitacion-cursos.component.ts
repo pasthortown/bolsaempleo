@@ -1,7 +1,10 @@
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Capacitacion } from './../../../models/capacitacion';
-import { PostulanteService } from './../../../services/postulante.service';
-import { Component, OnInit } from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Capacitacion} from './../../../models/capacitacion';
+import {PostulanteService} from './../../../services/postulante.service';
+import {Component, OnInit} from '@angular/core';
+import swal from 'sweetalert2';
+import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
+import {EstudioRealizado} from '../../../models/estudio-realizado';
 
 @Component({
   selector: 'app-capacitacion-cursos',
@@ -11,7 +14,11 @@ import { Component, OnInit } from '@angular/core';
 export class CapacitacionCursosComponent implements OnInit {
   capacitacion: Capacitacion;
 
-  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) { }
+  constructor(
+    private modalService: NgbModal,
+    public postulanteService: PostulanteService,
+    private firebaseBDDService: FirebaseBDDService) {
+  }
 
   ngOnInit() {
     this.capacitacion = new Capacitacion();
@@ -19,22 +26,22 @@ export class CapacitacionCursosComponent implements OnInit {
   }
 
   open(content, item: Capacitacion, editar) {
-    if ( editar ) {
+    if (editar) {
       this.capacitacion = item;
     } else {
       this.capacitacion = new Capacitacion();
     }
     this.modalService.open(content)
-    .result
-    .then((resultModal => {
-      if ( resultModal === 'save' ) {
-        if ( !editar ) {
-          this.agregar();
+      .result
+      .then((resultModal => {
+        if (resultModal === 'save') {
+          if (!editar) {
+            this.agregar();
+          }
         }
-      }
-    }), (resultCancel => {
+      }), (resultCancel => {
 
-    }));
+      }));
   }
 
   ordenarPorAntiguedad(descendente: boolean) {
@@ -60,7 +67,7 @@ export class CapacitacionCursosComponent implements OnInit {
   }
 
   agregar() {
-    if ( this.postulanteService.postulante.capacitaciones == null ) {
+    if (this.postulanteService.postulante.capacitaciones == null) {
       this.postulanteService.postulante.capacitaciones = [];
     }
     this.postulanteService.postulante.capacitaciones.push(this.capacitacion);
@@ -69,12 +76,44 @@ export class CapacitacionCursosComponent implements OnInit {
   }
 
   borrar(item: Capacitacion) {
-    const estudios = [];
-    this.postulanteService.postulante.capacitaciones.forEach(element => {
-      if (element !== item) {
-        estudios.push(element);
+    swal({
+      title: '¿Está seguro de Eliminar?',
+      text: item.nombreEvento,
+      type: 'warning',
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
+    }).then((result) => {
+      if (result.value) {
+        const estudios = [];
+        this.postulanteService.postulante.capacitaciones.forEach(element => {
+          if (element !== item) {
+            estudios.push(element);
+          }
+        });
+        this.postulanteService.postulante.capacitaciones = estudios;
+        this.actualizar();
+        swal({
+          title: 'Oferta',
+          text: 'Eliminación exitosa!',
+          type: 'success',
+          timer: 2000
+        });
       }
     });
-    this.postulanteService.postulante.capacitaciones = estudios;
+  }
+
+  actualizar() {
+    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Estudio Realizado',
+      text: 'Registro exitoso!',
+      showConfirmButton: true,
+      timer: 2000
+    });
   }
 }

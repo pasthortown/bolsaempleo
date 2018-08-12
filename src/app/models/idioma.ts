@@ -6,6 +6,7 @@ export class Idioma {
   nivelLectura: string;
 
   constructor() {
+    this.idioma = '';
     this.nivelEscrito = '';
     this.nivelHablado = '';
     this.nivelLectura = '';

@@ -954,5 +954,14 @@ export const catalogos = {
   sexos: [
     {descripcion: 'HOMBRE'},
     {descripcion: 'MUJER'}
+  ],
+  habilidades: [
+    {descripcion: 'ARTES'},
+    {descripcion: 'DEPORTE'},
+    {descripcion: 'OTRO'}
+  ],
+  idiomas: [
+    {descripcion: 'INGLÉS'},
+    {descripcion: 'CHINO'}
   ]
 };

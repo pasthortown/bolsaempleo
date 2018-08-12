@@ -13,23 +13,25 @@
         <div class="col-12">
           <table class="table table-bordered table-hover">
             <thead class="table-active">
-              <th>Idioma</th>
-              <th>Nivel Escrito</th>
-              <th>Nivel Hablado</th>
-              <th>Nivel Lectura</th>
-              <th width="100px">Opciones</th>
+            <th>Idioma</th>
+            <th>Nivel Escrito</th>
+            <th>Nivel Hablado</th>
+            <th>Nivel Lectura</th>
+            <th width="100px">Opciones</th>
             </thead>
             <tbody>
-              <tr *ngFor="let item of postulanteService.postulante.idiomas">
-                <td>{{item.idioma}}</td>
-                <td>{{item.nivelEscrito}}</td>
-                <td>{{item.nivelHablado}}</td>
-                <td>{{item.nivelLectura}}</td>
-                <td>
-                  <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span class="fa fa-edit"></span></button>
-                  <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
-                </td>
-              </tr>
+            <tr *ngFor="let item of postulanteService.postulante.idiomas">
+              <td>{{item.idioma}}</td>
+              <td>{{item.nivelEscrito}}</td>
+              <td>{{item.nivelHablado}}</td>
+              <td>{{item.nivelLectura}}</td>
+              <td>
+                <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span
+                  class="fa fa-edit"></span></button>
+                <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span>
+                </button>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -39,60 +41,73 @@
 </div>
 
 <ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <div class="row">
-      <h4 class="col-12 text-center">Idioma</h4>
-    </div>
-  </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group">
-          <label for="idioma">Idioma</label>
-          <input type="text" [(ngModel)]="idioma.idioma" class="form-control" id="idioma" placeholder="Idioma">
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="nivelEscrito">Nivel Escrito</label>
-          <select [(ngModel)]="idioma.nivelEscrito" class="form-control" id="nivelEscrito" name="nivelEscrito">
-            <option value="" selected>Seleccione...</option>
-            <option value="Básico">Básico</option>
-            <option value="Intermedio">Intermedio</option>
-            <option value="Avanzado">Avanzado</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="nivelHablado">Nivel Hablado</label>
-          <select class="form-control" [(ngModel)]="idioma.nivelHablado" id="nivelHablado" name="nivelHablado">
-            <option value="" selected>Seleccione...</option>
-            <option value="Básico">Básico</option>
-            <option value="Intermedio">Intermedio</option>
-            <option value="Avanzado">Avanzado</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="nivelLectura">Nivel Lectura</label>
-          <select class="form-control" [(ngModel)]="idioma.nivelLectura" id="nivelLectura" name="nivelLectura">
-            <option value="" selected>Seleccione...</option>
-            <option value="Básico">Básico</option>
-            <option value="Intermedio">Intermedio</option>
-            <option value="Avanzado">Avanzado</option>
-          </select>
-        </div>
+  <form name="capacitacionform" method="post" #formCtrl="ngForm">
+    <div class="modal-header">
+      <div class="row">
+        <h4 class="col-12 text-center">Idioma</h4>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-success" (click)="c('save')">
-      <span class="fa fa-check"></span>&nbsp;Aceptar
-    </button>
-    <button class="btn btn-danger" (click)="c('close')">
-      <span class="fa fa-close"></span>&nbsp;Cancelar
-    </button>
-  </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="idioma">
+              <b class="text-danger">*</b> Idioma:
+            </label>
+            <select type="text" [(ngModel)]="idioma.idioma" class="form-control text-uppercase" id="idioma"
+                    name="idioma"
+                    placeholder="Idioma" required>
+              <option value="">SELECCIONE...</option>
+              <option value="{{idioma.descripcion}}" *ngFor="let idioma of idiomas">{{idioma.descripcion}}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="nivelEscrito">
+              <b class="text-danger">*</b> Nivel Escrito:
+            </label>
+            <select [(ngModel)]="idioma.nivelEscrito" class="form-control" id="nivelEscrito" name="nivelEscrito"
+                    required>
+              <option value="" selected>SELECCIONE...</option>
+              <option value="BÁSICO">BÁSICO</option>
+              <option value="INTERMEDIO">INTERMEDIO</option>
+              <option value="AVANZADO">AVANZADO</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="nivelHablado">
+              <b class="text-danger">*</b> Nivel Hablado:
+            </label>
+            <select class="form-control" [(ngModel)]="idioma.nivelHablado" id="nivelHablado" name="nivelHablado"
+                    required>
+              <option value="" selected>SELECCIONE...</option>
+              <option value="BÁSICO">BÁSICO</option>
+              <option value="INTERMEDIO">INTERMEDIO</option>
+              <option value="AVANZADO">AVANZADO</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="nivelLectura">
+              <b class="text-danger">*</b> Nivel Lectura:
+            </label>
+            <select class="form-control" [(ngModel)]="idioma.nivelLectura" id="nivelLectura" name="nivelLectura"
+                    required>
+              <option value="" selected>SELECCIONE...</option>
+              <option value="BÁSICO">BÁSICO</option>
+              <option value="INTERMEDIO">INTERMEDIO</option>
+              <option value="AVANZADO">AVANZADO</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
+        <span class="fa fa-check"></span>&nbsp;Aceptar
+      </button>
+      <button class="btn btn-danger" (click)="c('close')">
+        <span class="fa fa-close"></span>&nbsp;Cancelar
+      </button>
+      <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
+    </div>
+  </form>
 </ng-template>

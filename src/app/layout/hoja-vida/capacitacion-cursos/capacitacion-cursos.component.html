@@ -13,29 +13,31 @@
         <div class="col-12">
           <table class="table table-bordered table-hover">
             <thead class="table-active">
-              <th>Institución</th>
-              <th>Tipo de Evento</th>
-              <th>Nombre del Evento</th>
-              <th>Tipo de Certificado</th>
-              <th>Desde</th>
-              <th>Hasta</th>
-              <th>Horas</th>
-              <th width="100px">Opciones</th>
+            <th>Institución</th>
+            <th>Tipo de Evento</th>
+            <th>Nombre del Evento</th>
+            <th>Tipo de Certificado</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+            <th>Horas</th>
+            <th width="100px">Opciones</th>
             </thead>
             <tbody>
-              <tr *ngFor="let item of postulanteService.postulante.capacitaciones">
-                <td>{{item.institucion}}</td>
-                <td>{{item.tipoEvento}}</td>
-                <td>{{item.nombreEvento}}</td>
-                <td>{{item.tipoCertificado}}</td>
-                <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
-                <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
-                <td>{{item.horas}}</td>
-                <td>
-                  <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span class="fa fa-edit"></span></button>
-                  <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span></button>
-                </td>
-              </tr>
+            <tr *ngFor="let item of postulanteService.postulante.capacitaciones">
+              <td>{{item.institucion}}</td>
+              <td>{{item.tipoEvento}}</td>
+              <td>{{item.nombreEvento}}</td>
+              <td>{{item.tipoCertificado}}</td>
+              <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+              <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}</td>
+              <td>{{item.horas}}</td>
+              <td>
+                <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span
+                  class="fa fa-edit"></span></button>
+                <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span>
+                </button>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>
@@ -45,87 +47,111 @@
 </div>
 
 <ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <div class="row">
-      <h4 class="col-12 text-center">Capacitación</h4>
+  <form name="capacitacionform" method="post" #formCtrl="ngForm">
+    <div class="modal-header">
+      <div class="row">
+        <h4 class="col-12 text-center">Capacitación o Curso</h4>
+      </div>
     </div>
-  </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group">
-          <label for="nivel">Tipo de Evento</label>
-          <select [(ngModel)]="capacitacion.tipoEvento" class="form-control" id="nivel" name="nivel">
-            <option value="" selected>Seleccione...</option>
-            <option value="Conferencia">Conferencia</option>
-            <option value="Congreso">Congreso</option>
-            <option value="Jornada">Jornada</option>
-            <option value="Panel">Panel</option>
-            <option value="Pasantía">Pasantía</option>
-            <option value="Seminario">Seminario</option>
-            <option value="Taller">Taller</option>
-            <option value="Vista de Observación">Vista de Observación</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="institucion">Institución</label>
-          <input type="text" [(ngModel)]="capacitacion.institucion" class="form-control" id="institucion" placeholder="Institución">
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="nombreEvento">Nombre del Evento</label>
-          <input type="text" [(ngModel)]="capacitacion.nombreEvento" class="form-control" id="nombreEvento" placeholder="Nombre del Evento">
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="fechaRegistro">Fecha de Inicio</label>
-          <div class="input-group datepicker-input">
-            <input class="form-control" [(ngModel)]="capacitacion.fechaInicio" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker">
-            <button class="input-group-addon" (click)="d.toggle()" type="button">
-              <span class="fa fa-calendar"></span>
-            </button>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="tipoEvento">
+              <b class="text-danger">*</b> Tipo de Evento:
+            </label>
+            <select [(ngModel)]="capacitacion.tipoEvento" class="form-control" id="tipoEvento" name="tipoEvento"
+                    required>
+              <option value="" selected>SELECCIONE...</option>
+              <option value="CONFERENCIA">CONFERENCIA</option>
+              <option value="CONGRESO">CONGRESO</option>
+              <option value="JORNADA">JORNADA</option>
+              <option value="PANEL">PANEL</option>
+              <option value="PASANTÍA">PASANTÍA</option>
+              <option value="Seminario">SEMINARIO</option>
+              <option value="TALLER">TALLER</option>
+              <option value="VISTA DE OBSERVACIÓN">VISTA DE OBSERVACIÓN</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="institucion">
+              <b class="text-danger">*</b> Institución:
+            </label>
+            <input type="text" [(ngModel)]="capacitacion.institucion" class="form-control" id="institucion"
+                   name="institucion" placeholder="Institución" required>
+          </div>
+          <div class="form-group">
+            <label for="nombreEvento">
+              <b class="text-danger">*</b> Nombre del Evento:
+            </label>
+            <input type="text" [(ngModel)]="capacitacion.nombreEvento" class="form-control" id="nombreEvento"
+                   name="nombreEvento" placeholder="Nombre del Evento" required>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-lg-6">
+                <label for="fechaRegistro">
+                  <b class="text-danger">*</b> Fecha de Inicio:
+                </label>
+                <div class="input-group datepicker-input">
+                  <input class="form-control" [(ngModel)]="capacitacion.fechaInicio" placeholder="yyyy-mm-dd" name="dp"
+                         ngbDatepicker #d="ngbDatepicker" required>
+                  <button class="input-group-addon" (click)="d.toggle()" type="button">
+                    <span class="fa fa-calendar"></span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <label for="fechaRegistro">
+                  <b class="text-danger">*</b> Fecha de Finalización:
+                </label>
+                <div class="input-group datepicker-input">
+                  <input class="form-control" [(ngModel)]="capacitacion.fechaFinalizacion" placeholder="yyyy-mm-dd"
+                         name="dp"
+                         ngbDatepicker #df="ngbDatepicker" required>
+                  <button class="input-group-addon" (click)="df.toggle()" type="button">
+                    <span class="fa fa-calendar"></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-lg-6">
+                <label for="horas">
+                  <b class="text-danger">*</b> Horas:
+                </label>
+                <input type="number" [(ngModel)]="capacitacion.horas" class="form-control" id="horas" name="horas"
+                       placeholder="Horas" required>
+              </div>
+              <div class="col-lg-6">
+                <label for="tipoCertificado">
+                  <b class="text-danger">*</b> Tipo de Certificado:
+                </label>
+                <select [(ngModel)]="capacitacion.tipoCertificado" class="form-control" id="tipoCertificado"
+                        name="tipoCertificado">
+                  <option value="" selected>SELECCIONE...</option>
+                  <option value="APROBACIÓN">APROBACIÓN</option>
+                  <option value="ASISTENCIA">ASISTENCIA</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+
           </div>
         </div>
       </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="fechaRegistro">Fecha de Finalización</label>
-          <div class="input-group datepicker-input">
-            <input class="form-control" [(ngModel)]="capacitacion.fechaFinalizacion" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #df="ngbDatepicker">
-            <button class="input-group-addon" (click)="df.toggle()" type="button">
-              <span class="fa fa-calendar"></span>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="horas">Horas</label>
-          <input type="number" [(ngModel)]="capacitacion.horas" class="form-control" id="horas" placeholder="Horas">
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="nivel">Tipo de Certificado</label>
-          <select [(ngModel)]="capacitacion.tipoCertificado" class="form-control" id="nivel" name="nivel">
-            <option value="" selected>Seleccione...</option>
-            <option value="Aprobación">Aprobación</option>
-            <option value="Asistencia">Asistencia</option>
-          </select>
-        </div>
-      </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-success" (click)="c('save')">
-      <span class="fa fa-check"></span>&nbsp;Aceptar
-    </button>
-    <button class="btn btn-danger" (click)="c('close')">
-      <span class="fa fa-close"></span>&nbsp;Cancelar
-    </button>
-  </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
+        <span class="fa fa-check"></span>&nbsp;Aceptar
+      </button>
+      <button class="btn btn-danger" (click)="c('close')">
+        <span class="fa fa-close"></span>&nbsp;Cancelar
+      </button>
+      <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
+    </div>
+  </form>
 </ng-template>

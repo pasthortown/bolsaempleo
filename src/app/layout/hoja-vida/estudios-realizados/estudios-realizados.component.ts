@@ -5,6 +5,7 @@ import {Component, OnInit} from '@angular/core';
 import {EstudioRealizado} from '../../../models/estudio-realizado';
 import swal from 'sweetalert2';
 import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
+import {Postulante} from '../../../models/postulante';
 
 @Component({
   selector: 'app-estudios-realizados',
@@ -16,6 +17,7 @@ export class EstudiosRealizadosComponent implements OnInit {
   filtro: Array<any>;
   tipo_titulo: Array<any>;
   instituciones: Array<any>;
+  postulante: Postulante;
 
   constructor(private modalService: NgbModal, public postulanteService: PostulanteService,
               private firebaseBDDService: FirebaseBDDService) {
@@ -90,6 +92,7 @@ export class EstudiosRealizadosComponent implements OnInit {
       text: item.titulo,
       type: 'warning',
       showCancelButton: true,
+      reverseButtons: true,
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
       confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'

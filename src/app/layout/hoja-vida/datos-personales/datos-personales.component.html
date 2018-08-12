@@ -31,10 +31,12 @@
           </div>
           <!--Acerca de Mi-->
           <div class="form-group text-center">
-            <label for="acercaDeMi" class="bg-info form-control text-white">¿Quién Soy?</label>
+            <label for="acercaDeMi" class="form-control text-dark">
+              <b class="text-danger">*</b>¿Quién Soy?
+            </label>
             <textarea rows="5" type="text" [(ngModel)]="postulanteService.postulante.acercaDeMi"
                       class="form-control text-uppercase" id="acercaDeMi" name="acerdaDeMi"
-                      placeholder="Escriba una descripción acerca de usted"></textarea>
+                      placeholder="Escriba una descripción acerca de usted" required></textarea>
           </div>
           <input type="file" style="visibility: hidden; height: 0px" class="form-control" id="foto"
                  placeholder="Fotografía" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
@@ -135,8 +137,7 @@
                   <b class="text-danger">*</b> Teléfono:
                 </label>
                 <input type="text" [(ngModel)]="postulanteService.postulante.telefono" class="form-control"
-                       id="telefono"
-                       name="telefono" placeholder="Teléfono" required>
+                       id="telefono" name="telefono" placeholder="Ej. 0987654321" required>
               </div>
               <!--Direccion-->
               <div class="form-group">

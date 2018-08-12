@@ -3,6 +3,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PostulanteService} from './../../../services/postulante.service';
 import {Component, OnInit} from '@angular/core';
 import swal from 'sweetalert2';
+import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
+import {Fortaleza} from '../../../models/fortaleza';
 
 @Component({
   selector: 'app-experiencia-profesional',
@@ -12,7 +14,10 @@ import swal from 'sweetalert2';
 export class ExperienciaProfesionalComponent implements OnInit {
   experienciaLaboral: ExperienciaLaboral;
 
-  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) {
+  constructor(
+    private modalService: NgbModal,
+    public postulanteService: PostulanteService,
+    private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
@@ -66,7 +71,7 @@ export class ExperienciaProfesionalComponent implements OnInit {
       this.postulanteService.postulante.experienciasLaborales = [];
     }
     if (this.experienciaLaboral.fechaFinalizacion !== null) {
-      if ( !this.compararFechas(this.experienciaLaboral.fechaInicio, this.experienciaLaboral.fechaFinalizacion) ) {
+      if (!this.compararFechas(this.experienciaLaboral.fechaInicio, this.experienciaLaboral.fechaFinalizacion)) {
         return;
       }
     }
@@ -76,13 +81,33 @@ export class ExperienciaProfesionalComponent implements OnInit {
   }
 
   borrar(item: ExperienciaLaboral) {
-    const experiencias = [];
-    this.postulanteService.postulante.experienciasLaborales.forEach(element => {
-      if (element !== item) {
-        experiencias.push(element);
+    swal({
+      title: '¿Está seguro de Eliminar?',
+      text: item.cargoDesempenado,
+      type: 'warning',
+      showCancelButton: true,
+      reverseButtons: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
+    }).then((result) => {
+      if (result.value) {
+        const experiencias = [];
+        this.postulanteService.postulante.experienciasLaborales.forEach(element => {
+          if (element !== item) {
+            experiencias.push(element);
+          }
+        });
+        this.postulanteService.postulante.experienciasLaborales = experiencias;
+        this.actualizar();
+        swal({
+          title: 'Oferta',
+          text: 'Eliminación exitosa!',
+          type: 'success',
+          timer: 2000
+        });
       }
     });
-    this.postulanteService.postulante.experienciasLaborales = experiencias;
   }
 
   validarFechaFinTrabajo() {
@@ -106,4 +131,17 @@ export class ExperienciaProfesionalComponent implements OnInit {
     }
     return true;
   }
+
+  actualizar() {
+    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
+    swal({
+      position: 'center',
+      type: 'success',
+      title: 'Estudio Realizado',
+      text: 'Registro exitoso!',
+      showConfirmButton: true,
+      timer: 2000
+    });
+  }
+
 }

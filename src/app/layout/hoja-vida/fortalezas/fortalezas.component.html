@@ -37,39 +37,47 @@
 </div>
 
 <ng-template #content let-c="close" let-d="dismiss">
-  <div class="modal-header">
-    <div class="row">
-      <h4 class="col-12 text-center">Fortaleza / Habilidad / Destreza</h4>
-    </div>
-  </div>
-  <div class="modal-body">
-    <div class="row">
-      <div class="col-12">
-        <div class="form-group">
-          <label for="nombre">Categoria</label>
-          <select type="text" [(ngModel)]="fortaleza.nombre" class="form-control" id="nombre" placeholder="Nombre">
-            <option value="">SELECCIONE...</option>
-            <option value="ARTES">ARTES</option>
-            <option value="DEPORTES">DEPORTES</option>
-            <option value="BAILE">BAILE</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-12">
-        <div class="form-group">
-          <label for="descripcion">Descripción</label>
-          <textarea type="text" [(ngModel)]="fortaleza.descripcion" class="form-control" id="descripcion" rows="10"
-                    placeholder="Un Deporte: Tengo varios El fútbol, gimnasio, la natación y el rugby."></textarea>
-        </div>
+  <form name="capacitacionform" method="post" #formCtrl="ngForm">
+    <div class="modal-header">
+      <div class="row">
+        <h4 class="col-12 text-center">Fortaleza / Habilidad / Destreza</h4>
       </div>
     </div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-success" (click)="c('save')">
-      <span class="fa fa-check"></span>&nbsp;Aceptar
-    </button>
-    <button class="btn btn-danger" (click)="c('close')">
-      <span class="fa fa-close"></span>&nbsp;Cancelar
-    </button>
-  </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="nombre">
+              <b class="text-danger">*</b> Categoria:
+            </label>
+            <select type="text" [(ngModel)]="fortaleza.nombre" class="form-control" id="nombre" name="nombre"
+                    placeholder="Nombre" required>
+              <option value="">SELECCIONE...</option>
+              <option value="{{habilidad.descripcion}}" *ngFor="let habilidad of habilidades">
+                {{habilidad.descripcion}}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="descripcion">
+              <b class="text-danger">*</b> Descripción:
+            </label>
+            <textarea type="text" [(ngModel)]="fortaleza.descripcion" class="form-control text-uppercase"
+                      id="descripcion" name="descripcion" rows="10"
+                      placeholder="Un Deporte: Tengo varios El fútbol, gimnasio, la natación y el rugby."
+                      required></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
+        <span class="fa fa-check"></span>&nbsp;Aceptar
+      </button>
+      <button class="btn btn-danger" (click)="c('close')">
+        <span class="fa fa-close"></span>&nbsp;Cancelar
+      </button>
+      <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
+    </div>
+  </form>
 </ng-template>
