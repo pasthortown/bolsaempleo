@@ -1,11 +1,13 @@
 <nav class="navbar navbar-expand-lg fixed-top headerSecction">
   <div class="navbar-brand">
-    <a href="postulantes">
+    <a [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']"
+       (click)="cambiarTitulo('TALENTO HUMANO')">
       <img src="assets/img/institutos.png" height="90px"/>
     </a>
   </div>
-  <div class="navbar-collapse" >
+  <div class="navbar-collapse">
     <!--Menu de Mi perfil-->
+
     <ul class="navbar-nav mr-auto" *ngIf="authService.rolActual=='p' || authService.rolActual=='e'">
       <li class="nav-item dropdown" ngbDropdown>
         <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
@@ -17,14 +19,17 @@
         </a>
         <div ngbDropdownMenu>
           <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/postulaciones']"
+             (click)="cambiarTitulo('')"
              [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-book"></i>&nbsp;Mis Postulaciones
           </a>
           <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/hoja-vida']"
+             (click)="cambiarTitulo('')"
              [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-address-card"></i>&nbsp;Hoja de Vida
           </a>
           <a *ngIf="authService.rolActual=='e'" class="dropdown-item" [routerLink]="['/perfil-empresa']"
+             (click)="cambiarTitulo('')"
              [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-address-card"></i>&nbsp;Perfil de mi Empresa
           </a>
@@ -32,12 +37,11 @@
              (click)="cerrarSesion()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
           </a>
-          <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="dropdown-item"
-             [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-sign-in"></i>&nbsp;Iniciar Sesión
-          </a>
         </div>
       </li>
+    </ul>
+    <ul>
+      <h1 class="text-white">{{titulo}}</h1>
     </ul>
     <!--Menus de Buscar, Iniciar Sesion y Registrate-->
     <ul class="navbar ml-auto">
@@ -47,10 +51,12 @@
           <i class="fa fa-fw fa-search"></i>&nbsp;Buscador
         </a>
         <div ngbDropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-users"></i>&nbsp;Talento Humano
+          <a class="dropdown-item" [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']"
+             (click)="cambiarTitulo('TALENTO HUMANO')">
+            <i class="fa fa-fw fa-users">&nbsp;Talento Humano</i>
           </a>
-          <a class="dropdown-item" [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']">
+          <a class="dropdown-item" [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']"
+             (click)="cambiarTitulo('OFERTAS LABORALES')">
             <i class="fa fa-fw fa-briefcase"></i>&nbsp;Ofertas Laborales
           </a>
         </div>
@@ -58,7 +64,8 @@
       <!--Iniciar Sesion-->
       <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
         <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
-           [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
+           (click)="cambiarTitulo('INICIAR SESIÓN')" [routerLink]="['/login']"
+           [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-sign-in"></i>&nbsp;Iniciar Sesión
         </a>
       </li>
@@ -69,11 +76,11 @@
           <i class="fa fa-fw fa-address-book"></i>&nbsp;Regístrate
         </a>
         <div ngbDropdownMenu>
-          <a class="dropdown-item" routerLink="/persona">
-            <i class="fa fa-fw fa-users"></i>&nbsp;Postulantes
+          <a class="dropdown-item" routerLink="/persona" (click)="cambiarTitulo('REGISTRO')">
+            <i class="fa fa-fw fa-users"></i> Postulantes
           </a>
-          <a class="dropdown-item" routerLink="/empresa">
-            <i class="fa fa-fw fa-building"></i>&nbsp;Empresas
+          <a class="dropdown-item" routerLink="/empresa" (click)="cambiarTitulo('REGISTRO')">
+            <i class="fa fa-fw fa-building"></i> Empresas&nbsp;
           </a>
         </div>
       </li>

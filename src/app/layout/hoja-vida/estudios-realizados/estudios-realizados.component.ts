@@ -18,6 +18,7 @@ export class EstudiosRealizadosComponent implements OnInit {
   tipo_titulo: Array<any>;
   instituciones: Array<any>;
   postulante: Postulante;
+  mensajes: Array<any>;
 
   constructor(private modalService: NgbModal, public postulanteService: PostulanteService,
               private firebaseBDDService: FirebaseBDDService) {
@@ -27,6 +28,7 @@ export class EstudiosRealizadosComponent implements OnInit {
     this.estudioRealizado = new EstudioRealizado();
     this.filtro = catalogos.titulos;
     this.instituciones = catalogos.instituciones;
+    this.mensajes = catalogos.mensajes;
     this.ordenarPorAntiguedad(true);
   }
 
@@ -95,7 +97,7 @@ export class EstudiosRealizadosComponent implements OnInit {
       reverseButtons: true,
       confirmButtonColor: '#d33',
       cancelButtonColor: '#3085d6',
-      confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
+      confirmButtonText: this.mensajes[0].icon_ok
     }).then((result) => {
       if (result.value) {
         const estudios = [];

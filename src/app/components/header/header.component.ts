@@ -4,6 +4,7 @@ import {AuthService} from '../../services/auth.service';
 import {FirebaseBDDService} from '../../services/firebase-bdd.service';
 import {Oferta} from '../../models/oferta';
 import swal from 'sweetalert2';
+import {catalogos} from '../../../environments/catalogos';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit {
   contadorPostulantes: number;
   contadorOfertas: number;
   totalOfertas: number;
+  titulo: string;
 
   constructor(public router: Router,
               public authService: AuthService,
@@ -22,12 +24,14 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titulo = catalogos.tituloMenuPrincipal;
     this.contarEmpresas();
     this.contarPostulantes();
     this.contarOfertas();
   }
 
   cerrarSesion() {
+    this.titulo = '';
     this.authService.logout();
   }
 
@@ -51,4 +55,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  cambiarTitulo(nombre) {
+    this.titulo = nombre;
+  }
 }

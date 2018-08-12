@@ -963,5 +963,12 @@ export const catalogos = {
   idiomas: [
     {descripcion: 'INGLÉS'},
     {descripcion: 'CHINO'}
-  ]
+  ],
+
+  mensajes: [
+    {insertarText: 'INGLÉS'},
+    {insertarTitle: 'INGLÉS'},
+    {icon_ok: '<i class="fa fa-trash" aria-hidden="true"></i>'}
+  ],
+  tituloMenuPrincipal: 'TALENTO HUMANO'
 };

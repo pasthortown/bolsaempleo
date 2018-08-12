@@ -10,16 +10,18 @@
             </a>
           </div>
           <div class="form-group">
-            <img src="{{postulanteService.postulante.fotografia}}" title="Seleccione su Foto"
+            <img src="{{postulanteService.postulante.fotografia}}" title="Haga click"
                  class="form-control rounded-circle col-4 offset-4  btn"
                  (click)="fileInput.click()" width="150px" height="120px">
+            <input type="file" class="form-control btn-secondary" id="foto" #fileInput
+                   (change)="CodificarArchivo($event)" accept="image/*">
           </div>
-          <div class="group-form">
+          <div class="group-form mt-5">
             <div class="row">
               <div class="col-lg-12 col-sm-12">
                 <button type="submit" class="col-lg-12 btn btn-success mr-1" (click)="actualizar()"
                         [disabled]="formCtrl.form.invalid">
-                  <i class="fa fa-fw fa-save"></i>&nbsp;ACtualizar
+                  <i class="fa fa-fw fa-save"></i>&nbsp;Actualizar Datos Personales
                 </button>
               </div>
             </div>
@@ -29,28 +31,28 @@
               </div>
             </div>
           </div>
-          <!--Acerca de Mi-->
-          <div class="form-group text-center">
-            <label for="acercaDeMi" class="form-control text-dark">
-              <b class="text-danger">*</b>¿Quién Soy?
-            </label>
-            <textarea rows="5" type="text" [(ngModel)]="postulanteService.postulante.acercaDeMi"
-                      class="form-control text-uppercase" id="acercaDeMi" name="acerdaDeMi"
-                      placeholder="Escriba una descripción acerca de usted" required></textarea>
-          </div>
-          <input type="file" style="visibility: hidden; height: 0px" class="form-control" id="foto"
-                 placeholder="Fotografía" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
         </div>
         <div class="col-9">
           <div class="row">
             <div class="col-6">
               <!--Identificacion-->
               <div class="form-group">
-                <label for="identificacion">
-                  <b class="text-danger">*</b> Identificación:
-                </label>
-                <input type="text" [(ngModel)]="postulanteService.postulante.identificacion" class="form-control"
-                       id="identificacion" name="identificacion" placeholder="Cédula" required>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label for="identificacion">
+                      <b class="text-danger">*</b> Identificación:
+                    </label>
+                    <input type="text" [(ngModel)]="postulanteService.postulante.identificacion" class="form-control"
+                           id="identificacion" name="identificacion" placeholder="Ej. 1723456789" required>
+                  </div>
+                  <div class="col-lg-6">
+                    <label for="telefono">
+                      <b class="text-danger">*</b> Teléfono:
+                    </label>
+                    <input type="text" [(ngModel)]="postulanteService.postulante.telefono" class="form-control"
+                           id="telefono" name="telefono" placeholder="Ej. 0987654321" required>
+                  </div>
+                </div>
               </div>
               <!--Nombres Completos-->
               <div class="form-group">
@@ -128,27 +130,27 @@
                 </label>
                 <input type="email" [(ngModel)]="postulanteService.postulante.correoElectronico"
                        class="form-control text-lowercase"
-                       id="correoElectronico" name="correoElectronico" placeholder="Ej. contacto@midominio.com"
+                       id="correoElectronico" name="correoElectronico" placeholder="Ej. contacto@gmail.com"
                        required>
-              </div>
-              <!--Telefono-->
-              <div class="form-group">
-                <label for="telefono">
-                  <b class="text-danger">*</b> Teléfono:
-                </label>
-                <input type="text" [(ngModel)]="postulanteService.postulante.telefono" class="form-control"
-                       id="telefono" name="telefono" placeholder="Ej. 0987654321" required>
               </div>
               <!--Direccion-->
               <div class="form-group">
                 <label for="domicilio">
                   <b class="text-danger">*</b> Dirección de Domicilio:
                 </label>
-                <textarea rows="5" type="text" [(ngModel)]="postulanteService.postulante.direccion"
+                <textarea rows="2" type="text" [(ngModel)]="postulanteService.postulante.direccion"
                           class="form-control text-uppercase"
                           id="domicilio" name="domicilio"
                           placeholder="EJ. PROVINCIA, CANTÓN, CALLE PRINCIPAL, CALLE SECUNDARIA, NÚMERO DE CASA"
                           required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="acercaDeMi">
+                  <b class="text-danger">*</b>¿Quién Soy?
+                </label>
+                <textarea rows="4" type="text" [(ngModel)]="postulanteService.postulante.acercaDeMi"
+                          class="form-control text-uppercase" id="acercaDeMi" name="acerdaDeMi"
+                          placeholder="Escriba una descripción acerca de usted" required></textarea>
               </div>
             </div>
           </div>
