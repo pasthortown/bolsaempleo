@@ -37,6 +37,7 @@ export class ExperienciaProfesionalComponent implements OnInit {
         if (resultModal === 'save') {
           if (!editar) {
             this.agregar();
+            this.actualizar();
           }
         }
       }), (resultCancel => {
@@ -133,6 +134,11 @@ export class ExperienciaProfesionalComponent implements OnInit {
   }
 
   actualizar() {
+    this.postulanteService.postulante.experienciasLaborales.forEach(value => {
+      value.empleador = value.empleador.toUpperCase();
+      value.cargoDesempenado = value.cargoDesempenado.toUpperCase();
+      value.descripcionCargo = value.descripcionCargo.toUpperCase();
+    });
     this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
     swal({
       position: 'center',

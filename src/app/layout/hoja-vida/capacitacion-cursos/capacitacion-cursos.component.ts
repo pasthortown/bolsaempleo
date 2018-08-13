@@ -37,6 +37,7 @@ export class CapacitacionCursosComponent implements OnInit {
         if (resultModal === 'save') {
           if (!editar) {
             this.agregar();
+            this.actualizar();
           }
         }
       }), (resultCancel => {
@@ -106,6 +107,10 @@ export class CapacitacionCursosComponent implements OnInit {
   }
 
   actualizar() {
+    this.postulanteService.postulante.capacitaciones.forEach(value => {
+      value.institucion = value.institucion.toUpperCase();
+      value.nombreEvento = value.nombreEvento.toUpperCase();
+    });
     this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
     swal({
       position: 'center',

@@ -39,6 +39,7 @@ export class IdiomasComponent implements OnInit {
         if (resultModal === 'save') {
           if (!editar) {
             this.agregar();
+            this.actualizar();
           }
         }
       }), (resultCancel => {

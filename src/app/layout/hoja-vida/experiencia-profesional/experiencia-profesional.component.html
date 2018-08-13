@@ -71,22 +71,21 @@
             <label for="empleador">
               <b class="text-danger">*</b> Empleador:
             </label>
-            <input type="text" [(ngModel)]="experienciaLaboral.empleador" class="form-control" id="empleador"
+            <input type="text" [(ngModel)]="experienciaLaboral.empleador" class="form-control text-uppercase" id="empleador"
                    name="empleador" placeholder="Nombre del Empleador" required>
           </div>
           <div class="form-group">
             <label for="cargo">
               <b class="text-danger">*</b> Cargo Desempeñado:
             </label>
-            <input type="text" [(ngModel)]="experienciaLaboral.cargoDesempenado" class="form-control" id="cargo"
-                   name="cargo"
-                   placeholder="Cargo Desempeñado" required>
+            <input type="text" [(ngModel)]="experienciaLaboral.cargoDesempenado" class="form-control text-uppercase" id="cargo"
+                   name="cargo" placeholder="Cargo Desempeñado" required>
           </div>
           <div class="form-group">
             <label for="nombreEvento">
               <b class="text-danger">*</b> Descripción del Cargo:
             </label>
-            <input type="text" [(ngModel)]="experienciaLaboral.descripcionCargo" class="form-control" id="nombreEvento"
+            <input type="text" [(ngModel)]="experienciaLaboral.descripcionCargo" class="form-control text-uppercase" id="nombreEvento"
                    name="nombreEvento" placeholder="Descripción del Cargo" required>
           </div>
           <div class="form-group">
@@ -96,7 +95,7 @@
                   <b class="text-danger">*</b> Fecha de Inicio:
                 </label>
                 <div class="input-group datepicker-input">
-                  <input [(ngModel)]="experienciaLaboral.fechaInicio" class="form-control"
+                  <input [(ngModel)]="experienciaLaboral.fechaInicio" class="form-control" id="fechaRegistro"
                          placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" required>
                   <button class="input-group-addon" (click)="d.toggle()" type="button">
                     <span class="fa fa-calendar"></span>

@@ -39,6 +39,7 @@ export class FortalezasComponent implements OnInit {
         if (resultModal === 'save') {
           if (!editar) {
             this.agregar();
+            this.actualizar();
           }
         }
       }), (resultCancel => {
@@ -85,6 +86,9 @@ export class FortalezasComponent implements OnInit {
   }
 
   actualizar() {
+    this.postulanteService.postulante.fortalezas.forEach(value => {
+      value.descripcion = value.descripcion.toUpperCase();
+    });
     this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
     swal({
       position: 'center',

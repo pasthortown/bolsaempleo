@@ -37,6 +37,7 @@ export class ReferenciasPersonalesComponent implements OnInit {
         if (resultModal === 'save') {
           if (!editar) {
             this.agregar();
+            this.actualizar();
           }
         }
       }), (resultCancel => {
@@ -83,6 +84,12 @@ export class ReferenciasPersonalesComponent implements OnInit {
   }
 
   actualizar() {
+    this.postulanteService.postulante.referenciasPersonales.forEach(value => {
+      value.institucion = value.institucion.toUpperCase();
+      value.cargo = value.cargo.toUpperCase();
+      value.nombresApellidos = value.nombresApellidos.toUpperCase();
+      value.telefono = value.telefono.toUpperCase();
+    });
     this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
     swal({
       position: 'center',
