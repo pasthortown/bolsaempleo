@@ -420,10 +420,10 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button *ngIf="aplicada(oferta.id)" class="btn btn-success btn-lg" title="Aplicar" (click)="c('aplicar')">
+    <button *ngIf="!aplicada(oferta.id)" class="btn btn-success btn-lg" title="Aplicar" (click)="c('aplicar')">
       <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
     </button>
-    <button *ngIf="!aplicada(oferta.id)" class="btn btn-success btn-lg" (click)="c('close')">
+    <button *ngIf="aplicada(oferta.id)" class="btn btn-success btn-lg" (click)="c('close')">
       <i class="fa fa-check" aria-hidden="true"> Postulado Satisfactoriamente</i>
     </button>
     <button class="btn btn-danger btn-lg" title="Cancelar" (click)="c('close')">
