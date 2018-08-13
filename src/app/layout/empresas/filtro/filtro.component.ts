@@ -315,15 +315,22 @@ export class FiltroComponent implements OnInit {
   }
 
   getMisPostulaciones() {
-    this.firebaseBDDService.firebaseControllerPostulaciones.getId('idPostulante', this.postulante.id)
+    this.firebaseBDDService.firebaseControllerPostulaciones.filtroExacto('idPostulante', this.postulante.id)
       .snapshotChanges().subscribe(items => {
       items.forEach(element => {
-        this.ofertasAplicadas.push(element.key);
+        const postulacion: Postulacion = element.payload.val() as Postulacion;
+        this.ofertasAplicadas.push(postulacion.idOferta);
       });
     });
   }
 
   aplicada(idOferta: string) {
-    return (idOferta in this.ofertasAplicadas);
+    let toReturn = false;
+    this.ofertasAplicadas.forEach(element => {
+      if (element == idOferta) {
+        toReturn = true;
+      }
+    });
+    return toReturn;
   }
 }
