@@ -7,7 +7,6 @@
   </div>
   <div class="navbar-collapse">
     <!--Menu de Mi perfil-->
-
     <ul class="navbar-nav mr-auto" *ngIf="authService.rolActual=='p' || authService.rolActual=='e'">
       <li class="nav-item dropdown" ngbDropdown>
         <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
@@ -40,11 +39,17 @@
         </div>
       </li>
     </ul>
-    <ul>
-      <h1 class="text-white">{{titulo}}</h1>
-    </ul>
-    <!--Menus de Buscar, Iniciar Sesion y Registrate-->
+
+    <!--Menus de About, Buscar, Iniciar Sesion y Registrate-->
     <ul class="navbar ml-auto">
+      <!--Acerca-->
+      <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
+        <a class="nav-link text-white" (click)="cambiarTitulo('ACERCA')" [routerLink]="['/about']"
+           [routerLinkActive]="['router-link-active']">
+          <i class="fa fa-fw fa-info-circle"></i>&nbsp;Acerca
+        </a>
+      </li>
+
       <!--Buscar-->
       <li class="nav-item dropdown pretty-button" ngbDropdown>
         <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
@@ -87,6 +92,3 @@
     </ul>
   </div>
 </nav>
-<script>
-
-</script>
