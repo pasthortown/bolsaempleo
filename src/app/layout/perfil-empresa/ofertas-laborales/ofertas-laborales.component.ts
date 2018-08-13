@@ -181,7 +181,9 @@ export class OfertasLaboralesComponent implements OnInit {
     this.oferta.correoElectronico = this.oferta.correoElectronico.toUpperCase();
     this.oferta.cargo = this.oferta.cargo.toUpperCase();
     this.oferta.actividades = this.oferta.actividades.toUpperCase();
-    this.oferta.informacionAdicional = this.oferta.informacionAdicional.toUpperCase();
+    if (this.oferta.informacionAdicional != null) {
+      this.oferta.informacionAdicional = this.oferta.informacionAdicional.toUpperCase();
+    }
     this.firebaseBDDService.firebaseControllerOfertas.insertar(this.oferta);
     swal({
       position: 'center',
