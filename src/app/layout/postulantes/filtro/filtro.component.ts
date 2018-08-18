@@ -3,10 +3,14 @@ import {catalogos} from './../../../../environments/catalogos';
 import {FirebaseBDDService} from './../../../services/firebase-bdd.service';
 import {Postulante} from './../../../models/postulante';
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
 import swal from 'sweetalert2';
+import {Router} from '@angular/router';
+import {EmpresaService} from '../../../services/empresa.service';
+import {Empresa} from '../../../models/empresa';
+import {Contactado} from '../../../models/contactado';
 
 @Component({
   selector: 'app-filtro',
@@ -22,17 +26,24 @@ export class FiltroComponent implements OnInit {
   postulanteSeleccionado: Postulante;
   campo = 'estudiosRealizados/0/tipo_titulo';
   pagina = 0;
-  registrosPorPagina = 2;
+  registrosPorPagina = 10;
   totalPaginas = 1;
+  contactado: Contactado;
   meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   @ViewChild('encabezadoHojaVida') encabezadoHojaVida: ElementRef;
   @ViewChild('cuerpoHojaVida') cuerpoHojaVida: ElementRef;
   @ViewChild('pieHojaVida') pieHojaVida: ElementRef;
 
-  constructor(public authService: AuthService, private modalService: NgbModal, private firebaseBDDService: FirebaseBDDService) {
+  constructor(public authService: AuthService,
+              private empresaService: EmpresaService,
+              private modalService: NgbModal,
+              private firebaseBDDService: FirebaseBDDService,
+              private router: Router) {
   }
 
   ngOnInit() {
+    this.empresaService.empresa = this.authService.obtenerUsuario() as Empresa;
+    this.contactado = new Contactado();
     this.postulantes = [];
     this.paginacion(true);
     this.getTotalPaginas();
@@ -57,22 +68,23 @@ export class FiltroComponent implements OnInit {
 
   paginacion(siguiente: boolean) {
     if (siguiente) {
-      if ( this.pagina === this.totalPaginas ) {
+      if (this.pagina === this.totalPaginas) {
         return;
       } else {
-        this.pagina ++;
+        this.pagina++;
       }
     } else {
-      if ( this.pagina === 1 ) {
+      if (this.pagina === 1) {
         return;
       } else {
-        this.pagina --;
+        this.pagina--;
       }
     }
-    this.postulantes = [];
-    this.firebaseBDDService.firebaseControllerPostulantes.getPagina(this.pagina, this.registrosPorPagina, this.campo).snapshotChanges().subscribe(items => {
+    this.firebaseBDDService.firebaseControllerPostulantes.getPagina(this.pagina, this.registrosPorPagina, this.campo)
+      .snapshotChanges().subscribe(items => {
+      this.postulantes = [];
       let i = (this.pagina - 1) * this.registrosPorPagina;
-      while ( i < items.length ) {
+      while (i < items.length) {
         let itemLeido: Postulante;
         itemLeido = items[i].payload.val() as Postulante;
         this.postulantes.push(itemLeido);
@@ -85,6 +97,49 @@ export class FiltroComponent implements OnInit {
     this.postulanteSeleccionado = postulanteSeleccionado;
   }
 
+  aplicarContactado(postulante: Postulante) {
+    console.log(postulante.id);
+    console.log(this.empresaService.empresa.id);
+    this.contactado.idPostulante = this.postulanteSeleccionado.id;
+    this.contactado.idEmpresa = this.empresaService.empresa.id;
+    console.log(this.contactado.idEmpresa);
+    swal({
+      title: '¿Está seguro de Contactar?',
+      text: 'asd',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '<i class="fa fa-check" aria-hidden="true"></i>'
+    }).then((result) => {
+      if (result.value) {
+        this.firebaseBDDService.firebaseControllerContactados.insertar(this.contactado);
+        swal({
+          title: 'Profesional Contactado',
+          text: 'Registro existoso!',
+          type: 'success',
+          timer: 2000
+        });
+      }
+    });
+  }
+
+  openPostulante(content, item: Postulante, editar) {
+    const logoutScreenOptions: NgbModalOptions = {
+      size: 'lg'
+    };
+    this.postulanteSeleccionado = item;
+    this.modalService.open(content, logoutScreenOptions)
+      .result
+      .then((resultAceptar => {
+        if (resultAceptar === 'aplicar') {
+          this.aplicarContactado(item);
+        }
+      }), (resultCancel => {
+
+      }));
+  }
+
   filtrarPorTitulo(areaEspecifica: string) {
     this.postulantes = [];
     this.etiquetaPrincipal = areaEspecifica;
@@ -94,7 +149,7 @@ export class FiltroComponent implements OnInit {
         swal({
           position: 'center',
           type: 'info',
-          title: 'No contamos con el Talento Humano Requerido',
+          title: 'No contamos con los profesionales requeridos!',
           text: '',
           showConfirmButton: false,
           timer: 3000
@@ -108,6 +163,29 @@ export class FiltroComponent implements OnInit {
     });
   }
 
+  validarSesion() {
+    swal({
+      title: 'Para ver más Información tiene que iniciar sesión como Empresa',
+      text: '',
+      type: 'info',
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: '<i class="fa fa-sign-in" aria-hidden="true"> Iniciar Sesión</i>',
+      cancelButtonText: '<i class="fa fa-address-book" aria-hidden="true"> Regístrate</i>'
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigate(['login']);
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        this.router.navigate(['empresa']);
+      }
+    });
+  }
+
   borrarFiltro() {
     this.etiquetaPrincipal = '';
     this.filtroDirecto();
@@ -115,13 +193,14 @@ export class FiltroComponent implements OnInit {
 
   filtroDirecto() {
     this.postulantes = [];
-    this.firebaseBDDService.firebaseControllerPostulantes.querySimple('estudiosRealizados/0/titulo', this.criterioBusqueda.toUpperCase())
+    this.firebaseBDDService.firebaseControllerPostulantes
+      .querySimple('estudiosRealizados/0/titulo', this.criterioBusqueda.toUpperCase())
       .snapshotChanges().subscribe(items => {
       if (items.length === 0) {
         swal({
           position: 'center',
           type: 'info',
-          title: 'No existen Ofertas',
+          title: 'No existen Profesionales con ese título',
           text: '',
           showConfirmButton: false,
           timer: 2000
@@ -158,7 +237,7 @@ export class FiltroComponent implements OnInit {
     });
     postulantes.forEach(postulante => {
       this.filtro.forEach(area => {
-        if ( postulante.estudiosRealizados != null ) {
+        if (postulante.estudiosRealizados != null) {
           postulante.estudiosRealizados.forEach(estudiosRealizados => {
             if (estudiosRealizados.tipo_titulo === area.campo_amplio) {
               area.total = area.total + 1;
@@ -177,7 +256,7 @@ export class FiltroComponent implements OnInit {
     });
     postulantes.forEach(postulante => {
       this.filtro.forEach(area => {
-        if ( postulante.estudiosRealizados != null ) {
+        if (postulante.estudiosRealizados != null) {
           postulante.estudiosRealizados.forEach(estudiosRealizados => {
             area.campos_especificos.forEach(areaEspecifica => {
               if (estudiosRealizados.titulo === areaEspecifica.nombre) {

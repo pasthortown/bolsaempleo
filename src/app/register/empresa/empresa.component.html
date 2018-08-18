@@ -46,15 +46,28 @@
                   <label for="contrasena" class="col-form-label">
                     <b class="text-danger">*</b> Contraseña:
                   </label>
-                  <input type="password" class="form-control" name="contrasena" id="contrasena" (change)="sonIguales()"
-                         [(ngModel)]="contrasena" required>
+                  <div class="input-group">
+                    <input type="password" class="form-control" name="contrasena" id="contrasena"
+                           [(ngModel)]="contrasena" (keyup)="validarClave()" required>
+                    <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
+                       *ngIf="claveValida"></i>
+                    <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
+                       *ngIf="!claveValida"></i>
+                  </div>
                 </div>
                 <div class="col-6">
                   <label for="confirmar" class="col-form-label">
                     <b class="text-danger">*</b> Repetir Contraseña:
                   </label>
-                  <input type="password" class="form-control" name="confirmar" id="confirmar"
-                         [(ngModel)]="confirmacion" required>
+                  <div class="input-group">
+                    <input type="password" class="form-control" name="confirmar" id="confirmar"
+                           (keyup)="validarClaveConfirmacion()"
+                           [(ngModel)]="confirmacion" required>
+                    <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
+                       *ngIf="claveConfirmacionValida"></i>
+                    <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
+                       *ngIf="!claveConfirmacionValida"></i>
+                  </div>
                 </div>
               </div>
             </div>
@@ -92,16 +105,31 @@
               <label for="correoElectronico" class="col-form-label">
                 <b class="text-danger">*</b> Correo Electrónico:
               </label>
-              <input type="email" class="form-control text-lowercase" name="correoElectronico" id="correoElectronico"
-                     [(ngModel)]="empresa.correoElectronico" placeholder="Ej. contacto@midominio.com" required>
+              <div class="input-group">
+                <input type="email" class="form-control text-lowercase" name="correoElectronico" id="correoElectronico"
+                       (keyup)="validarCorreoElectronico(empresa.correoElectronico)"
+                       [(ngModel)]="empresa.correoElectronico" placeholder="Ej. contacto@midominio.com" required>
+                <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
+                   *ngIf="correoValido"></i>
+                <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
+                   *ngIf="!correoValido"></i>
+              </div>
             </div>
             <!-- Pagina Web !-->
             <div class="form-group">
               <label for="paginaWeb" class="col-form-label">
                 Página web:
               </label>
-              <input class="form-control text-lowercase" name="paginaWeb" id="paginaWeb" [(ngModel)]="empresa.paginaWeb"
-                     placeholder="Ej. www.midominio.com">
+              <div class="input-group">
+                <span class="btn-info btn-lg input-group-prepend">www.</span>
+                <input class="form-control text-lowercase" name="paginaWeb" id="paginaWeb"
+                       [(ngModel)]="empresa.paginaWeb" (keyup)="validarPaginaWeb(empresa.paginaWeb)"
+                       placeholder="midominio.com">
+                <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
+                   *ngIf="paginaWebValida"></i>
+                <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
+                   *ngIf="!paginaWebValida"></i>
+              </div>
             </div>
             <!-- Dirección -->
             <div class="form-group">

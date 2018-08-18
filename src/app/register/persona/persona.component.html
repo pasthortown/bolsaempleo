@@ -1,5 +1,5 @@
 <div class="top-banner-div" style="background-image: url(assets/img/welcome-bg.png);">
-  <h1 class="col-12 text-left titulo" style="color:white; font-size: 70px; font-weight: 700;">POSTULANTE</h1>
+  <h1 class="col-12 text-left titulo" style="color:white; font-size: 70px; font-weight: 700;">PROFESIONAL</h1>
 </div>
 <div class="container">
   <div class="card">
@@ -60,8 +60,8 @@
                   </label>
                   <div class="input-group datepicker-input">
                     <input [(ngModel)]="postulante.fechaDeNacimiento" class="form-control" placeholder="yyyy-mm-dd"
-                           name="dp" ngbDatepicker #d="ngbDatepicker" required>
-                    <button class="input-group-addon" (click)="d.toggle()" type="button">
+                           name="dp" ngbDatepicker #d="ngbDatepicker" required readonly>
+                    <button class="btn input-group-addon" (click)="d.toggle()" type="button">
                       <span class="fa fa-calendar"></span>
                     </button>
                   </div>
@@ -75,17 +75,28 @@
                   <label for="contrasena" class="col-form-label">
                     <b class="text-danger">*</b> Contraseña:
                   </label>
-                  <div>
+                  <div class="input-group">
                     <input type="password" class="form-control" name="contrasena" id="contrasena"
-                           [(ngModel)]="contrasena" required>
+                           [(ngModel)]="contrasena" (keyup)="validarClave()" required>
+                    <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
+                       *ngIf="claveValida"></i>
+                    <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
+                       *ngIf="!claveValida"></i>
                   </div>
                 </div>
                 <div class="col-6">
                   <label for="confirmar" class="col-form-label">
                     <b class="text-danger">*</b> Repetir Contraseña:
                   </label>
-                  <input type="password" class="form-control" name="confirmar" id="confirmar"
-                         [(ngModel)]="confirmacion" required>
+                  <div class="input-group">
+                    <input type="password" class="form-control" name="confirmar" id="confirmar"
+                           (keyup)="validarClaveConfirmacion()"
+                           [(ngModel)]="confirmacion" required>
+                    <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
+                       *ngIf="claveConfirmacionValida"></i>
+                    <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
+                       *ngIf="!claveConfirmacionValida"></i>
+                  </div>
                 </div>
               </div>
             </div>
@@ -120,8 +131,16 @@
               <label for="correoElectronico" class="col-form-label">
                 <b class="text-danger">*</b> Correo Electrónico:
               </label>
-              <input type="email" class="form-control text-lowercase" name="correoElectronico" id="correoElectronico"
-                     [(ngModel)]="postulante.correoElectronico" placeholder="Ej. contacto@midominio.com" required>
+              <div class="input-group">
+                <input type="email" class="form-control text-lowercase " name="correoElectronico"
+                       id="correoElectronico" (keyup)="validarCorreoElectronico(postulante.correoElectronico)"
+                       [(ngModel)]="postulante.correoElectronico" placeholder="Ej. contacto@gmail.com" required>
+
+                <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
+                   *ngIf="correoValido"></i>
+                <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
+                   *ngIf="!correoValido"></i>
+              </div>
             </div>
             <!-- Dirección -->
             <div class="form-group">

@@ -13,21 +13,22 @@
         <div id="accordion" class="accordion" *ngFor="let item of filtro">
           <div class="card">
             <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
-                <div class="row">
-                  <div class="col-lg-9 col-sm-12">
-                    <a class="card-title campo-amplio">{{item.campo_amplio }}</a>
-                  </div>
-                  <span class="col-lg-2 col-sm-12">
+              <div class="row">
+                <div class="col-lg-9 col-sm-12">
+                  <a class="card-title campo-amplio">{{item.campo_amplio }}</a>
+                </div>
+                <span class="col-lg-2 col-sm-12">
                     <div class="text-dark">&nbsp;({{ item.total}})</div>
                   </span>
-                </div>
+              </div>
             </a>
             <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
               <div class="panel-body">
                 <table class="table">
                   <tr *ngFor="let areaEspecifica of item.campos_especificos">
                     <td width="80%">
-                      <a class="campo_especifico" href="javascript:void(0)" (click)="filtrarPorTitulo(areaEspecifica.nombre)">
+                      <a class="campo_especifico" href="javascript:void(0)"
+                         (click)="filtrarPorTitulo(areaEspecifica.nombre)">
                         {{areaEspecifica.nombre}}
                       </a>
 
@@ -48,7 +49,7 @@
     <div class="row">
       <div class="col-12">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Buscar..." [(ngModel)]="criterioBusqueda">
+          <input type="text" class="form-control text-uppercase" placeholder="Buscar..." [(ngModel)]="criterioBusqueda">
           <div class="input-group-append">
             <button class="btn btn-info" type="button" (click)="filtroDirecto()">
               <span class="fa fa-search"></span>&nbsp;Buscar
@@ -70,75 +71,24 @@
         </div>
       </div>
     </div>
+    <!--Lista de Postulantes-->
     <div class="row" style="overflow: auto">
-      <div class="col-12">
-        <div class="card  mt-2" *ngFor="let postulanteActual of postulantes">
-          <div class="card-body mt-1">
-            <div class="card-title">
-              <div class="row  texto">
-                <div class="col-12">
-                  <h3 class="col-12 text-left text-uppercase">{{postulanteActual.nombreCompleto}}</h3>
-                </div>
-                <div class="col-12">
-                  <h5 class="col-12 text-left mt-3">Estudios Realizados</h5>
-                  <table class="table table-sm">
-                    <thead>
-                    <th>Institución</th>
-                    <th>Tipo de Título</th>
-                    <th>Título</th>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let item of postulanteActual.estudiosRealizados">
-                      <td>{{item.institucion}}</td>
-                      <td>{{item.tipo_titulo}}</td>
-                      <td>{{item.titulo}}</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-12">
-                  <h5 class="col-12 text-left mt-3">Idiomas</h5>
-                  <table class="table table-sm">
-                    <thead>
-                    <th>Idioma</th>
-                    <th>Nivel Escrito</th>
-                    <th>Nivel Hablado</th>
-                    <th>Nivel Lectura</th>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let item of postulanteActual.idiomas">
-                      <td class="text-uppercase">{{item.idioma}}</td>
-                      <td class="text-uppercase">{{item.nivelEscrito}}</td>
-                      <td class="text-uppercase">{{item.nivelHablado}}</td>
-                      <td class="text-uppercase">{{item.nivelLectura}}</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-12">
-                  <h5 class="col-12 text-left mt-3">Capacitaciones y Certificaciones</h5>
-                  <table class="table table-sm">
-                    <thead>
-                    <th>Nombre del Evento</th>
-                    <th>Horas</th>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let item of postulanteActual.capacitaciones">
-                      <td class="text-uppercase">{{item.nombreEvento}}</td>
-                      <td>{{item.horas}}</td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 m-2 text-left">
-              <a *ngIf="authService.rolActual=='e'" target="_blank" class="btn btn-primary btn-sm text-uppercase text-right"
-                 href="curriculum?idPostulante={{postulanteActual.id}}">
-                <span class="fa fa-info-circle"></span>&nbsp;Más Información
-              </a>
-            </div>
-          </div>
+      <div class="col-lg-4 col-sm-12" *ngFor="let postulanteActual of postulantes">
+        <div class="single-special text-center">
+          <h4 class="text-uppercase" *ngFor="let estudioRealizado of postulanteActual.estudiosRealizados"
+              style="overflow:auto;height: 75px;">
+            {{estudioRealizado.titulo}}
+          </h4>
+          <p><b>Mi Perfil</b></p>
+          <p style="overflow: auto; height: 200px">{{postulanteActual.acercaDeMi}}</p>
+          <button class="btn btn-primary btn-sm pull-right" *ngIf="authService.rolActual=='e'"
+                  (click)="openPostulante(modalPostulante,postulanteActual,true)">
+            <span class="fa fa-info-circle"></span>&nbsp;Más Información
+          </button>
+          <button class="btn btn-primary btn-sm pull-right" *ngIf="authService.rolActual!=='e'"
+                  (click)="validarSesion()">
+            <span class="fa fa-info-circle"></span>&nbsp;Más Información
+          </button>
         </div>
       </div>
     </div>
@@ -161,3 +111,186 @@
     </div>
   </div>
 </div>
+
+<ng-template #modalPostulante let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+      PROFESIONAL
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-lg">
+    <!--Datos Personales-->
+    <div class="card">
+      <div class="card-header bg-primary">
+        <h3 class="text-white">Datos Personales:</h3>
+      </div>
+      <div class="card-body m-1">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Identificacion !-->
+            <div class="form-group">
+              <div class="row">
+                <div class="col-lg-6">
+                  <label for="editIdentificacion" class="col-form-label">
+                    <b>Identificación:</b>
+                  </label>
+                  <label class="form-control text-uppercase" id="editIdentificacion">
+                    {{postulanteSeleccionado.identificacion}}
+                  </label>
+                </div>
+                <div class="col-lg-6">
+                  <label for="editEstadoCivil" class="col-form-label">
+                    <b>Estado Civil:</b>
+                  </label>
+                  <label class="form-control text-uppercase" id="editEstadoCivil">
+                    {{postulanteSeleccionado.estadoCivil}}
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- Nombre Completo !-->
+            <div class="form-group ">
+              <label for="editNombreCompleto" class="col-form-label">
+                <b>Nombres:</b>
+              </label>
+              <label class="form-control" id="editNombreCompleto">
+                {{postulanteSeleccionado.nombreCompleto}}
+              </label>
+            </div>
+            <!-- Sexo !-->
+            <div class="form-group ">
+              <label for="editSexo" class="col-form-label">
+                <b>Sexo:</b>
+              </label>
+              <label class="form-control" id="editSexo">
+                {{postulanteSeleccionado.sexo}}
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!-- Telefono !-->
+            <div class="form-group ">
+              <label for="editTelefono" class="col-form-label">
+                <b>Teléfono:</b>
+              </label>
+              <label class="form-control" id="editTelefono">
+                {{postulanteSeleccionado.telefono}}
+              </label>
+            </div>
+            <!-- Correo Electronico !-->
+            <div class="form-group ">
+              <label for="editCorreoElectronico" class="col-form-label">
+                <b>Correo Electrónico:</b>
+              </label>
+              <label class="form-control" id="editCorreoElectronico">
+                {{postulanteSeleccionado.correoElectronico}}
+              </label>
+            </div>
+            <!-- Direccion !-->
+            <div class="form-group ">
+              <label for="editDireccion" class="col-form-label">
+                <b>Dirección:</b>
+              </label>
+              <label class="form-control" id="editDireccion">
+                {{postulanteSeleccionado.direccion}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="card">
+      <div class="card-header bg-info">
+        <h3 class="text-white">Perfil del Cargo</h3>
+      </div>
+      <div class="card-body  m-1">
+        <!-- Cargo !-->
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success btn-lg" title="Contactar" (click)="c('aplicar')">
+      <i class="fa fa-check" aria-hidden="true"> Contactar</i>
+    </button>
+    <button class="btn btn-danger btn-lg" title="Cancelar" (click)="c('close')">
+      <i class="fa fa-close" aria-hidden="true"> Cancelar</i>
+    </button>
+  </div>
+</ng-template>
+
+<!--<div class="row" style="overflow: auto">-->
+<!--<div class="col-12">-->
+<!--<div class="card  mt-2" *ngFor="let postulanteActual of postulantes">-->
+<!--<div class="card-body mt-1">-->
+<!--<div class="card-title">-->
+<!--<div class="row  texto">-->
+<!--<div class="col-12">-->
+<!--<h3 class="col-12 text-left text-uppercase">{{postulanteActual.nombreCompleto}}</h3>-->
+<!--</div>-->
+<!--<div class="col-12">-->
+<!--<h5 class="col-12 text-left mt-3">Estudios Realizados</h5>-->
+<!--<table class="table table-sm">-->
+<!--<thead>-->
+<!--<th>Institución</th>-->
+<!--<th>Tipo de Título</th>-->
+<!--<th>Título</th>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr *ngFor="let item of postulanteActual.estudiosRealizados">-->
+<!--<td>{{item.institucion}}</td>-->
+<!--<td>{{item.tipo_titulo}}</td>-->
+<!--<td>{{item.titulo}}</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--<div class="col-12">-->
+<!--<h5 class="col-12 text-left mt-3">Idiomas</h5>-->
+<!--<table class="table table-sm">-->
+<!--<thead>-->
+<!--<th>Idioma</th>-->
+<!--<th>Nivel Escrito</th>-->
+<!--<th>Nivel Hablado</th>-->
+<!--<th>Nivel Lectura</th>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr *ngFor="let item of postulanteActual.idiomas">-->
+<!--<td class="text-uppercase">{{item.idioma}}</td>-->
+<!--<td class="text-uppercase">{{item.nivelEscrito}}</td>-->
+<!--<td class="text-uppercase">{{item.nivelHablado}}</td>-->
+<!--<td class="text-uppercase">{{item.nivelLectura}}</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--<div class="col-12">-->
+<!--<h5 class="col-12 text-left mt-3">Capacitaciones y Certificaciones</h5>-->
+<!--<table class="table table-sm">-->
+<!--<thead>-->
+<!--<th>Nombre del Evento</th>-->
+<!--<th>Horas</th>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr *ngFor="let item of postulanteActual.capacitaciones">-->
+<!--<td class="text-uppercase">{{item.nombreEvento}}</td>-->
+<!--<td>{{item.horas}}</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-12 m-2 text-left">-->
+<!--<a *ngIf="authService.rolActual=='e'" target="_blank" class="btn btn-primary btn-sm text-uppercase text-right"-->
+<!--href="curriculum?idPostulante={{postulanteActual.id}}">-->
+<!--<span class="fa fa-info-circle"></span>&nbsp;Más Información-->
+<!--</a>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
