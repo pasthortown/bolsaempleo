@@ -43,7 +43,7 @@
     <!--Menus de About, Buscar, Iniciar Sesion y Registrate-->
     <ul class="navbar ml-auto">
       <!--Acerca-->
-      <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
+      <li class="nav-item dropdown pretty-button">
         <a class="nav-link text-white" (click)="cambiarTitulo('ACERCA')" [routerLink]="['/about']"
            [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-info-circle"></i>&nbsp;Acerca de Nosotros
@@ -58,7 +58,7 @@
         <div ngbDropdownMenu>
           <a class="dropdown-item" [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']"
              (click)="cambiarTitulo('TALENTO HUMANO')">
-            <i class="fa fa-fw fa-users"></i>&nbsp;Talento Humano
+            <i class="fa fa-fw fa-users"></i>&nbsp;Profesionales
           </a>
           <a class="dropdown-item" [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']"
              (click)="cambiarTitulo('OFERTAS LABORALES')">
@@ -75,19 +75,19 @@
         </a>
       </li>
       <!--Registrate-->
-      <li *ngIf="authService.rolActual!='e' && authService.rolActual!='p'" class="nav-item dropdown pretty-button"
-          ngbDropdown>
-        <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
-          <i class="fa fa-fw fa-address-book"></i>&nbsp;Regístrate
+      <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
+        <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
+           (click)="cambiarTitulo('INICIAR SESIÓN')" [routerLink]="['/empresa']"
+           [routerLinkActive]="['router-link-active']">
+          <i class="fa fa-fw fa-building"></i>&nbsp;Registro Empresas
         </a>
-        <div ngbDropdownMenu>
-          <a class="dropdown-item" routerLink="/persona" (click)="cambiarTitulo('REGISTRO')">
-            <i class="fa fa-fw fa-users"></i> Postulantes
-          </a>
-          <a class="dropdown-item" routerLink="/empresa" (click)="cambiarTitulo('REGISTRO')">
-            <i class="fa fa-fw fa-building"></i> Empresas&nbsp;
-          </a>
-        </div>
+      </li>
+      <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
+        <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
+           (click)="cambiarTitulo('INICIAR SESIÓN')" [routerLink]="['/persona']"
+           [routerLinkActive]="['router-link-active']">
+          <i class="fa fa-fw fa-users"></i>&nbsp;Registro Profesionales
+        </a>
       </li>
     </ul>
   </div>
