@@ -87,7 +87,9 @@ export class FiltroComponent implements OnInit {
       while (i < items.length) {
         let itemLeido: Postulante;
         itemLeido = items[i].payload.val() as Postulante;
-        this.postulantes.push(itemLeido);
+        if (itemLeido.estudiosRealizados != null) {
+          this.postulantes.push(itemLeido);
+        }
         i++;
       }
     });
@@ -98,14 +100,12 @@ export class FiltroComponent implements OnInit {
   }
 
   aplicarContactado(postulante: Postulante) {
-    console.log(postulante.id);
-    console.log(this.empresaService.empresa.id);
     this.contactado.idPostulante = this.postulanteSeleccionado.id;
     this.contactado.idEmpresa = this.empresaService.empresa.id;
     console.log(this.contactado.idEmpresa);
     swal({
       title: '¿Está seguro de Contactar?',
-      text: 'asd',
+      text: postulante.nombreCompleto.toUpperCase(),
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
@@ -214,7 +214,7 @@ export class FiltroComponent implements OnInit {
     });
   }
 
-  imprimir() {
+  imprimir2() {
     html2canvas(this.encabezadoHojaVida.nativeElement).then(canvasEncabezado => {
       const encabezadoHojaDatosImg = canvasEncabezado.toDataURL('image/png');
       html2canvas(this.cuerpoHojaVida.nativeElement).then(canvasCuerpo => {
@@ -228,6 +228,13 @@ export class FiltroComponent implements OnInit {
           doc.save('CV_' + this.postulanteSeleccionado.identificacion + '.pdf');
         });
       });
+    });
+  }
+
+  imprimir() {
+    return xepOnline.Formatter.Format('curriculum', {
+      render: 'download',
+      filename: 'CV - ' + this.postulanteSeleccionado.nombreCompleto.toLocaleUpperCase() + ' (' + this.postulanteSeleccionado.identificacion + ')'
     });
   }
 

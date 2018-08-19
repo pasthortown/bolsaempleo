@@ -5,98 +5,104 @@
     </div>
   </div>
 </div>
-<div class="row mt-2">
-  <div class="col-12">
-    <div class="card m-2" *ngFor="let postulacion of misPostulaciones">
-      <div *ngIf="postulacion.oferta != null" class="card-body">
-        <div class="card-title">
-          <!--Grid Ofertas-->
-          <div class="row" style="overflow: auto">
-            <div class="col-12">
-              <div class="card mt-1" style="height: 310px">
-                <div class="card-header">
-                  <div class="row">
-                    <div class="col-8">
-                      <h6>
-                        <a href="javascript:void(0)" class="col-12 text-left"
-                           (click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">
-                          {{postulacion.oferta.cargo}}
-                        </a>
-                      </h6>
-                      <h6 class="text-muted">
-                        <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        {{postulacion.oferta.canton + ', ' +postulacion.oferta.provincia}}
-                      </h6>
+<ngb-tabset>
+  <ngb-tab title="1. Ofertas Aplicadas" id="tab1">
+    <ng-template ngbTabContent>
+      <div class="row mt-2">
+        <div class="col-12">
+          <div class="card m-2" *ngFor="let postulacion of misPostulaciones">
+            <div *ngIf="postulacion.oferta != null" class="card-body">
+              <div class="card-title">
+                <!--Grid Ofertas-->
+                <div class="row" style="overflow: auto">
+                  <div class="col-12">
+                    <div class="card mt-1" style="height: 310px">
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col-8">
+                            <h6>
+                              <a href="javascript:void(0)" class="col-12 text-left"
+                                 (click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">
+                                {{postulacion.oferta.cargo}}
+                              </a>
+                            </h6>
+                            <h6 class="text-muted">
+                              <i class="fa fa-map-marker" aria-hidden="true"></i>
+                              {{postulacion.oferta.canton + ', ' +postulacion.oferta.provincia}}
+                            </h6>
+                          </div>
+                          <div class="col-4">
+                            <table class="col-12">
+                              <tbody>
+                              <tr>
+                                <th>
+                                  <i>Inicio Publicación:</i>&nbsp;
+                                </th>
+                                <td class="text-left text-muted">
+                                  <strong>
+                                    <i>
+                                      {{
+                                      postulacion.oferta.inicioPublicacion.year
+                                      + '/' + postulacion.oferta.inicioPublicacion.month
+                                      + '/' + postulacion.oferta.inicioPublicacion.day
+                                      }}
+                                    </i>
+                                  </strong>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>
+                                  <i>Fin Publicación:</i>&nbsp;
+                                </th>
+                                <td class="text-left text-muted">
+                                  <strong>
+                                    <i>
+                                      {{postulacion.oferta.finPublicacion.year
+                                      + '/' + postulacion.oferta.finPublicacion.month
+                                      + '/' + postulacion.oferta.finPublicacion.day
+                                      }}
+                                    </i></strong>
+                                </td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-12">
+                            <h6 class="text-muted" style="overflow: auto;height: 80px">
+                              {{postulacion.oferta.actividades}}
+                            </h6>
+                            <button class="btn btn-primary btn-sm pull-right"
+                                    (click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">
+                              <span class="fa fa-info-circle"></span>&nbsp;Más Información
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-footer text-muted">
+                        <div class="input-group">
+                          <h6 class="text-muted text-uppercase">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            {{postulacion.oferta.contacto}}
+                          </h6>
+                          <h6 class="text-muted ml-4">
+                            <i class="fa fa-mobile-phone" aria-hidden="true"></i>
+                            {{postulacion.oferta.telefonoCelular}}
+                          </h6>
+                          <h6 class="text-muted ml-4">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            {{postulacion.oferta.telefonoFijo}}
+                          </h6>
+                          <h6 class="text-muted ml-4">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            {{postulacion.oferta.correoElectronico}}
+                          </h6>
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-4">
-                      <table class="col-12">
-                        <tbody>
-                        <tr>
-                          <th>
-                            <i>Inicio Publicación:</i>&nbsp;
-                          </th>
-                          <td class="text-left text-muted">
-                            <strong>
-                              <i>
-                                {{
-                                postulacion.oferta.inicioPublicacion.year
-                                + '/' + postulacion.oferta.inicioPublicacion.month
-                                + '/' + postulacion.oferta.inicioPublicacion.day
-                                }}
-                              </i>
-                            </strong>
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>
-                            <i>Fin Publicación:</i>&nbsp;
-                          </th>
-                          <td class="text-left text-muted">
-                            <strong>
-                              <i>
-                                {{postulacion.oferta.finPublicacion.year
-                                + '/' + postulacion.oferta.finPublicacion.month
-                                + '/' + postulacion.oferta.finPublicacion.day
-                                }}
-                              </i></strong>
-                          </td>
-                        </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-12">
-                      <h6 class="text-muted" style="overflow: auto;height: 80px">
-                        {{postulacion.oferta.actividades}}
-                      </h6>
-                      <button class="btn btn-primary btn-sm pull-right"
-                              (click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">
-                        <span class="fa fa-info-circle"></span>&nbsp;Más Información
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer text-muted">
-                  <div class="input-group">
-                    <h6 class="text-muted text-uppercase">
-                      <i class="fa fa-user" aria-hidden="true"></i>
-                      {{postulacion.oferta.contacto}}
-                    </h6>
-                    <h6 class="text-muted ml-4">
-                      <i class="fa fa-mobile-phone" aria-hidden="true"></i>
-                      {{postulacion.oferta.telefonoCelular}}
-                    </h6>
-                    <h6 class="text-muted ml-4">
-                      <i class="fa fa-phone" aria-hidden="true"></i>
-                      {{postulacion.oferta.telefonoFijo}}
-                    </h6>
-                    <h6 class="text-muted ml-4">
-                      <i class="fa fa-envelope" aria-hidden="true"></i>
-                      {{postulacion.oferta.correoElectronico}}
-                    </h6>
                   </div>
                 </div>
               </div>
@@ -104,9 +110,115 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="2. Empresas Interesadas" id="tab2">
+    <ng-template ngbTabContent>
+      <div class="row mt-2">
+        <div class="col-12">
+          <div class="card m-2" *ngFor="let postulacion of misPostulaciones">
+            <div *ngIf="postulacion.oferta != null" class="card-body">
+              <div class="card-title">
+                <!--Grid Ofertas-->
+                <div class="row" style="overflow: auto">
+                  <div class="col-12">
+                    <div class="card mt-1" style="height: 310px">
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col-8">
+                            <h6>
+                              <a href="javascript:void(0)" class="col-12 text-left"
+                                 (click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">
+                                {{postulacion.oferta.cargo}}
+                              </a>
+                            </h6>
+                            <h6 class="text-muted">
+                              <i class="fa fa-map-marker" aria-hidden="true"></i>
+                              {{postulacion.oferta.canton + ', ' +postulacion.oferta.provincia}}
+                            </h6>
+                          </div>
+                          <div class="col-4">
+                            <table class="col-12">
+                              <tbody>
+                              <tr>
+                                <th>
+                                  <i>Inicio Publicación:</i>&nbsp;
+                                </th>
+                                <td class="text-left text-muted">
+                                  <strong>
+                                    <i>
+                                      {{
+                                      postulacion.oferta.inicioPublicacion.year
+                                      + '/' + postulacion.oferta.inicioPublicacion.month
+                                      + '/' + postulacion.oferta.inicioPublicacion.day
+                                      }}
+                                    </i>
+                                  </strong>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th>
+                                  <i>Fin Publicación:</i>&nbsp;
+                                </th>
+                                <td class="text-left text-muted">
+                                  <strong>
+                                    <i>
+                                      {{postulacion.oferta.finPublicacion.year
+                                      + '/' + postulacion.oferta.finPublicacion.month
+                                      + '/' + postulacion.oferta.finPublicacion.day
+                                      }}
+                                    </i></strong>
+                                </td>
+                              </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-12">
+                            <h6 class="text-muted" style="overflow: auto;height: 80px">
+                              {{postulacion.oferta.actividades}}
+                            </h6>
+                            <button class="btn btn-primary btn-sm pull-right"
+                                    (click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">
+                              <span class="fa fa-info-circle"></span>&nbsp;Más Información
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-footer text-muted">
+                        <div class="input-group">
+                          <h6 class="text-muted text-uppercase">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            {{postulacion.oferta.contacto}}
+                          </h6>
+                          <h6 class="text-muted ml-4">
+                            <i class="fa fa-mobile-phone" aria-hidden="true"></i>
+                            {{postulacion.oferta.telefonoCelular}}
+                          </h6>
+                          <h6 class="text-muted ml-4">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            {{postulacion.oferta.telefonoFijo}}
+                          </h6>
+                          <h6 class="text-muted ml-4">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            {{postulacion.oferta.correoElectronico}}
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
 <ng-template #modalOfertaLaboral let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title">

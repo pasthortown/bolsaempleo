@@ -4,9 +4,7 @@ import * as jsPDF from 'jspdf';
 import * as html2canvas from 'html2canvas';
 import {Postulante} from '../../models/postulante';
 import {AuthService} from '../../services/auth.service';
-import {Oferta} from '../../models/oferta';
 import {FirebaseBDDService} from '../../services/firebase-bdd.service';
-import {Postulacion} from '../../models/postulacion';
 
 @Component({
   selector: 'app-curriculum',

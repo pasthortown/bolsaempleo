@@ -74,7 +74,7 @@
     <!--Lista de Postulantes-->
     <div class="row" style="overflow: auto">
       <div class="col-lg-4 col-sm-12" *ngFor="let postulanteActual of postulantes">
-        <div class="single-special text-center">
+        <div class="single-special text-center mt-2">
           <h4 class="text-uppercase" *ngFor="let estudioRealizado of postulanteActual.estudiosRealizados"
               style="overflow:auto;height: 75px;">
             {{estudioRealizado.titulo}}
@@ -113,10 +113,17 @@
 </div>
 
 <ng-template #modalPostulante let-c="close" let-d="dismiss">
+
   <div class="modal-header">
-    <h4 class="modal-title">
-      PROFESIONAL
-    </h4>
+    <div class="input-group">
+      <a target="_blank" class="btn btn-primary btn-lg mr-1"
+         href="curriculum?idPostulante={{this.postulanteSeleccionado.id}}">
+        <i class="fa fa-print" aria-hidden="true"> Imprimir CV</i>
+      </a>
+      <button class="btn btn-success btn-lg pull-right" title="Contactar" (click)="c('aplicar')">
+        <i class="fa fa-check" aria-hidden="true"> Contactar</i>
+      </button>
+    </div>
     <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -124,7 +131,7 @@
   <div class="modal-body modal-lg">
     <!--Datos Personales-->
     <div class="card">
-      <div class="card-header bg-primary">
+      <div class="card-header bg-secondary">
         <h3 class="text-white">Datos Personales:</h3>
       </div>
       <div class="card-body m-1">
@@ -132,31 +139,19 @@
           <div class="col-lg-6">
             <!-- Identificacion !-->
             <div class="form-group">
-              <div class="row">
-                <div class="col-lg-6">
-                  <label for="editIdentificacion" class="col-form-label">
-                    <b>Identificación:</b>
-                  </label>
-                  <label class="form-control text-uppercase" id="editIdentificacion">
-                    {{postulanteSeleccionado.identificacion}}
-                  </label>
-                </div>
-                <div class="col-lg-6">
-                  <label for="editEstadoCivil" class="col-form-label">
-                    <b>Estado Civil:</b>
-                  </label>
-                  <label class="form-control text-uppercase" id="editEstadoCivil">
-                    {{postulanteSeleccionado.estadoCivil}}
-                  </label>
-                </div>
-              </div>
+              <label for="identificacion" class="col-form-label">
+                Identificación:
+              </label>
+              <input class="form-control" name="identificacion" id="identificacion"
+                     [(ngModel)]="postulanteSeleccionado.identificacion" placeholder="Ej. 1734839443" required>
+
             </div>
             <!-- Nombre Completo !-->
-            <div class="form-group ">
+            <div class="form-group">
               <label for="editNombreCompleto" class="col-form-label">
                 <b>Nombres:</b>
               </label>
-              <label class="form-control" id="editNombreCompleto">
+              <label class="form-control text-uppercase" id="editNombreCompleto">
                 {{postulanteSeleccionado.nombreCompleto}}
               </label>
             </div>
@@ -167,6 +162,14 @@
               </label>
               <label class="form-control" id="editSexo">
                 {{postulanteSeleccionado.sexo}}
+              </label>
+            </div>
+            <div class="form-group">
+              <label for="editEstadoCivil" class="col-form-label">
+                Estado Civil:
+              </label>
+              <label class="form-control text-uppercase" id="editEstadoCivil">
+                {{postulanteSeleccionado.estadoCivil}}
               </label>
             </div>
           </div>
@@ -185,7 +188,7 @@
               <label for="editCorreoElectronico" class="col-form-label">
                 <b>Correo Electrónico:</b>
               </label>
-              <label class="form-control" id="editCorreoElectronico">
+              <label class="form-control text-lowercase" id="editCorreoElectronico">
                 {{postulanteSeleccionado.correoElectronico}}
               </label>
             </div>
@@ -194,7 +197,7 @@
               <label for="editDireccion" class="col-form-label">
                 <b>Dirección:</b>
               </label>
-              <label class="form-control" id="editDireccion">
+              <label class="form-control text-uppercase" id="editDireccion" style="overflow: auto;height:130px">
                 {{postulanteSeleccionado.direccion}}
               </label>
             </div>
@@ -203,16 +206,198 @@
       </div>
     </div>
     <hr>
+    <!--Formación-->
     <div class="card">
-      <div class="card-header bg-info">
-        <h3 class="text-white">Perfil del Cargo</h3>
+      <div class="card-header bg-secondary">
+        <h3 class="text-white">Formación:</h3>
       </div>
       <div class="card-body  m-1">
-        <!-- Cargo !-->
+        <!--Estudios Realizados-->
+        <div class="row">
+          <div class="col-12">
+            <h2 class="table-secondary">Estudios Realizados:</h2>
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th width="25%">Institución</th>
+                <th width="45%">Título</th>
+                <th width="15%">Fecha de Registro</th>
+                <th width="15%">Cód. Reg. SENESCYT</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of postulanteSeleccionado.estudiosRealizados">
+                <td>{{item.institucion}}</td>
+                <td>{{item.titulo}}</td>
+                <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
+                <td>{{item.codigoRegistroSENESCYT}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!--Capacitación y Cursos-->
+        <div class="row">
+          <div class="col-12">
+            <h2 class="table-secondary">Capacitaciones y Cursos:</h2>
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th width="20%">Institución</th>
+                <th width="15%">Tipo de Evento</th>
+                <th width="25%">Nombre del Evento</th>
+                <th width="15%">Tipo de Certificado</th>
+                <th width="15%">Desde - Hasta</th>
+                <th width="10%">Horas</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of postulanteSeleccionado.capacitaciones">
+                <td>{{item.institucion}}</td>
+                <td>{{item.tipoEvento}}</td>
+                <td>{{item.nombreEvento}}</td>
+                <td>{{item.tipoCertificado}}</td>
+                <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}
+                  {{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
+                </td>
+                <td>{{item.horas}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!--Idiomas-->
+        <div class="row">
+          <div class="col-12">
+            <h3 class="table-secondary">Idiomas:</h3>
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th>Idioma</th>
+                <th>Nivel Escrito</th>
+                <th>Nivel Hablado</th>
+                <th>Nivel Lectura</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of postulanteSeleccionado.idiomas">
+                <td>{{item.idioma}}</td>
+                <td>{{item.nivelEscrito}}</td>
+                <td>{{item.nivelHablado}}</td>
+                <td>{{item.nivelLectura}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <!--Experiencia Profesional-->
+    <div class="card">
+      <div class="card-header bg-secondary">
+        <h3 class="text-white">Experiencia Profesional:</h3>
+      </div>
+      <div class="card-body  m-1">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th width="20%">Empleador</th>
+                <th width="20%">Cargo Desempeñado</th>
+                <th width="25%">Descripción del Cargo</th>
+                <th width="15%">Fecha de Inicio</th>
+                <th width="15%">Fecha de Salida</th>
+                <th width="5%">Actual</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of postulanteSeleccionado.experienciasLaborales">
+                <td>{{item.empleador}}</td>
+                <td>{{item.cargoDesempenado}}</td>
+                <td><p class="text-justify">{{item.descripcionCargo}}</p></td>
+                <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
+                <td *ngIf="item.actualmenteVigente"></td>
+                <td *ngIf="!item.actualmenteVigente">
+                  {{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
+                </td>
+                <td>
+                  <div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span
+                    class="badge badge-success">Actual</span>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <!--Fortalezas-->
+    <div class="card">
+      <div class="card-header bg-secondary">
+        <h3 class="text-white">Fortalezas:</h3>
+      </div>
+      <div class="card-body  m-1">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th width="30%">Nombre</th>
+                <th width="70%">Descripción</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of postulanteSeleccionado.fortalezas">
+                <td>{{item.nombre}}</td>
+                <td>{{item.descripcion}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <!--Referencias Personales-->
+    <div class="card">
+      <div class="card-header bg-secondary">
+        <h3 class="text-white">Referencias Personales:</h3>
+      </div>
+      <div class="card-body  m-1">
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-bordered">
+              <thead>
+              <tr>
+                <th width="30%">Nombres y Apellidos</th>
+                <th width="25%">Cargo</th>
+                <th width="30%">Empresa</th>
+                <th width="15%">Teléfono</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let item of postulanteSeleccionado.referenciasPersonales">
+                <td>{{item.nombresApellidos}}</td>
+                <td>{{item.cargo}}</td>
+                <td>{{item.institucion}}</td>
+                <td>{{item.telefono}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div class="modal-footer">
+    <a target="_blank" class="btn btn-primary btn-lg"
+       href="curriculum?idPostulante={{this.postulanteSeleccionado.id}}">
+      <i class="fa fa-print" aria-hidden="true"> Imprimir CV</i>
+    </a>
     <button class="btn btn-success btn-lg" title="Contactar" (click)="c('aplicar')">
       <i class="fa fa-check" aria-hidden="true"> Contactar</i>
     </button>
