@@ -17,20 +17,20 @@
         </a>
       </li>
 
-      <!--Buscar-->
-      <li class="nav-item dropdown pretty-button" ngbDropdown>
-        <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
-          <i class="fa fa-fw fa-search"></i>&nbsp;Buscador
+      <!--Postulantes-->
+      <li class="nav-item pretty-button">
+        <a class="nav-link text-white" [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']">
+          <i class="fa fa-fw fa-users"></i>&nbsp;Profesionales
         </a>
-        <div ngbDropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-users"></i>&nbsp;Profesionales
-          </a>
-          <a class="dropdown-item" [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-briefcase"></i>&nbsp;Ofertas Laborales
-          </a>
-        </div>
       </li>
+
+      <!--Ofertas-->
+      <li class="nav-item pretty-button">
+        <a class="nav-link text-white" [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']">
+          <i class="fa fa-fw fa-briefcase"></i>&nbsp;Ofertas Laborales
+        </a>
+      </li>
+
       <!--Iniciar Sesion-->
       <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
         <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
@@ -39,13 +39,14 @@
           <i class="fa fa-fw fa-sign-in"></i>&nbsp;Iniciar Sesión
         </a>
       </li>
-      <!--Registrate-->
+      <!--Registro Empresas-->
       <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
         <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
            [routerLink]="['/empresa']" [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-building"></i>&nbsp;Registro Empresas
         </a>
       </li>
+      <!--Registro Postulantes-->
       <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
         <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
            [routerLink]="['/persona']" [routerLinkActive]="['router-link-active']">
@@ -77,6 +78,7 @@
              [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-address-card"></i>&nbsp;Datos Personales
           </a>
+          <div class="dropdown-divider"></div>
           <a *ngIf="authService.rolActual=='e' || authService.rolActual=='p'" class="dropdown-item"
              (click)="cerrarSesion()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión

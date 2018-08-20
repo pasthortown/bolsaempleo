@@ -77,9 +77,10 @@ export class OfertasLaboralesComponent implements OnInit {
       size: 'lg'
     };
     if (editar) {
+      console.log(oferta.provincia);
+      this.ofertaSeleccionada = oferta;
       this.filtrarCamposEspecificos(oferta);
       this.filtrarCantones(oferta);
-      this.ofertaSeleccionada = oferta;
     } else {
       this.ofertaSeleccionada = new Oferta();
     }

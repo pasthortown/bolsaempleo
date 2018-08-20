@@ -2,23 +2,21 @@
   <div class="card-body">
     <form name="empresaform" method="post" #formCtrl="ngForm">
       <div class="row mt-1">
-        <div class="col-2">
+        <div class="col-lg-3 col-sm-12">
           <div class="row">
-            <div class="col-12 mt-3 text-center">
+            <div class="col-lg-12 mt-3 text-center">
               <div class="group-form">
-                <input type="file" style="visibility: hidden; height: 0px" class="form-control btn" id="logo"
+                <img src="{{empresaService.empresa.fotografia}}" class="rounded-circle" width="100px" height="100px"
+                     (click)="fileInput.click()" title="100 X 100">
+                <input type="file" class="form-control btn-light" id="logo"
                        placeholder="logo" #fileInput (change)="CodificarArchivo($event)" accept="image/*">
-                <button class="btn btn-light">
-                  <img src="{{empresaService.empresa.fotografia}}" class="rounded-circle" width="100px" height="100px"
-                       (click)="fileInput.click()" title="100 X 100">
-                </button>
               </div>
-              <div class="group-form">
+              <div class="group-form mt-5">
                 <div class="row">
                   <div class="col-lg-12 col-sm-12">
                     <button type="submit" class="col-lg-12 btn btn-success mr-1" (click)="actualizar()"
                             [disabled]="formCtrl.form.invalid">
-                      <i class="fa fa-fw fa-save"></i>&nbsp;ACtualizar
+                      <i class="fa fa-fw fa-save"></i>&nbsp;Actualizar
                     </button>
                   </div>
                 </div>
@@ -31,7 +29,7 @@
             </div>
           </div>
         </div>
-        <div class="col-10">
+        <div class="col-lg-9 col-sm-12">
           <div class="row">
             <div class="col-6">
               <!--Identificacion-->
@@ -48,7 +46,7 @@
                 <label for="nombreComercial">
                   <b class="text-danger">*</b> Nombre Comercial:
                 </label>
-                <input type="text" class="form-control" id="nombreComercial" name="nombreComercial"
+                <input type="text" class="form-control text-uppercase" id="nombreComercial" name="nombreComercial"
                        placeholder="NOMBRE COMERCIAL"
                        [(ngModel)]="empresaService.empresa.nombreComercial" required>
               </div>
@@ -71,7 +69,7 @@
                   <b class="text-danger">*</b> Actividad Económica:
                 </label>
                 <textarea rows="5" type="text" [(ngModel)]="empresaService.empresa.actividadEconomica"
-                          class="form-control" required
+                          class="form-control text-uppercase" required
                           id="actividadEconomica" name="actividadEconomica"
                           placeholder="ACTIVIDAD ECONÓMICA"></textarea>
               </div>
@@ -80,7 +78,7 @@
               <!--Pagina Web-->
               <div class="form-group">
                 <label for="paginaWeb">Página Web:</label>
-                <input type="text" class="form-control" id="paginaWeb" name="paginaWeb"
+                <input type="text" class="form-control text-lowercase" id="paginaWeb" name="paginaWeb"
                        placeholder="Ej. www.midominio.com"
                        [(ngModel)]="empresaService.empresa.paginaWeb">
               </div>
@@ -89,8 +87,8 @@
                 <label for="correoElectronico">
                   <b class="text-danger">*</b> Correo Electrónico:
                 </label>
-                <input type="email" class="form-control" id="correoElectronico" name="correoElectronico"
-                       placeholder="contacto@midominio.com"
+                <input type="email" class="form-control text-lowercase" id="correoElectronico" name="correoElectronico"
+                       placeholder="contacto@midominio.com" readonly
                        [(ngModel)]="empresaService.empresa.correoElectronico" required>
               </div>
               <!--Telefono Celular-->
@@ -117,7 +115,8 @@
                 <label for="direccion">
                   <b class="text-danger">*</b> Dirección:
                 </label>
-                <textarea rows="5" type="text" [(ngModel)]="empresaService.empresa.direccion" class="form-control"
+                <textarea rows="5" type="text" [(ngModel)]="empresaService.empresa.direccion"
+                          class="form-control text-uppercase"
                           id="direccion" name="direccion" required
                           placeholder="Provincia, Cantón, Calle Principal, Calle Secundaria, número de casa"></textarea>
               </div>

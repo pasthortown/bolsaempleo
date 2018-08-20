@@ -128,7 +128,7 @@ export class EmpresaComponent implements OnInit {
     if (validacion === '') {
       this.empresa.nombreComercial = this.empresa.nombreComercial.toUpperCase();
       this.empresa.actividadEconomica = this.empresa.actividadEconomica.toUpperCase();
-      this.empresa.correoElectronico = this.empresa.correoElectronico.toUpperCase();
+      this.empresa.correoElectronico = this.empresa.correoElectronico.toLowerCase();
       if (this.empresa.paginaWeb != null) {
         this.empresa.paginaWeb = this.empresa.paginaWeb.toLowerCase();
         this.empresa.paginaWeb = 'www.' + this.empresa.paginaWeb;

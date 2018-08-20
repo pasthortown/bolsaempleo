@@ -90,7 +90,7 @@
                 <label for="editProvincia" class="col-form-label">
                   <b class="text-danger">*</b> Provincia:
                 </label>
-                <select class="form-control" name="idCIudad" id="editProvincia"
+                <select class="form-control" name="idProvincia" id="editProvincia"
                         [(ngModel)]="ofertaSeleccionada.provincia"
                         (click)="filtrarCantones(ofertaSeleccionada)" (change)="filtrarCantones(ofertaSeleccionada)"
                         required>
@@ -122,7 +122,7 @@
               <!-- Inicio Publicacion !-->
               <div class="form-group datepicker-input">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-lg-12">
                     <label for="editInicioPublicacion" class="col-form-label">
                       <b class="text-danger">*</b> Inicio Publicación:
                     </label>
@@ -135,13 +135,13 @@
                       </button>
                     </div>
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-lg-6" hidden>
                     <label for="editDuracionOferta" class="col-form-label">
                       <b class="text-danger">*</b> Duración:
                     </label>
                     <select class="form-control" id="editDuracionOferta" name="editDuracionOferta"
                             (change)="calcularFechaFinOferta()"
-                            [(ngModel)]="duracionOferta" required>
+                            [(ngModel)]="duracionOferta" >
                       <option value="0">SELECCIONE...</option>
                       <option value="7">1 SEMANA</option>
                       <option value="14">2 SEMANAS</option>

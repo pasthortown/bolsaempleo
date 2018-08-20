@@ -11,7 +11,6 @@ import {AuthService} from '../../../services/auth.service';
 import {Postulante} from '../../../models/postulante';
 import {Router} from '@angular/router';
 import {PostulacionDiccionario} from '../../../models/miPostulacionDiccionario';
-import {Empresa} from '../../../models/empresa';
 import {PostulanteService} from '../../../services/postulante.service';
 
 @Component({
@@ -21,9 +20,7 @@ import {PostulanteService} from '../../../services/postulante.service';
 })
 export class FiltroComponent implements OnInit {
   oferta: Oferta;
-  misPostulacionesFB: Array<Postulacion> = [];
   ofertasAplicadas = [];
-  misPostulaciones: Array<PostulacionDiccionario> = [];
   postulacion: Postulacion;
   postulante: Postulante;
   ofertas: Array<Oferta>;
@@ -36,7 +33,7 @@ export class FiltroComponent implements OnInit {
   flag: string;
   criterioBusqueda: string;
   pagina = 0;
-  registrosPorPagina = 5;
+  registrosPorPagina = 10;
   totalPaginas = 1;
   campo = 'estudiosRealizados/0/tipo_titulo';
 

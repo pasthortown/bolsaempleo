@@ -26,7 +26,7 @@ export class FiltroComponent implements OnInit {
   postulanteSeleccionado: Postulante;
   campo = 'estudiosRealizados/0/tipo_titulo';
   pagina = 0;
-  registrosPorPagina = 10;
+  registrosPorPagina = 21;
   totalPaginas = 1;
   contactado: Contactado;
   meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
