@@ -27,7 +27,17 @@ export class CurriculumComponent implements OnInit {
 
   ngOnInit() {
     this.curriculum = new Postulante();
-    this.curriculum.fechaDeNacimiento = {year: 2018, month: 9, day: 8};
+    const fechaActual = new Date();
+    const year = fechaActual.getFullYear();
+    let month = fechaActual.getMonth();
+    month += 1;
+    const day = fechaActual.getDate();
+
+    this.curriculum.fechaDeNacimiento = {
+      year: year,
+      month: month,
+      day: day
+    };
     this.leerCurriculum();
   }
 

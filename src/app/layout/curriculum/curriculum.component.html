@@ -110,7 +110,7 @@
           </th>
           <td width="70%">
             <p class="text-justify">
-            {{curriculum.acercaDeMi}}
+              {{curriculum.acercaDeMi}}
             </p>
           </td>
         </tr>
@@ -129,8 +129,8 @@
     <div class="col-12">
       <table class="table table-sm">
         <thead>
-        <th width="25%">Institución</th>
-        <th width="45%">Título</th>
+        <th width="30%">Institución</th>
+        <th width="40%">Título</th>
         <th width="15%">Fecha de Registro</th>
         <th width="15%">Cód. Reg. SENESCYT</th>
         </thead>
@@ -192,10 +192,10 @@
     <div class="col-12">
       <table class="table table-sm">
         <thead>
-        <th>Idioma</th>
-        <th>Nivel Escrito</th>
-        <th>Nivel Hablado</th>
-        <th>Nivel Lectura</th>
+        <th width="40%">Idioma</th>
+        <th width="20%">Nivel Escrito</th>
+        <th width="20%">Nivel Hablado</th>
+        <th width="20%">Nivel Lectura</th>
         </thead>
         <tbody>
         <tr *ngFor="let item of curriculum.idiomas">
@@ -220,12 +220,12 @@
     <div class="col-12">
       <table class="table table-sm">
         <thead>
-        <th>Empleador</th>
-        <th>Cargo Desempeñado</th>
-        <th>Descripción del Cargo</th>
-        <th>Fecha de Inicio</th>
-        <th>Fecha de Salida</th>
-        <th>Actual</th>
+        <th width="20%">Empleador</th>
+        <th width="20%">Cargo Desempeñado</th>
+        <th width="30%">Descripción del Cargo</th>
+        <th width="10%">Fecha de Inicio</th>
+        <th width="10%">Fecha de Salida</th>
+        <th width="10%">Actual</th>
         </thead>
         <tbody>
         <tr *ngFor="let item of curriculum.experienciasLaborales">
@@ -259,15 +259,13 @@
     <div class="col-12">
       <table class="table table-sm">
         <thead>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Nivel</th>
+        <th width="30%">Nombre</th>
+        <th width="30%">Descripción</th>
         </thead>
         <tbody>
         <tr *ngFor="let item of curriculum.fortalezas">
           <td>{{item.nombre}}</td>
           <td>{{item.descripcion}}</td>
-          <td>{{item.nivel}}</td>
         </tr>
         </tbody>
       </table>
