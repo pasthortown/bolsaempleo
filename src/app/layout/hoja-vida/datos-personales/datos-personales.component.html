@@ -6,14 +6,8 @@
           <div class="row">
             <div class="col-lg-12 mt-3 text-center">
               <div class="form-group">
-                <a target="_blank" class="form-control btn btn-primary"
-                   href="curriculum?idPostulante={{this.postulanteService.postulante.id}}">
-                  <i class="fa fa-id-badge" aria-hidden="true"> VER CV</i>
-                </a>
-              </div>
-              <div class="form-group">
                 <img src="{{postulanteService.postulante.fotografia}}" title="Haga click"
-                     class="form-control rounded-circle col-4 offset-4  btn"
+                     class="form-control rounded-circle col-lg-5 offset-1 btn text-center"
                      (click)="fileInput.click()" width="150px" height="120px">
                 <input type="file" class="form-control btn-light" id="foto" #fileInput
                        (change)="CodificarArchivo($event)" accept="image/*">
@@ -166,3 +160,10 @@
     </form>
   </div>
 </div>
+
+<!--<div class="form-group" hidden>-->
+<!--<a target="_blank" class="form-control btn btn-primary"-->
+<!--href="curriculum?idPostulante={{this.postulanteService.postulante.id}}">-->
+<!--<i class="fa fa-id-badge" aria-hidden="true"> VER CV</i>-->
+<!--</a>-->
+<!--</div>-->

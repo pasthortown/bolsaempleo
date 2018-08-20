@@ -141,7 +141,7 @@
                     </label>
                     <select class="form-control" id="editDuracionOferta" name="editDuracionOferta"
                             (change)="calcularFechaFinOferta()"
-                            [(ngModel)]="duracionOferta" >
+                            [(ngModel)]="duracionOferta">
                       <option value="0">SELECCIONE...</option>
                       <option value="7">1 SEMANA</option>
                       <option value="14">2 SEMANAS</option>
@@ -245,7 +245,9 @@
                 </label>
                 <select class="form-control" id="campoAmplio" name="campoAmplio"
                         [(ngModel)]="ofertaSeleccionada.campoAmplio"
-                        (click)="filtrarCamposEspecificos(ofertaSeleccionada)" required>
+                        (click)="filtrarCamposEspecificos(ofertaSeleccionada)"
+                        (change)="filtrarCamposEspecificos(ofertaSeleccionada)"
+                        required>
                   <option value="">SELECCIONE...</option>
                   <option *ngFor="let campoAmplio of areas">
                     {{campoAmplio.campo_amplio}}

@@ -175,7 +175,7 @@ export class OfertasLaboralesComponent implements OnInit {
     this.ofertaSeleccionada.idEmpresa = this.empresa.id;
     this.ofertaSeleccionada.codigo = this.ofertaSeleccionada.codigo.toUpperCase();
     this.ofertaSeleccionada.contacto = this.ofertaSeleccionada.contacto.toUpperCase();
-    this.ofertaSeleccionada.correoElectronico = this.ofertaSeleccionada.correoElectronico.toUpperCase();
+    this.ofertaSeleccionada.correoElectronico = this.ofertaSeleccionada.correoElectronico.toLowerCase();
     this.ofertaSeleccionada.cargo = this.ofertaSeleccionada.cargo.toUpperCase();
     this.ofertaSeleccionada.actividades = this.ofertaSeleccionada.actividades.toUpperCase();
     if (this.ofertaSeleccionada.informacionAdicional != null) {
@@ -206,7 +206,9 @@ export class OfertasLaboralesComponent implements OnInit {
     this.ofertaSeleccionada.correoElectronico = this.ofertaSeleccionada.correoElectronico.toUpperCase();
     this.ofertaSeleccionada.cargo = this.ofertaSeleccionada.cargo.toUpperCase();
     this.ofertaSeleccionada.actividades = this.ofertaSeleccionada.actividades.toUpperCase();
-    this.ofertaSeleccionada.informacionAdicional = this.ofertaSeleccionada.informacionAdicional.toUpperCase();
+    if (this.ofertaSeleccionada.informacionAdicional != null) {
+      this.ofertaSeleccionada.informacionAdicional = this.ofertaSeleccionada.informacionAdicional.toUpperCase();
+    }
     this.firebaseBDDService.firebaseControllerOfertas.actualizar(this.ofertaSeleccionada);
     swal({
       position: 'center',

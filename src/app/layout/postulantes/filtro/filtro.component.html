@@ -117,7 +117,7 @@
   <div class="modal-header">
     <div class="input-group">
       <a target="_blank" class="btn btn-primary btn-lg mr-1"
-         href="curriculum?idPostulante={{this.postulanteSeleccionado.id}}">
+         href="curriculum?idPostulante={{this.postulanteSeleccionado.id}}" hidden>
         <i class="fa fa-print" aria-hidden="true"> Imprimir CV</i>
       </a>
       <button class="btn btn-success btn-lg pull-right" title="Contactar" (click)="c('aplicar')">
@@ -395,7 +395,7 @@
   </div>
   <div class="modal-footer">
     <a target="_blank" class="btn btn-primary btn-lg"
-       href="curriculum?idPostulante={{this.postulanteSeleccionado.id}}">
+       href="curriculum?idPostulante={{this.postulanteSeleccionado.id}}" hidden>
       <i class="fa fa-print" aria-hidden="true"> Imprimir CV</i>
     </a>
     <button class="btn btn-success btn-lg" title="Contactar" (click)="c('aplicar')">

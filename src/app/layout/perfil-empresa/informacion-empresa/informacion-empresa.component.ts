@@ -39,8 +39,10 @@ export class InformacionEmpresaComponent implements OnInit {
   }
 
   actualizar() {
+    if (this.empresaService.empresa.paginaWeb != null) {
+      this.empresaService.empresa.paginaWeb = this.empresaService.empresa.paginaWeb.toLowerCase();
+    }
     this.empresaService.empresa.nombreComercial = this.empresaService.empresa.nombreComercial.toUpperCase();
-    this.empresaService.empresa.paginaWeb = this.empresaService.empresa.paginaWeb.toLowerCase();
     this.empresaService.empresa.correoElectronico = this.empresaService.empresa.correoElectronico.toLowerCase();
     this.empresaService.empresa.direccion = this.empresaService.empresa.direccion.toUpperCase();
     this.empresaService.empresa.actividadEconomica = this.empresaService.empresa.actividadEconomica.toUpperCase();
