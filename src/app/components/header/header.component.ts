@@ -16,7 +16,6 @@ export class HeaderComponent implements OnInit {
   contadorPostulantes: number;
   contadorOfertas: number;
   totalOfertas: number;
-  titulo: string;
 
   constructor(public router: Router,
               public authService: AuthService,
@@ -24,14 +23,12 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.titulo = catalogos.tituloMenuPrincipal;
     this.contarEmpresas();
     this.contarPostulantes();
     this.contarOfertas();
   }
 
   cerrarSesion() {
-    this.titulo = '';
     this.authService.logout();
   }
 
@@ -55,7 +52,4 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  cambiarTitulo(nombre) {
-    this.titulo = nombre;
-  }
 }

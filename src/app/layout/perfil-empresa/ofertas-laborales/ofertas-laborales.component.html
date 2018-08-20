@@ -81,7 +81,7 @@
                   <b class="text-danger">*</b> Código:
                 </label>
                 <input class="form-control text-uppercase" id="editCodigo" name="editCodigo"
-                       [(ngModel)]="oferta.codigo"
+                       [(ngModel)]="ofertaSeleccionada.codigo"
                        placeholder="Código de la oferta" required>
               </div>
 
@@ -90,8 +90,10 @@
                 <label for="editProvincia" class="col-form-label">
                   <b class="text-danger">*</b> Provincia:
                 </label>
-                <select class="form-control" name="idCIudad" id="editProvincia" [(ngModel)]="oferta.provincia"
-                        (click)="filtrarCantones(oferta)" (change)="filtrarCantones(oferta)" required>
+                <select class="form-control" name="idCIudad" id="editProvincia"
+                        [(ngModel)]="ofertaSeleccionada.provincia"
+                        (click)="filtrarCantones(ofertaSeleccionada)" (change)="filtrarCantones(ofertaSeleccionada)"
+                        required>
                   <option value="">
                     SELECCIONE...
                   </option>
@@ -106,7 +108,8 @@
                 <label for="editCanton" class="col-form-label">
                   <b class="text-danger">*</b> Cantón:
                 </label>
-                <select class="form-control" name="idCIudad" id="editCanton" [(ngModel)]="oferta.canton" required>
+                <select class="form-control" name="idCIudad" id="editCanton" [(ngModel)]="ofertaSeleccionada.canton"
+                        required>
                   <option value="">
                     SELECCIONE...
                   </option>
@@ -118,15 +121,34 @@
 
               <!-- Inicio Publicacion !-->
               <div class="form-group datepicker-input">
-                <label for="editInicioPublicacion" class="col-form-label">
-                  <b class="text-danger">*</b> Inicio Publicación:
-                </label>
-                <div class="input-group datepicker-input">
-                  <input [(ngModel)]="oferta.inicioPublicacion" class="form-control" id="editInicioPublicacion"
-                         placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d1="ngbDatepicker" required>
-                  <button class="input-group-addon" (click)="d1.toggle()" type="button">
-                    <span class="fa fa-calendar"></span>
-                  </button>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <label for="editInicioPublicacion" class="col-form-label">
+                      <b class="text-danger">*</b> Inicio Publicación:
+                    </label>
+                    <div class="input-group datepicker-input">
+                      <input [(ngModel)]="ofertaSeleccionada.inicioPublicacion" class="form-control"
+                             id="editInicioPublicacion"
+                             placeholder="yyyy-mm-dd" name="dp1" ngbDatepicker #d1="ngbDatepicker" required>
+                      <button class="input-group-addon" (click)="d1.toggle()" type="button">
+                        <span class="fa fa-calendar"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <label for="editDuracionOferta" class="col-form-label">
+                      <b class="text-danger">*</b> Duración:
+                    </label>
+                    <select class="form-control" id="editDuracionOferta" name="editDuracionOferta"
+                            (change)="calcularFechaFinOferta()"
+                            [(ngModel)]="duracionOferta" required>
+                      <option value="0">SELECCIONE...</option>
+                      <option value="7">1 SEMANA</option>
+                      <option value="14">2 SEMANAS</option>
+                      <option value="21">3 SEMANAS</option>
+                      <option value="28">4 SEMANAS</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -136,8 +158,8 @@
                   <b class="text-danger">*</b> Fin Publicación:
                 </label>
                 <div class="input-group datepicker-input">
-                  <input [(ngModel)]="oferta.finPublicacion" class="form-control" id="editFinPublicacion"
-                         placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d2="ngbDatepicker" required>
+                  <input [(ngModel)]="ofertaSeleccionada.finPublicacion" class="form-control" id="editFinPublicacion"
+                         placeholder="yyyy-mm-dd" name="dp2" ngbDatepicker #d2="ngbDatepicker" required>
                   <button class="input-group-addon" (click)="d2.toggle()" type="button">
                     <span class="fa fa-calendar"></span>
                   </button>
@@ -151,7 +173,7 @@
                   <b class="text-danger">*</b> Contacto:
                 </label>
                 <input class="form-control text-uppercase" id="editContacto" name="editContacto"
-                       [(ngModel)]="oferta.contacto"
+                       [(ngModel)]="ofertaSeleccionada.contacto"
                        placeholder="Nombres y Apellidos" required>
               </div>
 
@@ -161,7 +183,7 @@
                   <b class="text-danger">*</b> Correo Electrónico:
                 </label>
                 <input type="email" class="form-control text-lowercase" id="editCorreoElectronico"
-                       name="editCorreoElectronico" [(ngModel)]="oferta.correoElectronico"
+                       name="editCorreoElectronico" [(ngModel)]="ofertaSeleccionada.correoElectronico"
                        placeholder="contacto@midominio.com" required>
               </div>
 
@@ -171,7 +193,7 @@
                   <b class="text-danger">*</b> Teléfono Fijo:
                 </label>
                 <input type="text" class="form-control" id="editTelefonoFijo" name="editTelefonoFijo"
-                       [(ngModel)]="oferta.telefonoFijo" placeholder="Ej. 023545432" required>
+                       [(ngModel)]="ofertaSeleccionada.telefonoFijo" placeholder="Ej. 023545432" required>
               </div>
 
               <!-- Telefono Celular !-->
@@ -180,7 +202,7 @@
                   Teléfono Celular:
                 </label>
                 <input type="text" class="form-control" id="editTelefonoCelular" name="editTelefonoCelular"
-                       [(ngModel)]="oferta.telefonoCelular" placeholder="Ej. 0987654321">
+                       [(ngModel)]="ofertaSeleccionada.telefonoCelular" placeholder="Ej. 0987654321">
               </div>
 
               <!-- Tipo Contrato !-->
@@ -189,7 +211,7 @@
                   <b class="text-danger">*</b> Tipo Contrato:
                 </label>
                 <select class="form-control" id="editTipoContrato" name="editTipoContrato"
-                        [(ngModel)]="oferta.tipoContrato" required>
+                        [(ngModel)]="ofertaSeleccionada.tipoContrato" required>
                   <option value="">SELECCIONE...</option>
                   <option value="TIEMPO COMPLETO">TIEMPO COMPLETO</option>
                   <option value="OCASIONAL">OCASIONAL</option>
@@ -213,7 +235,7 @@
                   <b class="text-danger">*</b> Cargo:
                 </label>
                 <input class="form-control text-uppercase" name="editCargo" id="editCargo"
-                       [(ngModel)]="oferta.cargo"
+                       [(ngModel)]="ofertaSeleccionada.cargo"
                        placeholder="Nomre del puesto de trabajo" required>
               </div>
               <!-- Campo Amplio !-->
@@ -221,8 +243,9 @@
                 <label for="campoAmplio" class="col-form-label">
                   <b class="text-danger">*</b> Campo Amplio:
                 </label>
-                <select class="form-control" id="campoAmplio" name="campoAmplio" [(ngModel)]="oferta.campoAmplio"
-                        (click)="filtrarCamposEspecificos(oferta)" required>
+                <select class="form-control" id="campoAmplio" name="campoAmplio"
+                        [(ngModel)]="ofertaSeleccionada.campoAmplio"
+                        (click)="filtrarCamposEspecificos(ofertaSeleccionada)" required>
                   <option value="">SELECCIONE...</option>
                   <option *ngFor="let campoAmplio of areas">
                     {{campoAmplio.campo_amplio}}
@@ -235,7 +258,7 @@
                   <b class="text-danger">*</b> Campo Específico:
                 </label>
                 <select class="form-control" id="campoEspecifico" name="campoEspecifico"
-                        [(ngModel)]="oferta.campoEspecifico" required>
+                        [(ngModel)]="ofertaSeleccionada.campoEspecifico" required>
                   <option value="">SELECCIONE...</option>
                   <option *ngFor="let campoEspecifico of camposEspecificos">
                     {{campoEspecifico.nombre}}
@@ -248,7 +271,7 @@
                   <b class="text-danger">*</b> Horas Capacitación:
                 </label>
                 <select class="form-control" id="horasCapacitacion" name="horasCapacitacion"
-                        [(ngModel)]="oferta.horasCapacitacion" placeholder="Horas de Capacitación" required>
+                        [(ngModel)]="ofertaSeleccionada.horasCapacitacion" placeholder="Horas de Capacitación" required>
                   <option value="">SELECCIONE...</option>
                   <option value="NINGUNA">NINGUNA</option>
                   <option value="0 - 40">0 - 40</option>
@@ -265,7 +288,8 @@
                 <label for="remuneracion" class="col-form-label">
                   <b class="text-danger">*</b> Remuneración:
                 </label>
-                <select class="form-control" id="remuneracion" name="remuneracion" [(ngModel)]="oferta.remuneracion"
+                <select class="form-control" id="remuneracion" name="remuneracion"
+                        [(ngModel)]="ofertaSeleccionada.remuneracion"
                         placeholder="Remuneración" required>
                   <option value="">SELECCIONE...</option>
                   <option value="SIN ESPECIFICAR">SIN ESPECIFICAR</option>
@@ -286,7 +310,7 @@
                   <b class="text-danger">*</b> Tiempo Experiencia:
                 </label>
                 <select class="form-control" id="experiencia" name="experiencia"
-                        [(ngModel)]="oferta.tiempoExperiencia"
+                        [(ngModel)]="ofertaSeleccionada.tiempoExperiencia"
                         placeholder="Tiempo de Experiencia" required>
                   <option value="">SELECCIONE...</option>
                   <option value="NINGUNO">NINGUNO</option>
@@ -302,7 +326,7 @@
                 <label for="jornada" class="col-form-label">
                   <b class="text-danger">*</b> Jornada:
                 </label>
-                <select class="form-control" id="jornada" name="jornada" [(ngModel)]="oferta.jornada"
+                <select class="form-control" id="jornada" name="jornada" [(ngModel)]="ofertaSeleccionada.jornada"
                         placeholder="Jornada" required>
                   <option value="">SELECCIONE...</option>
                   <option value="COMPLETA">COMPLETA</option>
@@ -315,7 +339,7 @@
                   <b class="text-danger">*</b> Puestos:
                 </label>
                 <input type="number" min="1" class="form-control" id="numeroPuestos" name="numeroPuestos"
-                       [(ngModel)]="oferta.numeroPuestos"
+                       [(ngModel)]="ofertaSeleccionada.numeroPuestos"
                        placeholder="# DE PUESTOS DE TRABAJO" required>
               </div>
             </div>
@@ -328,7 +352,7 @@
                   <b class="text-danger">*</b> Actividades:
                 </label>
                 <textarea class="form-control text-uppercase" rows="5" id="actividades" name="actividades"
-                          [(ngModel)]="oferta.actividades"
+                          [(ngModel)]="ofertaSeleccionada.actividades"
                           placeholder="ACTIVIDADES QUE VA A REALIZAR EN EL PUESTO DE TRABAJO" required></textarea>
               </div>
               <!-- Informacion Adicional !-->
@@ -338,7 +362,8 @@
                 </label>
                 <textarea class="form-control text-uppercase" rows="5" id="informacionAdicional"
                           name="informacionAdicional"
-                          [(ngModel)]="oferta.informacionAdicional" placeholder="Información Adicional"></textarea>
+                          [(ngModel)]="ofertaSeleccionada.informacionAdicional"
+                          placeholder="Información Adicional"></textarea>
               </div>
             </div>
           </div>

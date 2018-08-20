@@ -21,14 +21,11 @@ import {AuthService} from '../../../services/auth.service';
 export class OfertasLaboralesComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
   empresa: Empresa;
-  oferta: Oferta;
+  ofertaSeleccionada: Oferta;
   ofertas: Array<Oferta>;
   postulantes: Array<Postulante>;
   postulaciones: Array<Postulacion>;
-  srcFoto1: string;
-  srcFoto2: string;
-  srcFoto3: string;
-  srcFoto4: string;
+  duracionOferta: number;
   areas: Array<any>;
   provincias: Array<any>;
   cantones: Array<any>;
@@ -41,14 +38,11 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.duracionOferta = 0;
     this.empresa = this.authService.usuarioNegocio as Empresa;
     this.habilitarCamposEspecificos = false;
     this.habilitarCantones = false;
-    this.oferta = new Oferta();
-    this.srcFoto1 = 'assets/img/prueba/empresa1.png';
-    this.srcFoto2 = 'assets/img/prueba/empresa2.png';
-    this.srcFoto3 = 'assets/img/prueba/empresa3.png';
-    this.srcFoto4 = 'assets/img/prueba/empresa4.png';
+    this.ofertaSeleccionada = new Oferta();
     this.leerOfertas();
     this.areas = catalogos.titulos;
     this.provincias = catalogos.provincias;
@@ -58,34 +52,36 @@ export class OfertasLaboralesComponent implements OnInit {
     this.cantones = [];
     this.habilitarCantones = true;
     this.provincias.forEach(value => {
-      if (item.provincia == value.provincia) {
+      if (item.provincia === value.provincia) {
         this.cantones = value.cantones;
       }
     });
   }
 
-  CodificarArchivo(event) {
-    const reader = new FileReader();
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.srcFoto1 = 'data:' + file.type + ';base64,' + reader.result.split(',')[1];
-      };
-    }
+  calcularFechaFinOferta() {
+    const fecha =
+      this.ofertaSeleccionada.inicioPublicacion.year
+      + '-' + this.ofertaSeleccionada.inicioPublicacion.month
+      + '-' + this.ofertaSeleccionada.inicioPublicacion.day;
+    const fechaInicio = new Date(fecha);
+    fechaInicio.setDate(fechaInicio.getDate() + this.duracionOferta);
+    this.ofertaSeleccionada.finPublicacion.year = fechaInicio.getFullYear();
+    this.ofertaSeleccionada.finPublicacion.month = fechaInicio.getMonth();
+    this.ofertaSeleccionada.finPublicacion.day = fechaInicio.getDate();
+
   }
 
   openOfertaLaboral(content, oferta: Oferta, editar) {
-    const errores = this.validarCamposObligatorios(this.oferta);
+    const errores = this.validarCamposObligatorios(this.ofertaSeleccionada);
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
     if (editar) {
       this.filtrarCamposEspecificos(oferta);
       this.filtrarCantones(oferta);
-      this.oferta = oferta;
+      this.ofertaSeleccionada = oferta;
     } else {
-      this.oferta = new Oferta();
+      this.ofertaSeleccionada = new Oferta();
     }
 
     this.modalService.open(content, logoutScreenOptions)
@@ -93,7 +89,7 @@ export class OfertasLaboralesComponent implements OnInit {
       .then((resultAceptar => {
         if (true) {
           if (resultAceptar === 'save') {
-            if (!this.compararFechas(this.oferta.inicioPublicacion, this.oferta.finPublicacion)) {
+            if (!this.compararFechas(this.ofertaSeleccionada.inicioPublicacion, this.ofertaSeleccionada.finPublicacion)) {
               return;
             }
             if (editar) {
@@ -175,16 +171,16 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   insertar() {
-    this.oferta.idEmpresa = this.empresa.id;
-    this.oferta.codigo = this.oferta.codigo.toUpperCase();
-    this.oferta.contacto = this.oferta.contacto.toUpperCase();
-    this.oferta.correoElectronico = this.oferta.correoElectronico.toUpperCase();
-    this.oferta.cargo = this.oferta.cargo.toUpperCase();
-    this.oferta.actividades = this.oferta.actividades.toUpperCase();
-    if (this.oferta.informacionAdicional != null) {
-      this.oferta.informacionAdicional = this.oferta.informacionAdicional.toUpperCase();
+    this.ofertaSeleccionada.idEmpresa = this.empresa.id;
+    this.ofertaSeleccionada.codigo = this.ofertaSeleccionada.codigo.toUpperCase();
+    this.ofertaSeleccionada.contacto = this.ofertaSeleccionada.contacto.toUpperCase();
+    this.ofertaSeleccionada.correoElectronico = this.ofertaSeleccionada.correoElectronico.toUpperCase();
+    this.ofertaSeleccionada.cargo = this.ofertaSeleccionada.cargo.toUpperCase();
+    this.ofertaSeleccionada.actividades = this.ofertaSeleccionada.actividades.toUpperCase();
+    if (this.ofertaSeleccionada.informacionAdicional != null) {
+      this.ofertaSeleccionada.informacionAdicional = this.ofertaSeleccionada.informacionAdicional.toUpperCase();
     }
-    this.firebaseBDDService.firebaseControllerOfertas.insertar(this.oferta);
+    this.firebaseBDDService.firebaseControllerOfertas.insertar(this.ofertaSeleccionada);
     swal({
       position: 'center',
       type: 'success',
@@ -199,18 +195,18 @@ export class OfertasLaboralesComponent implements OnInit {
     if (this.ofertaService.ofertas == null) {
       this.ofertaService.ofertas = [];
     }
-    this.ofertaService.ofertas.push(this.oferta);
-    this.oferta = new Oferta();
+    this.ofertaService.ofertas.push(this.ofertaSeleccionada);
+    this.ofertaSeleccionada = new Oferta();
   }
 
   actualizar() {
-    this.oferta.codigo = this.oferta.codigo.toUpperCase();
-    this.oferta.contacto = this.oferta.contacto.toUpperCase();
-    this.oferta.correoElectronico = this.oferta.correoElectronico.toUpperCase();
-    this.oferta.cargo = this.oferta.cargo.toUpperCase();
-    this.oferta.actividades = this.oferta.actividades.toUpperCase();
-    this.oferta.informacionAdicional = this.oferta.informacionAdicional.toUpperCase();
-    this.firebaseBDDService.firebaseControllerOfertas.actualizar(this.oferta);
+    this.ofertaSeleccionada.codigo = this.ofertaSeleccionada.codigo.toUpperCase();
+    this.ofertaSeleccionada.contacto = this.ofertaSeleccionada.contacto.toUpperCase();
+    this.ofertaSeleccionada.correoElectronico = this.ofertaSeleccionada.correoElectronico.toUpperCase();
+    this.ofertaSeleccionada.cargo = this.ofertaSeleccionada.cargo.toUpperCase();
+    this.ofertaSeleccionada.actividades = this.ofertaSeleccionada.actividades.toUpperCase();
+    this.ofertaSeleccionada.informacionAdicional = this.ofertaSeleccionada.informacionAdicional.toUpperCase();
+    this.firebaseBDDService.firebaseControllerOfertas.actualizar(this.ofertaSeleccionada);
     swal({
       position: 'center',
       type: 'success',
@@ -245,7 +241,6 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   leerOfertas() {
-    console.log(this.empresa.id);
     this.firebaseBDDService.firebaseControllerOfertas.getId('idEmpresa', this.empresa.id)
       .snapshotChanges().subscribe(items => {
       this.ofertaService.ofertas = [];
@@ -253,7 +248,6 @@ export class OfertasLaboralesComponent implements OnInit {
         let itemLeido: Oferta;
         itemLeido = element.payload.val() as Oferta;
         if (itemLeido.id === '0') {
-          console.log(itemLeido.cargo);
           itemLeido.id = element.key;
           this.firebaseBDDService.firebaseControllerOfertas.actualizar(itemLeido);
         }
@@ -267,7 +261,7 @@ export class OfertasLaboralesComponent implements OnInit {
     this.camposEspecificos = [];
     this.habilitarCamposEspecificos = true;
     this.areas.forEach(value => {
-      if (item.campoAmplio == value.campo_amplio) {
+      if (item.campoAmplio === value.campo_amplio) {
         this.camposEspecificos = value.campos_especificos;
       }
     });
@@ -275,7 +269,7 @@ export class OfertasLaboralesComponent implements OnInit {
 
   validarCamposObligatorios(oferta: Oferta): string {
     let errores = 'save';
-    if (oferta.codigo == null || oferta.codigo == '') {
+    if (oferta.codigo == null || oferta.codigo === '') {
       errores = errores + 'Código';
     }
     // if (oferta.contacto == null || oferta.contacto == '') {errores = errores + ', Contacto';}

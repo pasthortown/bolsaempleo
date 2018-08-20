@@ -1,50 +1,17 @@
-<nav class="navbar navbar-expand-lg fixed-top headerSecction">
-  <div class="navbar-brand">
-    <a [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']"
-       (click)="cambiarTitulo('TALENTO HUMANO')">
+<nav class="navbar navbar-expand-md fixed-top headerSecction navbar-dark">
+  <button class="navbar-toggler" data-toggle="collapse" data-target="collapse_target">
+    <span class="navbar-toggler-icon text-white"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapse_target">
+    <a [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']" class="navbar-brand">
       <img src="assets/img/institutos.png" height="90px"/>
     </a>
-  </div>
-  <div class="navbar-collapse">
-    <!--Menu de Mi perfil-->
-    <ul class="navbar-nav mr-auto" *ngIf="authService.rolActual=='p' || authService.rolActual=='e'">
-      <li class="nav-item dropdown" ngbDropdown>
-        <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
-          <i>
-            <img src="{{authService.usuarioNegocio.fotografia}}" class="rounded-circle"
-                 style="width: 70px; height: 70px;">
-          </i>&nbsp;{{authService.displayNameOrEmail()}}
-          <b class="caret"></b>
-        </a>
-        <div ngbDropdownMenu>
-          <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/postulaciones']"
-             (click)="cambiarTitulo('')"
-             [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-book"></i>&nbsp;Mis Postulaciones
-          </a>
-          <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/hoja-vida']"
-             (click)="cambiarTitulo('')"
-             [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-address-card"></i>&nbsp;Hoja de Vida
-          </a>
-          <a *ngIf="authService.rolActual=='e'" class="dropdown-item" [routerLink]="['/perfil-empresa']"
-             (click)="cambiarTitulo('')"
-             [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-address-card"></i>&nbsp;Perfil de mi Empresa
-          </a>
-          <a *ngIf="authService.rolActual=='e' || authService.rolActual=='p'" class="dropdown-item"
-             (click)="cerrarSesion()">
-            <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
-          </a>
-        </div>
-      </li>
-    </ul>
 
-    <!--Menus de About, Buscar, Iniciar Sesion y Registrate-->
-    <ul class="navbar ml-auto">
+    <!--Menu de Mi perfil-->
+    <ul class="navbar-nav mr-auto">
       <!--Acerca-->
       <li class="nav-item dropdown pretty-button">
-        <a class="nav-link text-white" (click)="cambiarTitulo('ACERCA')" [routerLink]="['/about']"
+        <a class="nav-link text-white" [routerLink]="['/about']"
            [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-info-circle"></i>&nbsp;Acerca de Nosotros
         </a>
@@ -56,12 +23,10 @@
           <i class="fa fa-fw fa-search"></i>&nbsp;Buscador
         </a>
         <div ngbDropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']"
-             (click)="cambiarTitulo('TALENTO HUMANO')">
+          <a class="dropdown-item" [routerLink]="['/postulantes']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-users"></i>&nbsp;Profesionales
           </a>
-          <a class="dropdown-item" [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']"
-             (click)="cambiarTitulo('OFERTAS LABORALES')">
+          <a class="dropdown-item" [routerLink]="['/empresas']" [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-briefcase"></i>&nbsp;Ofertas Laborales
           </a>
         </div>
@@ -69,7 +34,7 @@
       <!--Iniciar Sesion-->
       <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
         <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
-           (click)="cambiarTitulo('INICIAR SESIÓN')" [routerLink]="['/login']"
+           [routerLink]="['/login']"
            [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-sign-in"></i>&nbsp;Iniciar Sesión
         </a>
@@ -77,17 +42,46 @@
       <!--Registrate-->
       <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
         <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
-           (click)="cambiarTitulo('INICIAR SESIÓN')" [routerLink]="['/empresa']"
-           [routerLinkActive]="['router-link-active']">
+           [routerLink]="['/empresa']" [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-building"></i>&nbsp;Registro Empresas
         </a>
       </li>
       <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
         <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
-           (click)="cambiarTitulo('INICIAR SESIÓN')" [routerLink]="['/persona']"
-           [routerLinkActive]="['router-link-active']">
+           [routerLink]="['/persona']" [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-users"></i>&nbsp;Registro Profesionales
         </a>
+      </li>
+
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      <!--Mi perfil-->
+      <li class="nav-item dropdown" ngbDropdown *ngIf="authService.rolActual=='p' || authService.rolActual=='e'">
+        <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
+          <i>
+            <img src="{{authService.usuarioNegocio.fotografia}}" class="rounded-circle"
+                 style="width: 70px; height: 70px;">
+          </i> Mi Perfil
+          <b class="caret"></b>
+        </a>
+        <div ngbDropdownMenu>
+          <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/postulaciones']"
+             [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-book"></i>&nbsp;Mis Postulaciones
+          </a>
+          <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/hoja-vida']"
+             [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-address-card"></i>&nbsp;Hoja de Vida
+          </a>
+          <a *ngIf="authService.rolActual=='e'" class="dropdown-item" [routerLink]="['/perfil-empresa']"
+             [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-address-card"></i>&nbsp;Datos Personales
+          </a>
+          <a *ngIf="authService.rolActual=='e' || authService.rolActual=='p'" class="dropdown-item"
+             (click)="cerrarSesion()">
+            <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
+          </a>
+        </div>
       </li>
     </ul>
   </div>
