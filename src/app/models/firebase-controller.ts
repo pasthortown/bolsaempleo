@@ -39,6 +39,12 @@ export class FirebaseController {
     });
   }
 
+  getAllAux() {
+    return this.firebase.list(this.coleccionBDD, ref => {
+      return ref.orderByChild('provincia').equalTo('PICHINCHA');
+    });
+  }
+
   getPagina(pagina: number, registrosPorPagina: number, campo: string) {
     return this.coleccion = this.firebase.list(this.coleccionBDD, ref => {
       return ref.orderByChild(campo).limitToFirst(registrosPorPagina * pagina);

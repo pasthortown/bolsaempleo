@@ -24,13 +24,8 @@ export class FiltroComponent implements OnInit {
   postulacion: Postulacion;
   postulante: Postulante;
   ofertas: Array<Oferta>;
-  ofertasAux: Array<Oferta>;
   areas: Array<any>;
   etiquetaPrincipal: string;
-  etiquetaSecundaria: string;
-  campoAmplioSeleccionado: string;
-  campoEspecificoSeleccionado: string;
-  flag: string;
   criterioBusqueda: string;
   pagina = 0;
   registrosPorPagina = 10;
@@ -53,12 +48,12 @@ export class FiltroComponent implements OnInit {
     this.oferta = new Oferta();
     this.areas = catalogos.titulos;
     this.ofertas = new Array<Oferta>();
-    this.paginacion(true);
+    // this.paginacion(true);
     this.getTotalPaginas();
     if (this.postulante != null) {
       this.getMisPostulaciones();
     }
-    // this.leerOfertas();
+    this.leerOfertas();
     // this.contarOfertasPorCampoEspecifico();
   }
 
@@ -105,7 +100,7 @@ export class FiltroComponent implements OnInit {
   }
 
   leerOfertas() {
-    this.firebaseBDDService.firebaseControllerOfertas.getAll()
+    this.firebaseBDDService.firebaseControllerOfertas.getAllAux()
       .snapshotChanges().subscribe(items => {
       this.ofertas = [];
       if (items.length === 0) {
