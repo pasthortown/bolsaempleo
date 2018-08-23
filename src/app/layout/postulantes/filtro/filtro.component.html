@@ -80,7 +80,7 @@
             {{estudioRealizado.titulo}}
           </h4>
           <p><b>Mi Perfil</b></p>
-          <p style="overflow: auto; height: 200px">{{postulanteActual.acercaDeMi}}</p>
+          <p style="overflow: auto; height: 200px" class="text-justify">{{postulanteActual.acercaDeMi}}</p>
           <button class="btn btn-primary btn-sm pull-right" *ngIf="authService.rolActual=='e'"
                   (click)="openPostulante(modalPostulante,postulanteActual,true)">
             <span class="fa fa-info-circle"></span>&nbsp;Más Información
