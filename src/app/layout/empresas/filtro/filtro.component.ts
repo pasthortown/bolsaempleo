@@ -48,12 +48,12 @@ export class FiltroComponent implements OnInit {
     this.oferta = new Oferta();
     this.areas = catalogos.titulos;
     this.ofertas = new Array<Oferta>();
-    // this.paginacion(true);
+    this.paginacion(true);
     this.getTotalPaginas();
     if (this.postulante != null) {
       this.getMisPostulaciones();
     }
-    this.leerOfertas();
+    // this.leerOfertas();
     // this.contarOfertasPorCampoEspecifico();
   }
 
@@ -286,7 +286,7 @@ export class FiltroComponent implements OnInit {
 
   validarSesion() {
     swal({
-      title: 'Para ver más Información tiene que iniciar sesión como Postulante',
+      title: 'Para ver más Información tiene que iniciar sesión como Profesional',
       text: '',
       type: 'info',
       showCancelButton: true,
