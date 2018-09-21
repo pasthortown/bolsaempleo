@@ -15,14 +15,14 @@
                     Identificación:
                   </label>
                   <input class="form-control" name="identificacion" id="identificacion"
-                         [(ngModel)]="postulante.identificacion" placeholder="Ej. 1734839443" required>
+                         [(ngModel)]="professional.identity" placeholder="Ej. 1734839443" required>
                 </div>
                 <div class="col-6">
                   <label for="nacionalidad" class="col-form-label">
                     <b class="text-danger">*</b> Nacionalidad:
                   </label>
                   <select class="form-control" name="nacionalidad" id="nacionalidad"
-                          [(ngModel)]="postulante.nacionalidad" required>
+                          [(ngModel)]="professional.nationality" required>
                     <option value="">SELECCIONE...</option>
                     <option value="{{nacionalidad.descripcion}}" *ngFor="let nacionalidad of nacionalidades">
                       {{nacionalidad.descripcion}}
@@ -31,13 +31,21 @@
                 </div>
               </div>
             </div>
-            <!-- nombreCompleto !-->
+            <!-- nombres !-->
             <div class="form-group">
-              <label for="nombreCompleto" class="col-form-label">
+              <label for="nombres" class="col-form-label">
                 <b class="text-danger">*</b> Nombre Completo:
               </label>
-              <input class="form-control text-uppercase" name="nombreCompleto" id="nombreCompleto"
-                     [(ngModel)]="postulante.nombreCompleto" placeholder="Apellidos y Nombres" required>
+              <input class="form-control text-uppercase" name="nombres" id="nombres"
+                     [(ngModel)]="professional.first_name" placeholder="Nombres" required>
+            </div>
+            <!-- apellidos !-->
+            <div class="form-group">
+              <label for="apellidos" class="col-form-label">
+                <b class="text-danger">*</b> Nombre Completo:
+              </label>
+              <input class="form-control text-uppercase" name="apellidos" id="apellidos"
+                     [(ngModel)]="professional.last_name" placeholder="Apellidos" required>
             </div>
             <!-- Estado civil !-->
             <div class="form-group">
@@ -46,7 +54,8 @@
                   <label for="estadoCivil" class="col-form-label">
                     <b class="text-danger">*</b> Estado civil:
                   </label>
-                  <select [(ngModel)]="postulante.estadoCivil" class="form-control" id="estadoCivil" name="estadoCivil"
+                  <select [(ngModel)]="professional.civil_status" class="form-control" id="estadoCivil"
+                          name="estadoCivil"
                           required>
                     <option value="" selected>SELECCIONE...</option>
                     <option value="{{estadoCivil.descripcion}}" *ngFor="let estadoCivil of estadosCiviles">
@@ -58,13 +67,8 @@
                   <label for="fechaDeNacimiento" class="col-form-label">
                     <b class="text-danger">*</b> Fecha de Nacimiento:
                   </label>
-                  <div class="input-group datepicker-input">
-                    <input [(ngModel)]="postulante.fechaDeNacimiento" class="form-control" placeholder="yyyy-mm-dd"
-                           name="dp" ngbDatepicker #d="ngbDatepicker" required>
-                    <button class="btn input-group-addon" (click)="d.toggle()" type="button">
-                      <span class="fa fa-calendar"></span>
-                    </button>
-                  </div>
+                  <input type="date" class="form-control" name="fechaDeNacimiento" id="fechaDeNacimiento"
+                         [(ngModel)]="professional.birthdate"  required>
                 </div>
               </div>
             </div>
@@ -72,12 +76,12 @@
             <div class="form-group">
               <div class="row">
                 <div class="col-6">
-                  <label for="contrasena" class="col-form-label">
+                  <label for="password" class="col-form-label">
                     <b class="text-danger">*</b> Contraseña:
                   </label>
                   <div class="input-group">
-                    <input type="password" class="form-control" name="contrasena" id="contrasena"
-                           [(ngModel)]="contrasena" (keyup)="validarClave()" required>
+                    <input type="password" class="form-control" name="password" id="password"
+                           [(ngModel)]="password" (keyup)="validarClave()" required>
                     <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
                        *ngIf="claveValida"></i>
                     <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
@@ -91,7 +95,7 @@
                   <div class="input-group">
                     <input type="password" class="form-control" name="confirmar" id="confirmar"
                            (keyup)="validarClaveConfirmacion()"
-                           [(ngModel)]="confirmacion" required>
+                           [(ngModel)]="password_confirmation" required>
                     <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
                        *ngIf="claveConfirmacionValida"></i>
                     <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
@@ -110,14 +114,14 @@
                     <b class="text-danger">*</b> Teléfono:
                   </label>
                   <input type="tel" class="form-control" name="telefonoCelular" id="telefonoCelular"
-                         [(ngModel)]="postulante.telefono" placeholder="Ej. 0987654321" required>
+                         [(ngModel)]="professional.phone" placeholder="Ej. 0987654321" required>
                 </div>
                 <div class="col-lg-6">
                   <label for="sexo" class="col-form-label">
                     <b class="text-danger">*</b> Sexo:
                   </label>
                   <select class="form-control" name="sexo" id="sexo"
-                          [(ngModel)]="postulante.sexo" required>
+                          [(ngModel)]="professional.gender" required>
                     <option value="">SELECCIONE...</option>
                     <option value="{{sexo.descripcion}}" *ngFor="let sexo of sexos">
                       {{sexo.descripcion}}
@@ -133,8 +137,8 @@
               </label>
               <div class="input-group">
                 <input type="email" class="form-control text-lowercase " name="correoElectronico"
-                       id="correoElectronico" (keyup)="validarCorreoElectronico(postulante.correoElectronico)"
-                       [(ngModel)]="postulante.correoElectronico" placeholder="Ej. contacto@gmail.com" required>
+                       id="correoElectronico" (keyup)="validarCorreoElectronico(user.email)"
+                       [(ngModel)]="user.email" placeholder="Ej. contacto@gmail.com" required>
 
                 <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
                    *ngIf="correoValido"></i>
@@ -148,7 +152,7 @@
                 <b class="text-danger">*</b> Dirección de Domicilio:
               </label>
               <textarea rows="5" class="form-control text-uppercase" name="direccion" id="direccion"
-                        [(ngModel)]="postulante.direccion" required
+                        [(ngModel)]="professional.address" required
                         placeholder="EJ. PROVINCIA, CANTÓN, CALLE PRINCIPAL, CALLE SECUNDARIA, NÚMERO DE CASA"></textarea>
             </div>
           </div>

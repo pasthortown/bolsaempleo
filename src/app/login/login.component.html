@@ -17,7 +17,7 @@
                   <div class="form-content">
                     <div class="form-group row">
                       <input type="text" class="form-control input-underline input-lg" id="email"
-                             [(ngModel)]="user.email" name="email" placeholder="Correo Electrónico"
+                             [(ngModel)]="user.user_name" name="email" placeholder="Correo Electrónico"
                              required>
                     </div>
                     <div class="form-group row">
@@ -43,7 +43,7 @@
                       <app-loader></app-loader>
                     </div>
                   </div>
-                  <button type="submit" class="col-8 btn btn-primary mr-1" (click)="signInWithEmail()"
+                  <button type="submit" class="col-8 btn btn-primary mr-1" (click)="login()"
                           [disabled]="formCtrl.form.invalid">
                     <i class="fa fa-fw fa-sign-in"></i>&nbsp;Ingresar
                   </button>

@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
 import {EmpresaService} from '../../../services/empresa.service';
 import {Empresa} from '../../../models/empresa';
 import {Contactado} from '../../../models/contactado';
+import {PostulanteService} from '../../../services/postulante.service';
 
 @Component({
   selector: 'app-filtro',
@@ -34,7 +35,8 @@ export class FiltroComponent implements OnInit {
   @ViewChild('cuerpoHojaVida') cuerpoHojaVida: ElementRef;
   @ViewChild('pieHojaVida') pieHojaVida: ElementRef;
 
-  constructor(public authService: AuthService,
+  constructor(private dataService: PostulanteService,
+              public authService: AuthService,
               private empresaService: EmpresaService,
               private modalService: NgbModal,
               private firebaseBDDService: FirebaseBDDService,
@@ -42,6 +44,7 @@ export class FiltroComponent implements OnInit {
   }
 
   ngOnInit() {
+//    this.getAllOffers();
     this.empresaService.empresa = this.authService.obtenerUsuario() as Empresa;
     this.contactado = new Contactado();
     this.postulantes = [];
@@ -50,6 +53,7 @@ export class FiltroComponent implements OnInit {
     this.postulanteSeleccionado = new Postulante();
     this.postulanteSeleccionado.nombreCompleto = '';
     this.filtro = catalogos.titulos;
+
   }
 
   getTotalPaginas() {
@@ -275,4 +279,7 @@ export class FiltroComponent implements OnInit {
       });
     });
   }
+
+
+
 }

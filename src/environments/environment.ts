@@ -11,9 +11,11 @@ export const environment = {
       projectId: 'bolsaempleo-104d4',
       storageBucket: 'bolsaempleo-104d4.appspot.com',
       messagingSenderId: '823621543685'
-    }
+    },
+    apiUrl: 'http://localhost:8089/'
   }
 ;
+
 
 /*
  * In development mode, to ignore zone related error stack frames such as

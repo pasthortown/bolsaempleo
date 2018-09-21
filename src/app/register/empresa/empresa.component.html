@@ -4,7 +4,7 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
-      <form name="empresaform" method="post" #formCtrl="ngForm">
+      <form name="companyForm" method="post" #formCtrl="ngForm">
         <div class="row">
           <div class="col-lg-6">
             <!-- Identificacion !-->
@@ -15,13 +15,13 @@
                     <b class="text-danger">*</b> Identificación:
                   </label>
                   <input class="form-control" name="identificacion" id="identificacion" required
-                         [(ngModel)]="empresa.identificacion" placeholder="Ej. 1234567890001">
+                         [(ngModel)]="company.identity" placeholder="Ej. 1234567890001">
                 </div>
                 <div class="col-6">
                   <label for="naturaleza" class="col-form-label">
                     Naturaleza:
                   </label>
-                  <select class="form-control" name="naturaleza" id="naturaleza" [(ngModel)]="empresa.naturaleza"
+                  <select class="form-control" name="naturaleza" id="naturaleza" [(ngModel)]="company.nature"
                           required>
                     <option value="" selected>SELECCIONE...</option>
                     <option value="PÚBLICA">PÚBLICA</option>
@@ -37,18 +37,18 @@
                 <b class="text-danger">*</b> Nombre Comercial:
               </label>
               <input type="text" class="form-control text-uppercase" name="nombreComercial" id="nombreComercial"
-                     [(ngModel)]="empresa.nombreComercial" required>
+                     [(ngModel)]="company.trade_name" required>
             </div>
             <!-- Contraseña !-->
             <div class="form-group">
               <div class="row">
                 <div class="col-6">
-                  <label for="contrasena" class="col-form-label">
+                  <label for="password" class="col-form-label">
                     <b class="text-danger">*</b> Contraseña:
                   </label>
                   <div class="input-group">
-                    <input type="password" class="form-control" name="contrasena" id="contrasena"
-                           [(ngModel)]="contrasena" (keyup)="validarClave()" required>
+                    <input type="password" class="form-control" name="password" id="password"
+                           [(ngModel)]="password" (keyup)="validarClave()" required>
                     <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
                        *ngIf="claveValida"></i>
                     <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
@@ -62,7 +62,7 @@
                   <div class="input-group">
                     <input type="password" class="form-control" name="confirmar" id="confirmar"
                            (keyup)="validarClaveConfirmacion()"
-                           [(ngModel)]="confirmacion" required>
+                           [(ngModel)]="password_confirmation" required>
                     <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
                        *ngIf="claveConfirmacionValida"></i>
                     <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
@@ -77,7 +77,7 @@
                 <b class="text-danger">*</b> Actividad Comercial:
               </label>
               <textarea rows="3" class="form-control text-uppercase" name="actividadEconomica" id="actividadEconomica"
-                        [(ngModel)]="empresa.actividadEconomica" required></textarea>
+                        [(ngModel)]="company.comercial_activity" required></textarea>
             </div>
           </div>
           <div class="col-lg-6">
@@ -89,14 +89,14 @@
                     Teléfono celular:
                   </label>
                   <input type="tel" class="form-control" name="telefonoCelular" id="telefonoCelular"
-                         [(ngModel)]="empresa.telefonoCelular" placeholder="Ej. 0987654321">
+                         [(ngModel)]="company.cell_phone" placeholder="Ej. 0987654321">
                 </div>
                 <div class="col-6">
                   <label for="telefonoFijo" class="col-form-label">
                     <b class="text-danger">*</b> Teléfono fijo:
                   </label>
                   <input type="tel" class="form-control" name="telefonoFijo" id="telefonoFijo"
-                         [(ngModel)]="empresa.telefonoFijo" placeholder="Ej. 0234567890" required>
+                         [(ngModel)]="company.phone" placeholder="Ej. 0234567890" required>
                 </div>
               </div>
             </div>
@@ -107,8 +107,8 @@
               </label>
               <div class="input-group">
                 <input type="email" class="form-control text-lowercase" name="correoElectronico" id="correoElectronico"
-                       (keyup)="validarCorreoElectronico(empresa.correoElectronico)"
-                       [(ngModel)]="empresa.correoElectronico" placeholder="Ej. contacto@midominio.com" required>
+                       (keyup)="validarCorreoElectronico(user.email)"
+                       [(ngModel)]="user.email" placeholder="Ej. contacto@midominio.com" required>
                 <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
                    *ngIf="correoValido"></i>
                 <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
@@ -123,7 +123,7 @@
               <div class="input-group">
                 <span class="btn-info btn-lg input-group-prepend">www.</span>
                 <input class="form-control text-lowercase" name="paginaWeb" id="paginaWeb"
-                       [(ngModel)]="empresa.paginaWeb" (keyup)="validarPaginaWeb(empresa.paginaWeb)"
+                       [(ngModel)]="company.web_page" (keyup)="validarPaginaWeb(company.web_page)"
                        placeholder="midominio.com">
                 <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
                    *ngIf="paginaWebValida"></i>
@@ -138,7 +138,7 @@
               </label>
               <textarea rows="3" class="form-control text-uppercase" name="direccion" id="direccion"
                         placeholder="EJ. PROVINCIA, CANTÓN, CALLE PRINCIPAL, CALLE SECUNDARIA, NÚMERO DE CASA"
-                        [(ngModel)]="empresa.direccion" required></textarea>
+                        [(ngModel)]="company.address" required></textarea>
             </div>
           </div>
         </div>

@@ -12,6 +12,7 @@ import {Postulante} from '../../../models/postulante';
 import {Router} from '@angular/router';
 import {PostulacionDiccionario} from '../../../models/miPostulacionDiccionario';
 import {PostulanteService} from '../../../services/postulante.service';
+import {Offer} from '../../../models/offer';
 
 @Component({
   selector: 'app-filtro-ofertas',
@@ -32,6 +33,11 @@ export class FiltroComponent implements OnInit {
   totalPaginas = 1;
   campo = 'estudiosRealizados/0/tipo_titulo';
 
+  offers: Offer;
+  actual_page: number;
+  records_per_page: number;
+  total_pages: number;
+
   constructor(private modalService: NgbModal,
               public empresaService: EmpresaService,
               private postulanteService: PostulanteService,
@@ -42,6 +48,10 @@ export class FiltroComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.actual_page = 1;
+    this.records_per_page = 5;
+    this.total_pages = 1;
+    this.getAllOffers();
     this.criterioBusqueda = '';
     this.postulante = this.authService.obtenerUsuario();
     this.postulacion = new Postulacion();
@@ -73,30 +83,20 @@ export class FiltroComponent implements OnInit {
 
   paginacion(siguiente: boolean) {
     if (siguiente) {
-      if (this.pagina === this.totalPaginas) {
+      if (this.actual_page === this.total_pages) {
         return;
       } else {
-        this.pagina++;
+        this.actual_page++;
       }
     } else {
-      if (this.pagina === 1) {
+      if (this.actual_page === 1) {
         return;
       } else {
-        this.pagina--;
+        this.actual_page--;
       }
     }
-    this.ofertas = [];
-    this.firebaseBDDService.firebaseControllerOfertas.getPagina(this.pagina, this.registrosPorPagina, this.campo)
-      .snapshotChanges()
-      .subscribe(items => {
-        let i = (this.pagina - 1) * this.registrosPorPagina;
-        while (i < items.length) {
-          let itemLeido: Oferta;
-          itemLeido = items[i].payload.val() as Oferta;
-          this.ofertas.push(itemLeido);
-          i++;
-        }
-      });
+    this.getAllOffers();
+
   }
 
   leerOfertas() {
@@ -324,5 +324,14 @@ export class FiltroComponent implements OnInit {
       }
     });
     return toReturn;
+  }
+
+  getAllOffers(): void {
+    this.empresaService.getAllOffers(this.actual_page, this.records_per_page).subscribe(response => {
+
+      this.offers = response['data'];
+      this.total_pages = response['total'];
+      console.log(response['total']);
+    });
   }
 }

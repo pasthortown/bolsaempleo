@@ -78,9 +78,26 @@
       </div>
     </div>
     <!--Grid de Ofertas-->
+    <div class="row mt-3">
+      <div class="col-12">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)" tabindex="-1" (click)="paginacion(false)">Previous</a>
+            </li>
+            <li class="page-item disabled">
+              <a class="page-link" href="javascript:void(0)">{{actual_page}} de {{total_pages}}</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)" (click)="paginacion(true)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
     <div class="row" style="overflow: auto">
       <div class="col-lg-12">
-        <div class="card mb-2" *ngFor="let ofertaActual of ofertas">
+        <div class="card mb-2" *ngFor="let ofertaActual of offers">
           <div class="card-header">
             <div class="row">
               <div class="col-lg-9 col-sm-12">
@@ -93,7 +110,7 @@
                     </a>
                   </ng-template>
                   <ng-template #elseBLock>
-                    <h6 class="titulo1" style="color: #007bff">{{ofertaActual.cargo}}</h6>
+                    <h6 class="titulo1" style="color: #007bff">{{ofertaActual.position}}</h6>
                   </ng-template>
                 </h6>
                 <h6 class="text-muted texto">
@@ -110,11 +127,7 @@
                     </th>
                     <td class="texto text-left text-muted">
                       <i>
-                        {{
-                        ofertaActual.inicioPublicacion.year
-                        + '/' + ofertaActual.inicioPublicacion.month
-                        + '/' + ofertaActual.inicioPublicacion.day
-                        }}
+                        {{ofertaActual.start_date}}
                       </i>
                     </td>
                   </tr>
@@ -124,10 +137,7 @@
                     </th>
                     <td class="text-left text-muted">
                       <i class="texto">
-                        {{ofertaActual.finPublicacion.year
-                        + '/' + ofertaActual.finPublicacion.month
-                        + '/' + ofertaActual.finPublicacion.day
-                        }}
+                        {{ofertaActual.finish_date}}
                       </i>
                     </td>
                   </tr>
@@ -140,7 +150,7 @@
             <div class="row">
               <div class="col-lg-12">
                 <p class="text-muted texto" style="overflow: auto;">
-                  {{ofertaActual.actividades}}
+                  {{ofertaActual.activities}}
                 </p>
                 <button class="btn btn-primary btn-sm pull-right" *ngIf="authService.rolActual=='p'"
                         (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
@@ -164,7 +174,7 @@
               <a class="page-link" href="javascript:void(0)" tabindex="-1" (click)="paginacion(false)">Previous</a>
             </li>
             <li class="page-item disabled">
-              <a class="page-link" href="javascript:void(0)">{{pagina}} de {{totalPaginas}}</a>
+              <a class="page-link" href="javascript:void(0)">{{actual_page}} de {{total_pages}}</a>
             </li>
             <li class="page-item">
               <a class="page-link" href="javascript:void(0)" (click)="paginacion(true)">Next</a>
@@ -189,7 +199,6 @@
     <div class="card">
       <div class="card-header bg-primary">
         <h3 class="text-white">Oferta Laboral</h3>
-
       </div>
       <div class="card-body m-1">
         <div class="row">

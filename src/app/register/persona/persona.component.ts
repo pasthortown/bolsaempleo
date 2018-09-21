@@ -6,6 +6,10 @@ import {AuthService} from '../../services/auth.service';
 import {Router} from '@angular/router';
 import swal from 'sweetalert2';
 import {catalogos} from '../../../environments/catalogos';
+import {RegisterService} from '../../services/register.service';
+import {Company} from '../../models/company';
+import {User} from '../../models/user';
+import {Professional} from '../../models/professional';
 
 @Component({
   selector: 'app-persona',
@@ -13,9 +17,10 @@ import {catalogos} from '../../../environments/catalogos';
   styleUrls: ['./persona.component.css']
 })
 export class PersonaComponent implements OnInit {
-  postulante: Postulante;
-  contrasena: string;
-  confirmacion: string;
+  professional: Professional;
+  user: User;
+  password: string;
+  password_confirmation: string;
   nacionalidades: Array<any>;
   estadosCiviles: Array<any>;
   sexos: Array<any>;
@@ -23,38 +28,35 @@ export class PersonaComponent implements OnInit {
   claveValida: boolean;
   claveConfirmacionValida: boolean;
 
-  constructor(private postulanteService: PostulanteService,
-              private firebaseBDDService: FirebaseBDDService,
-              public authService: AuthService,
-              private _router: Router) {
+  constructor(
+    private registerService: RegisterService,
+    private postulanteService: PostulanteService,
+    private firebaseBDDService: FirebaseBDDService,
+    public authService: AuthService,
+    private _router: Router) {
   }
 
   ngOnInit() {
     this.correoValido = false;
     this.claveValida = false;
     this.claveConfirmacionValida = false;
+    this.professional = new Professional();
+    this.user = new User();
     this.nacionalidades = catalogos.nacionalidades;
-    this.postulante = new Postulante();
     this.estadosCiviles = catalogos.estadosCiviles;
     this.sexos = catalogos.sexos;
   }
 
-  estaCompleto(): boolean {
-    if (!this.postulante.correoElectronico || !this.contrasena) {
-      return false;
-    }
-    return true;
-  }
 
   validarClave(): boolean {
-    if (this.confirmacion == null || this.confirmacion.length == 0) {
-      if (this.contrasena.length < 6) {
+    if (this.password_confirmation == null || this.password_confirmation.length === 0) {
+      if (this.password.length < 6) {
         this.claveValida = false;
       } else {
         this.claveValida = true;
       }
     } else {
-      if (this.contrasena == this.confirmacion && this.contrasena.length >= 6) {
+      if (this.password === this.password_confirmation && this.password.length >= 6) {
         this.claveValida = true;
         this.claveConfirmacionValida = true;
       } else {
@@ -67,15 +69,15 @@ export class PersonaComponent implements OnInit {
   }
 
   validarClaveConfirmacion(): boolean {
-    console.log(this.contrasena);
-    if (this.contrasena == null || this.contrasena.length == 0) {
-      if (this.confirmacion.length < 6) {
+    console.log(this.password);
+    if (this.password == null || this.password.length === 0) {
+      if (this.password_confirmation.length < 6) {
         this.claveConfirmacionValida = false;
       } else {
         this.claveConfirmacionValida = true;
       }
     } else {
-      if (this.contrasena == this.confirmacion && this.contrasena.length >= 6) {
+      if (this.password === this.password_confirmation && this.password.length >= 6) {
         this.claveValida = true;
         this.claveConfirmacionValida = true;
       } else {
@@ -98,60 +100,77 @@ export class PersonaComponent implements OnInit {
 
   }
 
-  validarFormulario(registro: Postulante): string {
+  validarFormulario(dataUser: User): string {
     let errores = '';
-    if (this.contrasena.length < 6 || this.confirmacion.length < 6) {
+    if (this.password.length < 6 || this.password_confirmation.length < 6) {
       errores += 'La contraseña debe tener más de 6 caracteres';
     }
 
-    if (!this.validarCorreoElectronico(registro.correoElectronico)) {
+    if (!this.validarCorreoElectronico(dataUser.email)) {
       if (errores.length > 0) {
         errores += ' - ';
       }
       errores += 'Correo electrónico no válido';
     }
-    if (this.confirmacion !== this.contrasena) {
+    if (this.password_confirmation !== this.password) {
       if (errores.length > 0) {
         errores += ' - ';
       }
       errores += 'Las contraseñas no coinciden';
     }
-    if (registro.correoElectronico.length > 0) {
-      const correo = registro.correoElectronico.split('', 1);
+    if (dataUser.email.length > 0) {
+      const correo = dataUser.email.split('', 1);
       console.log(correo);
     }
     return errores;
   }
 
   registrar() {
-    const validacion = this.validarFormulario(this.postulante);
+    console.log('fecha');
+    console.log(this.professional.birthdate);
+    const validacion = this.validarFormulario(this.user);
     if (validacion === '') {
-      this.postulante.nombreCompleto.toUpperCase();
-      this.postulante.correoElectronico.toLowerCase();
-      this.postulante.direccion.toUpperCase();
-      this.authService.createUserWithEmailAndPassword(this.postulante.correoElectronico, this.contrasena)
-        .then(x => {
-          this.postulanteService.postulante = this.postulante;
-          this.firebaseBDDService.firebaseControllerPostulantes.insertar(this.postulanteService.postulante);
+      this.professional.first_name.toUpperCase();
+      this.user.email.toLowerCase();
+      this.professional.address.toUpperCase();
+      this.user.name = this.professional.first_name + ' ' + this.professional.last_name;
+      this.user.user_name = this.professional.identity;
+      this.user.password = this.password;
+      const data = {'professional': this.professional, 'user': this.user};
+      this.registerService.createProfessionalUser(data).subscribe(
+        response => {
           swal({
-            position: 'center',
-            type: 'success',
-            title: 'Registro de postulante',
-            text: 'Registro Satisfactorio',
-            showConfirmButton: false,
-            timer: 2000
-          });
+              position: 'center',
+              type: 'success',
+              title: 'Registro de Empresa',
+              text: 'Registro Satisfactorio',
+              showConfirmButton: false,
+              timer: 2000
+            }
+          );
           this._router.navigate(['/login']);
-        }).catch(error => {
-        swal({
-          position: 'center',
-          type: 'error',
-          title: 'Registro de postulante',
-          text: 'Se produjo un error',
-          showConfirmButton: false,
-          timer: 2000
-        });
-      });
+        },
+        error => {
+          if (error.valueOf().error.errorInfo[0] === '23505') {
+            swal({
+              position: 'center',
+              type: 'error',
+              title: 'El usuario ya se encuentra registrado',
+              text: 'Verifique la identificación y/o correo electrónico',
+              showConfirmButton: true
+            });
+          }
+          if (error.valueOf().error.errorInfo[0] === '22007') {
+            swal({
+              position: 'center',
+              type: 'error',
+              title: 'El formato de la fecha no es el correcto',
+              text: '',
+              showConfirmButton: true
+            });
+          }
+        }
+      );
     } else {
       swal({
         position: 'center',

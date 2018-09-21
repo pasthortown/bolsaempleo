@@ -4,6 +4,8 @@ import {Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import swal from 'sweetalert2';
 import {environment} from '../../environments/environment';
+import {RegisterService} from '../services/register.service';
+import {User} from '../models/user';
 
 @Component({
   selector: 'app-login',
@@ -12,39 +14,39 @@ import {environment} from '../../environments/environment';
   animations: [routerTransition()]
 })
 export class LoginComponent implements OnInit {
-  user = {
-    email: '',
-    password: ''
-  };
-  usuario: firebase.User;
+  user: User;
   mostrarMensajeError = false;
   isLoading = false;
 
-  constructor(public router: Router, public authService: AuthService) {
+  constructor(public _router: Router, private registerService: RegisterService) {
   }
 
   ngOnInit() {
+    this.user = new User();
   }
 
-  signInWithEmail() {
+  login() {
     this.isLoading = true;
-    this.authService.signInRegular(this.user.email, this.user.password)
-      .then((res) => {
+    const data = {'user': this.user};
+    this.registerService.login(data).subscribe(
+      response => {
+        localStorage.setItem('user_logged', JSON.stringify(response));
+        const userLogged = JSON.parse(localStorage.getItem('user_logged')) as User;
         this.isLoading = false;
-        console.log(this.isLoading);
-      })
-      .catch((err) => {
-        this.isLoading = false;
-        console.log(this.isLoading);
-        swal({
-          position: 'center',
-          type: 'warning',
-          title: 'Usuario y/o Contraseña Incorrectos',
-          text: 'Se produjo un error al validar sus credenciales',
-          showConfirmButton: false,
-          timer: 3000
-        });
-        console.log('error: ' + err);
-      });
+        this._router.navigate(['/']);
+      },
+      error => {
+        if (error.valueOf().error.errorInfo[0] === '23505') {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'El usuario ya se encuentra registrado',
+            text: 'Verifique la identificación y/o correo electrónico',
+            showConfirmButton: true
+          });
+        }
+
+      }
+    );
   }
 }
