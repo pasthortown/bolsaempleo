@@ -1,5 +1,5 @@
 export class Offer {
-  id: string;
+  id?: string;
   company_id: string;
   code: string;
   contact: string;
@@ -17,22 +17,32 @@ export class Offer {
   activities: string;
   aditional_information: string;
   experience_time: string;
-  start_date: string;
-  finish_date: string;
+  start_date: Date;
+  finish_date: Date;
   city: string;
   province: string;
   total: string;
 
   constructor() {
-    this.id = '0';
-    this.number_jobs = 1;
+    this.code = '';
+    this.contact = '';
+    this.email = '';
+    this.phone = '';
+    this.cell_phone = '';
     this.contract_type = '';
-    this.remuneration = '';
-    this.experience_time = '';
-    this.training_hours = '';
-    this.working_day = '';
-    // this.provincia = '';
+    this.position = '';
     this.broad_field = '';
     this.specific_field = '';
+    this.training_hours = '';
+    this.remuneration = '';
+    this.working_day = '';
+    this.number_jobs = 1;
+    this.activities = '';
+    this.aditional_information = '';
+    this.experience_time = '';
+    this.start_date = new Date();
+    this.finish_date = new Date();
+    this.city = '';
+    this.province = '';
   }
 }

@@ -10,6 +10,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class RegisterService {
+  headers: HttpHeaders;
 
   constructor(public _http: HttpClient) {
   }
@@ -33,5 +34,12 @@ export class RegisterService {
     const url = environment.apiUrl + 'login';
     console.log(url);
     return this._http.post(url, JSON.stringify(data));
+  }
+
+  logout(data: any): Observable<any> {
+    const url = environment.apiUrl + 'logout';
+    console.log('api_token');
+    this.headers = new HttpHeaders().set('Api-Token', data['user']['api_token']);
+    return this._http.post(url, JSON.stringify(data), {headers: this.headers});
   }
 }

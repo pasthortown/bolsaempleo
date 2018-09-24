@@ -8,6 +8,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 })
 export class EmpresaService {
   empresa: Empresa;
+  headers = new HttpHeaders();
 
   constructor(private authService: AuthService, public _http: HttpClient) {
     this.empresa = this.authService.usuarioNegocio as Empresa;
@@ -22,6 +23,11 @@ export class EmpresaService {
     const body = {'id': 1};
     const options = {headers: headers};
     return this._http.get(url, options);
+  }
+
+  filterOffers(data: any, actual_page: number, records_per_page: number) {
+    const url = 'http://localhost:8089/offers/filter?limit=' + records_per_page + '&page=' + actual_page + '&field=id&order=ASC';
+    return this._http.post(url, JSON.stringify(data));
   }
 
 

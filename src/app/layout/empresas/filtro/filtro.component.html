@@ -14,7 +14,7 @@
         <div id="accordion" class="accordion" *ngFor="let item of areas">
           <div class="card">
             <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
-                <span class="row" (click)="filtrarPorCampoAmplio(item.campo_amplio)">
+                <span class="row" (click)="filterOffersSingle('broad_field',item.campo_amplio)">
                   <span class="col-lg-9 col-sm-12">
                     <a class="card-title campo-amplio">{{item.campo_amplio }}</a>
                   </span>
@@ -31,7 +31,7 @@
                     <tr>
                       <td width="80%">
                         <a class="campo_especifico" href="javascript:void(0)"
-                           (click)="filtrarPorCampoEspecifico(areaEspecifica.nombre)">
+                           (click)="filterOffersSingle('specific_field',areaEspecifica.nombre)">
                           {{areaEspecifica.nombre}}
                         </a>
                       </td>
@@ -60,6 +60,9 @@
             <button class="btn btn-info" type="button" (click)="filtrarPorCargo(criterioBusqueda)">
               <span class="fa fa-search"></span>&nbsp;Buscar
             </button>
+            <button class="btn btn-warning ml-1" type="button" (click)="openFilter(modalFilter)">
+              <span class="fa fa-sliders"></span>&nbsp;Filtrar
+            </button>
           </div>
         </div>
       </div>
@@ -67,12 +70,19 @@
     <!--Etiquetas de Filtro-->
     <div class="row mt-2">
       <div class="col-12">
-        <div class="input-group">
-          <div *ngIf="etiquetaPrincipal">
-            <label class="btn-warning">{{etiquetaPrincipal}}</label>
-            <button type="button" class="close" aria-label="Close" (click)="borrarFiltro()">
-              <span aria-hidden="true">&times;</span>
-            </button>
+        <div class="form-group">
+          <div class="input-group">
+            <div *ngFor="let filter of filters" class="ml-2">
+              <div *ngIf="filter && filter!=''">
+                <label class="btn-link text-danger">
+                  {{filter}}
+                </label>
+                <button type="button" class="input-group-prepend close" aria-label="Close"
+                        (click)="borrarFiltro(filter)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -115,7 +125,7 @@
                 </h6>
                 <h6 class="text-muted texto">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  {{ofertaActual.canton + ', ' +ofertaActual.provincia}}
+                  {{ofertaActual.city+ ', ' +ofertaActual.province}}
                 </h6>
               </div>
               <div class="col-lg-3 col-sm-12">
@@ -434,6 +444,116 @@
     </button>
     <button *ngIf="aplicada(oferta.id)" class="btn btn-success btn-lg" (click)="c('close')">
       <i class="fa fa-check" aria-hidden="true"> Postulado Satisfactoriamente</i>
+    </button>
+    <button class="btn btn-danger btn-lg" title="Cancelar" (click)="c('close')">
+      <i class="fa fa-close" aria-hidden="true"> Cancelar</i>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalFilter let-c="close" let-d="dismiss">
+  <div class="modal-header  bg-warning">
+    <h4 class="modal-title">
+      <h4><i class="fa fa-filter" aria-hidden="true"></i> Filtros</h4>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body m-1">
+        <div class="row">
+          <div class="col-lg-6">
+            <!-- Codigo !-->
+            <div class="form-group">
+              <label for="filterCode" class="col-form-label">
+                <b>Código:</b>
+              </label>
+              <input class="form-control text-uppercase" id="filterCode" [(ngModel)]="filters[0]">
+            </div>
+            <!-- Provincia !-->
+            <div class="form-group ">
+              <label for="editProvincia" class="col-form-label">
+                <b>Provincia:</b>
+              </label>
+              <select class="form-control" name="idProvincia" id="editProvincia"
+                      [(ngModel)]="filters[1]"
+                      (click)="filtrarCantones(filters[1])" (change)="filtrarCantones(filters[1])"
+                      required>
+                <option value="" selected>
+                  SELECCIONE...
+                </option>
+                <option *ngFor="let province of provinces">
+                  {{province.provincia}}
+                </option>
+              </select>
+            </div>
+            <!-- Camp Especifico !-->
+            <div class="form-group ">
+              <label for="campoAmplio" class="col-form-label">
+                <b>Campo Amplio:</b>
+              </label>
+              <select class="form-control" id="campoAmplio" name="campoAmplio"
+                      [(ngModel)]="filters[2]"
+                      (click)="filtrarCamposEspecificos(filters[2])"
+                      (change)="filtrarCamposEspecificos(filters[2])"
+                      required>
+                <option value="">SELECCIONE...</option>
+                <option *ngFor="let campoAmplio of areas">
+                  {{campoAmplio.campo_amplio}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <!-- Cargo !-->
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label for="editCargo" class="col-form-label ">
+                    <b>Cargo:</b>
+                  </label>
+                  <input class="form-control text-uppercase" name="cargo" id="editCargo" [(ngModel)]="filters[3]">
+                </div>
+              </div>
+            </div>
+            <!-- Canton !-->
+            <div class="form-group ">
+              <label for="editCanton" class="col-form-label">
+                <b>Cantón:</b>
+              </label>
+              <select class="form-control" name="idCIudad" id="editCanton" [(ngModel)]="filters[4]"
+                      required>
+                <option value="">
+                  SELECCIONE UNA PROVINCIA...
+                </option>
+                <option *ngFor="let canton of cantones">
+                  {{canton.nombre}}
+                </option>
+              </select>
+            </div>
+            <!-- Especifico !-->
+            <div class="form-group ">
+              <label for="campoEspecifico" class="col-form-label">
+                <b>Campo Específico:</b>
+              </label>
+              <select class="form-control" id="campoEspecifico" name="campoEspecifico"
+                      [(ngModel)]="filters[5]" required>
+                <option value="">SELECCIONE CAMPO AMPLIO...</option>
+                <option *ngFor="let campoEspecifico of camposEspecificos">
+                  {{campoEspecifico.nombre}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success btn-lg" title="Aplicar" (click)="c('aplicar')">
+      <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
     </button>
     <button class="btn btn-danger btn-lg" title="Cancelar" (click)="c('close')">
       <i class="fa fa-close" aria-hidden="true"> Cancelar</i>

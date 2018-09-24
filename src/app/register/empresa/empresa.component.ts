@@ -128,7 +128,7 @@ export class EmpresaComponent implements OnInit {
     return errores;
   }
 
-  registrar() {
+  register() {
     const validacion = this.validarFormulario(this.user);
     if (validacion === '') {
       this.company.trade_name = this.company.trade_name.toUpperCase();
@@ -145,7 +145,6 @@ export class EmpresaComponent implements OnInit {
 
       this.registerService.createCompanyUser(data).subscribe(
         response => {
-
           swal({
               position: 'center',
               type: 'success',
@@ -155,7 +154,9 @@ export class EmpresaComponent implements OnInit {
               timer: 2000
             }
           );
-          this._router.navigate(['/login']);
+          sessionStorage.setItem('user_logged', JSON.stringify(response));
+
+          location.replace('/postulantes');
         },
         error => {
           if (error.valueOf().error.errorInfo[0] === '23505') {

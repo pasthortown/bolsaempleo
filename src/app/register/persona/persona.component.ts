@@ -148,7 +148,8 @@ export class PersonaComponent implements OnInit {
               timer: 2000
             }
           );
-          this._router.navigate(['/login']);
+          sessionStorage.setItem('user_logged', JSON.stringify(response));
+          location.replace('/empresas');
         },
         error => {
           if (error.valueOf().error.errorInfo[0] === '23505') {

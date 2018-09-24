@@ -32,24 +32,20 @@
       </li>
 
       <!--Iniciar Sesion-->
-      <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
-        <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
-           [routerLink]="['/login']"
-           [routerLinkActive]="['router-link-active']">
+      <li class="nav-item dropdown pretty-button" *ngIf="userLogged.role!='1' && userLogged.role!='2'">
+        <a class="nav-link text-white" [routerLink]="['/login']" [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-sign-in"></i>&nbsp;Iniciar Sesión
         </a>
       </li>
       <!--Registro Empresas-->
-      <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
-        <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
-           [routerLink]="['/empresa']" [routerLinkActive]="['router-link-active']">
+      <li class="nav-item dropdown pretty-button" *ngIf="userLogged.role!='2' && userLogged.role!='1'">
+        <a class="nav-link text-white" [routerLink]="['/empresa']" [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-building"></i>&nbsp;Registro Empresas
         </a>
       </li>
       <!--Registro Postulantes-->
-      <li class="nav-item dropdown pretty-button" *ngIf="authService.rolActual!='e' && authService.rolActual!='p'">
-        <a *ngIf="authService.rolActual!='e' && authService.rolActual!='p' " class="nav-link text-white"
-           [routerLink]="['/persona']" [routerLinkActive]="['router-link-active']">
+      <li class="nav-item dropdown pretty-button" *ngIf="userLogged.role!='1' && userLogged.role!='2'">
+        <a class="nav-link text-white" [routerLink]="['/persona']" [routerLinkActive]="['router-link-active']">
           <i class="fa fa-fw fa-users"></i>&nbsp;Registro Profesionales
         </a>
       </li>
@@ -57,30 +53,29 @@
     </ul>
     <ul class="navbar-nav ml-auto">
       <!--Mi perfil-->
-      <li class="nav-item dropdown" ngbDropdown *ngIf="authService.rolActual=='p' || authService.rolActual=='e'">
+      <li class="nav-item dropdown " ngbDropdown *ngIf="userLogged.role=='1' || userLogged.role=='2'">
         <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
           <i>
-            <img src="{{authService.usuarioNegocio.fotografia}}" class="rounded-circle"
-                 style="width: 70px; height: 70px;">
+            <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-id-512.png" class="rounded-circle"style="width: 80px; height: 80px;">
           </i> Mi Perfil
           <b class="caret"></b>
         </a>
         <div ngbDropdownMenu>
-          <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/postulaciones']"
+          <a *ngIf="userLogged.role=='1'" class="dropdown-item" [routerLink]="['/postulaciones']"
              [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-book"></i>&nbsp;Mis Postulaciones
           </a>
-          <a *ngIf="authService.rolActual=='p'" class="dropdown-item" [routerLink]="['/hoja-vida']"
+          <a *ngIf="userLogged.role=='1'" class="dropdown-item" [routerLink]="['/hoja-vida']"
              [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-address-card"></i>&nbsp;Hoja de Vida
           </a>
-          <a *ngIf="authService.rolActual=='e'" class="dropdown-item" [routerLink]="['/perfil-empresa']"
+          <a *ngIf="userLogged.role=='2'" class="dropdown-item" [routerLink]="['/perfil-empresa']"
              [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-address-card"></i>&nbsp;Datos Personales
           </a>
           <div class="dropdown-divider"></div>
-          <a *ngIf="authService.rolActual=='e' || authService.rolActual=='p'" class="dropdown-item"
-             (click)="cerrarSesion()">
+          <a *ngIf="userLogged.role=='2' || userLogged.role=='1'" class="dropdown-item"
+             (click)="logout()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
           </a>
         </div>

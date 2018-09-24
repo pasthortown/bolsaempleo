@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   user: User;
   mostrarMensajeError = false;
   isLoading = false;
+  srcFoto: string;
 
   constructor(public _router: Router, private registerService: RegisterService) {
   }
@@ -30,12 +31,28 @@ export class LoginComponent implements OnInit {
     const data = {'user': this.user};
     this.registerService.login(data).subscribe(
       response => {
-        localStorage.setItem('user_logged', JSON.stringify(response));
-        const userLogged = JSON.parse(localStorage.getItem('user_logged')) as User;
+        sessionStorage.setItem('user_logged', JSON.stringify(response));
+        const userLogged = JSON.parse(sessionStorage.getItem('user_logged')) as User;
+        if (userLogged && userLogged.role.toString() === '1') {
+          location.replace('/empresas');
+        } else if (userLogged && userLogged.role.toString() === '2') {
+          location.replace('/postulantes');
+        }
+
         this.isLoading = false;
-        this._router.navigate(['/']);
+
       },
       error => {
+        this.isLoading = false;
+        if (error.status === 401) {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Usuario y/o Contraseña incorrectas',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        }
         if (error.valueOf().error.errorInfo[0] === '23505') {
           swal({
             position: 'center',

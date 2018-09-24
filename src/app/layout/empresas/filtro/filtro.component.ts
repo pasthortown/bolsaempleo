@@ -13,6 +13,7 @@ import {Router} from '@angular/router';
 import {PostulacionDiccionario} from '../../../models/miPostulacionDiccionario';
 import {PostulanteService} from '../../../services/postulante.service';
 import {Offer} from '../../../models/offer';
+import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-filtro-ofertas',
@@ -20,6 +21,9 @@ import {Offer} from '../../../models/offer';
   styleUrls: ['./filtro.component.css']
 })
 export class FiltroComponent implements OnInit {
+  filters: Array<String>;
+  columns = new Array('code', 'province', 'specific_field', 'position', 'city', 'broad_field');
+  operators = new Array('=', '=', 'like', 'like', 'like', '=');
   oferta: Oferta;
   ofertasAplicadas = [];
   postulacion: Postulacion;
@@ -33,10 +37,15 @@ export class FiltroComponent implements OnInit {
   totalPaginas = 1;
   campo = 'estudiosRealizados/0/tipo_titulo';
 
-  offers: Offer;
+  offers: Array<Offer>;
   actual_page: number;
   records_per_page: number;
   total_pages: number;
+  provinces: Array<any>;
+  cantones: Array<any>;
+  enable_city: boolean;
+  camposEspecificos: Array<any>;
+  filterFlag: boolean;
 
   constructor(private modalService: NgbModal,
               public empresaService: EmpresaService,
@@ -48,6 +57,9 @@ export class FiltroComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.provinces = catalogos.provincias;
+    this.areas = catalogos.titulos;
+    this.filters = new Array<String>();
     this.actual_page = 1;
     this.records_per_page = 5;
     this.total_pages = 1;
@@ -56,15 +68,10 @@ export class FiltroComponent implements OnInit {
     this.postulante = this.authService.obtenerUsuario();
     this.postulacion = new Postulacion();
     this.oferta = new Oferta();
-    this.areas = catalogos.titulos;
-    this.ofertas = new Array<Oferta>();
     this.paginacion(true);
-    this.getTotalPaginas();
     if (this.postulante != null) {
       this.getMisPostulaciones();
     }
-    // this.leerOfertas();
-    // this.contarOfertasPorCampoEspecifico();
   }
 
   getTotalPaginas() {
@@ -95,7 +102,11 @@ export class FiltroComponent implements OnInit {
         this.actual_page--;
       }
     }
-    this.getAllOffers();
+    if (this.filters.length === 0) {
+      this.getAllOffers();
+    } else {
+      this.filterOffers();
+    }
 
   }
 
@@ -138,6 +149,79 @@ export class FiltroComponent implements OnInit {
       }));
   }
 
+  openFilter(content, item: Oferta, editar) {
+    const logoutScreenOptions: NgbModalOptions = {
+      size: 'lg'
+    };
+    this.oferta = item;
+    this.modalService.open(content, logoutScreenOptions)
+      .result
+      .then((resultAceptar => {
+        if (resultAceptar === 'aplicar') {
+          this.filterOffers();
+        }
+
+      }), (resultCancel => {
+
+      }));
+  }
+
+  filterOffers() {
+    this.actual_page = 1;
+    let condition = [];
+    const conditions = [];
+    for (let i = 0; i < this.filters.length; i++) {
+      if (this.filters[i] != null && this.filters[i] !== '') {
+        condition.push(this.columns[i]);
+        condition.push(this.operators[i]);
+        condition.push(this.filters[i]);
+        conditions.push(condition);
+        condition = [];
+      }
+    }
+    this.empresaService.filterOffers({'filters': {'conditions': conditions}}, this.actual_page, this.records_per_page).subscribe(
+      response => {
+        this.offers = response['offers']['data'];
+        if (response['pagination']['total'] === 0) {
+          swal({
+            title: 'Oops! No encotramos lo que estás buscando',
+            text: 'Intenta otra vez!',
+            type: 'info',
+            timer: 3500
+          });
+          this.total_pages = 1;
+        } else {
+          this.total_pages = response['pagination']['last_page'];
+        }
+      });
+  }
+
+  filterOffersSingle(column, item) {
+    this.actual_page = 1;
+    this.filters[0] = item;
+    const condition = [];
+    const conditions = [];
+    condition.push(column);
+    condition.push('like');
+    condition.push(item);
+    conditions.push(condition);
+    this.empresaService.filterOffers({'filters': {'conditions': conditions}}, this.actual_page, this.records_per_page).subscribe(
+      response => {
+        this.offers = response['offers']['data'];
+        if (response['pagination']['total'] === 0) {
+          swal({
+            title: 'Oops! No encotramos lo que estás buscando',
+            text: 'Intenta otra vez!',
+            type: 'info',
+            timer: 3500
+          });
+          this.total_pages = 1;
+        } else {
+          this.total_pages = response['pagination']['last_page'];
+        }
+      });
+  }
+
   aplicarOferta(oferta) {
     this.postulacion.idPostulante = this.postulante.id;
     this.postulacion.idOferta = oferta.id;
@@ -163,9 +247,15 @@ export class FiltroComponent implements OnInit {
     });
   }
 
-  borrarFiltro() {
+  borrarFiltro(filter) {
+    this.filters.splice(this.filters.indexOf(filter), 1);
     this.etiquetaPrincipal = '';
-    this.leerOfertas();
+    if (this.filters.length === 0) {
+      this.getAllOffers();
+    } else {
+      this.filterOffers();
+    }
+
   }
 
   filtrarPorCargo() {
@@ -238,13 +328,13 @@ export class FiltroComponent implements OnInit {
     });
   }
 
-  contarOfertasPorCampoAmplio(ofertas: Array<Oferta>) {
+  contarOfertasPorCampoAmplio(ofertas: Array<Offer>) {
     this.areas.forEach(area => {
       area.total = 0;
     });
     ofertas.forEach(oferta => {
       this.areas.forEach(area => {
-        if (oferta.campoAmplio === area.campo_amplio) {
+        if (oferta.broad_field === area.campo_amplio) {
           area.total = area.total + 1;
         }
       });
@@ -267,7 +357,7 @@ export class FiltroComponent implements OnInit {
     */
   }
 
-  contarOfertasPorCampoEspecifico(ofertas: Array<Oferta>) {
+  contarOfertasPorCampoEspecifico(ofertas: Array<Offer>) {
     this.areas.forEach(area => {
       area.campos_especificos.forEach(areaEspecifica => {
         areaEspecifica.total = 0;
@@ -276,7 +366,7 @@ export class FiltroComponent implements OnInit {
     ofertas.forEach(oferta => {
       this.areas.forEach(area => {
         area.campos_especificos.forEach(areaEspecifica => {
-          if (oferta.campoEspecifico === areaEspecifica.nombre) {
+          if (oferta.specific_field === areaEspecifica.nombre) {
             areaEspecifica.total = areaEspecifica.total + 1;
           }
         });
@@ -319,7 +409,7 @@ export class FiltroComponent implements OnInit {
   aplicada(idOferta: string) {
     let toReturn = false;
     this.ofertasAplicadas.forEach(element => {
-      if (element == idOferta) {
+      if (element === idOferta) {
         toReturn = true;
       }
     });
@@ -328,10 +418,33 @@ export class FiltroComponent implements OnInit {
 
   getAllOffers(): void {
     this.empresaService.getAllOffers(this.actual_page, this.records_per_page).subscribe(response => {
+      this.offers = response['offers']['data'];
+      this.contarOfertasPorCampoAmplio(this.offers);
+      this.contarOfertasPorCampoEspecifico(this.offers);
+      if (response['pagination']['total'] === 0) {
+        this.total_pages = 1;
+      } else {
+        this.total_pages = response['pagination']['last_page'];
+      }
+    });
+  }
 
-      this.offers = response['data'];
-      this.total_pages = response['total'];
-      console.log(response['total']);
+  filtrarCantones(item) {
+    this.cantones = [];
+    this.enable_city = true;
+    this.provinces.forEach(value => {
+      if (item === value.provincia) {
+        this.cantones = value.cantones;
+      }
+    });
+  }
+
+  filtrarCamposEspecificos(item) {
+    this.camposEspecificos = [];
+    this.areas.forEach(value => {
+      if (item === value.campo_amplio) {
+        this.camposEspecificos = value.campos_especificos;
+      }
     });
   }
 }

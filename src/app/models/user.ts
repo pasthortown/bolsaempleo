@@ -6,4 +6,5 @@ export class User {
   email: string;
   password: string;
   api_token: string;
+  role: string;
 }

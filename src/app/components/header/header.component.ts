@@ -5,6 +5,8 @@ import {FirebaseBDDService} from '../../services/firebase-bdd.service';
 import {Oferta} from '../../models/oferta';
 import swal from 'sweetalert2';
 import {catalogos} from '../../../environments/catalogos';
+import {User} from '../../models/user';
+import {RegisterService} from '../../services/register.service';
 
 @Component({
   selector: 'app-header',
@@ -16,9 +18,11 @@ export class HeaderComponent implements OnInit {
   contadorPostulantes: number;
   contadorOfertas: number;
   totalOfertas: number;
+  userLogged: User;
 
   constructor(public router: Router,
-              public authService: AuthService,
+              public _router: Router,
+              public registerService: RegisterService,
               private firebaseBDDService: FirebaseBDDService) {
   }
 
@@ -26,10 +30,34 @@ export class HeaderComponent implements OnInit {
     this.contarEmpresas();
     this.contarPostulantes();
     this.contarOfertas();
+    this.userLogged = new User();
+    if (sessionStorage.getItem('user_logged') != null) {
+      this.userLogged = JSON.parse(sessionStorage.getItem('user_logged')) as User;
+      console.log(this.userLogged.role);
+    }
   }
 
-  cerrarSesion() {
-    this.authService.logout();
+  logout() {
+    const data = {'user': this.userLogged};
+    console.log(data);
+    this.registerService.logout(data).subscribe(
+      response => {
+        sessionStorage.clear();
+        location.replace('/login');
+      },
+      error => {
+        if (error.valueOf().error.errorInfo[0] === '23505') {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'El usuario ya se encuentra registrado',
+            text: 'Verifique la identificación y/o correo electrónico',
+            showConfirmButton: true
+          });
+        }
+
+      }
+    );
   }
 
   contarEmpresas() {
