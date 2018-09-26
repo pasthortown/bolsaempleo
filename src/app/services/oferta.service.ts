@@ -1,13 +1,25 @@
 import {Injectable} from '@angular/core';
-import {Oferta} from '../models/oferta';
+import {environment} from '../../environments/environment';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OfertaService {
-  ofertas: Array<Oferta>;
+  headers: HttpHeaders;
 
-  constructor() {
-    this.ofertas = new Array<Oferta>();
+  constructor(public _http: HttpClient) {
+
   }
+
+  getAllOffers(actual_page: number, records_per_page: number) {
+    const url = environment.apiUrl + 'offers?limit=' + records_per_page + '&page=' + actual_page + '&field=id&order=ASC';
+    return this._http.get(url);
+  }
+
+  filterOffers(data: any, actual_page: number, records_per_page: number) {
+    const url = environment.apiUrl + 'offers/filter?limit=' + records_per_page + '&page=' + actual_page + '&field=id&order=ASC';
+    return this._http.post(url, JSON.stringify(data));
+  }
+
 }

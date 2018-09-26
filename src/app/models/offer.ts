@@ -1,5 +1,5 @@
 export class Offer {
-  id?: string;
+  id?: number;
   company_id: string;
   code: string;
   contact: string;

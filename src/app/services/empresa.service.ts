@@ -1,33 +1,58 @@
-import {AuthService} from './auth.service';
 import {Injectable} from '@angular/core';
 import {Empresa} from '../models/empresa';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmpresaService {
   empresa: Empresa;
-  headers = new HttpHeaders();
+  headers: HttpHeaders;
 
-  constructor(private authService: AuthService, public _http: HttpClient) {
-    this.empresa = this.authService.usuarioNegocio as Empresa;
+  constructor(public _http: HttpClient) {
   }
 
-  getAllOffers(actual_page: number, records_per_page: number) {
-    const url = 'http://localhost:8089/offers?limit=' + records_per_page + '&page=' + actual_page + '&field=id&order=ASC';
-    console.log(url);
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json');
-    headers.set('Api-Token', 'oJhjGsMcXUgIQoggInJOkQ2wFkkzjD45oWHWtx9SuKdbNh0mCzMATWQn8txh');
-    const body = {'id': 1};
-    const options = {headers: headers};
-    return this._http.get(url, options);
+  getCompany(id, api_token) {
+    const url = 'http://localhost:8089/companies/' + id;
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.get(url, {headers: this.headers});
   }
 
-  filterOffers(data: any, actual_page: number, records_per_page: number) {
-    const url = 'http://localhost:8089/offers/filter?limit=' + records_per_page + '&page=' + actual_page + '&field=id&order=ASC';
-    return this._http.post(url, JSON.stringify(data));
+  updateCompany(data: any, api_token: string) {
+    const url = 'http://localhost:8089/companies';
+    this.headers.set('Api-Token', api_token);
+    return this._http.put(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  getOffers(actual_page: number, records_per_page: number, company_id: number, api_token: string) {
+    const url = 'http://localhost:8089/companies/offers?limit=' + records_per_page + '&page=' + actual_page + '&field=id&order=ASC&user_id=' + company_id;
+    this.headers.set('Api-Token', api_token);
+    return this._http.get(url, {headers: this.headers});
+  }
+
+  getProfessionals(actual_page: number, records_per_page: number, offer_id: number, api_token: string) {
+    const url = environment.apiUrl + 'companies/professionals?limit=' + records_per_page + '&page=' + actual_page + '&field=id&order=ASC&offer_id=' + offer_id;
+    this.headers.set('Api-Token', api_token);
+    return this._http.get(url, {headers: this.headers});
+  }
+
+  createOffer(data: any, api_token: string) {
+    const url = 'http://localhost:8089/companies/offers';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.post(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  updateOffer(data: any, api_token: string) {
+    const url = 'http://localhost:8089/companies/offers';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.put(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  deleteOffer(id: number, api_token: string) {
+    const url = 'http://localhost:8089/companies?id=' + id;
+    this.headers.set('Api-Token', api_token);
+    return this._http.delete(url, {headers: this.headers});
   }
 
 

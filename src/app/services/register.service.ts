@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {Company} from '../models/company';
-import {User} from 'firebase';
-import {stringify} from 'querystring';
 import {Observable} from 'rxjs';
 
 @Injectable({
@@ -16,9 +13,7 @@ export class RegisterService {
   }
 
   createCompanyUser(data: any): Observable<any> {
-    console.log(data);
     const url = environment.apiUrl + 'users/createCompanyUser';
-    console.log(url);
     return this._http.post(url, JSON.stringify(data));
   }
 

@@ -2,6 +2,7 @@ export class Professional {
   id: string;
   identity: string;
   first_name: string;
+  email: string;
   last_name: string;
   nationality: string;
   civil_status: string;

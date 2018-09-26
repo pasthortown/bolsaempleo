@@ -56,7 +56,8 @@
       <li class="nav-item dropdown " ngbDropdown *ngIf="userLogged.role=='1' || userLogged.role=='2'">
         <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
           <i>
-            <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-id-512.png" class="rounded-circle"style="width: 80px; height: 80px;">
+            <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-id-512.png" class="rounded-circle"
+                 style="width: 80px; height: 80px;">
           </i> Mi Perfil
           <b class="caret"></b>
         </a>
@@ -68,6 +69,10 @@
           <a *ngIf="userLogged.role=='1'" class="dropdown-item" [routerLink]="['/hoja-vida']"
              [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-address-card"></i>&nbsp;Hoja de Vida
+          </a>
+          <a *ngIf="userLogged.role=='1' || userLogged.role=='2'" class="dropdown-item" [routerLink]="['/acount']"
+             [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-wrench"></i>&nbsp;Cuenta
           </a>
           <a *ngIf="userLogged.role=='2'" class="dropdown-item" [routerLink]="['/perfil-empresa']"
              [routerLinkActive]="['router-link-active']">

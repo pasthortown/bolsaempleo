@@ -48,12 +48,11 @@ export class FiltroComponent implements OnInit {
   filterFlag: boolean;
 
   constructor(private modalService: NgbModal,
-              public empresaService: EmpresaService,
+              public ofertaService: OfertaService,
               private postulanteService: PostulanteService,
               private firebaseBDDService: FirebaseBDDService,
               public authService: AuthService,
-              private router: Router,
-              public ofertaService: OfertaService) {
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -179,7 +178,7 @@ export class FiltroComponent implements OnInit {
         condition = [];
       }
     }
-    this.empresaService.filterOffers({'filters': {'conditions': conditions}}, this.actual_page, this.records_per_page).subscribe(
+    this.ofertaService.filterOffers({'filters': {'conditions': conditions}}, this.actual_page, this.records_per_page).subscribe(
       response => {
         this.offers = response['offers']['data'];
         if (response['pagination']['total'] === 0) {
@@ -205,7 +204,7 @@ export class FiltroComponent implements OnInit {
     condition.push('like');
     condition.push(item);
     conditions.push(condition);
-    this.empresaService.filterOffers({'filters': {'conditions': conditions}}, this.actual_page, this.records_per_page).subscribe(
+    this.ofertaService.filterOffers({'filters': {'conditions': conditions}}, this.actual_page, this.records_per_page).subscribe(
       response => {
         this.offers = response['offers']['data'];
         if (response['pagination']['total'] === 0) {
@@ -417,7 +416,7 @@ export class FiltroComponent implements OnInit {
   }
 
   getAllOffers(): void {
-    this.empresaService.getAllOffers(this.actual_page, this.records_per_page).subscribe(response => {
+    this.ofertaService.getAllOffers(this.actual_page, this.records_per_page).subscribe(response => {
       this.offers = response['offers']['data'];
       this.contarOfertasPorCampoAmplio(this.offers);
       this.contarOfertasPorCampoEspecifico(this.offers);

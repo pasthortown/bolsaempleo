@@ -1,9 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EmpresaService} from '../../../services/empresa.service';
-import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 import swal from 'sweetalert2';
-import {Empresa} from '../../../models/empresa';
-import {AuthService} from '../../../services/auth.service';
+import {Company} from '../../../models/company';
+import {User} from '../../../models/user';
 
 @Component({
   selector: 'app-informacion-empresa',
@@ -11,60 +10,64 @@ import {AuthService} from '../../../services/auth.service';
   styleUrls: ['./informacion-empresa.component.css']
 })
 export class InformacionEmpresaComponent implements OnInit {
-  @ViewChild('fileInput') fileInput;
   srcFoto: string;
-  empresa: Empresa;
+  company: Company;
+  userLogged: User;
 
-  constructor(public empresaService: EmpresaService,
-              private authService: AuthService,
-              private firebaseBDDService: FirebaseBDDService) {
+  constructor(public empresaService: EmpresaService) {
   }
 
   ngOnInit() {
-    this.empresa = new Empresa();
-    this.srcFoto = 'assets/img/prueba/descarga.jpg';
-    this.empresaService.empresa = this.authService.usuarioNegocio as Empresa;
-    this.leerEmpresa();
+    this.userLogged = JSON.parse(sessionStorage.getItem('user_logged')) as User;
+    this.company = new Company();
+    this.getCompany();
   }
 
-  CodificarArchivo(event) {
-    const reader = new FileReader();
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.empresaService.empresa.fotografia = 'data:' + file.type + ';base64,' + reader.result.split(',')[1];
-      };
-    }
-  }
-
-  actualizar() {
-    if (this.empresaService.empresa.paginaWeb != null) {
-      this.empresaService.empresa.paginaWeb = this.empresaService.empresa.paginaWeb.toLowerCase();
-    }
-    this.empresaService.empresa.nombreComercial = this.empresaService.empresa.nombreComercial.toUpperCase();
-    this.empresaService.empresa.correoElectronico = this.empresaService.empresa.correoElectronico.toLowerCase();
-    this.empresaService.empresa.direccion = this.empresaService.empresa.direccion.toUpperCase();
-    this.empresaService.empresa.actividadEconomica = this.empresaService.empresa.actividadEconomica.toUpperCase();
-    this.firebaseBDDService.firebaseControllerEmpresas.actualizar(this.empresaService.empresa);
-    swal({
-      position: 'center',
-      type: 'success',
-      title: 'Datos Personales',
-      text: 'Actualización fue exitosa!',
-      showConfirmButton: false,
-      timer: 2000
-    });
-  }
-
-  leerEmpresa() {
-    this.firebaseBDDService.firebaseControllerEmpresas.getId('id', this.empresaService.empresa.id)
-      .snapshotChanges().subscribe(items => {
-      this.empresa = new Empresa();
-      items.forEach(element => {
-        this.empresa = element.payload.val() as Empresa;
+  getCompany(): void {
+    this.empresaService.getCompany(this.userLogged.user_id, this.userLogged.api_token).subscribe(
+      response => {
+        console.log(response['company']);
+        this.company = response['company'];
+      },
+      error => {
+        if (error.status === 401) {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Oops! no tienes autorización para acceder a este sitio',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        }
       });
-    });
+  }
+
+  updateCompany(): void {
+    console.log('avatar');
+    console.log(this.company.avatar);
+    this.empresaService.updateCompany({'company': this.company}, this.userLogged.api_token).subscribe(
+      response => {
+        this.getCompany();
+        swal({
+          position: 'center',
+          type: 'success',
+          title: 'Los datos fueron actualizados',
+          text: '',
+          timer: 2000,
+          showConfirmButton: true
+        });
+      },
+      error => {
+        if (error.status === 401) {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Oops! no tiene los permisos necesarios',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        }
+      });
   }
 
 }

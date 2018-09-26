@@ -4,14 +4,11 @@ import swal from 'sweetalert2';
 import {EmpresaService} from '../../../services/empresa.service';
 import {Oferta} from '../../../models/oferta';
 import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
-import {Idioma} from '../../../models/idioma';
-import {OfertaService} from '../../../services/oferta.service';
 import {catalogos} from '../../../../environments/catalogos';
-import {isUpperCase} from 'tslint/lib/utils';
-import {Postulacion} from '../../../models/postulacion';
-import {Postulante} from '../../../models/postulante';
-import {Empresa} from '../../../models/empresa';
+import {Professional} from '../../../models/professional';
 import {AuthService} from '../../../services/auth.service';
+import {Offer} from '../../../models/offer';
+import {User} from '../../../models/user';
 
 @Component({
   selector: 'app-ofertas-laborales',
@@ -20,11 +17,7 @@ import {AuthService} from '../../../services/auth.service';
 })
 export class OfertasLaboralesComponent implements OnInit {
   @ViewChild('fileInput') fileInput;
-  empresa: Empresa;
-  ofertaSeleccionada: Oferta;
-  ofertas: Array<Oferta>;
-  postulantes: Array<Postulante>;
-  postulaciones: Array<Postulacion>;
+  ofertaSeleccionada: Offer;
   duracionOferta: number;
   areas: Array<any>;
   provincias: Array<any>;
@@ -33,56 +26,50 @@ export class OfertasLaboralesComponent implements OnInit {
   habilitarCamposEspecificos: boolean;
   habilitarCantones: boolean;
 
-  constructor(private modalService: NgbModal, public ofertaService: OfertaService, private firebaseBDDService: FirebaseBDDService,
+  actual_page: number;
+  total_pages: number;
+  offers: Array<Offer>;
+  professionals: Array<Professional>;
+  selectedOffer: Offer;
+  userLogged: User;
+
+  constructor(public empresaService: EmpresaService,
+              private modalService: NgbModal,
+              private firebaseBDDService: FirebaseBDDService,
               private authService: AuthService) {
   }
 
   ngOnInit() {
+    this.userLogged = JSON.parse(sessionStorage.getItem('user_logged')) as User;
+    this.offers = new Array<Offer>();
+    this.selectedOffer = new Offer();
+    this.actual_page = 1;
+    this.total_pages = 5;
     this.duracionOferta = 0;
-    this.empresa = this.authService.usuarioNegocio as Empresa;
     this.habilitarCamposEspecificos = false;
     this.habilitarCantones = false;
-    this.ofertaSeleccionada = new Oferta();
-    this.leerOfertas();
+    this.ofertaSeleccionada = new Offer();
     this.areas = catalogos.titulos;
     this.provincias = catalogos.provincias;
+    this.getOffers();
   }
 
-  filtrarCantones(item) {
-    this.cantones = [];
-    this.habilitarCantones = true;
-    this.provincias.forEach(value => {
-      if (item.provincia === value.provincia) {
-        this.cantones = value.cantones;
-      }
-    });
-  }
 
   calcularFechaFinOferta() {
-    const fecha =
-      this.ofertaSeleccionada.inicioPublicacion.year
-      + '-' + this.ofertaSeleccionada.inicioPublicacion.month
-      + '-' + this.ofertaSeleccionada.inicioPublicacion.day;
-    const fechaInicio = new Date(fecha);
-    fechaInicio.setDate(fechaInicio.getDate() + this.duracionOferta);
-    this.ofertaSeleccionada.finPublicacion.year = fechaInicio.getFullYear();
-    this.ofertaSeleccionada.finPublicacion.month = fechaInicio.getMonth();
-    this.ofertaSeleccionada.finPublicacion.day = fechaInicio.getDate();
 
   }
 
-  openOfertaLaboral(content, oferta: Oferta, editar) {
-    const errores = this.validarCamposObligatorios(this.ofertaSeleccionada);
+  openOfertaLaboral(content, offer: Offer, editar) {
+    const errores = this.validarCamposObligatorios(this.selectedOffer);
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
     if (editar) {
-      console.log(oferta.provincia);
-      this.ofertaSeleccionada = oferta;
-      this.filtrarCamposEspecificos(oferta);
-      this.filtrarCantones(oferta);
+      this.selectedOffer = offer;
+      this.filtrarCamposEspecificos(offer);
+      this.filtrarCantones(offer);
     } else {
-      this.ofertaSeleccionada = new Oferta();
+      this.selectedOffer = new Offer();
     }
 
     this.modalService.open(content, logoutScreenOptions)
@@ -90,44 +77,17 @@ export class OfertasLaboralesComponent implements OnInit {
       .then((resultAceptar => {
         if (true) {
           if (resultAceptar === 'save') {
-            if (!this.compararFechas(this.ofertaSeleccionada.inicioPublicacion, this.ofertaSeleccionada.finPublicacion)) {
-              return;
-            }
             if (editar) {
-              this.actualizar();
+              this.updateOffer(this.selectedOffer);
             } else {
-              this.insertar();
-              this.agregarOferta();
+              this.createOffer(this.selectedOffer);
             }
-            this.ordenarPorAntiguedad(true);
           }
         } else {
         }
       }), (resultCancel => {
 
       }));
-  }
-
-  ordenarPorAntiguedad(descendente: boolean) {
-    this.ofertaService.ofertas.sort((n1, n2) => {
-      const fechaInicio = new Date(n1.inicioPublicacion.year + '/' + n1.inicioPublicacion.month + '/' + n1.inicioPublicacion.day);
-      const fechaFin = new Date(n2.inicioPublicacion.year + '/' + n2.inicioPublicacion.month + '/' + n2.inicioPublicacion.day);
-      if (fechaFin > fechaInicio) {
-        if (descendente) {
-          return 1;
-        } else {
-          return -1;
-        }
-      }
-      if (fechaFin < fechaInicio) {
-        if (descendente) {
-          return -1;
-        } else {
-          return 1;
-        }
-      }
-      return 0;
-    });
   }
 
   compararFechas(fechaMenor: any, fechaMayor: any): boolean {
@@ -157,11 +117,11 @@ export class OfertasLaboralesComponent implements OnInit {
       }));
   }
 
-  openPostulantes(content, oferta: Oferta) {
+  openPostulantes(content, offer: Offer) {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
-    this.leerPostulaciones(oferta);
+    this.getProfessionals(offer.id);
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
@@ -171,60 +131,128 @@ export class OfertasLaboralesComponent implements OnInit {
       }));
   }
 
-  insertar() {
-    this.ofertaSeleccionada.idEmpresa = this.empresa.id;
-    this.ofertaSeleccionada.codigo = this.ofertaSeleccionada.codigo.toUpperCase();
-    this.ofertaSeleccionada.contacto = this.ofertaSeleccionada.contacto.toUpperCase();
-    this.ofertaSeleccionada.correoElectronico = this.ofertaSeleccionada.correoElectronico.toLowerCase();
-    this.ofertaSeleccionada.cargo = this.ofertaSeleccionada.cargo.toUpperCase();
-    this.ofertaSeleccionada.actividades = this.ofertaSeleccionada.actividades.toUpperCase();
-    if (this.ofertaSeleccionada.informacionAdicional != null) {
-      this.ofertaSeleccionada.informacionAdicional = this.ofertaSeleccionada.informacionAdicional.toUpperCase();
-    }
-    this.firebaseBDDService.firebaseControllerOfertas.insertar(this.ofertaSeleccionada);
-    swal({
-      position: 'center',
-      type: 'success',
-      title: 'Oferta Laboral',
-      text: 'Registro exitoso!',
-      showConfirmButton: false,
-      timer: 2000
+  filtrarCantones(item) {
+    this.cantones = [];
+    this.habilitarCantones = true;
+    this.provincias.forEach(value => {
+      if (item.province === value.provincia) {
+        this.cantones = value.cantones;
+      }
     });
   }
 
-  agregarOferta() {
-    if (this.ofertaService.ofertas == null) {
-      this.ofertaService.ofertas = [];
-    }
-    this.ofertaService.ofertas.push(this.ofertaSeleccionada);
-    this.ofertaSeleccionada = new Oferta();
-  }
-
-  actualizar() {
-    this.ofertaSeleccionada.codigo = this.ofertaSeleccionada.codigo.toUpperCase();
-    this.ofertaSeleccionada.contacto = this.ofertaSeleccionada.contacto.toUpperCase();
-    this.ofertaSeleccionada.correoElectronico = this.ofertaSeleccionada.correoElectronico.toUpperCase();
-    this.ofertaSeleccionada.cargo = this.ofertaSeleccionada.cargo.toUpperCase();
-    this.ofertaSeleccionada.actividades = this.ofertaSeleccionada.actividades.toUpperCase();
-    if (this.ofertaSeleccionada.informacionAdicional != null) {
-      this.ofertaSeleccionada.informacionAdicional = this.ofertaSeleccionada.informacionAdicional.toUpperCase();
-    }
-    this.firebaseBDDService.firebaseControllerOfertas.actualizar(this.ofertaSeleccionada);
-    swal({
-      position: 'center',
-      type: 'success',
-      title: 'Oferta',
-      text: 'Actualización exitosa!',
-      showConfirmButton: false,
-      timer: 2000
+  filtrarCamposEspecificos(item) {
+    this.camposEspecificos = [];
+    this.habilitarCamposEspecificos = true;
+    this.areas.forEach(value => {
+      if (item.broad_field === value.campo_amplio) {
+        this.camposEspecificos = value.campos_especificos;
+      }
     });
   }
 
-  borrar(item) {
-    const ofertas = [];
+  validarCamposObligatorios(oferta: Offer): string {
+    let errores = 'save';
+    if (oferta.code == null || oferta.code === '') {
+      errores = errores + 'Código';
+    }
+    // if (oferta.contacto == null || oferta.contacto == '') {errores = errores + ', Contacto';}
+    // if (oferta.correoElectronico == null || oferta.correoElectronico == '') {errores = errores + ', Correo Electrónico';}
+    return errores;
+  }
+
+  getOffers(): void {
+    this.empresaService.getOffers(this.actual_page, this.total_pages, this.userLogged.user_id, this.userLogged.api_token).subscribe(
+      response => {
+        this.offers = response['offers']['data'];
+      },
+      error => {
+        if (error.status === 401) {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Usuario y/o Contraseña incorrectas',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        }
+      });
+  }
+
+  getProfessionals(offer_id: number): void {
+    this.empresaService.getProfessionals(this.actual_page, this.total_pages, offer_id, this.userLogged.api_token).subscribe(
+      response => {
+        this.professionals = response['professionals']['data'];
+      },
+      error => {
+        if (error.status === 401) {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Usuario y/o Contraseña incorrectas',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        }
+      });
+  }
+
+  createOffer(offer: Offer): void {
+    this.empresaService.createOffer({'company': this.userLogged, 'offer': this.selectedOffer}, this.userLogged.api_token).subscribe(
+      response => {
+        swal({
+          position: 'center',
+          type: 'success',
+          title: 'Sus datos fueron ingresados correctamente',
+          text: '',
+          showConfirmButton: true
+        });
+        this.getOffers();
+      },
+      error => {
+        if (error.status === 401) {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Usuario y/o Contraseña incorrectas',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        }
+      });
+  }
+
+  updateOffer(offer: Offer): void {
+
+    this.empresaService.updateOffer({'offer': this.selectedOffer}, this.userLogged.api_token).subscribe(
+      response => {
+        this.getOffers();
+        swal({
+          position: 'center',
+          type: 'success',
+          title: 'Sus datos fueron actualizados correctamente',
+          text: '',
+          timer: 2000,
+          showConfirmButton: true
+        });
+      },
+      error => {
+        if (error.status === 401) {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Usuario y/o Contraseña incorrectas',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        }
+      });
+  }
+
+  deleteOffer(offer: Offer): void {
     swal({
       title: '¿Está seguro de Eliminar?',
-      text: 'Cargo: ' + item.cargo,
+      text: 'Cargo: ' + offer.position,
       type: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
@@ -232,7 +260,21 @@ export class OfertasLaboralesComponent implements OnInit {
       confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
     }).then((result) => {
       if (result.value) {
-        this.firebaseBDDService.firebaseControllerOfertas.borrar(item);
+        this.empresaService.deleteOffer(offer.id, this.userLogged.api_token).subscribe(
+          response => {
+            this.getOffers();
+          },
+          error => {
+            if (error.status === 401) {
+              swal({
+                position: 'center',
+                type: 'error',
+                title: 'Usuario y/o Contraseña incorrectas',
+                text: 'Vuelva a intentar',
+                showConfirmButton: true
+              });
+            }
+          });
         swal({
           title: 'Oferta',
           text: 'Eliminación exitosa!',
@@ -242,74 +284,4 @@ export class OfertasLaboralesComponent implements OnInit {
       }
     });
   }
-
-  leerOfertas() {
-    this.firebaseBDDService.firebaseControllerOfertas.getId('idEmpresa', this.empresa.id)
-      .snapshotChanges().subscribe(items => {
-      this.ofertaService.ofertas = [];
-      items.forEach(element => {
-        let itemLeido: Oferta;
-        itemLeido = element.payload.val() as Oferta;
-        if (itemLeido.id === '0') {
-          itemLeido.id = element.key;
-          this.firebaseBDDService.firebaseControllerOfertas.actualizar(itemLeido);
-        }
-        this.ofertaService.ofertas.push(itemLeido);
-        console.log(this.ofertaService);
-      });
-    });
-  }
-
-  filtrarCamposEspecificos(item) {
-    this.camposEspecificos = [];
-    this.habilitarCamposEspecificos = true;
-    this.areas.forEach(value => {
-      if (item.campoAmplio === value.campo_amplio) {
-        this.camposEspecificos = value.campos_especificos;
-      }
-    });
-  }
-
-  validarCamposObligatorios(oferta: Oferta): string {
-    let errores = 'save';
-    if (oferta.codigo == null || oferta.codigo === '') {
-      errores = errores + 'Código';
-    }
-    // if (oferta.contacto == null || oferta.contacto == '') {errores = errores + ', Contacto';}
-    // if (oferta.correoElectronico == null || oferta.correoElectronico == '') {errores = errores + ', Correo Electrónico';}
-    return errores;
-  }
-
-  leerPostulaciones(oferta: Oferta) {
-    this.postulaciones = [];
-    this.firebaseBDDService.firebaseControllerPostulaciones.filtroExacto('idOferta', oferta.id)
-      .snapshotChanges().subscribe(items => {
-      items.forEach(element => {
-        let itemLeido: Postulacion;
-        itemLeido = element.payload.val() as Postulacion;
-        itemLeido.id = element.key;
-        this.postulaciones.push(itemLeido);
-      });
-      this.leerPostulantes();
-    });
-  }
-
-  leerPostulantes() {
-    this.postulantes = [];
-    this.postulaciones.forEach(value => {
-      console.log(value.idPostulante);
-      this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('id', value.idPostulante)
-        .snapshotChanges().subscribe(items => {
-        items.forEach(element => {
-          console.log('entro');
-          let itemLeido: Postulante;
-          itemLeido = element.payload.val() as Postulante;
-          itemLeido.id = element.key;
-          this.postulantes.push(itemLeido);
-        });
-      });
-    });
-
-  }
-
 }

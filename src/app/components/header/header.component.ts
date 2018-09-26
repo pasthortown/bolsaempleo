@@ -33,7 +33,6 @@ export class HeaderComponent implements OnInit {
     this.userLogged = new User();
     if (sessionStorage.getItem('user_logged') != null) {
       this.userLogged = JSON.parse(sessionStorage.getItem('user_logged')) as User;
-      console.log(this.userLogged.role);
     }
   }
 
