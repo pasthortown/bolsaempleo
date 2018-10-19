@@ -3,6 +3,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {catalogos} from '../../../../environments/catalogos';
 import swal from 'sweetalert2';
 import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
+import {Professional} from '../../../models/professional';
+import {User} from '../../../models/user';
 
 @Component({
   selector: 'app-datos-personales',
@@ -15,15 +17,20 @@ export class DatosPersonalesComponent implements OnInit {
   nacionalidades: Array<any>;
   estadosCiviles: Array<any>;
   sexos: Array<any>;
+  professional: Professional;
+  userLogged: User;
 
   constructor(public postulanteService: PostulanteService,
               private firebaseBDDService: FirebaseBDDService) {
   }
 
   ngOnInit() {
+    this.userLogged = JSON.parse(sessionStorage.getItem('user_logged')) as User;
+    this.professional = new Professional();
     this.nacionalidades = catalogos.nacionalidades;
     this.estadosCiviles = catalogos.estadosCiviles;
     this.sexos = catalogos.sexos;
+    this.getProfessional();
   }
 
   CodificarArchivo(event) {
@@ -37,15 +44,49 @@ export class DatosPersonalesComponent implements OnInit {
     }
   }
 
-  actualizar() {
-    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
-    swal({
-      position: 'center',
-      type: 'success',
-      title: 'Datos Personales',
-      text: 'Registro exitoso!',
-      showConfirmButton: true,
-      timer: 2000
-    });
+  updateProfessional(): void {
+    this.postulanteService.updateProfessional({'professional': this.professional}, this.userLogged.api_token).subscribe(
+      response => {
+        this.getProfessional();
+        swal({
+          position: 'center',
+          type: 'success',
+          title: 'Los datos fueron actualizados',
+          text: '',
+          timer: 2000,
+          showConfirmButton: true
+        });
+      },
+      error => {
+        if (error.status === 401) {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Oops! no tiene los permisos necesarios',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        } else {
+          console.log(error);
+        }
+      });
+  }
+
+  getProfessional(): void {
+    this.postulanteService.getProfessional(this.userLogged.id, this.userLogged.api_token).subscribe(
+      response => {
+        this.professional = response['professional'];
+      },
+      error => {
+        if (error.status === 401) {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Oops! no tienes autorización para acceder a este sitio',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        }
+      });
   }
 }

@@ -270,7 +270,6 @@ export const catalogos = {
         {nombre: 'TECNÓLOGO SUPERIOR EN LOGÍSTICA DE ALMACENAMIENTO Y DISTRIBUCIÓN'}
       ]
     }
-
   ],
 
   provincias: [
@@ -951,24 +950,71 @@ export const catalogos = {
     {descripcion: 'UNIÓN DE HECHO'},
     {descripcion: 'VIUDO (A)'}
   ],
+
   sexos: [
     {descripcion: 'HOMBRE'},
     {descripcion: 'MUJER'}
   ],
+
   habilidades: [
     {descripcion: 'ARTES'},
     {descripcion: 'DEPORTE'},
     {descripcion: 'OTRO'}
   ],
+
   idiomas: [
     {descripcion: 'INGLÉS'},
     {descripcion: 'CHINO'}
   ],
 
-  mensajes: [
-    {insertarText: 'INGLÉS'},
-    {insertarTitle: 'INGLÉS'},
-    {icon_ok: '<i class="fa fa-trash" aria-hidden="true"></i>'}
-  ],
+  messages:
+    {
+      createSuccess: {
+        'toast': true,
+        'position': 'center',
+        'type': 'success',
+        'title': 'Su datos fueron guardados correctamente',
+        'text': 'Registro(s) ingresado(s)',
+        'timer': 3000,
+        'showConfirmButton': true,
+        'backdrop': 'rgba(0, 0, 255,0.4)'
+      },
+      updateSuccess: {
+        'position': 'center',
+        'type': 'success',
+        'title': 'Su datos fueron actualizados correctamente',
+        'text': 'Registro(s) actualizado(s)',
+        'timer': 3000,
+        'showConfirmButton': false,
+        'backdrop': 'rgba(0,0,250,0.4)'
+      },
+      deleteSuccess: {
+        'position': 'center',
+        'type': 'success',
+        'title': 'Su datos fueron eliminados correctamente',
+        'text': 'Registro(s) eliminado(s)',
+        'timer': 3000,
+        'showConfirmButton': true,
+        'backdrop': 'rgba(0,0,255,0.4)'
+      },
+      deleteQuestion: {
+        'position': 'center',
+        'type': 'warning',
+        'title': 'Está seguro de eliminar el registro?',
+        'text': '',
+        'showConfirmButton': true,
+        'showCancelButton': true,
+        'confirmButtonColor': '#d33',
+        'cancelButtonColor': '#3085d6',
+        'confirmButtonText': '<i class="fa fa-trash" aria-hidden="true"> Confimar</i>',
+        'cancelButtonText': 'Cancelar',
+        'reverseButtons': true,
+        'customClass': 'animated tada',
+        'backdrop': 'rgba(255, 0, 0,0.4)'
+      },
+      createConfirmationDialog: {'ok': 'Crear', 'cancel': 'Cancelar'},
+      requiredFields: {'icon': '*', 'text': 'Todos los campos son obligatorios'}
+    },
+
   tituloMenuPrincipal: 'TALENTO HUMANO'
 };

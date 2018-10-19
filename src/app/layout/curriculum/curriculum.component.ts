@@ -74,10 +74,8 @@ export class CurriculumComponent implements OnInit {
   }
 
   imprimir() {
-    return xepOnline.Formatter.Format('curriculum', {
-      render: 'download',
-      filename: 'CV - ' + this.curriculum.nombreCompleto.toLocaleUpperCase() + ' (' + this.curriculum.identificacion + ')'
-    });
+    return xepOnline.Formatter.Format('curriculum', {render: 'download',
+      filename: 'CV - ' + this.curriculum.nombreCompleto.toLocaleUpperCase() + ' (' + this.curriculum.identificacion + ')'});
   }
 
   getQueryParams(name) {

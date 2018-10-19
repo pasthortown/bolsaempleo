@@ -14,43 +14,45 @@ export class EmpresaService {
   }
 
   getCompany(id, api_token) {
-    const url = 'http://localhost:8089/companies/' + id;
+    const url = environment.apiUrl + 'companies/' + id;
     this.headers = new HttpHeaders().set('Api-Token', api_token);
     return this._http.get(url, {headers: this.headers});
   }
 
   updateCompany(data: any, api_token: string) {
-    const url = 'http://localhost:8089/companies';
+    const url = environment.apiUrl + 'companies';
     this.headers.set('Api-Token', api_token);
     return this._http.put(url, JSON.stringify(data), {headers: this.headers});
   }
 
   getOffers(actual_page: number, records_per_page: number, company_id: number, api_token: string) {
-    const url = 'http://localhost:8089/companies/offers?limit=' + records_per_page + '&page=' + actual_page + '&field=id&order=ASC&user_id=' + company_id;
+    const url = environment.apiUrl + 'companies/offers?limit=' + records_per_page + '&page=' + actual_page
+      + '&field=id&order=ASC&id=' + company_id;
     this.headers.set('Api-Token', api_token);
     return this._http.get(url, {headers: this.headers});
   }
 
   getProfessionals(actual_page: number, records_per_page: number, offer_id: number, api_token: string) {
-    const url = environment.apiUrl + 'companies/professionals?limit=' + records_per_page + '&page=' + actual_page + '&field=id&order=ASC&offer_id=' + offer_id;
+    const url = environment.apiUrl + 'companies/professionals?limit=' + records_per_page + '&page=' + actual_page
+      + '&field=id&order=ASC&offer_id=' + offer_id;
     this.headers.set('Api-Token', api_token);
     return this._http.get(url, {headers: this.headers});
   }
 
   createOffer(data: any, api_token: string) {
-    const url = 'http://localhost:8089/companies/offers';
+    const url = environment.apiUrl + 'companies/offers';
     this.headers = new HttpHeaders().set('Api-Token', api_token);
     return this._http.post(url, JSON.stringify(data), {headers: this.headers});
   }
 
   updateOffer(data: any, api_token: string) {
-    const url = 'http://localhost:8089/companies/offers';
+    const url = environment.apiUrl + 'companies/offers';
     this.headers = new HttpHeaders().set('Api-Token', api_token);
     return this._http.put(url, JSON.stringify(data), {headers: this.headers});
   }
 
   deleteOffer(id: number, api_token: string) {
-    const url = 'http://localhost:8089/companies?id=' + id;
+    const url = environment.apiUrl + 'offers?id=' + id;
     this.headers.set('Api-Token', api_token);
     return this._http.delete(url, {headers: this.headers});
   }

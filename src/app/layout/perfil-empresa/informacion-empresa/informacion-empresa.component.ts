@@ -24,9 +24,8 @@ export class InformacionEmpresaComponent implements OnInit {
   }
 
   getCompany(): void {
-    this.empresaService.getCompany(this.userLogged.user_id, this.userLogged.api_token).subscribe(
+    this.empresaService.getCompany(this.userLogged.id, this.userLogged.api_token).subscribe(
       response => {
-        console.log(response['company']);
         this.company = response['company'];
       },
       error => {

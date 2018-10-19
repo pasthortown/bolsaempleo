@@ -125,14 +125,10 @@ export class PersonaComponent implements OnInit {
     return errores;
   }
 
-  registrar() {
-    console.log('fecha');
-    console.log(this.professional.birthdate);
+  register() {
     const validacion = this.validarFormulario(this.user);
     if (validacion === '') {
-      this.professional.first_name.toUpperCase();
-      this.user.email.toLowerCase();
-      this.professional.address.toUpperCase();
+      this.professional.email = this.user.email;
       this.user.name = this.professional.first_name + ' ' + this.professional.last_name;
       this.user.user_name = this.professional.identity;
       this.user.password = this.password;
@@ -142,7 +138,7 @@ export class PersonaComponent implements OnInit {
           swal({
               position: 'center',
               type: 'success',
-              title: 'Registro de Empresa',
+              title: 'Registro de Profesional',
               text: 'Registro Satisfactorio',
               showConfirmButton: false,
               timer: 2000

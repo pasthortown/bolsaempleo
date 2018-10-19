@@ -58,7 +58,7 @@
           <i>
             <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-id-512.png" class="rounded-circle"
                  style="width: 80px; height: 80px;">
-          </i> Mi Perfil
+          </i> {{userLogged.name}}
           <b class="caret"></b>
         </a>
         <div ngbDropdownMenu>
@@ -80,7 +80,7 @@
           </a>
           <div class="dropdown-divider"></div>
           <a *ngIf="userLogged.role=='2' || userLogged.role=='1'" class="dropdown-item"
-             (click)="logout()">
+             [routerLink]="['/perfil-empresa']" [routerLinkActive]="['router-link-active']" (click)="logout()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión
           </a>
         </div>

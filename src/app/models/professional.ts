@@ -1,5 +1,6 @@
 export class Professional {
   id: string;
+  avatar: string;
   identity: string;
   first_name: string;
   email: string;

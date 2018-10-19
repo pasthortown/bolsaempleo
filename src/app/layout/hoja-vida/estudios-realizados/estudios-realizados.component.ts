@@ -2,10 +2,9 @@ import {catalogos} from './../../../../environments/catalogos';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PostulanteService} from './../../../services/postulante.service';
 import {Component, OnInit} from '@angular/core';
-import {EstudioRealizado} from '../../../models/estudio-realizado';
 import swal from 'sweetalert2';
-import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
-import {Postulante} from '../../../models/postulante';
+import {User} from '../../../models/user';
+import {AcademicFormation} from '../../../models/academic-formation';
 
 @Component({
   selector: 'app-estudios-realizados',
@@ -13,41 +12,70 @@ import {Postulante} from '../../../models/postulante';
   styleUrls: ['./estudios-realizados.component.css']
 })
 export class EstudiosRealizadosComponent implements OnInit {
-  estudioRealizado: EstudioRealizado;
-  filtro: Array<any>;
+  academicFormations: Array<AcademicFormation>;
+  selectedAcademicFormation: AcademicFormation;
+  actual_page: number;
+  records_per_page: number;
+  total_pages: number;
+  flagPagination: boolean;
+  messages: any;
+  userLogged: User;
+  titles: Array<any>;
   tipo_titulo: Array<any>;
   instituciones: Array<any>;
-  postulante: Postulante;
-  mensajes: Array<any>;
 
-  constructor(private modalService: NgbModal, public postulanteService: PostulanteService,
-              private firebaseBDDService: FirebaseBDDService) {
+  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) {
   }
 
   ngOnInit() {
-    this.estudioRealizado = new EstudioRealizado();
-    this.filtro = catalogos.titulos;
+    this.actual_page = 1;
+    this.records_per_page = 4;
+    this.total_pages = 1;
+    this.flagPagination = false;
+    this.userLogged = JSON.parse(sessionStorage.getItem('user_logged')) as User;
+    this.selectedAcademicFormation = new AcademicFormation();
+    this.titles = catalogos.titulos;
     this.instituciones = catalogos.instituciones;
-    this.mensajes = catalogos.mensajes;
-    this.ordenarPorAntiguedad(true);
+    this.messages = catalogos.messages;
+    this.getAcademicFormations();
+    this.filterProfessionalDegree();
   }
 
-  open(content, item: EstudioRealizado, editar) {
-    if (editar) {
-      this.estudioRealizado = item;
-      this.mostrar();
+  paginate(siguiente: boolean) {
+    this.flagPagination = true;
+    if (siguiente) {
+      if (this.actual_page === this.total_pages) {
+        this.flagPagination = false;
+        return;
+      } else {
+        this.actual_page++;
+      }
     } else {
-      this.estudioRealizado = new EstudioRealizado();
+      if (this.actual_page === 1) {
+        this.flagPagination = false;
+        return;
+      } else {
+        this.actual_page--;
+      }
+    }
+    this.getAcademicFormations();
+  }
+
+  open(content, selectedAcademicFormation: AcademicFormation, editar) {
+    if (editar) {
+      this.selectedAcademicFormation = selectedAcademicFormation;
+      this.filterProfessionalDegree();
+    } else {
+      this.selectedAcademicFormation = new AcademicFormation();
     }
     this.modalService.open(content)
       .result
       .then((resultModal => {
         if (resultModal === 'save') {
-          if (!editar) {
-            this.agregar();
-            this.actualizar();
+          if (editar) {
+            this.updateAcademicFormation();
           } else {
-            this.actualizar();
+            this.createAcademicFormation();
           }
         }
       }), (resultCancel => {
@@ -55,90 +83,152 @@ export class EstudiosRealizadosComponent implements OnInit {
       }));
   }
 
-  ordenarPorAntiguedad(descendente: boolean) {
-    if (this.postulanteService.postulante.estudiosRealizados.length > 0) {
-      this.postulanteService.postulante.estudiosRealizados.sort((n1, n2) => {
-        const fechaInicio = new Date(n1.fechaRegistro.year + '/' + n1.fechaRegistro.month + '/' + n1.fechaRegistro.day);
-        const fechaFin = new Date(n2.fechaRegistro.year + '/' + n2.fechaRegistro.month + '/' + n2.fechaRegistro.day);
-        if (fechaFin > fechaInicio) {
-          if (descendente) {
-            return 1;
-          } else {
-            return -1;
+  getAcademicFormations(): void {
+    this.postulanteService.getAcademicFormations(this.actual_page, this.records_per_page, this.userLogged.id, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          console.log('academicFormations');
+          console.log(response['academicFormations']);
+          this.academicFormations = response['academicFormations']['data'];
+          this.total_pages = response['pagination']['last_page'];
+          this.flagPagination = false;
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: 'center',
+              type: 'error',
+              title: 'Oops! no tienes autorización para acceder a este sitio',
+              text: 'Vuelva a intentar',
+              showConfirmButton: true
+            });
           }
-        }
-        if (fechaFin < fechaInicio) {
-          if (descendente) {
-            return -1;
-          } else {
-            return 1;
-          }
-        }
-        return 0;
-      });
-    }
+        });
   }
 
-  agregar() {
-    if (this.postulanteService.postulante.estudiosRealizados == null) {
-      this.postulanteService.postulante.estudiosRealizados = [];
-    }
-    this.postulanteService.postulante.estudiosRealizados.push(this.estudioRealizado);
-    this.estudioRealizado = new EstudioRealizado();
-    this.ordenarPorAntiguedad(true);
+  createAcademicFormation(): void {
+    this.postulanteService.createAcademicFormation(
+      {'academicFormation': this.selectedAcademicFormation, 'user': this.userLogged}, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          this.getAcademicFormations();
+          swal({
+            position: this.messages['createSuccess']['position'],
+            type: this.messages['createSuccess']['type'],
+            title: this.messages['createSuccess']['title'],
+            text: this.messages['createSuccess']['text'],
+            timer: this.messages['createSuccess']['timer'],
+            showConfirmButton: this.messages['createSuccess']['showConfirmButton'],
+            backdrop: this.messages['createSuccess']['backdrop']
+          });
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: 'center',
+              type: 'error',
+              title: 'Oops! no tiene los permisos necesarios',
+              text: 'Vuelva a intentar',
+              showConfirmButton: true
+            });
+          } else {
+            console.log(error);
+          }
+        });
   }
 
-  borrar(item: EstudioRealizado) {
+  updateAcademicFormation(): void {
+    this.postulanteService.updateAcademicFormation({'academicFormation': this.selectedAcademicFormation}, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          this.getAcademicFormations();
+          swal({
+            position: this.messages['updateSuccess']['position'],
+            type: this.messages['updateSuccess']['type'],
+            title: this.messages['updateSuccess']['title'],
+            text: this.messages['updateSuccess']['text'],
+            timer: this.messages['updateSuccess']['timer'],
+            showConfirmButton: this.messages['updateSuccess']['showConfirmButton'],
+            backdrop: this.messages['updateSuccess']['backdrop']
+          });
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: 'center',
+              type: 'error',
+              title: 'Oops! no tiene los permisos necesarios',
+              text: 'Vuelva a intentar',
+              showConfirmButton: true
+            });
+          } else {
+            console.log(error);
+          }
+        });
+  }
+
+  deleteAcademicFormation(academicFormation: AcademicFormation): void {
     swal({
-      title: '¿Está seguro de Eliminar?',
-      text: item.titulo,
-      type: 'warning',
-      showCancelButton: true,
-      reverseButtons: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: this.mensajes[0].icon_ok
+      position: this.messages['deleteQuestion']['position'],
+      type: this.messages['deleteQuestion']['type'],
+      title: this.messages['deleteQuestion']['title'],
+      text: this.messages['deleteQuestion']['text'],
+      showConfirmButton: this.messages['deleteQuestion']['showConfirmButton'],
+      showCancelButton: this.messages['deleteQuestion']['showCancelButton'],
+      confirmButtonColor: this.messages['deleteQuestion']['confirmButtonColor'],
+      cancelButtonColor: this.messages['deleteQuestion']['cancelButtonColor'],
+      confirmButtonText: this.messages['deleteQuestion']['confirmButtonText'],
+      cancelButtonText: this.messages['deleteQuestion']['cancelButtonText'],
+      reverseButtons: this.messages['deleteQuestion']['reverseButtons'],
+      backdrop: this.messages['deleteQuestion']['backdrop'],
     }).then((result) => {
       if (result.value) {
-        const estudios = [];
-        this.postulanteService.postulante.estudiosRealizados.forEach(element => {
-          if (element !== item) {
-            estudios.push(element);
-          }
-        });
-        this.postulanteService.postulante.estudiosRealizados = estudios;
-        this.actualizar();
-        swal({
-          title: 'Oferta',
-          text: 'Eliminación exitosa!',
-          type: 'success',
-          timer: 2000
-        });
+        this.postulanteService.deleteAcademicFormation(academicFormation.id, this.userLogged.api_token).subscribe(
+          response => {
+            this.getAcademicFormations();
+            swal({
+              position: this.messages['deleteSuccess']['position'],
+              type: this.messages['deleteSuccess']['type'],
+              title: this.messages['deleteSuccess']['title'],
+              text: this.messages['deleteSuccess']['text'],
+              timer: this.messages['deleteSuccess']['timer'],
+              showConfirmButton: this.messages['deleteSuccess']['showConfirmButton'],
+              backdrop: this.messages['deleteSuccess']['backdrop'],
+            });
+          },
+          error => {
+            if (error.status === 401) {
+              swal({
+                position: 'center',
+                type: 'error',
+                title: 'Oops! no tienes autorización para acceder a este sitio',
+                text: 'Vuelva a intentar',
+                showConfirmButton: true
+              });
+            }
+            if (error.status === 405) {
+              swal({
+                position: 'center',
+                type: 'error',
+                title: 'Oops! no pudimos procesar tu solicitud, es posible que el recurso ya no esté disponible',
+                text: 'Vuelve a intentar',
+                showConfirmButton: true
+              });
+            }
+          });
       }
     });
   }
 
-  mostrar() {
-    this.filtro.forEach(element => {
-      if (this.estudioRealizado.tipo_titulo === '') {
+  filterProfessionalDegree() {
+    this.titles.forEach(titulo => {
+      if (this.selectedAcademicFormation.career === '') {
         this.tipo_titulo = null;
         return;
       }
-      if (element.campo_amplio === this.estudioRealizado.tipo_titulo) {
-        this.tipo_titulo = element.campos_especificos;
+      if (titulo.campo_amplio === this.selectedAcademicFormation.career) {
+        this.tipo_titulo = titulo.campos_especificos;
       }
-    });
-  }
-
-  actualizar() {
-    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
-    swal({
-      position: 'center',
-      type: 'success',
-      title: 'Estudio Realizado',
-      text: 'Registro exitoso!',
-      showConfirmButton: true,
-      timer: 2000
     });
   }
 }

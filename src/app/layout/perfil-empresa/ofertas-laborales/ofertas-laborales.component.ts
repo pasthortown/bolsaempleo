@@ -28,6 +28,7 @@ export class OfertasLaboralesComponent implements OnInit {
 
   actual_page: number;
   total_pages: number;
+  records_per_page: number;
   offers: Array<Offer>;
   professionals: Array<Professional>;
   selectedOffer: Offer;
@@ -44,7 +45,7 @@ export class OfertasLaboralesComponent implements OnInit {
     this.offers = new Array<Offer>();
     this.selectedOffer = new Offer();
     this.actual_page = 1;
-    this.total_pages = 5;
+    this.records_per_page = 2;
     this.duracionOferta = 0;
     this.habilitarCamposEspecificos = false;
     this.habilitarCantones = false;
@@ -70,6 +71,7 @@ export class OfertasLaboralesComponent implements OnInit {
       this.filtrarCantones(offer);
     } else {
       this.selectedOffer = new Offer();
+      this.calculateFinishDate();
     }
 
     this.modalService.open(content, logoutScreenOptions)
@@ -162,9 +164,10 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   getOffers(): void {
-    this.empresaService.getOffers(this.actual_page, this.total_pages, this.userLogged.user_id, this.userLogged.api_token).subscribe(
+    this.empresaService.getOffers(this.actual_page, this.records_per_page, this.userLogged.id, this.userLogged.api_token).subscribe(
       response => {
         this.offers = response['offers']['data'];
+        this.total_pages = response['pagination']['last_page'];
       },
       error => {
         if (error.status === 401) {
@@ -189,7 +192,7 @@ export class OfertasLaboralesComponent implements OnInit {
           swal({
             position: 'center',
             type: 'error',
-            title: 'Usuario y/o Contraseña incorrectas',
+            title: 'Oops! no tienes autorización para acceder a este sitio',
             text: 'Vuelva a intentar',
             showConfirmButton: true
           });
@@ -214,7 +217,7 @@ export class OfertasLaboralesComponent implements OnInit {
           swal({
             position: 'center',
             type: 'error',
-            title: 'Usuario y/o Contraseña incorrectas',
+            title: 'Oops! no tienes autorización para acceder a este sitio',
             text: 'Vuelva a intentar',
             showConfirmButton: true
           });
@@ -223,7 +226,6 @@ export class OfertasLaboralesComponent implements OnInit {
   }
 
   updateOffer(offer: Offer): void {
-
     this.empresaService.updateOffer({'offer': this.selectedOffer}, this.userLogged.api_token).subscribe(
       response => {
         this.getOffers();
@@ -237,11 +239,22 @@ export class OfertasLaboralesComponent implements OnInit {
         });
       },
       error => {
+        console.log(error);
         if (error.status === 401) {
           swal({
             position: 'center',
             type: 'error',
-            title: 'Usuario y/o Contraseña incorrectas',
+            title: 'Oops! no tienes autorización para acceder a este sitio',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        }
+
+        if (error.valueOf().error.errorInfo[0] === '22007') {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'El formato de fecha no es el correcto',
             text: 'Vuelva a intentar',
             showConfirmButton: true
           });
@@ -283,5 +296,31 @@ export class OfertasLaboralesComponent implements OnInit {
         });
       }
     });
+  }
+
+  pagination(next: boolean) {
+    if (next) {
+      if (this.actual_page === this.total_pages) {
+        return;
+      } else {
+        this.actual_page++;
+      }
+    } else {
+      if (this.actual_page === 1) {
+        return;
+      } else {
+        this.actual_page--;
+      }
+    }
+    this.getOffers();
+  }
+
+  calculateFinishDate() {
+    if (this.selectedOffer.start_date != null && this.selectedOffer.start_date.toString() !== '') {
+      this.selectedOffer.finish_date = new Date(this.selectedOffer.start_date.toString() + ' GMT-0500');
+      this.selectedOffer.finish_date.setMonth(this.selectedOffer.finish_date.getMonth() + 1);
+    } else {
+      this.selectedOffer.finish_date = null;
+    }
   }
 }

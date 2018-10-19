@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-lg-12 mt-3 text-center">
               <div class="form-group">
-                <img src="{{postulanteService.postulante.fotografia}}" title="Haga click"
+                <img src="{{professional.avatar}}" title="Haga click"
                      class="form-control rounded-circle col-lg-5 offset-1 btn text-center"
                      (click)="fileInput.click()" width="150px" height="120px">
                 <input type="file" class="form-control btn-light" id="foto" #fileInput
@@ -15,7 +15,7 @@
               <div class="group-form mt-5">
                 <div class="row">
                   <div class="col-lg-12 col-sm-12">
-                    <button type="submit" class="col-lg-12 btn btn-success mr-1" (click)="actualizar()"
+                    <button type="submit" class="col-lg-12 btn btn-success mr-1" (click)="updateProfessional()"
                             [disabled]="formCtrl.form.invalid">
                       <i class="fa fa-fw fa-save"></i>&nbsp;Actualizar
                     </button>
@@ -40,7 +40,7 @@
                     <label for="identificacion">
                       <b class="text-danger">*</b> Identificación:
                     </label>
-                    <input type="text" [(ngModel)]="postulanteService.postulante.identificacion"
+                    <input type="text" [(ngModel)]="professional.identity"
                            class="form-control"
                            id="identificacion" name="identificacion" placeholder="Ej. 1723456789" required>
                   </div>
@@ -48,19 +48,29 @@
                     <label for="telefono">
                       <b class="text-danger">*</b> Teléfono:
                     </label>
-                    <input type="text" [(ngModel)]="postulanteService.postulante.telefono" class="form-control"
+                    <input type="text" [(ngModel)]="professional.phone" class="form-control"
                            id="telefono" name="telefono" placeholder="Ej. 0987654321" required>
                   </div>
                 </div>
               </div>
               <!--Nombres Completos-->
-              <div class="form-group">
-                <label for="nombreCompleto">
-                  <b class="text-danger">*</b> Nombre Completo:
-                </label>
-                <input type="text" [(ngModel)]="postulanteService.postulante.nombreCompleto"
-                       class="form-control text-uppercase"
-                       id="nombreCompleto" name="nombreCompleto" placeholder="Apellidos y Nombres" required>
+              <div class="form-group row">
+                <div class="col-lg-6">
+                  <label for="nombres">
+                    <b class="text-danger">*</b> Nombres:
+                  </label>
+                  <input type="text" [(ngModel)]="professional.last_name"
+                         class="form-control text-uppercase"
+                         id="nombres" name="nombreCompleto" placeholder="Apellidos y Nombres" required>
+                </div>
+                <div class="col-lg-6">
+                  <label for="apellidos">
+                    <b class="text-danger">*</b> Apellidos:
+                  </label>
+                  <input type="text" [(ngModel)]="professional.first_name"
+                         class="form-control text-uppercase"
+                         id="apellidos" name="nombreCompleto" placeholder="Apellidos y Nombres" required>
+                </div>
               </div>
               <!--Nacionalidad-->
               <div class="form-group">
@@ -69,7 +79,7 @@
                     <label for="nacionalidad">
                       <b class="text-danger">*</b> Nacionalidad:
                     </label>
-                    <select type="text" [(ngModel)]="postulanteService.postulante.nacionalidad" class="form-control"
+                    <select type="text" [(ngModel)]="professional.nationality" class="form-control"
                             id="nacionalidad" name="nacionalidad" placeholder="Nacionalidad" required>
                       <option value="">SELECCIONE...</option>
                       <option value="{{nacionalidad.descripcion}}" *ngFor="let nacionalidad of nacionalidades">
@@ -81,7 +91,7 @@
                     <label for="sexo">
                       <b class="text-danger">*</b> Sexo:
                     </label>
-                    <select [(ngModel)]="postulanteService.postulante.sexo" class="form-control" id="sexo"
+                    <select [(ngModel)]="professional.gender" class="form-control" id="sexo"
                             name="sexo"
                             required>
                       <option value="" selected>SELECCIONE...</option>
@@ -99,7 +109,7 @@
                     <label for="estadoCivil">
                       <b class="text-danger">*</b> Estado Civil:
                     </label>
-                    <select [(ngModel)]="postulanteService.postulante.estadoCivil" class="form-control"
+                    <select [(ngModel)]="professional.civil_status" class="form-control"
                             id="estadoCivil"
                             name="estadoCivil" required>
                       <option value="" selected>SELECCIONE...</option>
@@ -109,16 +119,11 @@
                     </select>
                   </div>
                   <div class="col-6">
-                    <label for="fechaNacimiento">
+                    <label for="fechaDeNacimiento">
                       <b class="text-danger">*</b> Fecha de Nacimiento:
                     </label>
-                    <div class="input-group datepicker-input">
-                      <input [(ngModel)]="postulanteService.postulante.fechaDeNacimiento" class="form-control"
-                             placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" required>
-                      <button class="input-group-addon btn" (click)="d.toggle()" type="button">
-                        <span class="fa fa-calendar"></span>
-                      </button>
-                    </div>
+                    <input type="date" class="form-control" name="fechaDeNacimiento" id="fechaDeNacimiento"
+                           (keypress)="false" [(ngModel)]="professional.birthdate" required>
                   </div>
                 </div>
               </div>
@@ -129,7 +134,7 @@
                 <label for="correoElectronico">
                   <b class="text-danger">*</b> Correo Electrónico:
                 </label>
-                <input type="email" [(ngModel)]="postulanteService.postulante.correoElectronico"
+                <input type="email" [(ngModel)]="professional.email"
                        class="form-control text-lowercase"
                        id="correoElectronico" name="correoElectronico" placeholder="Ej. contacto@gmail.com"
                        required readonly>
@@ -139,7 +144,7 @@
                 <label for="domicilio">
                   <b class="text-danger">*</b> Dirección de Domicilio:
                 </label>
-                <textarea rows="2" type="text" [(ngModel)]="postulanteService.postulante.direccion"
+                <textarea rows="2" type="text" [(ngModel)]="professional.address"
                           class="form-control text-uppercase"
                           id="domicilio" name="domicilio"
                           placeholder="EJ. PROVINCIA, CANTÓN, CALLE PRINCIPAL, CALLE SECUNDARIA, NÚMERO DE CASA"
@@ -149,7 +154,7 @@
                 <label for="acercaDeMi">
                   <b class="text-danger">*</b> Acerca de mí:
                 </label>
-                <textarea rows="4" type="text" [(ngModel)]="postulanteService.postulante.acercaDeMi"
+                <textarea rows="4" type="text" [(ngModel)]="professional.about_me"
                           class="form-control text-uppercase" id="acercaDeMi" name="acerdaDeMi"
                           placeholder="Escriba una descripción acerca de usted" required></textarea>
               </div>
@@ -163,7 +168,7 @@
 
 <!--<div class="form-group" hidden>-->
 <!--<a target="_blank" class="form-control btn btn-primary"-->
-<!--href="curriculum?idPostulante={{this.postulanteService.postulante.id}}">-->
+<!--href="curriculum?idPostulante={{this.professional.id}}">-->
 <!--<i class="fa fa-id-badge" aria-hidden="true"> VER CV</i>-->
 <!--</a>-->
 <!--</div>-->

@@ -22,7 +22,7 @@ import {forEach} from '@angular/router/src/utils/collection';
 })
 export class FiltroComponent implements OnInit {
   filters: Array<String>;
-  columns = new Array('code', 'province', 'specific_field', 'position', 'city', 'broad_field');
+  columns = new Array('code', 'province', 'broad_field', 'position', 'city', 'specific_field');
   operators = new Array('=', '=', 'like', 'like', 'like', '=');
   oferta: Oferta;
   ofertasAplicadas = [];
@@ -62,12 +62,13 @@ export class FiltroComponent implements OnInit {
     this.actual_page = 1;
     this.records_per_page = 5;
     this.total_pages = 1;
-    this.getAllOffers();
+    this.getOffers();
     this.criterioBusqueda = '';
     this.postulante = this.authService.obtenerUsuario();
     this.postulacion = new Postulacion();
     this.oferta = new Oferta();
     this.paginacion(true);
+    this.getAllOffers();
     if (this.postulante != null) {
       this.getMisPostulaciones();
     }
@@ -102,33 +103,11 @@ export class FiltroComponent implements OnInit {
       }
     }
     if (this.filters.length === 0) {
-      this.getAllOffers();
+      this.getOffers();
     } else {
       this.filterOffers();
     }
 
-  }
-
-  leerOfertas() {
-    this.firebaseBDDService.firebaseControllerOfertas.getAllAux()
-      .snapshotChanges().subscribe(items => {
-      this.ofertas = [];
-      if (items.length === 0) {
-        swal({
-          position: 'center',
-          type: 'info',
-          title: 'No existen Ofertas',
-          text: '',
-          showConfirmButton: false,
-          timer: 2000
-        });
-      }
-      items.forEach(element => {
-        let itemLeido: Oferta;
-        itemLeido = element.payload.val() as Oferta;
-        this.ofertas.push(itemLeido);
-      });
-    });
   }
 
   openOfertaLaboral(content, item: Oferta, editar) {
@@ -196,7 +175,6 @@ export class FiltroComponent implements OnInit {
   }
 
   filterOffersSingle(column, item) {
-    this.actual_page = 1;
     this.filters[0] = item;
     const condition = [];
     const conditions = [];
@@ -250,7 +228,7 @@ export class FiltroComponent implements OnInit {
     this.filters.splice(this.filters.indexOf(filter), 1);
     this.etiquetaPrincipal = '';
     if (this.filters.length === 0) {
-      this.getAllOffers();
+      this.getOffers();
     } else {
       this.filterOffers();
     }
@@ -327,42 +305,35 @@ export class FiltroComponent implements OnInit {
     });
   }
 
-  contarOfertasPorCampoAmplio(ofertas: Array<Offer>) {
+  getAllOffers() {
+    this.ofertaService.getAllOffers().subscribe(
+      response => {
+        this.contarOfertasPorCampoAmplio(response['offers']);
+        this.contarOfertasPorCampoEspecifico(response['offers']);
+      });
+  }
+
+  contarOfertasPorCampoAmplio(offers: Array<Offer>) {
+
     this.areas.forEach(area => {
       area.total = 0;
     });
-    ofertas.forEach(oferta => {
+    offers.forEach(oferta => {
       this.areas.forEach(area => {
         if (oferta.broad_field === area.campo_amplio) {
           area.total = area.total + 1;
         }
       });
     });
-    /*
-    this.ofertas = [];
-    this.areas.forEach(value => {
-      value.total = 0;
-      this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoAmplio', value.campo_amplio)
-        .snapshotChanges().subscribe(items => {
-        items.forEach(element => {
-          let itemLeido: Oferta;
-          itemLeido = element.payload.val() as Oferta;
-          if (value.campo_amplio === itemLeido.campoAmplio) {
-            value.total = items.length;
-          }
-        });
-      });
-    });
-    */
   }
 
-  contarOfertasPorCampoEspecifico(ofertas: Array<Offer>) {
+  contarOfertasPorCampoEspecifico(offers: Array<Offer>) {
     this.areas.forEach(area => {
       area.campos_especificos.forEach(areaEspecifica => {
         areaEspecifica.total = 0;
       });
     });
-    ofertas.forEach(oferta => {
+    offers.forEach(oferta => {
       this.areas.forEach(area => {
         area.campos_especificos.forEach(areaEspecifica => {
           if (oferta.specific_field === areaEspecifica.nombre) {
@@ -415,11 +386,9 @@ export class FiltroComponent implements OnInit {
     return toReturn;
   }
 
-  getAllOffers(): void {
-    this.ofertaService.getAllOffers(this.actual_page, this.records_per_page).subscribe(response => {
+  getOffers(): void {
+    this.ofertaService.getOffers(this.actual_page, this.records_per_page).subscribe(response => {
       this.offers = response['offers']['data'];
-      this.contarOfertasPorCampoAmplio(this.offers);
-      this.contarOfertasPorCampoEspecifico(this.offers);
       if (response['pagination']['total'] === 0) {
         this.total_pages = 1;
       } else {

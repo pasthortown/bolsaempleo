@@ -34,18 +34,18 @@
             <!-- nombres !-->
             <div class="form-group">
               <label for="nombres" class="col-form-label">
-                <b class="text-danger">*</b> Nombre Completo:
+                <b class="text-danger">*</b> Nombres:
               </label>
               <input class="form-control text-uppercase" name="nombres" id="nombres"
-                     [(ngModel)]="professional.first_name" placeholder="Nombres" required>
+                     [(ngModel)]="professional.first_name" placeholder="EJ. JORGE LUIS" required>
             </div>
             <!-- apellidos !-->
             <div class="form-group">
               <label for="apellidos" class="col-form-label">
-                <b class="text-danger">*</b> Nombre Completo:
+                <b class="text-danger">*</b> Apellidos:
               </label>
               <input class="form-control text-uppercase" name="apellidos" id="apellidos"
-                     [(ngModel)]="professional.last_name" placeholder="Apellidos" required>
+                     [(ngModel)]="professional.last_name" placeholder="EJ. TAMAYO LÓPEZ" required>
             </div>
             <!-- Estado civil !-->
             <div class="form-group">
@@ -68,7 +68,7 @@
                     <b class="text-danger">*</b> Fecha de Nacimiento:
                   </label>
                   <input type="date" class="form-control" name="fechaDeNacimiento" id="fechaDeNacimiento"
-                         [(ngModel)]="professional.birthdate"  required>
+                         (keypress)="false" [(ngModel)]="professional.birthdate" required>
                 </div>
               </div>
             </div>
@@ -159,7 +159,7 @@
         </div>
         <div class="row">
           <div class="col-lg-12 col-sm-12">
-            <button type="submit" class="btn btn-primary mr-1" (click)="registrar()"
+            <button type="submit" class="btn btn-primary mr-1" (click)="register()"
                     [disabled]="formCtrl.form.invalid">
               Regístrate
             </button>

@@ -1,40 +1,62 @@
-<div class="col-12 mt-2">
-  <div class="row">
-    <button class="btn btn-success m-2" (click)="open(content, estudioRealizado, false)">
-      <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-    </button>
-  </div>
-  <div class="row">
-    <div class="col-12 card mt-3">
-      <div class="row">
-        <div class="col-12">
-          <h4 class="col-12 text-center">Estudios Realizados</h4>
-        </div>
-        <div class="col-12">
-          <table class="table table-bordered table-hover">
-            <thead class="table-active">
-            <th width="25%">Institución</th>
-            <th width="45%">Título</th>
-            <th width="15%">Fecha de Registro</th>
-            <th width="15%">Cód. de Reg. SENESCYT</th>
-            <th width="100px">Opciones</th>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of postulanteService.postulante.estudiosRealizados">
-              <td>{{item.institucion}}</td>
-              <td>{{item.titulo}}</td>
-              <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
-              <td>{{item.codigoRegistroSENESCYT}}</td>
-              <td>
-                <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span
-                  class="fa fa-edit"></span></button>
-                <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span>
-                </button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+<div class="row m-1">
+  <div class="col-12">
+    <div class="row m-1">
+      <div class="col-2 offset-10">
+      </div>
+    </div>
+    <div class="row ml-1">
+      <div class="col-12">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item">
+              <button type="button" class="page-link" (click)="paginate(false)" [disabled]="flagPagination">
+                Atrás
+              </button>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)">{{actual_page}} de {{total_pages}}</a>
+            </li>
+            <li class="page-item">
+              <button type="button" class="page-link" (click)="paginate(true)" [disabled]="flagPagination">
+                Siguiente
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="row m-1">
+      <div class="col-12">
+        <table class="table table-bordered table-hover table-striped">
+          <thead class="table-default text-center">
+          <th width="35%">Institución</th>
+          <th width="45%">Título</th>
+          <th width="10%">Fecha de Registro</th>
+          <th width="10%">Cód. de Reg. SENESCYT</th>
+          <th>
+            Opciones
+            <button class="btn btn-success"
+                    (click)="open(content, selectedAcademicFormation, false)">
+              <span class="fa fa-plus"></span>
+            </button>
+          </th>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of academicFormations">
+            <td>{{item.institution}}</td>
+            <td>{{item.professional_degree}}</td>
+            <td>{{item.registration_date}}</td>
+            <td>{{item.senescyt_code}}</td>
+            <td class="text-center">
+              <button class="btn btn-warning btn-sm text-white" (click)="open(content,item,true)"><span
+                class="fa fa-edit"></span></button>
+              <button class="btn btn-danger ml-1 btn-sm" (click)="deleteAcademicFormation(item)"><span
+                class="fa fa-trash"></span>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -43,7 +65,7 @@
   <form name="empresaform" method="post" #formCtrl="ngForm">
     <div class="modal-header">
       <div class="row">
-        <h4 class="col-12 text-center" name="titulo">Estudio Realizado</h4>
+        <h4 class="col-12 text-center" name="titulo">Estudio Realizado:</h4>
       </div>
     </div>
     <div class="modal-body">
@@ -53,7 +75,8 @@
             <label for="institucion">
               <b class="text-danger">*</b> Institución:
             </label>
-            <select type="text" [(ngModel)]="estudioRealizado.institucion" class="form-control" id="institucion"
+            <select type="text" [(ngModel)]="selectedAcademicFormation.institution" class="form-control"
+                    id="institucion"
                     name="institucion" required>
               <option value="">SELECCIONE...</option>
               <option value="{{institucion.nombre}}" *ngFor="let institucion of instituciones">{{institucion.nombre}}
@@ -64,38 +87,34 @@
             <label>
               <b class="text-danger">*</b> Tipo de Título:
             </label>
-            <select class="form-control" [(ngModel)]="estudioRealizado.tipo_titulo" (change)="mostrar()" id="tipoTitulo"
-                    name="tipoTitulo" required>
+            <select class="form-control" [(ngModel)]="selectedAcademicFormation.career"
+                    (change)="filterProfessionalDegree()" id="tipoTitulo" name="tipoTitulo" required>
               <option value="" selected>SELECCIONE...</option>
-              <option *ngFor="let item of filtro" value="{{item.campo_amplio}}">{{item.campo_amplio}}</option>
+              <option *ngFor="let item of titles" value="{{item.campo_amplio}}">{{item.campo_amplio}}</option>
             </select>
           </div>
           <div class="form-group">
             <label>
               <b class="text-danger">*</b> Título:
             </label>
-            <select class="form-control" [(ngModel)]="estudioRealizado.titulo" id="titulo" name="titulo" required>
+            <select class="form-control" [(ngModel)]="selectedAcademicFormation.professional_degree" id="titulo"
+                    name="titulo" required>
               <option value="" selected>SELECCIONE...</option>
               <option *ngFor="let item of tipo_titulo" value="{{item.nombre}}">{{item.nombre}}</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="dp">
+            <label for="registrationDate">
               <b class="text-danger">*</b> Fecha de Registro:
             </label>
-            <div class="input-group datepicker-input">
-              <input class="form-control" [(ngModel)]="estudioRealizado.fechaRegistro" placeholder="yyyy-mm-dd"
-                     id="dp" name="dp" [(ngModel)]="model" ngbDatepicker #d="ngbDatepicker" required>
-              <button class="input-group-addon" (click)="d.toggle()" type="button">
-                <span class="fa fa-calendar"></span>
-              </button>
-            </div>
+            <input type="date" class="form-control" name="registrationDate" id="registrationDate"
+                   (keypress)="false" [(ngModel)]="selectedAcademicFormation.registration_date" required>
           </div>
           <div class="form-group">
             <label for="codigoRegistro">
               <b class="text-danger">*</b> Código de Registro SENESCYT:
             </label>
-            <input type="text" [(ngModel)]="estudioRealizado.codigoRegistroSENESCYT" class="form-control"
+            <input type="text" [(ngModel)]="selectedAcademicFormation.senescyt_code" class="form-control"
                    id="codigoRegistro" name="codigoRegistro" placeholder="Código de Registro SENESCYT" required>
           </div>
         </div>
@@ -103,12 +122,13 @@
     </div>
     <div class="modal-footer">
       <button class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
-        <span class="fa fa-check"></span>&nbsp;Aceptar
+        <span class="fa fa-check"></span>&nbsp;{{messages['createConfirmationDialog']['ok']}}
       </button>
       <button class="btn btn-danger" (click)="c('close')">
-        <span class="fa fa-close"></span>&nbsp;Cancelar
+        <span class="fa fa-close"></span>&nbsp;{{messages['createConfirmationDialog']['cancel']}}
       </button>
-      <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
+      <h6 class="text-muted"><b class="text-danger">{{messages['requiredFields']['icon']}} </b>{{messages['requiredFields']['text']}}
+      </h6>
     </div>
   </form>
 </ng-template>
