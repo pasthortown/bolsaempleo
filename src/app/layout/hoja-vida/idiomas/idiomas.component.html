@@ -1,71 +1,90 @@
-<div class="col-12 mt-2">
-  <div class="row">
-    <button class="btn btn-success m-2" (click)="open(content, estudioRealizado, false)">
-      <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-    </button>
-  </div>
-  <div class="row">
-    <div class="col-12 card mt-3">
-      <div class="row">
-        <div class="col-12">
-          <h4 class="col-12 text-center">Idiomas</h4>
-        </div>
-        <div class="col-12">
-          <table class="table table-bordered table-hover">
-            <thead class="table-active">
-            <th>Idioma</th>
-            <th>Nivel Escrito</th>
-            <th>Nivel Hablado</th>
-            <th>Nivel Lectura</th>
-            <th width="100px">Opciones</th>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of postulanteService.postulante.idiomas">
-              <td>{{item.idioma}}</td>
-              <td>{{item.nivelEscrito}}</td>
-              <td>{{item.nivelHablado}}</td>
-              <td>{{item.nivelLectura}}</td>
-              <td>
-                <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span
-                  class="fa fa-edit"></span></button>
-                <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span>
-                </button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+<div class="row m-1">
+  <div class="col-12">
+    <div class="row m-1">
+      <div class="col-2 offset-10">
+      </div>
+    </div>
+    <div class="row ml-1">
+      <div class="col-12">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item">
+              <button type="button" class="page-link" (click)="paginate(false)" [disabled]="flagPagination">
+                {{messages['bottomPaginationNext']['text']}}
+              </button>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)">{{actual_page}} de {{total_pages}}</a>
+            </li>
+            <li class="page-item">
+              <button type="button" class="page-link" (click)="paginate(true)" [disabled]="flagPagination">
+                {{messages['bottomPaginationBack']['text']}}
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="row m-1">
+      <div class="col-12">
+        <table class="table table-bordered table-hover table-striped">
+          <thead class="table-default text-center">
+          <th width="40%">Idioma</th>
+          <th width="20%">Nivel Escrito</th>
+          <th width="20%">Nivel Lectura</th>
+          <th width="20%">Nivel Hablado</th>
+          <th>
+            <button class="btn btn-success"
+                    (click)="open(content, selectedLanguage, false)">
+              <span class="{{messages['bottomAdd']['icon']}}"> {{messages['bottomAdd']['text']}}</span>
+            </button>
+          </th>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of languages">
+            <td>{{item.description}}</td>
+            <td>{{item.written_level}}</td>
+            <td>{{item.reading_level}}</td>
+            <td>{{item.spoken_level}}</td>
+            <td class="text-center">
+              <button class="btn btn-warning btn-sm text-white" (click)="open(content,item,true)"><span
+                class="{{messages['bottomUpdate']['icon']}}"></span></button>
+              <button class="btn btn-danger ml-1 btn-sm" (click)="deleteLanguage(item)"><span
+                class="{{messages['bottomDelete']['icon']}}"></span>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </div>
-
 <ng-template #content let-c="close" let-d="dismiss">
-  <form name="capacitacionform" method="post" #formCtrl="ngForm">
+  <form name="empresaform" method="post" #formCtrl="ngForm">
     <div class="modal-header">
       <div class="row">
-        <h4 class="col-12 text-center">Idioma</h4>
+        <h4 class="col-12 text-center" name="titulo">Idioma:</h4>
       </div>
     </div>
     <div class="modal-body">
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="idioma">
+            <label>
               <b class="text-danger">*</b> Idioma:
             </label>
-            <select type="text" [(ngModel)]="idioma.idioma" class="form-control text-uppercase" id="idioma"
-                    name="idioma"
-                    placeholder="Idioma" required>
-              <option value="">SELECCIONE...</option>
-              <option value="{{idioma.descripcion}}" *ngFor="let idioma of idiomas">{{idioma.descripcion}}</option>
+            <select class="form-control" [(ngModel)]="selectedLanguage.description" id="description" name="description"
+                    required>
+              <option value="" selected>SELECCIONE...</option>
+              <option *ngFor="let item of idiomas" value="{{item.descripcion}}">{{item.descripcion}}</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="nivelEscrito">
+            <label>
               <b class="text-danger">*</b> Nivel Escrito:
             </label>
-            <select [(ngModel)]="idioma.nivelEscrito" class="form-control" id="nivelEscrito" name="nivelEscrito"
+            <select class="form-control" [(ngModel)]="selectedLanguage.written_level" id="written_level" name="written_level"
                     required>
               <option value="" selected>SELECCIONE...</option>
               <option value="BÁSICO">BÁSICO</option>
@@ -74,22 +93,22 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="nivelHablado">
-              <b class="text-danger">*</b> Nivel Hablado:
-            </label>
-            <select class="form-control" [(ngModel)]="idioma.nivelHablado" id="nivelHablado" name="nivelHablado"
-                    required>
-              <option value="" selected>SELECCIONE...</option>
-              <option value="BÁSICO">BÁSICO</option>
-              <option value="INTERMEDIO">INTERMEDIO</option>
-              <option value="AVANZADO">AVANZADO</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="nivelLectura">
+            <label>
               <b class="text-danger">*</b> Nivel Lectura:
             </label>
-            <select class="form-control" [(ngModel)]="idioma.nivelLectura" id="nivelLectura" name="nivelLectura"
+            <select class="form-control" [(ngModel)]="selectedLanguage.reading_level" id="reading_level" name="reading_level"
+                    required>
+              <option value="" selected>SELECCIONE...</option>
+              <option value="BÁSICO">BÁSICO</option>
+              <option value="INTERMEDIO">INTERMEDIO</option>
+              <option value="AVANZADO">AVANZADO</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>
+              <b class="text-danger">*</b> Nivel Hablado:
+            </label>
+            <select class="form-control" [(ngModel)]="selectedLanguage.spoken_level" id="spoken_level" name="spoken_level"
                     required>
               <option value="" selected>SELECCIONE...</option>
               <option value="BÁSICO">BÁSICO</option>
@@ -101,13 +120,16 @@
       </div>
     </div>
     <div class="modal-footer">
+      <h6 class="text-muted">
+        <b class="text-danger">{{messages['requiredFields']['icon']}} </b>
+        {{messages['requiredFields']['text']}}
+      </h6>
       <button class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
-        <span class="fa fa-check"></span>&nbsp;Aceptar
+        <span class="{{messages['saveConfirmationDialog']['iconOk']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['ok']}}
       </button>
       <button class="btn btn-danger" (click)="c('close')">
-        <span class="fa fa-close"></span>&nbsp;Cancelar
+        <span class="{{messages['saveConfirmationDialog']['iconCancel']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['cancel']}}
       </button>
-      <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
     </div>
   </form>
 </ng-template>

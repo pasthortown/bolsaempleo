@@ -125,14 +125,24 @@ export class EstudiosRealizadosComponent implements OnInit {
         error => {
           if (error.status === 401) {
             swal({
-              position: 'center',
-              type: 'error',
-              title: 'Oops! no tiene los permisos necesarios',
-              text: 'Vuelva a intentar',
-              showConfirmButton: true
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
             });
-          } else {
-            console.log(error);
+          }
+
+          if (error.status === 500) {
+            swal({
+              position: this.messages['createError500']['position'],
+              type: this.messages['createError500']['type'],
+              title: this.messages['createError500']['title'],
+              text: this.messages['createError500']['text'],
+              showConfirmButton: this.messages['createError500']['showConfirmButton'],
+              backdrop: this.messages['createError500']['backdrop']
+            });
           }
         });
   }
@@ -155,14 +165,24 @@ export class EstudiosRealizadosComponent implements OnInit {
         error => {
           if (error.status === 401) {
             swal({
-              position: 'center',
-              type: 'error',
-              title: 'Oops! no tiene los permisos necesarios',
-              text: 'Vuelva a intentar',
-              showConfirmButton: true
+              position: this.messages['updateError401']['position'],
+              type: this.messages['updateError401']['type'],
+              title: this.messages['updateError401']['title'],
+              text: this.messages['updateError401']['text'],
+              showConfirmButton: this.messages['updateError401']['showConfirmButton'],
+              backdrop: this.messages['updateError401']['backdrop']
             });
-          } else {
-            console.log(error);
+          }
+
+          if (error.status === 500) {
+            swal({
+              position: this.messages['updateError500']['position'],
+              type: this.messages['updateError500']['type'],
+              title: this.messages['updateError500']['title'],
+              text: this.messages['updateError500']['text'],
+              showConfirmButton: this.messages['updateError500']['showConfirmButton'],
+              backdrop: this.messages['updateError500']['backdrop']
+            });
           }
         });
   }
@@ -199,20 +219,23 @@ export class EstudiosRealizadosComponent implements OnInit {
           error => {
             if (error.status === 401) {
               swal({
-                position: 'center',
-                type: 'error',
-                title: 'Oops! no tienes autorización para acceder a este sitio',
-                text: 'Vuelva a intentar',
-                showConfirmButton: true
+                position: this.messages['deleteError401']['position'],
+                type: this.messages['deleteError401']['type'],
+                title: this.messages['deleteError401']['title'],
+                text: this.messages['deleteError401']['text'],
+                showConfirmButton: this.messages['deleteError401']['showConfirmButton'],
+                backdrop: this.messages['deleteError401']['backdrop']
               });
             }
-            if (error.status === 405) {
+
+            if (error.status === 500) {
               swal({
-                position: 'center',
-                type: 'error',
-                title: 'Oops! no pudimos procesar tu solicitud, es posible que el recurso ya no esté disponible',
-                text: 'Vuelve a intentar',
-                showConfirmButton: true
+                position: this.messages['deleteError500']['position'],
+                type: this.messages['deleteError500']['type'],
+                title: this.messages['deleteError500']['title'],
+                text: this.messages['deleteError500']['text'],
+                showConfirmButton: this.messages['deleteError500']['showConfirmButton'],
+                backdrop: this.messages['deleteError500']['backdrop']
               });
             }
           });

@@ -51,6 +51,131 @@ export class PostulanteService {
     return this._http.delete(url, {headers: this.headers});
   }
 
+  getCourses(actual_page: number, records_per_page: number, id: number, api_token: string) {
+    const url = environment.apiUrl + 'courses?limit=' + records_per_page + '&page=' + actual_page
+      + '&field=id&order=ASC&user_id=' + id;
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.get(url, {headers: this.headers});
+  }
+
+  createCourse(data: any, api_token: string) {
+    const url = environment.apiUrl + 'courses';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.post(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  updateCourse(data: any, api_token: string) {
+    const url = environment.apiUrl + 'courses';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.put(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  deleteCourse(id: number, api_token: string) {
+    const url = environment.apiUrl + 'courses?id=' + id;
+    this.headers.set('Api-Token', api_token);
+    return this._http.delete(url, {headers: this.headers});
+  }
+
+  getLanguages(actual_page: number, records_per_page: number, id: number, api_token: string) {
+    const url = environment.apiUrl + 'languages?limit=' + records_per_page + '&page=' + actual_page
+      + '&field=id&order=ASC&user_id=' + id;
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.get(url, {headers: this.headers});
+  }
+
+  createLanguage(data: any, api_token: string) {
+    const url = environment.apiUrl + 'languages';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.post(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  updateLanguage(data: any, api_token: string) {
+    const url = environment.apiUrl + 'languages';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.put(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  deleteLanguage(id: number, api_token: string) {
+    const url = environment.apiUrl + 'languages?id=' + id;
+    this.headers.set('Api-Token', api_token);
+    return this._http.delete(url, {headers: this.headers});
+  }
+
+  getAbilities(actual_page: number, records_per_page: number, id: number, api_token: string) {
+    const url = environment.apiUrl + 'abilities?limit=' + records_per_page + '&page=' + actual_page
+      + '&field=id&order=ASC&user_id=' + id;
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.get(url, {headers: this.headers});
+  }
+
+  createAbility(data: any, api_token: string) {
+    const url = environment.apiUrl + 'abilities';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.post(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  updateAbility(data: any, api_token: string) {
+    const url = environment.apiUrl + 'abilities';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.put(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  deleteAbility(id: number, api_token: string) {
+    const url = environment.apiUrl + 'abilities?id=' + id;
+    this.headers.set('Api-Token', api_token);
+    return this._http.delete(url, {headers: this.headers});
+  }
+
+  getProfessionalReferences(actual_page: number, records_per_page: number, id: number, api_token: string) {
+    const url = environment.apiUrl + 'professionalReferences?limit=' + records_per_page + '&page=' + actual_page
+      + '&field=id&order=ASC&user_id=' + id;
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.get(url, {headers: this.headers});
+  }
+
+  createProfessionalReference(data: any, api_token: string) {
+    const url = environment.apiUrl + 'professionalReferences';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.post(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  updateProfessionalReference(data: any, api_token: string) {
+    const url = environment.apiUrl + 'professionalReferences';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.put(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  deleteProfessionalReference(id: number, api_token: string) {
+    const url = environment.apiUrl + 'professionalReferences?id=' + id;
+    this.headers.set('Api-Token', api_token);
+    return this._http.delete(url, {headers: this.headers});
+  }
+
+  getProfessionalExperiences(actual_page: number, records_per_page: number, id: number, api_token: string) {
+    const url = environment.apiUrl + 'professionalExperiences?limit=' + records_per_page + '&page=' + actual_page
+      + '&field=id&order=ASC&user_id=' + id;
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.get(url, {headers: this.headers});
+  }
+
+  createProfessionalExperience(data: any, api_token: string) {
+    const url = environment.apiUrl + 'professionalExperiences';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.post(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  updateProfessionalExperience(data: any, api_token: string) {
+    const url = environment.apiUrl + 'professionalExperiences';
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.put(url, JSON.stringify(data), {headers: this.headers});
+  }
+
+  deleteProfessionalExperience(id: number, api_token: string) {
+    const url = environment.apiUrl + 'professionalExperiences?id=' + id;
+    this.headers.set('Api-Token', api_token);
+    return this._http.delete(url, {headers: this.headers});
+  }
+
   getProfessional(id, api_token) {
     const url = environment.apiUrl + 'professionals/' + id;
     this.headers = new HttpHeaders().set('Api-Token', api_token);

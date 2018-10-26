@@ -43,6 +43,16 @@ export class LoginComponent implements OnInit {
 
       },
       error => {
+        console.log(error);
+        if (error.status == 0) {
+          swal({
+            position: 'center',
+            type: 'error',
+            title: 'Error en la conexión',
+            text: 'Vuelva a intentar',
+            showConfirmButton: true
+          });
+        }
         this.isLoading = false;
         if (error.status === 401) {
           swal({

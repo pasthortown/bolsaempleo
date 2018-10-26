@@ -1,168 +1,151 @@
-<div class="col-12 mt-2">
-  <div class="row">
-    <button class="btn btn-success m-2" (click)="open(content, estudioRealizado, false)">
-      <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-    </button>
-  </div>
-  <div class="row">
-    <div class="col-12 card mt-3">
-      <div class="row">
-        <div class="col-12">
-          <h4 class="col-12 text-center">Experiencia Profesional</h4>
-        </div>
-        <div class="col-12">
-          <table class="table table-bordered table-hover">
-            <thead class="table-active">
-            <th>Institución</th>
-            <th>Cargo Desempeñado</th>
-            <th>Descripción del Cargo</th>
-            <th>Fecha de Inicio</th>
-            <th>Fecha de Salida</th>
-            <th>Motivo de Salida</th>
-            <th>Actual</th>
-            <th width="100px">Opciones</th>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of postulanteService.postulante.experienciasLaborales">
-              <td>{{item.empleador}}</td>
-              <td>{{item.cargoDesempenado}}</td>
-              <td>{{item.descripcionCargo}}</td>
-              <td>
-                <div>
-                  {{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}
-                </div>
-              </td>
-              <td>
-                <div *ngIf="item.fechaFinalizacion != null">
-                  {{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
-                </div>
-              </td>
-              <td>{{item.motivoSalida}}</td>
-              <td>
-                <div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span
-                  class="badge badge-success">Actual</span></div>
-              </td>
-              <td>
-                <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span
-                  class="fa fa-edit"></span></button>
-                <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span>
-                </button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+<div class="row m-1">
+  <div class="col-12">
+    <div class="row m-1">
+      <div class="col-2 offset-10">
+      </div>
+    </div>
+    <div class="row ml-1">
+      <div class="col-12">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item">
+              <button type="button" class="page-link" (click)="paginate(false)" [disabled]="flagPagination">
+                {{messages['bottomPaginationNext']['text']}}
+              </button>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)">{{actual_page}} de {{total_pages}}</a>
+            </li>
+            <li class="page-item">
+              <button type="button" class="page-link" (click)="paginate(true)" [disabled]="flagPagination">
+                {{messages['bottomPaginationBack']['text']}}
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="row m-1">
+      <div class="col-12">
+        <table class="table table-bordered table-hover table-striped">
+          <thead class="table-default text-center">
+          <th width="30%">Institución</th>
+          <th width="20%">Cargo</th>
+          <th width="25%">Descripción</th>
+          <th width="10%">Fecha Inicio</th>
+          <th width="10%">Fecha Fin</th>
+          <th width="5%">Trabajo Actual</th>
+          <th>
+            <button class="btn btn-success"
+                    (click)="open(content, selectedProfessionalExperience, false)">
+              <span class="{{messages['bottomAdd']['icon']}}"> {{messages['bottomAdd']['text']}}</span>
+            </button>
+          </th>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of professionalExperiences">
+            <td>{{item.employer}}</td>
+            <td>{{item.position}}</td>
+            <td>{{item.job_description}}</td>
+            <td>{{item.start_date}}</td>
+            <td *ngIf="!item.current_work"> {{item.finish_date}}</td>
+            <td *ngIf="item.current_work"></td>
+            <td class="text-center"><i class="fa fa-check" *ngIf="item.current_work"></i></td>
+            <td class="text-center">
+              <button class="btn btn-warning btn-sm text-white" (click)="open(content,item,true)"><span
+                class="{{messages['bottomUpdate']['icon']}}"></span></button>
+              <button class="btn btn-danger ml-1 btn-sm" (click)="deleteProfessionalExperience(item)"><span
+                class="{{messages['bottomDelete']['icon']}}"></span>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </div>
-
 <ng-template #content let-c="close" let-d="dismiss">
-  <form name="capacitacionform" method="post" #formCtrl="ngForm">
+  <form name="empresaform" method="post" #formCtrl="ngForm">
     <div class="modal-header">
       <div class="row">
-        <h4 class="col-12 text-center">Experiencia Profesional</h4>
+        <h4 class="col-12 text-center" name="titulo">Experiencia Profesional:</h4>
       </div>
     </div>
     <div class="modal-body">
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="empleador">
+            <label for="employer">
               <b class="text-danger">*</b> Empleador:
             </label>
-            <input type="text" [(ngModel)]="experienciaLaboral.empleador" class="form-control text-uppercase" id="empleador"
-                   name="empleador" placeholder="Nombre del Empleador" required>
+            <input type="text" [(ngModel)]="selectedProfessionalExperience.employer" class="form-control text-uppercase"
+                   id="employer" name="employer" placeholder="Nombre del empleador" required>
           </div>
           <div class="form-group">
-            <label for="cargo">
-              <b class="text-danger">*</b> Cargo Desempeñado:
+            <label>
+              <b class="text-danger">*</b> Cargo:
             </label>
-            <input type="text" [(ngModel)]="experienciaLaboral.cargoDesempenado" class="form-control text-uppercase" id="cargo"
-                   name="cargo" placeholder="Cargo Desempeñado" required>
+            <input type="text" [(ngModel)]="selectedProfessionalExperience.position" class="form-control text-uppercase"
+                   id="position" name="position" placeholder="Cargo" required>
           </div>
           <div class="form-group">
-            <label for="nombreEvento">
-              <b class="text-danger">*</b> Descripción del Cargo:
+            <label>
+              <b class="text-danger">*</b> Descripción del cargo:
             </label>
-            <input type="text" [(ngModel)]="experienciaLaboral.descripcionCargo" class="form-control text-uppercase" id="nombreEvento"
-                   name="nombreEvento" placeholder="Descripción del Cargo" required>
+            <textarea type="text" [(ngModel)]="selectedProfessionalExperience.job_description"
+                      class="form-control  text-uppercase"
+                      id="job_description" name="job_description" placeholder="Descripción del cargo"
+                      required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="trabajoActual">
+              <input type="checkbox" id="trabajoActual" name="trabajoActual"
+                     [(ngModel)]="selectedProfessionalExperience.current_work"
+                     (click)="validateCurrentWork()">
+              Trabajo actualmente aquí!
+            </label>
           </div>
           <div class="form-group">
             <div class="row">
               <div class="col-lg-6">
-                <label for="fechaRegistro">
-                  <b class="text-danger">*</b> Fecha de Inicio:
+                <label for="start_date">
+                  <b class="text-danger">*</b> Fecha Inicio:
                 </label>
-                <div class="input-group datepicker-input">
-                  <input [(ngModel)]="experienciaLaboral.fechaInicio" class="form-control" id="fechaRegistro"
-                         placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #d="ngbDatepicker" required>
-                  <button class="input-group-addon" (click)="d.toggle()" type="button">
-                    <span class="fa fa-calendar"></span>
-                  </button>
-                </div>
+                <input type="date" class="form-control" name="start_date" id="start_date"
+                       (keypress)="false" [(ngModel)]="selectedProfessionalExperience.start_date" required>
               </div>
-              <div class="col-lg-6">
-                <div *ngIf="!experienciaLaboral.actualmenteVigente">
-                  <div class="form-group">
-                    <label for="fechaRegistro">
-                      <b class="text-danger">*</b> Fecha de Finalización:
-                    </label>
-                    <div class="input-group datepicker-input">
-                      <input class="form-control" [(ngModel)]="experienciaLaboral.fechaFinalizacion"
-                             placeholder="yyyy-mm-dd"
-                             name="dp" ngbDatepicker #d="ngbDatepicker" required>
-                      <button class="input-group-addon" (click)="d.toggle()" type="button">
-                        <span class="fa fa-calendar"></span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
+              <div class="col-lg-6" *ngIf="!selectedProfessionalExperience.current_work">
+                <label for="finish_date">
+                  <b class="text-danger">*</b> Fecha Fin:
+                </label>
+                <input type="date" class="form-control" name="finish_date" id="finish_date"
+                       (keypress)="false" [(ngModel)]="selectedProfessionalExperience.finish_date">
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <div *ngIf="!experienciaLaboral.actualmenteVigente">
-              <label for="motivoSalida">
-                <b class="text-danger">*</b> Motivo Salida:
-              </label>
-              <select id="motivoSalida" class="form-control" [(ngModel)]="experienciaLaboral.motivoSalida"
-                      name="motivoSalida" required>
-                <option value="">SELECCIONE...</option>
-                <option value="CRECIMIENTO PROFESIONAL">CRECIMIENTO PROFESIONAL</option>
-                <option value="DESPIDOS Y SALIDAS PACTADAS">DESPIDOS Y SALIDAS PACTADAS</option>
-                <option value="MAL AMBIENTE">MAL AMBIENTE</option>
-                <option value="MEJORA DE CONDICIONES LABORALES">MEJORA DE CONDICIONES LABORALES</option>
-                <option value="SITUACIÓN INCÓMODA">SITUACIÓN INCÓMODA</option>
-                <option value="SOBRECARGA LABORAL">SOBRECARGA LABORAL</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <input type="checkbox" [(ngModel)]="experienciaLaboral.actualmenteVigente" class="form-check-input"
-                   id="actualmenteTrabajoAqui" name="actualmenteTrabajoAqui" hidden>
-            <div class="form-group text-center">
-              <label class="form-check-label btn" for="actualmenteTrabajoAqui" [ngClass]="{'btn-primary':
-                   experienciaLaboral.actualmenteVigente,'btn-danger':!experienciaLaboral.actualmenteVigente}"
-                     (click)="validarFechaFinTrabajo()">
-                <i *ngIf="experienciaLaboral.actualmenteVigente" class="fa fa-check" aria-hidden="true"> Actualmente
-                  trabajo aquí</i>
-                <i *ngIf="!experienciaLaboral.actualmenteVigente" class="fa fa-question" aria-hidden="true"> Actualmente
-                  trabajo aquí</i>
-              </label>
-            </div>
+          <div class="form-group" *ngIf="!selectedProfessionalExperience.current_work">
+            <label for="reason_leave">
+              <b class="text-danger">*</b> Motivo de la salidad:
+            </label>
+            <textarea type="number" min="1" [(ngModel)]="selectedProfessionalExperience.reason_leave"
+                      class="form-control text-uppercase"
+                      id="reason_leave" name="reason_leave" placeholder="Motivo de la salida" required></textarea>
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
+      <h6 class="text-muted">
+        <b class="text-danger">{{messages['requiredFields']['icon']}} </b>
+        {{messages['requiredFields']['text']}}
+      </h6>
       <button class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
-        <span class="fa fa-check"></span>&nbsp;Aceptar
+        <span class="{{messages['saveConfirmationDialog']['iconOk']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['ok']}}
       </button>
       <button class="btn btn-danger" (click)="c('close')">
-        <span class="fa fa-close"></span>&nbsp;Cancelar
+        <span class="{{messages['saveConfirmationDialog']['iconCancel']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['cancel']}}
       </button>
-      <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
     </div>
   </form>
 </ng-template>

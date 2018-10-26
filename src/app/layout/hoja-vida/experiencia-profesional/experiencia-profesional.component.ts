@@ -1,10 +1,13 @@
-import {ExperienciaLaboral} from './../../../models/experiencia-laboral';
+import {ProfessionalExperience} from './../../../models/professionalExperience';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PostulanteService} from './../../../services/postulante.service';
 import {Component, OnInit} from '@angular/core';
 import swal from 'sweetalert2';
 import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 import {Fortaleza} from '../../../models/fortaleza';
+import {Course} from '../../../models/course';
+import {User} from '../../../models/user';
+import {catalogos} from '../../../../environments/catalogos';
 
 @Component({
   selector: 'app-experiencia-profesional',
@@ -12,32 +15,72 @@ import {Fortaleza} from '../../../models/fortaleza';
   styleUrls: ['./experiencia-profesional.component.css']
 })
 export class ExperienciaProfesionalComponent implements OnInit {
-  experienciaLaboral: ExperienciaLaboral;
+  professionalExperiences: Array<ProfessionalExperience>;
+  selectedProfessionalExperience: ProfessionalExperience;
+  actual_page: number;
+  records_per_page: number;
+  total_pages: number;
+  flagPagination: boolean;
+  messages: any;
+  userLogged: User;
+  instituciones: Array<any>;
+  tiposEvento: Array<any>;
+  current_work: boolean;
 
   constructor(
     private modalService: NgbModal,
-    public postulanteService: PostulanteService,
-    private firebaseBDDService: FirebaseBDDService) {
+    public postulanteService: PostulanteService) {
   }
 
   ngOnInit() {
-    this.experienciaLaboral = new ExperienciaLaboral();
-    this.ordenarPorAntiguedad(true);
+    this.actual_page = 1;
+    this.records_per_page = 4;
+    this.total_pages = 1;
+    this.flagPagination = false;
+    this.current_work = false;
+    this.userLogged = JSON.parse(sessionStorage.getItem('user_logged')) as User;
+    this.selectedProfessionalExperience = new ProfessionalExperience();
+    this.instituciones = catalogos.instituciones;
+    this.tiposEvento = catalogos.tiposEvento;
+    this.messages = catalogos.messages;
+    this.getProfessionalExperiences();
+
   }
 
-  open(content, item: ExperienciaLaboral, editar) {
-    if (editar) {
-      this.experienciaLaboral = item;
+  paginate(siguiente: boolean) {
+    this.flagPagination = true;
+    if (siguiente) {
+      if (this.actual_page === this.total_pages) {
+        this.flagPagination = false;
+        return;
+      } else {
+        this.actual_page++;
+      }
     } else {
-      this.experienciaLaboral = new ExperienciaLaboral();
+      if (this.actual_page === 1) {
+        this.flagPagination = false;
+        return;
+      } else {
+        this.actual_page--;
+      }
+    }
+    this.getProfessionalExperiences();
+  }
+
+  open(content, selectedProfessionalExperience: ProfessionalExperience, editar) {
+    if (editar) {
+      this.selectedProfessionalExperience = selectedProfessionalExperience;
+    } else {
+      this.selectedProfessionalExperience = new ProfessionalExperience();
     }
     this.modalService.open(content)
       .result
       .then((resultModal => {
         if (resultModal === 'save') {
-          if (!editar) {
-            this.agregar();
-            this.actualizar();
+          if (editar) {
+            this.updateProfessionalExperience();
+          } else {
+            this.createProfessionalExperience();
           }
         }
       }), (resultCancel => {
@@ -45,109 +88,170 @@ export class ExperienciaProfesionalComponent implements OnInit {
       }));
   }
 
-  ordenarPorAntiguedad(descendente: boolean) {
-    this.postulanteService.postulante.experienciasLaborales.sort((n1, n2) => {
-      const fechaInicio = new Date(n1.fechaInicio.year + '/' + n1.fechaInicio.month + '/' + n1.fechaInicio.day);
-      const fechaFin = new Date(n2.fechaInicio.year + '/' + n2.fechaInicio.month + '/' + n2.fechaInicio.day);
-      if (fechaFin > fechaInicio) {
-        if (descendente) {
-          return 1;
-        } else {
-          return -1;
-        }
-      }
-      if (fechaFin < fechaInicio) {
-        if (descendente) {
-          return -1;
-        } else {
-          return 1;
-        }
-      }
-      return 0;
-    });
-  }
-
-  agregar() {
-    if (this.postulanteService.postulante.experienciasLaborales == null) {
-      this.postulanteService.postulante.experienciasLaborales = [];
-    }
-    if (this.experienciaLaboral.fechaFinalizacion !== null) {
-      if (!this.compararFechas(this.experienciaLaboral.fechaInicio, this.experienciaLaboral.fechaFinalizacion)) {
-        return;
-      }
-    }
-    this.postulanteService.postulante.experienciasLaborales.push(this.experienciaLaboral);
-    this.experienciaLaboral = new ExperienciaLaboral();
-    this.ordenarPorAntiguedad(true);
-  }
-
-  borrar(item: ExperienciaLaboral) {
-    swal({
-      title: '¿Está seguro de Eliminar?',
-      text: item.cargoDesempenado,
-      type: 'warning',
-      showCancelButton: true,
-      reverseButtons: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
-    }).then((result) => {
-      if (result.value) {
-        const experiencias = [];
-        this.postulanteService.postulante.experienciasLaborales.forEach(element => {
-          if (element !== item) {
-            experiencias.push(element);
+  getProfessionalExperiences(): void {
+    this.postulanteService.getProfessionalExperiences(this.actual_page, this.records_per_page, this.userLogged.id, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          console.log('Courses');
+          console.log(response['Courses']);
+          this.professionalExperiences = response['professionalExperiences']['data'];
+          this.total_pages = response['pagination']['last_page'];
+          this.flagPagination = false;
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: 'center',
+              type: 'error',
+              title: 'Oops! no tienes autorización para acceder a este sitio',
+              text: 'Vuelva a intentar',
+              showConfirmButton: true
+            });
           }
         });
-        this.postulanteService.postulante.experienciasLaborales = experiencias;
-        this.actualizar();
-        swal({
-          title: 'Oferta',
-          text: 'Eliminación exitosa!',
-          type: 'success',
-          timer: 2000
+  }
+
+  createProfessionalExperience(): void {
+    this.postulanteService.createProfessionalExperience(
+      {'professionalExperience': this.selectedProfessionalExperience, 'user': this.userLogged}, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          this.getProfessionalExperiences();
+          swal({
+            position: this.messages['createSuccess']['position'],
+            type: this.messages['createSuccess']['type'],
+            title: this.messages['createSuccess']['title'],
+            text: this.messages['createSuccess']['text'],
+            timer: this.messages['createSuccess']['timer'],
+            showConfirmButton: this.messages['createSuccess']['showConfirmButton'],
+            backdrop: this.messages['createSuccess']['backdrop']
+          });
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
+            });
+          }
+
+          if (error.status === 500) {
+            swal({
+              position: this.messages['createError500']['position'],
+              type: this.messages['createError500']['type'],
+              title: this.messages['createError500']['title'],
+              text: this.messages['createError500']['text'],
+              showConfirmButton: this.messages['createError500']['showConfirmButton'],
+              backdrop: this.messages['createError500']['backdrop']
+            });
+          }
         });
+  }
+
+  updateProfessionalExperience(): void {
+    this.postulanteService.updateProfessionalExperience({'professionalExperience': this.selectedProfessionalExperience}, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          this.getProfessionalExperiences();
+          swal({
+            position: this.messages['updateSuccess']['position'],
+            type: this.messages['updateSuccess']['type'],
+            title: this.messages['updateSuccess']['title'],
+            text: this.messages['updateSuccess']['text'],
+            timer: this.messages['updateSuccess']['timer'],
+            showConfirmButton: this.messages['updateSuccess']['showConfirmButton'],
+            backdrop: this.messages['updateSuccess']['backdrop']
+          });
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: this.messages['updateError401']['position'],
+              type: this.messages['updateError401']['type'],
+              title: this.messages['updateError401']['title'],
+              text: this.messages['updateError401']['text'],
+              showConfirmButton: this.messages['updateError401']['showConfirmButton'],
+              backdrop: this.messages['updateError401']['backdrop']
+            });
+          }
+
+          if (error.status === 500) {
+            swal({
+              position: this.messages['updateError500']['position'],
+              type: this.messages['updateError500']['type'],
+              title: this.messages['updateError500']['title'],
+              text: this.messages['updateError500']['text'],
+              showConfirmButton: this.messages['updateError500']['showConfirmButton'],
+              backdrop: this.messages['updateError500']['backdrop']
+            });
+          }
+        });
+  }
+
+  deleteProfessionalExperience(professionalExperience: ProfessionalExperience): void {
+    swal({
+      position: this.messages['deleteQuestion']['position'],
+      type: this.messages['deleteQuestion']['type'],
+      title: this.messages['deleteQuestion']['title'],
+      text: this.messages['deleteQuestion']['text'],
+      showConfirmButton: this.messages['deleteQuestion']['showConfirmButton'],
+      showCancelButton: this.messages['deleteQuestion']['showCancelButton'],
+      confirmButtonColor: this.messages['deleteQuestion']['confirmButtonColor'],
+      cancelButtonColor: this.messages['deleteQuestion']['cancelButtonColor'],
+      confirmButtonText: this.messages['deleteQuestion']['confirmButtonText'],
+      cancelButtonText: this.messages['deleteQuestion']['cancelButtonText'],
+      reverseButtons: this.messages['deleteQuestion']['reverseButtons'],
+      backdrop: this.messages['deleteQuestion']['backdrop'],
+    }).then((result) => {
+      if (result.value) {
+        this.postulanteService.deleteProfessionalExperience(professionalExperience.id, this.userLogged.api_token).subscribe(
+          response => {
+            this.getProfessionalExperiences();
+            swal({
+              position: this.messages['deleteSuccess']['position'],
+              type: this.messages['deleteSuccess']['type'],
+              title: this.messages['deleteSuccess']['title'],
+              text: this.messages['deleteSuccess']['text'],
+              timer: this.messages['deleteSuccess']['timer'],
+              showConfirmButton: this.messages['deleteSuccess']['showConfirmButton'],
+              backdrop: this.messages['deleteSuccess']['backdrop'],
+            });
+          },
+          error => {
+            if (error.status === 401) {
+              swal({
+                position: this.messages['deleteError401']['position'],
+                type: this.messages['deleteError401']['type'],
+                title: this.messages['deleteError401']['title'],
+                text: this.messages['deleteError401']['text'],
+                showConfirmButton: this.messages['deleteError401']['showConfirmButton'],
+                backdrop: this.messages['deleteError401']['backdrop']
+              });
+            }
+
+            if (error.status === 500) {
+              swal({
+                position: this.messages['deleteError500']['position'],
+                type: this.messages['deleteError500']['type'],
+                title: this.messages['deleteError500']['title'],
+                text: this.messages['deleteError500']['text'],
+                showConfirmButton: this.messages['deleteError500']['showConfirmButton'],
+                backdrop: this.messages['deleteError500']['backdrop']
+              });
+            }
+          });
       }
     });
   }
 
-  validarFechaFinTrabajo() {
-    this.experienciaLaboral.motivoSalida = '';
-    this.experienciaLaboral.fechaFinalizacion = null;
-  }
-
-  compararFechas(fechaMenor: any, fechaMayor: any): boolean {
-    const fechaInicio = new Date(fechaMenor.year + '/' + fechaMenor.month + '/' + fechaMenor.day);
-    const fechaFin = new Date(fechaMayor.year + '/' + fechaMayor.month + '/' + fechaMayor.day);
-    if (fechaFin < fechaInicio) {
-      swal({
-        position: 'center',
-        type: 'warning',
-        title: 'Datos Incorrectos',
-        text: 'Hay un error en las fechas ingresadas.',
-        showConfirmButton: false,
-        timer: 2000
-      });
-      return false;
+  validateCurrentWork() {
+    if (!this.current_work) {
+      this.selectedProfessionalExperience.finish_date = new Date();
+      this.selectedProfessionalExperience.reason_leave = '';
     }
-    return true;
   }
-
-  actualizar() {
-    this.postulanteService.postulante.experienciasLaborales.forEach(value => {
-      value.empleador = value.empleador.toUpperCase();
-      value.cargoDesempenado = value.cargoDesempenado.toUpperCase();
-      value.descripcionCargo = value.descripcionCargo.toUpperCase();
-    });
-    this.firebaseBDDService.firebaseControllerPostulantes.actualizar(this.postulanteService.postulante);
-    swal({
-      position: 'center',
-      type: 'success',
-      title: 'Estudio Realizado',
-      text: 'Registro exitoso!',
-      showConfirmButton: true,
-      timer: 2000
-    });
-  }
-
 }

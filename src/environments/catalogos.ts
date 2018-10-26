@@ -967,10 +967,14 @@ export const catalogos = {
     {descripcion: 'CHINO'}
   ],
 
+  categoriasFortaleza: [
+    {descripcion: 'CATEGORIA1'},
+    {descripcion: 'CATEGORIA2'}
+  ],
+
   messages:
     {
       createSuccess: {
-        'toast': true,
         'position': 'center',
         'type': 'success',
         'title': 'Su datos fueron guardados correctamente',
@@ -985,8 +989,8 @@ export const catalogos = {
         'title': 'Su datos fueron actualizados correctamente',
         'text': 'Registro(s) actualizado(s)',
         'timer': 3000,
-        'showConfirmButton': false,
-        'backdrop': 'rgba(0,0,250,0.4)'
+        'showConfirmButton': true,
+        'backdrop': 'rgba(0,0,255,0.4)'
       },
       deleteSuccess: {
         'position': 'center',
@@ -997,6 +1001,69 @@ export const catalogos = {
         'showConfirmButton': true,
         'backdrop': 'rgba(0,0,255,0.4)'
       },
+      createError500: {
+        'position': 'center',
+        'type': 'error',
+        'title': 'Oops! Tuvimos problemas al procesar tu solicitud',
+        'text': 'Vuelve a intentar',
+        'timer': 3000,
+        'showConfirmButton': true,
+        'backdrop': 'rgba(255, 0, 0,0.4)'
+      },
+      createError401: {
+        'position': 'center',
+        'type': 'error',
+        'title': 'Oops! No tienes autorización',
+        'text': 'Vuelve a intentar',
+        'timer': 3000,
+        'showConfirmButton': true,
+        'backdrop': 'rgba(255, 0, 0,0.4)'
+      },
+      createError23505: {
+        'position': 'center',
+        'type': 'error',
+        'title': 'Oops! registro duplicado',
+        'text': 'Vuelve a intentar',
+        'timer': 3000,
+        'showConfirmButton': true,
+        'backdrop': 'rgba(255, 0, 0,0.4)'
+      },
+      updateError500: {
+        'position': 'center',
+        'type': 'error',
+        'title': 'Oops! Tuvimos problemas al procesar tu solicitud',
+        'text': 'Vuelve a intentar',
+        'timer': 3000,
+        'showConfirmButton': false,
+        'backdrop': 'rgba(255,0,0,0.4)'
+      },
+      updateError401: {
+        'position': 'center',
+        'type': 'error',
+        'title': 'Oops! No tienes autorización',
+        'text': 'Vuelve a intentar',
+        'timer': 3000,
+        'showConfirmButton': true,
+        'backdrop': 'rgba(255, 0, 0,0.4)'
+      },
+      deleteError500: {
+        'position': 'center',
+        'type': 'error',
+        'title': 'Oops! Tuvimos problemas al procesar tu solicitud',
+        'text': 'Vuelve a intentar',
+        'timer': 3000,
+        'showConfirmButton': true,
+        'backdrop': 'rgba(255,0,0,0.4)'
+      },
+      deleteError401: {
+        'position': 'center',
+        'type': 'error',
+        'title': 'Oops! No tienes autorización',
+        'text': 'Vuelve a intentar',
+        'timer': 3000,
+        'showConfirmButton': true,
+        'backdrop': 'rgba(255, 0, 0,0.4)'
+      },
       deleteQuestion: {
         'position': 'center',
         'type': 'warning',
@@ -1006,15 +1073,29 @@ export const catalogos = {
         'showCancelButton': true,
         'confirmButtonColor': '#d33',
         'cancelButtonColor': '#3085d6',
-        'confirmButtonText': '<i class="fa fa-trash" aria-hidden="true"> Confimar</i>',
+        'confirmButtonText': '<i class="fa fa-trash" aria-hidden="true"> Confirmar</i>',
         'cancelButtonText': 'Cancelar',
         'reverseButtons': true,
         'customClass': 'animated tada',
         'backdrop': 'rgba(255, 0, 0,0.4)'
       },
-      createConfirmationDialog: {'ok': 'Crear', 'cancel': 'Cancelar'},
-      requiredFields: {'icon': '*', 'text': 'Todos los campos son obligatorios'}
+      saveConfirmationDialog: {'ok': 'Guardar', 'cancel': 'Cancelar', 'iconOk': 'fa fa-save', 'iconCancel': 'fa fa-close'},
+      requiredFields: {'icon': '*', 'text': 'Todos los campos son obligatorios'},
+      bottomAdd: {'icon': 'fa fa-plus', 'text': 'Añadir'},
+      bottomUpdate: {'icon': 'fa fa-edit', 'text': ''},
+      bottomDelete: {'icon': 'fa fa-trash', 'text': ''},
+      bottomPaginationNext: {'icon': 'fa fa-trash', 'text': 'Atrás'},
+      bottomPaginationBack: {'icon': 'fa fa-trash', 'text': 'Siguiente'}
     },
-
+  tiposEvento: [
+    {descripcion: 'CONFERENCIA'},
+    {descripcion: 'CONGRESO'},
+    {descripcion: 'JORNADA'},
+    {descripcion: 'PANEL'},
+    {descripcion: 'PASANTÍA'},
+    {descripcion: 'SEMINARIO'},
+    {descripcion: 'TALLER'},
+    {descripcion: 'VISTA DE OBSERVACIÓN'}
+  ],
   tituloMenuPrincipal: 'TALENTO HUMANO'
 };

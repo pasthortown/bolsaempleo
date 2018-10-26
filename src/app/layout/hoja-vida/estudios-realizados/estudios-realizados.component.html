@@ -10,7 +10,7 @@
           <ul class="pagination">
             <li class="page-item">
               <button type="button" class="page-link" (click)="paginate(false)" [disabled]="flagPagination">
-                Atrás
+                {{messages['bottomPaginationNext']['text']}}
               </button>
             </li>
             <li class="page-item">
@@ -18,7 +18,7 @@
             </li>
             <li class="page-item">
               <button type="button" class="page-link" (click)="paginate(true)" [disabled]="flagPagination">
-                Siguiente
+                {{messages['bottomPaginationBack']['text']}}
               </button>
             </li>
           </ul>
@@ -34,10 +34,9 @@
           <th width="10%">Fecha de Registro</th>
           <th width="10%">Cód. de Reg. SENESCYT</th>
           <th>
-            Opciones
             <button class="btn btn-success"
                     (click)="open(content, selectedAcademicFormation, false)">
-              <span class="fa fa-plus"></span>
+              <span class="{{messages['bottomAdd']['icon']}}"> {{messages['bottomAdd']['text']}}</span>
             </button>
           </th>
           </thead>
@@ -49,9 +48,9 @@
             <td>{{item.senescyt_code}}</td>
             <td class="text-center">
               <button class="btn btn-warning btn-sm text-white" (click)="open(content,item,true)"><span
-                class="fa fa-edit"></span></button>
+                class="{{messages['bottomUpdate']['icon']}}"></span></button>
               <button class="btn btn-danger ml-1 btn-sm" (click)="deleteAcademicFormation(item)"><span
-                class="fa fa-trash"></span>
+                class="{{messages['bottomDelete']['icon']}}"></span>
               </button>
             </td>
           </tr>
@@ -121,14 +120,16 @@
       </div>
     </div>
     <div class="modal-footer">
+      <h6 class="text-muted">
+        <b class="text-danger">{{messages['requiredFields']['icon']}} </b>
+        {{messages['requiredFields']['text']}}
+      </h6>
       <button class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
-        <span class="fa fa-check"></span>&nbsp;{{messages['createConfirmationDialog']['ok']}}
+        <span class="{{messages['saveConfirmationDialog']['iconOk']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['ok']}}
       </button>
       <button class="btn btn-danger" (click)="c('close')">
-        <span class="fa fa-close"></span>&nbsp;{{messages['createConfirmationDialog']['cancel']}}
+        <span class="{{messages['saveConfirmationDialog']['iconCancel']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['cancel']}}
       </button>
-      <h6 class="text-muted"><b class="text-danger">{{messages['requiredFields']['icon']}} </b>{{messages['requiredFields']['text']}}
-      </h6>
     </div>
   </form>
 </ng-template>

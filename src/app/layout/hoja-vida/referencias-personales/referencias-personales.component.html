@@ -1,96 +1,117 @@
-<div class="col-12 mt-2">
-  <div class="row">
-    <button class="btn btn-success m-2" (click)="open(content, estudioRealizado, false)">
-      <span class="fa fa-plus-circle"></span>&nbsp;Agregar
-    </button>
-  </div>
-  <div class="row">
-    <div class="col-12 card mt-3">
-      <div class="row">
-        <div class="col-12">
-          <h4 class="col-12 text-center">Referencias Profesionales</h4>
-        </div>
-        <div class="col-12">
-          <table class="table table-bordered table-hover">
-            <thead class="table-active">
-            <th>Institución</th>
-            <th>Cargo</th>
-            <th>Nombres y Apellidos</th>
-            <th>Teléfono</th>
-            <th width="100px">Opciones</th>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of postulanteService.postulante.referenciasPersonales">
-              <td>{{item.institucion}}</td>
-              <td>{{item.cargo}}</td>
-              <td>{{item.nombresApellidos}}</td>
-              <td>{{item.telefono}}</td>
-              <td>
-                <button class="btn btn-warning btn-sm" (click)="open(content,item,true)"><span
-                  class="fa fa-edit"></span></button>
-                <button class="btn btn-danger ml-1 btn-sm" (click)="borrar(item)"><span class="fa fa-trash"></span>
-                </button>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+<div class="row m-1">
+  <div class="col-12">
+    <div class="row m-1">
+      <div class="col-2 offset-10">
+      </div>
+    </div>
+    <div class="row ml-1">
+      <div class="col-12">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item">
+              <button type="button" class="page-link" (click)="paginate(false)" [disabled]="flagPagination">
+                {{messages['bottomPaginationNext']['text']}}
+              </button>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)">{{actual_page}} de {{total_pages}}</a>
+            </li>
+            <li class="page-item">
+              <button type="button" class="page-link" (click)="paginate(true)" [disabled]="flagPagination">
+                {{messages['bottomPaginationBack']['text']}}
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="row m-1">
+      <div class="col-12">
+        <table class="table table-bordered table-hover table-striped">
+          <thead class="table-default text-center">
+          <th width="25%">Institución</th>
+          <th width="25%">Cargo</th>
+          <th width="25%">Contacto</th>
+          <th width="25%">Teléfono</th>
+          <th>
+            <button class="btn btn-success"
+                    (click)="open(content, selectedProfessionalReference, false)">
+              <span class="{{messages['bottomAdd']['icon']}}"> {{messages['bottomAdd']['text']}}</span>
+            </button>
+          </th>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of professionalReferences">
+            <td>{{item.institution}}</td>
+            <td>{{item.position}}</td>
+            <td>{{item.contact}}</td>
+            <td>{{item.phone}}</td>
+            <td class="text-center">
+              <button class="btn btn-warning btn-sm text-white" (click)="open(content,item,true)"><span
+                class="{{messages['bottomUpdate']['icon']}}"></span></button>
+              <button class="btn btn-danger ml-1 btn-sm" (click)="deleteProfessionalReference(item)"><span
+                class="{{messages['bottomDelete']['icon']}}"></span>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
 </div>
-
 <ng-template #content let-c="close" let-d="dismiss">
-  <form name="capacitacionform" method="post" #formCtrl="ngForm">
+  <form name="empresaform" method="post" #formCtrl="ngForm">
     <div class="modal-header">
       <div class="row">
-        <h4 class="col-12 text-center">Referencias Profesionales</h4>
+        <h4 class="col-12 text-center" name="titulo">Referencia Profesional:</h4>
       </div>
     </div>
     <div class="modal-body">
       <div class="row">
         <div class="col-12">
           <div class="form-group">
-            <label for="institucion">
+            <label>
               <b class="text-danger">*</b> Institución:
             </label>
-            <input type="text" [(ngModel)]="referenciaPersonal.institucion" class="form-control text-uppercase"
-                   id="institucion" name="institucion"
-                   placeholder="NOMBRE DE LA INSTITUCIÓN" required>
+            <input type="text" [(ngModel)]="selectedProfessionalReference.institution" class="form-control text-uppercase"
+                   id="institution" name="institution" placeholder="Nombre de la Institución" required>
           </div>
           <div class="form-group">
-            <label for="cargo">
+            <label>
               <b class="text-danger">*</b> Cargo:
             </label>
-            <input type="text" [(ngModel)]="referenciaPersonal.cargo" class="form-control text-uppercase" id="cargo"
-                   name="cargo" placeholder="NOMBRE DEL CARGO" required>
+            <input type="text" [(ngModel)]="selectedProfessionalReference.position" class="form-control text-uppercase"
+                   id="position" name="position" placeholder="Cargo" required>
           </div>
           <div class="form-group">
-            <label for="nombresApellidos">
-              <b class="text-danger">*</b> Apellidos y Nombres:
+            <label>
+              <b class="text-danger">*</b> Apellidos y Nombres Contacto:
             </label>
-            <input type="text" [(ngModel)]="referenciaPersonal.nombresApellidos" class="form-control text-uppercase"
-                   id="nombresApellidos" name="nombresApellidos" placeholder="APELLIDOS Y NOMBRES">
+            <input type="text" [(ngModel)]="selectedProfessionalReference.contact" class="form-control text-uppercase"
+                   id="contact" name="contact" placeholder="Apellidos y Nombres" required>
           </div>
           <div class="form-group">
-            <label for="telefono">
+            <label>
               <b class="text-danger">*</b> Teléfono:
             </label>
-            <input type="text" [(ngModel)]="referenciaPersonal.telefono" class="form-control" id="telefono"
-                   name="telefono"
-                   placeholder="NÚMERO DE CONTACTO" required>
+            <input type="text" [(ngModel)]="selectedProfessionalReference.phone" class="form-control"
+                   id="phone" name="phone" placeholder="Número de teléfono" required>
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
+      <h6 class="text-muted">
+        <b class="text-danger">{{messages['requiredFields']['icon']}} </b>
+        {{messages['requiredFields']['text']}}
+      </h6>
       <button class="btn btn-success" (click)="c('save')" [disabled]="formCtrl.form.invalid">
-        <span class="fa fa-check"></span>&nbsp;Aceptar
+        <span class="{{messages['saveConfirmationDialog']['iconOk']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['ok']}}
       </button>
       <button class="btn btn-danger" (click)="c('close')">
-        <span class="fa fa-close"></span>&nbsp;Cancelar
+        <span class="{{messages['saveConfirmationDialog']['iconCancel']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['cancel']}}
       </button>
-      <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
     </div>
   </form>
 </ng-template>
