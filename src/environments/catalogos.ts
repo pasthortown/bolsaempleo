@@ -1076,7 +1076,30 @@ export const catalogos = {
         'confirmButtonText': '<i class="fa fa-trash" aria-hidden="true"> Confirmar</i>',
         'cancelButtonText': 'Cancelar',
         'reverseButtons': true,
+        'backdrop': 'rgba(255, 0, 0,0.4)'
+      },
+      finishQuestion: {
+        'position': 'center',
+        'type': 'warning',
+        'title': 'Está seguro de finalizar la oferta?',
+        'text': 'La oferta finalizará y no se podrá realizar cambios',
+        'showConfirmButton': true,
+        'showCancelButton': true,
+        'confirmButtonColor': '#d33',
+        'cancelButtonColor': '#3085d6',
+        'confirmButtonText': '<i class="fa fa-power-off" aria-hidden="true"> Confirmar</i>',
+        'cancelButtonText': 'Cancelar',
+        'reverseButtons': true,
         'customClass': 'animated tada',
+        'backdrop': 'rgba(255, 0, 0,0.4)'
+      },
+      getError401: {
+        'position': 'center',
+        'type': 'error',
+        'title': 'Oops! No tienes autorización',
+        'text': 'Vuelve a intentar',
+        'timer': 3000,
+        'showConfirmButton': true,
         'backdrop': 'rgba(255, 0, 0,0.4)'
       },
       saveConfirmationDialog: {'ok': 'Guardar', 'cancel': 'Cancelar', 'iconOk': 'fa fa-save', 'iconCancel': 'fa fa-close'},

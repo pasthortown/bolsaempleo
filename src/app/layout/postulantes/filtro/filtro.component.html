@@ -1,4 +1,5 @@
 <div class="row">
+  <!--Menu lateral izquierdo Filtros-->
   <div class="col-3">
     <div class="row">
       <div class="col-12">
@@ -10,33 +11,35 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <div id="accordion" class="accordion" *ngFor="let item of filtro">
+        <div id="accordion" class="accordion" *ngFor="let item of areas">
           <div class="card">
             <a class="card-header collapsed" data-toggle="collapse" [href]="'#'+item.id">
-              <div class="row">
-                <div class="col-lg-9 col-sm-12">
-                  <a class="card-title campo-amplio">{{item.campo_amplio }}</a>
-                </div>
-                <span class="col-lg-2 col-sm-12">
-                    <div class="text-dark">&nbsp;({{ item.total}})</div>
+                <span class="row" (click)="filterOffersSingle('broad_field',item.campo_amplio)">
+                  <span class="col-lg-9 col-sm-12">
+                    <a class="card-title campo-amplio">{{item.campo_amplio }}</a>
                   </span>
-              </div>
+                  <span class="col-lg-3 col-sm-12 text-dark">
+                    &nbsp;({{ item.total}})
+                  </span>
+                </span>
             </a>
             <div id="{{item.id}}" class="card-body collapse" data-parent="#accordion">
               <div class="panel-body">
                 <table class="table">
-                  <tr *ngFor="let areaEspecifica of item.campos_especificos">
-                    <td width="80%">
-                      <a class="campo_especifico" href="javascript:void(0)"
-                         (click)="filtrarPorTitulo(areaEspecifica.nombre)">
-                        {{areaEspecifica.nombre}}
-                      </a>
-
-                    </td>
-                    <td width="20%">
-                      <div class="campo_especifico text-dark">&nbsp;({{ areaEspecifica.total}})</div>
-                    </td>
-                  </tr>
+                  <div *ngFor="let areaEspecifica of item.campos_especificos">
+                    <!--<tr *ngIf="areaEspecifica.total">-->
+                    <tr>
+                      <td width="80%">
+                        <a class="campo_especifico" href="javascript:void(0)"
+                           (click)="filterOffersSingle('specific_field',areaEspecifica.nombre)">
+                          {{areaEspecifica.nombre}}
+                        </a>
+                      </td>
+                      <td width="20%">
+                        <span class=" campo_especifico text-dark">&nbsp;({{ areaEspecifica.total}})</span>
+                      </td>
+                    </tr>
+                  </div>
                 </table>
               </div>
             </div>
@@ -45,14 +48,20 @@
       </div>
     </div>
   </div>
+  <!--Ofertas de trabajo-->
   <div class="col-9">
+    <!--Buscador-->
     <div class="row">
       <div class="col-12">
         <div class="input-group">
-          <input type="text" class="form-control text-uppercase" placeholder="Buscar..." [(ngModel)]="criterioBusqueda">
+          <input type="text" class="form-control" placeholder="Buscar..." aria-label=""
+                 aria-describedby="basic-addon1" [(ngModel)]="criterioBusqueda">
           <div class="input-group-append">
-            <button class="btn btn-info" type="button" (click)="filtroDirecto()">
+            <button class="btn btn-info" type="button" (click)="filtrarPorCargo(criterioBusqueda)">
               <span class="fa fa-search"></span>&nbsp;Buscar
+            </button>
+            <button class="btn btn-warning ml-1" type="button" (click)="openFilter(modalFilter)">
+              <span class="fa fa-sliders"></span>&nbsp;Filtrar
             </button>
           </div>
         </div>
@@ -61,17 +70,41 @@
     <!--Etiquetas de Filtro-->
     <div class="row mt-2">
       <div class="col-12">
-        <div class="input-group">
-          <div *ngIf="etiquetaPrincipal">
-            <label class="btn-warning">{{etiquetaPrincipal}}</label>
-            <button type="button" class="close" aria-label="Close" (click)="borrarFiltro()">
-              <span aria-hidden="true">&times;</span>
-            </button>
+        <div class="form-group">
+          <div class="input-group">
+            <div *ngFor="let filter of filters" class="ml-2">
+              <div *ngIf="filter && filter!=''">
+                <label class="btn-link text-danger">
+                  {{filter}}
+                </label>
+                <button type="button" class="input-group-prepend close" aria-label="Close"
+                        (click)="borrarFiltro(filter)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <!--Lista de Postulantes-->
+    <!--Grid de Ofertas-->
+    <div class="row mt-3">
+      <div class="col-12">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)" tabindex="-1" (click)="paginacion(false)">Previous</a>
+            </li>
+            <li class="page-item disabled">
+              <a class="page-link" href="javascript:void(0)">{{actual_page}} de {{total_pages}}</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="javascript:void(0)" (click)="paginacion(true)">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
     <div class="row" style="overflow: auto">
       <div class="col-lg-4 col-sm-12" *ngFor="let postulanteActual of postulantes">
         <div class="single-special text-center mt-2">
@@ -100,7 +133,7 @@
               <a class="page-link" href="javascript:void(0)" tabindex="-1" (click)="paginacion(false)">Previous</a>
             </li>
             <li class="page-item disabled">
-              <a class="page-link" href="javascript:void(0)">{{pagina}} de {{totalPaginas}}</a>
+              <a class="page-link" href="javascript:void(0)">{{actual_page}} de {{total_pages}}</a>
             </li>
             <li class="page-item">
               <a class="page-link" href="javascript:void(0)" (click)="paginacion(true)">Next</a>
@@ -406,76 +439,3 @@
     </button>
   </div>
 </ng-template>
-
-<!--<div class="row" style="overflow: auto">-->
-<!--<div class="col-12">-->
-<!--<div class="card  mt-2" *ngFor="let postulanteActual of postulantes">-->
-<!--<div class="card-body mt-1">-->
-<!--<div class="card-title">-->
-<!--<div class="row  texto">-->
-<!--<div class="col-12">-->
-<!--<h3 class="col-12 text-left text-uppercase">{{postulanteActual.nombreCompleto}}</h3>-->
-<!--</div>-->
-<!--<div class="col-12">-->
-<!--<h5 class="col-12 text-left mt-3">Estudios Realizados</h5>-->
-<!--<table class="table table-sm">-->
-<!--<thead>-->
-<!--<th>Institución</th>-->
-<!--<th>Tipo de Título</th>-->
-<!--<th>Título</th>-->
-<!--</thead>-->
-<!--<tbody>-->
-<!--<tr *ngFor="let item of postulanteActual.estudiosRealizados">-->
-<!--<td>{{item.institucion}}</td>-->
-<!--<td>{{item.tipo_titulo}}</td>-->
-<!--<td>{{item.titulo}}</td>-->
-<!--</tr>-->
-<!--</tbody>-->
-<!--</table>-->
-<!--</div>-->
-<!--<div class="col-12">-->
-<!--<h5 class="col-12 text-left mt-3">Idiomas</h5>-->
-<!--<table class="table table-sm">-->
-<!--<thead>-->
-<!--<th>Idioma</th>-->
-<!--<th>Nivel Escrito</th>-->
-<!--<th>Nivel Hablado</th>-->
-<!--<th>Nivel Lectura</th>-->
-<!--</thead>-->
-<!--<tbody>-->
-<!--<tr *ngFor="let item of postulanteActual.idiomas">-->
-<!--<td class="text-uppercase">{{item.idioma}}</td>-->
-<!--<td class="text-uppercase">{{item.nivelEscrito}}</td>-->
-<!--<td class="text-uppercase">{{item.nivelHablado}}</td>-->
-<!--<td class="text-uppercase">{{item.nivelLectura}}</td>-->
-<!--</tr>-->
-<!--</tbody>-->
-<!--</table>-->
-<!--</div>-->
-<!--<div class="col-12">-->
-<!--<h5 class="col-12 text-left mt-3">Capacitaciones y Certificaciones</h5>-->
-<!--<table class="table table-sm">-->
-<!--<thead>-->
-<!--<th>Nombre del Evento</th>-->
-<!--<th>Horas</th>-->
-<!--</thead>-->
-<!--<tbody>-->
-<!--<tr *ngFor="let item of postulanteActual.capacitaciones">-->
-<!--<td class="text-uppercase">{{item.nombreEvento}}</td>-->
-<!--<td>{{item.horas}}</td>-->
-<!--</tr>-->
-<!--</tbody>-->
-<!--</table>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="col-12 m-2 text-left">-->
-<!--<a *ngIf="authService.rolActual=='e'" target="_blank" class="btn btn-primary btn-sm text-uppercase text-right"-->
-<!--href="curriculum?idPostulante={{postulanteActual.id}}">-->
-<!--<span class="fa fa-info-circle"></span>&nbsp;Más Información-->
-<!--</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->

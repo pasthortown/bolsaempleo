@@ -1,19 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {OfertaService} from '../../../services/oferta.service';
-import {EmpresaService} from '../../../services/empresa.service';
-import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
-import {Oferta} from '../../../models/oferta';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 import swal from 'sweetalert2';
 import {catalogos} from '../../../../environments/catalogos';
-import {Postulacion} from '../../../models/postulacion';
-import {AuthService} from '../../../services/auth.service';
-import {Postulante} from '../../../models/postulante';
 import {Router} from '@angular/router';
-import {PostulacionDiccionario} from '../../../models/miPostulacionDiccionario';
 import {PostulanteService} from '../../../services/postulante.service';
 import {Offer} from '../../../models/offer';
-import {forEach} from '@angular/router/src/utils/collection';
+import {User} from '../../../models/user';
 
 @Component({
   selector: 'app-filtro-ofertas',
@@ -24,20 +17,13 @@ export class FiltroComponent implements OnInit {
   filters: Array<String>;
   columns = new Array('code', 'province', 'broad_field', 'position', 'city', 'specific_field');
   operators = new Array('=', '=', 'like', 'like', 'like', '=');
-  oferta: Oferta;
-  ofertasAplicadas = [];
-  postulacion: Postulacion;
-  postulante: Postulante;
-  ofertas: Array<Oferta>;
   areas: Array<any>;
   etiquetaPrincipal: string;
   criterioBusqueda: string;
-  pagina = 0;
-  registrosPorPagina = 10;
-  totalPaginas = 1;
-  campo = 'estudiosRealizados/0/tipo_titulo';
 
+  userLogged: User;
   offers: Array<Offer>;
+  selectedOffer: Offer;
   actual_page: number;
   records_per_page: number;
   total_pages: number;
@@ -45,47 +31,37 @@ export class FiltroComponent implements OnInit {
   cantones: Array<any>;
   enable_city: boolean;
   camposEspecificos: Array<any>;
-  filterFlag: boolean;
+  validateOffer: boolean;
+  messages: any;
+  filterOption: string;
+  filterColumnSingle: string;
 
   constructor(private modalService: NgbModal,
               public ofertaService: OfertaService,
               private postulanteService: PostulanteService,
-              private firebaseBDDService: FirebaseBDDService,
-              public authService: AuthService,
               private router: Router) {
   }
 
   ngOnInit() {
+    this.validateOffer = false;
     this.provinces = catalogos.provincias;
     this.areas = catalogos.titulos;
     this.filters = new Array<String>();
     this.actual_page = 1;
-    this.records_per_page = 5;
+    this.records_per_page = 1;
     this.total_pages = 1;
+    this.messages = catalogos.messages;
+    if (sessionStorage.getItem('user_logged')) {
+      this.userLogged = JSON.parse(sessionStorage.getItem('user_logged')) as User;
+    } else {
+      this.userLogged = new User();
+    }
+
     this.getOffers();
     this.criterioBusqueda = '';
-    this.postulante = this.authService.obtenerUsuario();
-    this.postulacion = new Postulacion();
-    this.oferta = new Oferta();
     this.paginacion(true);
-    this.getAllOffers();
-    if (this.postulante != null) {
-      this.getMisPostulaciones();
-    }
-  }
+    this.countOffers();
 
-  getTotalPaginas() {
-    const ofertas = [];
-    this.firebaseBDDService.firebaseControllerOfertas.getAll().snapshotChanges().subscribe(items => {
-      this.totalPaginas = Math.ceil(items.length / this.registrosPorPagina);
-      items.forEach(element => {
-        let itemLeido: Oferta;
-        itemLeido = element.payload.val() as Oferta;
-        ofertas.push(itemLeido);
-      });
-      this.contarOfertasPorCampoAmplio(ofertas);
-      this.contarOfertasPorCampoEspecifico(ofertas);
-    });
   }
 
   paginacion(siguiente: boolean) {
@@ -102,24 +78,35 @@ export class FiltroComponent implements OnInit {
         this.actual_page--;
       }
     }
-    if (this.filters.length === 0) {
+    if (this.filters.length === 0 && (this.etiquetaPrincipal == '' || this.etiquetaPrincipal == null)) {
       this.getOffers();
     } else {
-      this.filterOffers();
+      switch (this.filterOption) {
+        case 'single':
+          break;
+        case 'field':
+          this.filterOffersField();
+          break;
+        case 'filter':
+          this.filterOffers();
+          break;
+      }
+
     }
 
   }
 
-  openOfertaLaboral(content, item: Oferta, editar) {
+  openOfertaLaboral(content, item: Offer, editar) {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
-    this.oferta = item;
+    this.selectedOffer = item;
+    this.validateAppliedOffer();
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
         if (resultAceptar === 'aplicar') {
-          this.aplicarOferta(item);
+          this.applyOffer();
         }
 
       }), (resultCancel => {
@@ -127,15 +114,28 @@ export class FiltroComponent implements OnInit {
       }));
   }
 
-  openFilter(content, item: Oferta, editar) {
+  validateAppliedOffer() {
+    this.ofertaService.validateAppliedOffer(this.userLogged.id, this.selectedOffer.id).subscribe(response => {
+      if (response) {
+        this.validateOffer = true;
+      } else {
+        this.validateOffer = false;
+      }
+    });
+  }
+
+  openFilter(content, item: Offer, editar) {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
-    this.oferta = item;
+    this.selectedOffer = item;
+    this.filters = new Array<String>();
+
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
         if (resultAceptar === 'aplicar') {
+          this.etiquetaPrincipal = null;
           this.filterOffers();
         }
 
@@ -145,7 +145,8 @@ export class FiltroComponent implements OnInit {
   }
 
   filterOffers() {
-    this.actual_page = 1;
+    this.filterOption = 'filter';
+    this.etiquetaPrincipal = null;
     let condition = [];
     const conditions = [];
     for (let i = 0; i < this.filters.length; i++) {
@@ -174,8 +175,29 @@ export class FiltroComponent implements OnInit {
       });
   }
 
+  filterOffersField() {
+    this.filterOption = 'field';
+    this.ofertaService.filterOffersField(this.criterioBusqueda, this.actual_page, this.records_per_page).subscribe(
+      response => {
+        this.offers = response['offers']['data'];
+        if (response['pagination']['total'] === 0) {
+          swal({
+            title: 'Oops! No encotramos lo que estás buscando',
+            text: 'Intenta otra vez!',
+            type: 'info',
+            timer: 3500
+          });
+          this.total_pages = 1;
+        } else {
+          this.total_pages = response['pagination']['last_page'];
+        }
+      });
+  }
+
   filterOffersSingle(column, item) {
-    this.filters[0] = item;
+    this.filterOption = 'single';
+    this.etiquetaPrincipal = item;
+    this.filters = null;
     const condition = [];
     const conditions = [];
     condition.push(column);
@@ -199,34 +221,9 @@ export class FiltroComponent implements OnInit {
       });
   }
 
-  aplicarOferta(oferta) {
-    this.postulacion.idPostulante = this.postulante.id;
-    this.postulacion.idOferta = oferta.id;
-
-    swal({
-      title: '¿Está seguro de Aplicar?',
-      text: oferta.cargo,
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: '<i class="fa fa-check" aria-hidden="true"></i>'
-    }).then((result) => {
-      if (result.value) {
-        this.firebaseBDDService.firebaseControllerPostulaciones.insertar(this.postulacion);
-        swal({
-          title: 'Oferta Aplicada',
-          text: 'Aplicación exitosa!',
-          type: 'success',
-          timer: 2000
-        });
-      }
-    });
-  }
-
-  borrarFiltro(filter) {
+  cleanFilter(filter) {
     this.filters.splice(this.filters.indexOf(filter), 1);
-    this.etiquetaPrincipal = '';
+    this.etiquetaPrincipal = null;
     if (this.filters.length === 0) {
       this.getOffers();
     } else {
@@ -235,92 +232,27 @@ export class FiltroComponent implements OnInit {
 
   }
 
-  filtrarPorCargo() {
-    this.ofertas = [];
-    this.etiquetaPrincipal = this.criterioBusqueda;
-    this.firebaseBDDService.firebaseControllerOfertas.querySimple('cargo', this.criterioBusqueda.toUpperCase())
-      .snapshotChanges().subscribe(items => {
-      if (items.length === 0) {
-        swal({
-          position: 'center',
-          type: 'info',
-          title: 'No existen Ofertas',
-          text: '',
-          showConfirmButton: false,
-          timer: 2000
-        });
-      }
-      items.forEach(element => {
-        let itemLeido: Oferta;
-        itemLeido = element.payload.val() as Oferta;
-        this.ofertas.push(itemLeido);
-      });
-    });
+  cleanFilterSingle() {
+    this.etiquetaPrincipal = null;
+    this.getOffers();
   }
 
-  filtrarPorCampoAmplio(filtro) {
-    this.ofertas = [];
-    this.etiquetaPrincipal = filtro;
-    this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoAmplio', filtro)
-      .snapshotChanges().subscribe(items => {
-      if (items.length === 0) {
-        swal({
-          position: 'center',
-          type: 'info',
-          title: 'No existen Ofertas',
-          text: '',
-          showConfirmButton: false,
-          timer: 2000
-        });
-      }
-      items.forEach(element => {
-        let itemLeido: Oferta;
-        itemLeido = element.payload.val() as Oferta;
-        this.ofertas.push(itemLeido);
-      });
-    });
-  }
-
-  filtrarPorCampoEspecifico(filtro) {
-    this.ofertas = [];
-    this.etiquetaPrincipal = filtro;
-    this.firebaseBDDService.firebaseControllerOfertas.filtroExacto('campoEspecifico', filtro)
-      .snapshotChanges().subscribe(items => {
-
-      if (items.length === 0) {
-        swal({
-          position: 'center',
-          type: 'info',
-          title: 'No existen Ofertas',
-          text: '',
-          showConfirmButton: false,
-          timer: 2000
-        });
-      }
-      items.forEach(element => {
-        let itemLeido: Oferta;
-        itemLeido = element.payload.val() as Oferta;
-        this.ofertas.push(itemLeido);
-      });
-    });
-  }
-
-  getAllOffers() {
+  countOffers() {
     this.ofertaService.getAllOffers().subscribe(
       response => {
+        console.log('entro');
         this.contarOfertasPorCampoAmplio(response['offers']);
         this.contarOfertasPorCampoEspecifico(response['offers']);
       });
   }
 
   contarOfertasPorCampoAmplio(offers: Array<Offer>) {
-
     this.areas.forEach(area => {
       area.total = 0;
     });
-    offers.forEach(oferta => {
+    offers.forEach(offer => {
       this.areas.forEach(area => {
-        if (oferta.broad_field === area.campo_amplio) {
+        if (offer.broad_field === area.campo_amplio) {
           area.total = area.total + 1;
         }
       });
@@ -344,46 +276,53 @@ export class FiltroComponent implements OnInit {
     });
   }
 
-  validarSesion() {
-    swal({
-      title: 'Para ver más Información tiene que iniciar sesión como Profesional',
-      text: '',
-      type: 'info',
-      showCancelButton: true,
-      confirmButtonColor: '#28a745',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: '<i class="fa fa-sign-in" aria-hidden="true"> Iniciar Sesión</i>',
-      cancelButtonText: '<i class="fa fa-address-book" aria-hidden="true"> Regístrate</i>'
-    }).then((result) => {
-      if (result.value) {
-        this.router.navigate(['login']);
-      } else if (
-        // Read more about handling dismissals
-        result.dismiss === swal.DismissReason.cancel
-      ) {
-        this.router.navigate(['persona']);
+  validateSession(content, item: Offer, editar) {
+    if (!(this.userLogged == null)) {
+      if (this.userLogged.role.toString() === '1') {
+        this.openOfertaLaboral(content, item, editar);
+      } else {
+        swal({
+          title: 'Para ver más Información tiene que iniciar sesión como Profesional',
+          text: '',
+          type: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#28a745',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: '<i class="fa fa-sign-in" aria-hidden="true"> Iniciar Sesión</i>',
+          cancelButtonText: '<i class="fa fa-address-book" aria-hidden="true"> Regístrate</i>'
+        }).then((result) => {
+          if (result.value) {
+            this.router.navigate(['login']);
+          } else if (
+            // Read more about handling dismissals
+            result.dismiss === swal.DismissReason.cancel
+          ) {
+            this.router.navigate(['persona']);
+          }
+        });
       }
-    });
-  }
-
-  getMisPostulaciones() {
-    this.firebaseBDDService.firebaseControllerPostulaciones.filtroExacto('idPostulante', this.postulante.id)
-      .snapshotChanges().subscribe(items => {
-      items.forEach(element => {
-        const postulacion: Postulacion = element.payload.val() as Postulacion;
-        this.ofertasAplicadas.push(postulacion.idOferta);
+    } else {
+      swal({
+        title: 'Para ver más Información tiene que iniciar sesión como Profesional',
+        text: '',
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: '<i class="fa fa-sign-in" aria-hidden="true"> Iniciar Sesión</i>',
+        cancelButtonText: '<i class="fa fa-address-book" aria-hidden="true"> Regístrate</i>'
+      }).then((result) => {
+        if (result.value) {
+          this.router.navigate(['login']);
+        } else if (
+          // Read more about handling dismissals
+          result.dismiss === swal.DismissReason.cancel
+        ) {
+          this.router.navigate(['persona']);
+        }
       });
-    });
-  }
+    }
 
-  aplicada(idOferta: string) {
-    let toReturn = false;
-    this.ofertasAplicadas.forEach(element => {
-      if (element === idOferta) {
-        toReturn = true;
-      }
-    });
-    return toReturn;
   }
 
   getOffers(): void {
@@ -414,5 +353,47 @@ export class FiltroComponent implements OnInit {
         this.camposEspecificos = value.campos_especificos;
       }
     });
+  }
+
+  applyOffer(): void {
+    this.ofertaService.applyOffer(
+      {'user': this.userLogged, 'offer': this.selectedOffer}, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          if (response) {
+            swal({
+              position: this.messages['createSuccess']['position'],
+              type: this.messages['createSuccess']['type'],
+              title: this.messages['createSuccess']['title'],
+              text: this.messages['createSuccess']['text'],
+              timer: this.messages['createSuccess']['timer'],
+              showConfirmButton: this.messages['createSuccess']['showConfirmButton'],
+              backdrop: this.messages['createSuccess']['backdrop']
+            });
+          }
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
+            });
+          }
+
+          if (error.status === 500) {
+            swal({
+              position: this.messages['createError500']['position'],
+              type: this.messages['createError500']['type'],
+              title: this.messages['createError500']['title'],
+              text: this.messages['createError500']['text'],
+              showConfirmButton: this.messages['createError500']['showConfirmButton'],
+              backdrop: this.messages['createError500']['backdrop']
+            });
+          }
+        });
   }
 }

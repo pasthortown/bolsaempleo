@@ -33,11 +33,10 @@ export class OfertasLaboralesComponent implements OnInit {
   professionals: Array<Professional>;
   selectedOffer: Offer;
   userLogged: User;
+  messages: any;
 
   constructor(public empresaService: EmpresaService,
-              private modalService: NgbModal,
-              private firebaseBDDService: FirebaseBDDService,
-              private authService: AuthService) {
+              private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -45,8 +44,9 @@ export class OfertasLaboralesComponent implements OnInit {
     this.offers = new Array<Offer>();
     this.selectedOffer = new Offer();
     this.actual_page = 1;
-    this.records_per_page = 2;
+    this.records_per_page = 5;
     this.duracionOferta = 0;
+    this.messages = catalogos.messages;
     this.habilitarCamposEspecificos = false;
     this.habilitarCantones = false;
     this.ofertaSeleccionada = new Offer();
@@ -54,7 +54,6 @@ export class OfertasLaboralesComponent implements OnInit {
     this.provincias = catalogos.provincias;
     this.getOffers();
   }
-
 
   calcularFechaFinOferta() {
 
@@ -215,9 +214,31 @@ export class OfertasLaboralesComponent implements OnInit {
       error => {
         if (error.status === 401) {
           swal({
+            position: this.messages['createError401']['position'],
+            type: this.messages['createError401']['type'],
+            title: this.messages['createError401']['title'],
+            text: this.messages['createError401']['text'],
+            showConfirmButton: this.messages['createError401']['showConfirmButton'],
+            backdrop: this.messages['createError401']['backdrop']
+          });
+        }
+
+        if (error.status === 500) {
+          swal({
+            position: this.messages['createError500']['position'],
+            type: this.messages['createError500']['type'],
+            title: this.messages['createError500']['title'],
+            text: this.messages['createError500']['text'],
+            showConfirmButton: this.messages['createError500']['showConfirmButton'],
+            backdrop: this.messages['createError500']['backdrop']
+          });
+        }
+
+        if (error.valueOf().error.errorInfo[0] === '22007') {
+          swal({
             position: 'center',
             type: 'error',
-            title: 'Oops! no tienes autorización para acceder a este sitio',
+            title: 'El formato de fecha no es el correcto',
             text: 'Vuelva a intentar',
             showConfirmButton: true
           });
@@ -230,23 +251,36 @@ export class OfertasLaboralesComponent implements OnInit {
       response => {
         this.getOffers();
         swal({
-          position: 'center',
-          type: 'success',
-          title: 'Sus datos fueron actualizados correctamente',
-          text: '',
-          timer: 2000,
-          showConfirmButton: true
+          position: this.messages['updateSuccess']['position'],
+          type: this.messages['updateSuccess']['type'],
+          title: this.messages['updateSuccess']['title'],
+          text: this.messages['updateSuccess']['text'],
+          timer: this.messages['updateSuccess']['timer'],
+          showConfirmButton: this.messages['updateSuccess']['showConfirmButton'],
+          backdrop: this.messages['updateSuccess']['backdrop']
         });
       },
       error => {
         console.log(error);
         if (error.status === 401) {
           swal({
-            position: 'center',
-            type: 'error',
-            title: 'Oops! no tienes autorización para acceder a este sitio',
-            text: 'Vuelva a intentar',
-            showConfirmButton: true
+            position: this.messages['updateError401']['position'],
+            type: this.messages['updateError401']['type'],
+            title: this.messages['updateError401']['title'],
+            text: this.messages['updateError401']['text'],
+            showConfirmButton: this.messages['updateError401']['showConfirmButton'],
+            backdrop: this.messages['updateError401']['backdrop']
+          });
+        }
+
+        if (error.status === 500) {
+          swal({
+            position: this.messages['updateError500']['position'],
+            type: this.messages['updateError500']['type'],
+            title: this.messages['updateError500']['title'],
+            text: this.messages['updateError500']['text'],
+            showConfirmButton: this.messages['updateError500']['showConfirmButton'],
+            backdrop: this.messages['updateError500']['backdrop']
           });
         }
 
@@ -264,36 +298,112 @@ export class OfertasLaboralesComponent implements OnInit {
 
   deleteOffer(offer: Offer): void {
     swal({
-      title: '¿Está seguro de Eliminar?',
-      text: 'Cargo: ' + offer.position,
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: '<i class="fa fa-trash" aria-hidden="true"></i>'
+      position: this.messages['deleteQuestion']['position'],
+      type: this.messages['deleteQuestion']['type'],
+      title: this.messages['deleteQuestion']['title'],
+      text: this.messages['deleteQuestion']['text'],
+      showConfirmButton: this.messages['deleteQuestion']['showConfirmButton'],
+      showCancelButton: this.messages['deleteQuestion']['showCancelButton'],
+      confirmButtonColor: this.messages['deleteQuestion']['confirmButtonColor'],
+      cancelButtonColor: this.messages['deleteQuestion']['cancelButtonColor'],
+      confirmButtonText: this.messages['deleteQuestion']['confirmButtonText'],
+      cancelButtonText: this.messages['deleteQuestion']['cancelButtonText'],
+      reverseButtons: this.messages['deleteQuestion']['reverseButtons'],
+      backdrop: this.messages['deleteQuestion']['backdrop'],
     }).then((result) => {
       if (result.value) {
         this.empresaService.deleteOffer(offer.id, this.userLogged.api_token).subscribe(
           response => {
             this.getOffers();
+            swal({
+              position: this.messages['deleteSuccess']['position'],
+              type: this.messages['deleteSuccess']['type'],
+              title: this.messages['deleteSuccess']['title'],
+              text: this.messages['deleteSuccess']['text'],
+              timer: this.messages['deleteSuccess']['timer'],
+              showConfirmButton: this.messages['deleteSuccess']['showConfirmButton'],
+              backdrop: this.messages['deleteSuccess']['backdrop'],
+            });
           },
           error => {
             if (error.status === 401) {
               swal({
-                position: 'center',
-                type: 'error',
-                title: 'Usuario y/o Contraseña incorrectas',
-                text: 'Vuelva a intentar',
-                showConfirmButton: true
+                position: this.messages['deleteError401']['position'],
+                type: this.messages['deleteError401']['type'],
+                title: this.messages['deleteError401']['title'],
+                text: this.messages['deleteError401']['text'],
+                showConfirmButton: this.messages['deleteError401']['showConfirmButton'],
+                backdrop: this.messages['deleteError401']['backdrop']
+              });
+            }
+
+            if (error.status === 500) {
+              swal({
+                position: this.messages['deleteError500']['position'],
+                type: this.messages['deleteError500']['type'],
+                title: this.messages['deleteError500']['title'],
+                text: this.messages['deleteError500']['text'],
+                showConfirmButton: this.messages['deleteError500']['showConfirmButton'],
+                backdrop: this.messages['deleteError500']['backdrop']
               });
             }
           });
-        swal({
-          title: 'Oferta',
-          text: 'Eliminación exitosa!',
-          type: 'success',
-          timer: 2000
-        });
+      }
+    });
+  }
+
+  finishOffer(offer: Offer): void {
+    swal({
+      position: this.messages['finishQuestion']['position'],
+      type: this.messages['finishQuestion']['type'],
+      title: this.messages['finishQuestion']['title'],
+      text: this.messages['finishQuestion']['text'],
+      showConfirmButton: this.messages['finishQuestion']['showConfirmButton'],
+      showCancelButton: this.messages['finishQuestion']['showCancelButton'],
+      confirmButtonColor: this.messages['finishQuestion']['confirmButtonColor'],
+      cancelButtonColor: this.messages['finishQuestion']['cancelButtonColor'],
+      confirmButtonText: this.messages['finishQuestion']['confirmButtonText'],
+      cancelButtonText: this.messages['finishQuestion']['cancelButtonText'],
+      reverseButtons: this.messages['finishQuestion']['reverseButtons'],
+      backdrop: this.messages['finishQuestion']['backdrop'],
+    }).then((result) => {
+      if (result.value) {
+        this.empresaService.finishOffer(offer.id, this.userLogged.api_token).subscribe(
+          response => {
+            this.getOffers();
+            swal({
+              position: this.messages['deleteSuccess']['position'],
+              type: this.messages['deleteSuccess']['type'],
+              title: this.messages['deleteSuccess']['title'],
+              text: this.messages['deleteSuccess']['text'],
+              timer: this.messages['deleteSuccess']['timer'],
+              showConfirmButton: this.messages['deleteSuccess']['showConfirmButton'],
+              backdrop: this.messages['deleteSuccess']['backdrop'],
+            });
+          },
+          error => {
+            if (error.status === 401) {
+              swal({
+                position: this.messages['deleteError401']['position'],
+                type: this.messages['deleteError401']['type'],
+                title: this.messages['deleteError401']['title'],
+                text: this.messages['deleteError401']['text'],
+                showConfirmButton: this.messages['deleteError401']['showConfirmButton'],
+                backdrop: this.messages['deleteError401']['backdrop']
+              });
+            }
+
+            if (error.status === 500) {
+              swal({
+                position: this.messages['deleteError500']['position'],
+                type: this.messages['deleteError500']['type'],
+                title: this.messages['deleteError500']['title'],
+                text: this.messages['deleteError500']['text'],
+                showConfirmButton: this.messages['deleteError500']['showConfirmButton'],
+                backdrop: this.messages['deleteError500']['backdrop']
+              });
+            }
+          });
       }
     });
   }

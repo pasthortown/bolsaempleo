@@ -113,13 +113,11 @@ export class CapacitacionCursosComponent implements OnInit {
         response => {
           this.getCourses();
           swal({
-            position: this.messages['createSuccess']['position'],
-            type: this.messages['createSuccess']['type'],
-            title: this.messages['createSuccess']['title'],
-            text: this.messages['createSuccess']['text'],
-            timer: this.messages['createSuccess']['timer'],
-            showConfirmButton: this.messages['createSuccess']['showConfirmButton'],
-            backdrop: this.messages['createSuccess']['backdrop']
+            position: 'center',
+            type: 'success',
+            title: 'Sus datos fueron ingresados correctamente',
+            text: '',
+            showConfirmButton: true
           });
         },
         error => {

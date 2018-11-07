@@ -10,8 +10,8 @@
     <ng-template ngbTabContent>
       <div class="row mt-2">
         <div class="col-12">
-          <div class="card m-2" *ngFor="let postulacion of misPostulaciones">
-            <div *ngIf="postulacion.oferta != null" class="card-body">
+          <div class="card m-2" *ngFor="let offer of offers">
+            <div *ngIf="offer != null" class="card-body">
               <div class="card-title">
                 <!--Grid Ofertas-->
                 <div class="row" style="overflow: auto">
@@ -22,13 +22,13 @@
                           <div class="col-8">
                             <h6>
                               <a href="javascript:void(0)" class="col-12 text-left"
-                                 (click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">
-                                {{postulacion.oferta.cargo}}
+                                 (click)="openOfertaLaboral(modalOfertaLaboral,offer,true)">
+                                {{offer.position}}
                               </a>
                             </h6>
                             <h6 class="text-muted">
                               <i class="fa fa-map-marker" aria-hidden="true"></i>
-                              {{postulacion.oferta.canton + ', ' +postulacion.oferta.provincia}}
+                              {{offer.city+ ', ' +offer.province}}
                             </h6>
                           </div>
                           <div class="col-4">
@@ -41,11 +41,7 @@
                                 <td class="text-left text-muted">
                                   <strong>
                                     <i>
-                                      {{
-                                      postulacion.oferta.inicioPublicacion.year
-                                      + '/' + postulacion.oferta.inicioPublicacion.month
-                                      + '/' + postulacion.oferta.inicioPublicacion.day
-                                      }}
+                                      {{offer.start_date}}
                                     </i>
                                   </strong>
                                 </td>
@@ -57,10 +53,7 @@
                                 <td class="text-left text-muted">
                                   <strong>
                                     <i>
-                                      {{postulacion.oferta.finPublicacion.year
-                                      + '/' + postulacion.oferta.finPublicacion.month
-                                      + '/' + postulacion.oferta.finPublicacion.day
-                                      }}
+                                      {{offer.finish_date}}
                                     </i></strong>
                                 </td>
                               </tr>
@@ -73,10 +66,10 @@
                         <div class="row">
                           <div class="col-12">
                             <h6 class="text-muted" style="overflow: auto;height: 80px">
-                              {{postulacion.oferta.actividades}}
+                              {{offer.activities}}
                             </h6>
                             <button class="btn btn-primary btn-sm pull-right"
-                                    (click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">
+                                    (click)="openOfertaLaboral(modalOfertaLaboral,offer,true)">
                               <span class="fa fa-info-circle"></span>&nbsp;Más Información
                             </button>
                           </div>
@@ -86,19 +79,19 @@
                         <div class="input-group">
                           <h6 class="text-muted text-uppercase">
                             <i class="fa fa-user" aria-hidden="true"></i>
-                            {{postulacion.oferta.contacto}}
+                            {{offer.contact}}
                           </h6>
                           <h6 class="text-muted ml-4 text-uppercase">
                             <i class="fa fa-mobile-phone" aria-hidden="true"></i>
-                            {{postulacion.oferta.telefonoCelular}}
+                            {{offer.cell_phone}}
                           </h6>
                           <h6 class="text-muted ml-4">
                             <i class="fa fa-phone" aria-hidden="true"></i>
-                            {{postulacion.oferta.telefonoFijo}}
+                            {{offer.phone}}
                           </h6>
                           <h6 class="text-muted ml-4 text-lowercase">
                             <i class="fa fa-envelope" aria-hidden="true"></i>
-                            {{postulacion.oferta.correoElectronico}}
+                            {{offer.email}}
                           </h6>
                         </div>
                       </div>
@@ -112,112 +105,72 @@
       </div>
     </ng-template>
   </ngb-tab>
-  <!--<ngb-tab title="2. Empresas Interesadas" id="tab2">-->
-    <!--<ng-template ngbTabContent>-->
-      <!--<div class="row mt-2">-->
-        <!--<div class="col-12">-->
-          <!--<div class="card m-2" *ngFor="let postulacion of misPostulaciones">-->
-            <!--<div *ngIf="postulacion.oferta != null" class="card-body">-->
-              <!--<div class="card-title">-->
-                <!--&lt;!&ndash;Grid Ofertas&ndash;&gt;-->
-                <!--<div class="row" style="overflow: auto">-->
-                  <!--<div class="col-12">-->
-                    <!--<div class="card mt-1" style="height: 310px">-->
-                      <!--<div class="card-header">-->
-                        <!--<div class="row">-->
-                          <!--<div class="col-8">-->
-                            <!--<h6>-->
-                              <!--<a href="javascript:void(0)" class="col-12 text-left"-->
-                                 <!--(click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">-->
-                                <!--{{postulacion.oferta.cargo}}-->
-                              <!--</a>-->
-                            <!--</h6>-->
-                            <!--<h6 class="text-muted">-->
-                              <!--<i class="fa fa-map-marker" aria-hidden="true"></i>-->
-                              <!--{{postulacion.oferta.canton + ', ' +postulacion.oferta.provincia}}-->
-                            <!--</h6>-->
-                          <!--</div>-->
-                          <!--<div class="col-4">-->
-                            <!--<table class="col-12">-->
-                              <!--<tbody>-->
-                              <!--<tr>-->
-                                <!--<th>-->
-                                  <!--<i>Inicio Publicación:</i>&nbsp;-->
-                                <!--</th>-->
-                                <!--<td class="text-left text-muted">-->
-                                  <!--<strong>-->
-                                    <!--<i>-->
-                                      <!--{{-->
-                                      <!--postulacion.oferta.inicioPublicacion.year-->
-                                      <!--+ '/' + postulacion.oferta.inicioPublicacion.month-->
-                                      <!--+ '/' + postulacion.oferta.inicioPublicacion.day-->
-                                      <!--}}-->
-                                    <!--</i>-->
-                                  <!--</strong>-->
-                                <!--</td>-->
-                              <!--</tr>-->
-                              <!--<tr>-->
-                                <!--<th>-->
-                                  <!--<i>Fin Publicación:</i>&nbsp;-->
-                                <!--</th>-->
-                                <!--<td class="text-left text-muted">-->
-                                  <!--<strong>-->
-                                    <!--<i>-->
-                                      <!--{{postulacion.oferta.finPublicacion.year-->
-                                      <!--+ '/' + postulacion.oferta.finPublicacion.month-->
-                                      <!--+ '/' + postulacion.oferta.finPublicacion.day-->
-                                      <!--}}-->
-                                    <!--</i></strong>-->
-                                <!--</td>-->
-                              <!--</tr>-->
-                              <!--</tbody>-->
-                            <!--</table>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                      <!--<div class="card-body">-->
-                        <!--<div class="row">-->
-                          <!--<div class="col-12">-->
-                            <!--<h6 class="text-muted" style="overflow: auto;height: 80px">-->
-                              <!--{{postulacion.oferta.actividades}}-->
-                            <!--</h6>-->
-                            <!--<button class="btn btn-primary btn-sm pull-right"-->
-                                    <!--(click)="openOfertaLaboral(modalOfertaLaboral,postulacion.oferta,true)">-->
-                              <!--<span class="fa fa-info-circle"></span>&nbsp;Más Información-->
-                            <!--</button>-->
-                          <!--</div>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                      <!--<div class="card-footer text-muted">-->
-                        <!--<div class="input-group">-->
-                          <!--<h6 class="text-muted text-uppercase">-->
-                            <!--<i class="fa fa-user" aria-hidden="true"></i>-->
-                            <!--{{postulacion.oferta.contacto}}-->
-                          <!--</h6>-->
-                          <!--<h6 class="text-muted ml-4">-->
-                            <!--<i class="fa fa-mobile-phone" aria-hidden="true"></i>-->
-                            <!--{{postulacion.oferta.telefonoCelular}}-->
-                          <!--</h6>-->
-                          <!--<h6 class="text-muted ml-4">-->
-                            <!--<i class="fa fa-phone" aria-hidden="true"></i>-->
-                            <!--{{postulacion.oferta.telefonoFijo}}-->
-                          <!--</h6>-->
-                          <!--<h6 class="text-muted ml-4">-->
-                            <!--<i class="fa fa-envelope" aria-hidden="true"></i>-->
-                            <!--{{postulacion.oferta.correoElectronico}}-->
-                          <!--</h6>-->
-                        <!--</div>-->
-                      <!--</div>-->
-                    <!--</div>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</ng-template>-->
-  <!--</ngb-tab>-->
+  <ngb-tab title="2. Empresas Interesadas" id="tab2">
+    <ng-template ngbTabContent>
+      <div class="row mt-2">
+        <div class="col-12">
+          <div class="card m-2" *ngFor="let company of companies">
+            <div *ngIf="company != null" class="card-body">
+              <div class="card-title">
+                <!--Grid Companies-->
+                <div class="row" style="overflow: auto">
+                  <div class="col-12">
+                    <div class="card mt-1" style="height: 310px">
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <h6>
+                              <a href="javascript:void(0)" class="col-12 text-left"
+                                 (click)="openCompany(modalCompany,company,true)">
+                                {{company.trade_name}}
+                              </a>
+                            </h6>
+                            <h6 class="text-muted">
+                              <i class="fa fa-map-marker" aria-hidden="true"></i>
+                              {{company.address}}
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-12">
+                            <h6 class="text-muted" style="overflow: auto;height: 80px">
+                              {{company.comercial_activity}}
+                            </h6>
+                            <button class="btn btn-primary btn-sm pull-right"
+                                    (click)="openCompany(modalCompany,company,true)">
+                              <span class="fa fa-info-circle"></span>&nbsp;Más Información
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-footer text-muted">
+                        <div class="input-group">
+                          <h6 class="text-muted ml-4 text-uppercase">
+                            <i class="fa fa-mobile-phone" aria-hidden="true"></i>
+                            {{company.cell_phone}}
+                          </h6>
+                          <h6 class="text-muted ml-4">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            {{company.phone}}
+                          </h6>
+                          <h6 class="text-muted ml-4 text-lowercase">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            {{company.email}}
+                          </h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
 </ngb-tabset>
 <ng-template #modalOfertaLaboral let-c="close" let-d="dismiss">
   <div class="modal-header">
@@ -232,7 +185,6 @@
     <div class="card">
       <div class="card-header bg-primary">
         <h3 class="text-white">Oferta Laboral</h3>
-
       </div>
       <div class="card-body m-1">
         <div class="row">
@@ -243,7 +195,7 @@
                 <b>Código:</b>
               </label>
               <label class="form-control text-uppercase" id="editCodigo">
-                {{oferta.codigo}}
+                {{selectedOffer.code}}
               </label>
             </div>
 
@@ -253,7 +205,7 @@
                 <b>Provincia:</b>
               </label>
               <label class="form-control" id="editProvincia">
-                {{oferta.provincia}}
+                {{selectedOffer.province}}
               </label>
             </div>
 
@@ -262,7 +214,7 @@
               <label for="editCanton" class="col-form-label">
                 <b>Cantón:</b>
               </label>
-              <label class="form-control" id="editCanton">{{oferta.canton}}</label>
+              <label class="form-control" id="editCanton">{{selectedOffer.city}}</label>
             </div>
 
             <!-- Inicio Publicacion !-->
@@ -271,8 +223,7 @@
                 <b>Inicio Publicación:</b>
               </label>
               <div class="form-control">
-                {{oferta.inicioPublicacion.year + '/' + oferta.inicioPublicacion.month + '/' +
-                oferta.inicioPublicacion.day }}
+                {{selectedOffer.start_date}}
               </div>
             </div>
 
@@ -282,7 +233,7 @@
                 <b>Fin Publicación:</b>
               </label>
               <div class="form-control">
-                {{oferta.finPublicacion.year + '/' + oferta.finPublicacion.month + '/' + oferta.finPublicacion.day }}
+                {{selectedOffer.finish_date}}
               </div>
             </div>
           </div>
@@ -293,7 +244,7 @@
                 <b>Contacto:</b>
               </label>
               <label class="form-control text-uppercase" id="editContacto">
-                {{oferta.contacto}}
+                {{selectedOffer.contact}}
               </label>
             </div>
 
@@ -303,7 +254,7 @@
                 <b>Correo:</b>
               </label>
               <label class="form-control text-lowercase" id="editCorreoElectronico">
-                {{oferta.correoElectronico}}
+                {{selectedOffer.email}}
               </label>
             </div>
 
@@ -313,7 +264,7 @@
                 <b>Teléfono Fijo:</b>
               </label>
               <label class="form-control" id="editTelefonoFijo">
-                {{oferta.telefonoFijo}}
+                {{selectedOffer.phone}}
               </label>
             </div>
 
@@ -323,7 +274,7 @@
                 <b>Teléfono Celular:</b>
               </label>
               <label class="form-control" id="editTelefonoCelular">
-                {{oferta.telefonoCelular}}
+                {{selectedOffer.cell_phone}}
               </label>
             </div>
 
@@ -333,7 +284,7 @@
                 <b>Tipo Contrato:</b>
               </label>
               <label class="form-control" id="editTipoContrato">
-                {{oferta.tipoContrato}}
+                {{selectedOffer.contract_type}}
               </label>
             </div>
           </div>
@@ -354,7 +305,7 @@
                 <b>Cargo:</b>
               </label>
               <label class="form-control text-uppercase" name="cargo" id="editCargo" style="overflow: auto;">
-                {{oferta.cargo}}
+                {{selectedOffer.position}}
               </label>
             </div>
           </div>
@@ -367,7 +318,7 @@
                 <b>Campo Amplio:</b>
               </label>
               <label class="form-control" id="campoAmplio" style="overflow: auto;height: 75px">
-                {{oferta.campoAmplio}}
+                {{selectedOffer.broad_field}}
               </label>
             </div>
           </div>
@@ -377,7 +328,7 @@
                 <b>Campo Específico:</b>
               </label>
               <label class="form-control" id="campoEspecifico" style="overflow: auto;height: 75px">
-                {{oferta.campoEspecifico}}
+                {{selectedOffer.specific_field}}
               </label>
             </div>
           </div>
@@ -390,7 +341,7 @@
                 <b>Jornada:</b>
               </label>
               <label class="form-control" id="jornada">
-                {{oferta.jornada}}
+                {{selectedOffer.working_day}}
               </label>
             </div>
           </div>
@@ -401,7 +352,7 @@
                 <b>Puestos:</b>
               </label>
               <label class="form-control" id="numeroPuestos">
-                {{oferta.numeroPuestos}}
+                {{selectedOffer.number_jobs}}
               </label>
             </div>
           </div>
@@ -412,7 +363,7 @@
                 <b>Remuneración:</b>
               </label>
               <label class="form-control" id="remuneracion">
-                {{oferta.remuneracion}}
+                {{selectedOffer.remuneration}}
               </label>
             </div>
           </div>
@@ -423,7 +374,7 @@
                 <b>Tiempo Experiencia:</b>
               </label>
               <label class="form-control" id="experiencia">
-                {{oferta.tiempoExperiencia}}
+                {{selectedOffer.experience_time}}
               </label>
             </div>
           </div>
@@ -434,7 +385,7 @@
                 <b>Horas de Capacitación:</b>
               </label>
               <label class="form-control" id="horasCapacitacion">
-                {{oferta.horasCapacitacion}}
+                {{selectedOffer.training_hours}}
               </label>
             </div>
           </div>
@@ -447,7 +398,7 @@
                 <b>Actividades:</b>
               </label>
               <label class="form-control text-uppercase" id="actividades" style="overflow: auto;height: 120px">
-                {{oferta.actividades}}
+                {{selectedOffer.activities}}
               </label>
             </div>
             <!-- Informacion Adicional !-->
@@ -457,8 +408,88 @@
               </label>
               <label class="form-control text-uppercase texto" id="informacionAdicional"
                      style="overflow: auto;height: 120px">
-                {{oferta.informacionAdicional}}
+                {{selectedOffer.aditional_information}}
               </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary btn-lg" title="Cerrar" (click)="c('close')">
+      <i class="fa fa-close" aria-hidden="true"> Cerrar</i>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #modalCompany let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">
+
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('ClickEnX')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body modal-lg">
+    <div class="card">
+      <div class="card-header bg-primary">
+        <h3 class="text-white">Empresa - {{selectedCompany.trade_name}}</h3>
+      </div>
+      <div class="card-body m-1">
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- Actividad Comercial!-->
+            <div class="form-group">
+              <label for="editCodigo" class="col-form-label">
+                <b>Actividad Comercial:</b>
+              </label>
+              <label class="form-control text-uppercase" id="editCodigo">
+                {{selectedCompany.comercial_activity}}
+              </label>
+            </div>
+
+            <!-- Telefono !-->
+            <div class="form-group ">
+              <label for="editProvincia" class="col-form-label">
+                <b>Teléfono:</b>
+              </label>
+              <label class="form-control" id="editProvincia">
+                {{selectedCompany.phone}}
+              </label>
+            </div>
+
+            <!-- Celular !-->
+            <div class="form-group ">
+              <label for="editCanton" class="col-form-label">
+                <b>Celular:</b>
+              </label>
+              <label class="form-control" id="editCanton">{{selectedCompany.cell_phone}}</label>
+            </div>
+
+            <!-- Email !-->
+            <div class="form-group ">
+              <label for="editCanton" class="col-form-label">
+                <b>Correo Electrónico:</b>
+              </label>
+              <label class="form-control" id="editCanton">{{selectedCompany.email}}</label>
+            </div>
+
+            <!-- Pagina Web !-->
+            <div class="form-group ">
+              <label for="editCanton" class="col-form-label">
+                <b>Página Web:</b>
+              </label>
+              <label class="form-control" id="editCanton">{{selectedCompany.web_page}}</label>
+            </div>
+
+            <!-- Direccion !-->
+            <div class="form-group ">
+              <label for="editCanton" class="col-form-label">
+                <b>Dirección:</b>
+              </label>
+              <label class="form-control" id="editCanton">{{selectedCompany.address}}</label>
             </div>
           </div>
         </div>

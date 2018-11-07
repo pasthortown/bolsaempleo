@@ -54,10 +54,10 @@
     <div class="row">
       <div class="col-12">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Buscar..." aria-label=""
+          <input type="text" class="form-control text-uppercase" placeholder="Buscar..." aria-label=""
                  aria-describedby="basic-addon1" [(ngModel)]="criterioBusqueda">
           <div class="input-group-append">
-            <button class="btn btn-info" type="button" (click)="filtrarPorCargo(criterioBusqueda)">
+            <button class="btn btn-info" type="button" (click)="filterOffersField()">
               <span class="fa fa-search"></span>&nbsp;Buscar
             </button>
             <button class="btn btn-warning ml-1" type="button" (click)="openFilter(modalFilter)">
@@ -73,15 +73,24 @@
         <div class="form-group">
           <div class="input-group">
             <div *ngFor="let filter of filters" class="ml-2">
-              <div *ngIf="filter && filter!=''">
+              <div *ngIf="filter && filter !=''">
                 <label class="btn-link text-danger">
                   {{filter}}
                 </label>
                 <button type="button" class="input-group-prepend close" aria-label="Close"
-                        (click)="borrarFiltro(filter)">
+                        (click)="cleanFilter(filter)">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
+            </div>
+            <div *ngIf="etiquetaPrincipal != null">
+              <label class="btn-link text-danger">
+                {{etiquetaPrincipal}}
+              </label>
+              <button type="button" class="input-group-prepend close" aria-label="Close"
+                      (click)="cleanFilterSingle()">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
           </div>
         </div>
@@ -112,11 +121,11 @@
             <div class="row">
               <div class="col-lg-9 col-sm-12">
                 <h6>
-                  <div *ngIf="authService.rolActual=='p';then thenBlock else elseBLock"></div>
+                  <div *ngIf="userLogged.role =='1';then thenBlock else elseBLock"></div>
                   <ng-template #thenBlock>
-                    <a class="titulo1" href="javascript:void(0)" *ngIf="authService.rolActual=='p'"
+                    <a class="titulo1" href="javascript:void(0)" *ngIf="userLogged.role=='1'"
                        (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
-                      {{ofertaActual.cargo}}
+                      {{ofertaActual.position}}
                     </a>
                   </ng-template>
                   <ng-template #elseBLock>
@@ -162,12 +171,8 @@
                 <p class="text-muted texto" style="overflow: auto;">
                   {{ofertaActual.activities}}
                 </p>
-                <button class="btn btn-primary btn-sm pull-right" *ngIf="authService.rolActual=='p'"
-                        (click)="openOfertaLaboral(modalOfertaLaboral,ofertaActual,true)">
-                  <span class="fa fa-info-circle"></span>&nbsp;Más Información
-                </button>
-                <button class="btn btn-primary btn-sm pull-right" *ngIf="authService.rolActual!=='p'"
-                        (click)="validarSesion()">
+                <button class="btn btn-primary btn-sm pull-right"
+                        (click)="validateSession(modalOfertaLaboral,ofertaActual,true)">
                   <span class="fa fa-info-circle"></span>&nbsp;Más Información
                 </button>
               </div>
@@ -215,98 +220,102 @@
           <div class="col-lg-6">
             <!-- Codigo !-->
             <div class="form-group">
-              <label for="editCodigo" class="col-form-label">
+              <label for="code" class="col-form-label">
                 <b>Código:</b>
               </label>
-              <label class="form-control text-uppercase" id="editCodigo">
-                {{oferta.codigo}}
+              <label class="form-control text-uppercase" id="code">
+                {{selectedOffer.code}}
               </label>
             </div>
 
             <!-- Provincia !-->
             <div class="form-group ">
-              <label for="editProvincia" class="col-form-label">
+              <label for="province" class="col-form-label">
                 <b>Provincia:</b>
               </label>
-              <label class="form-control" id="editProvincia">
-                {{oferta.provincia}}
+              <label class="form-control" id="province">
+                {{selectedOffer.province}}
               </label>
             </div>
 
             <!-- Canton !-->
             <div class="form-group ">
-              <label for="editCanton" class="col-form-label">
+              <label for="city" class="col-form-label">
                 <b>Cantón:</b>
               </label>
-              <label class="form-control" id="editCanton">{{oferta.canton}}</label>
+              <label class="form-control" id="city">
+                {{selectedOffer.city}}
+              </label>
             </div>
 
             <!-- Inicio Publicacion !-->
             <div class="form-group datepicker-input">
-              <label for="editInicioPublicacion" class="col-form-label">
+              <label for="start_date" class="col-form-label">
                 <b>Inicio Publicación:</b>
               </label>
-              <input class="form-control" id="editInicioPublicacion" name="dp" ngbDatepicker
-                     [(ngModel)]="oferta.inicioPublicacion" readonly>
+              <label class="form-control" id="start_date">
+                {{selectedOffer.start_date}}
+              </label>
             </div>
 
             <!-- Fin Publicacion !-->
             <div class="form-group datepicker-input">
-              <label for="editFinPublicacion" class="col-form-label">
+              <label for="finish_date" class="col-form-label">
                 <b>Fin Publicación:</b>
               </label>
-              <input [(ngModel)]="oferta.finPublicacion" class="form-control" id="editFinPublicacion" name="dp"
-                     ngbDatepicker #d2="ngbDatepicker" disabled>
+              <label class="form-control" id="finish_date">
+                {{selectedOffer.finish_date}}
+              </label>
             </div>
           </div>
           <div class="col-lg-6">
             <!-- Contacto !-->
             <div class="form-group">
-              <label for="editContacto" class="col-form-label">
+              <label for="contact" class="col-form-label">
                 <b>Contacto:</b>
               </label>
-              <label class="form-control text-uppercase" id="editContacto">
-                {{oferta.contacto}}
+              <label class="form-control text-uppercase" id="contact">
+                {{selectedOffer.contact}}
               </label>
             </div>
 
             <!-- Correo Electronico !-->
             <div class="form-group ">
-              <label for="editCorreoElectronico" class="col-form-label">
+              <label for="email" class="col-form-label">
                 <b>Correo:</b>
               </label>
-              <label class="form-control text-lowercase" id="editCorreoElectronico">
-                {{oferta.correoElectronico}}
+              <label class="form-control text-lowercase" id="email">
+                {{selectedOffer.email}}
               </label>
             </div>
 
             <!-- Telefono Fijo !-->
             <div class="form-group ">
-              <label for="editTelefonoFijo" class="col-form-label">
+              <label for="phone" class="col-form-label">
                 <b>Teléfono Fijo:</b>
               </label>
-              <label class="form-control" id="editTelefonoFijo">
-                {{oferta.telefonoFijo}}
+              <label class="form-control" id="phone">
+                {{selectedOffer.phone}}
               </label>
             </div>
 
             <!-- Telefono Celular !-->
             <div class="form-group ">
-              <label for="editTelefonoCelular" class="col-form-label">
+              <label for="cell_phone" class="col-form-label">
                 <b>Teléfono Celular:</b>
               </label>
-              <label class="form-control" id="editTelefonoCelular">
-                {{oferta.telefonoCelular}}
+              <label class="form-control" id="cell_phone">
+                {{selectedOffer.cell_phone}}
               </label>
             </div>
 
             <!-- Tipo Contrato !-->
             <div class="form-group ">
-              <label for="editTipoContrato" class="col-form-label">
+              <label for="contract_type" class="col-form-label">
                 <b>Tipo Contrato:</b>
               </label>
-              <label class="form-control" id="editTipoContrato">
-                {{oferta.tipoContrato}}
+              <label class="form-control" id="contract_type">
+                {{selectedOffer.contract_type}}
               </label>
             </div>
           </div>
@@ -327,7 +336,7 @@
                 <b>Cargo:</b>
               </label>
               <label class="form-control text-uppercase" name="cargo" id="editCargo" style="overflow: auto;">
-                {{oferta.cargo}}
+                {{selectedOffer.position}}
               </label>
             </div>
           </div>
@@ -340,7 +349,7 @@
                 <b>Campo Amplio:</b>
               </label>
               <label class="form-control" id="campoAmplio" style="overflow: auto;height: 75px">
-                {{oferta.campoAmplio}}
+                {{selectedOffer.broad_field}}
               </label>
             </div>
           </div>
@@ -350,7 +359,7 @@
                 <b>Campo Específico:</b>
               </label>
               <label class="form-control" id="campoEspecifico" style="overflow: auto;height: 75px">
-                {{oferta.campoEspecifico}}
+                {{selectedOffer.specific_field}}
               </label>
             </div>
           </div>
@@ -363,7 +372,7 @@
                 <b>Jornada:</b>
               </label>
               <label class="form-control" id="jornada">
-                {{oferta.jornada}}
+                {{selectedOffer.working_day}}
               </label>
             </div>
           </div>
@@ -374,7 +383,7 @@
                 <b>Puestos:</b>
               </label>
               <label class="form-control" id="numeroPuestos">
-                {{oferta.numeroPuestos}}
+                {{selectedOffer.number_jobs}}
               </label>
             </div>
           </div>
@@ -385,7 +394,7 @@
                 <b>Remuneración:</b>
               </label>
               <label class="form-control" id="remuneracion">
-                {{oferta.remuneracion}}
+                {{selectedOffer.remuneration}}
               </label>
             </div>
           </div>
@@ -396,7 +405,7 @@
                 <b>Tiempo Experiencia:</b>
               </label>
               <label class="form-control" id="experiencia">
-                {{oferta.tiempoExperiencia}}
+                {{selectedOffer.experience_time}}
               </label>
             </div>
           </div>
@@ -407,7 +416,7 @@
                 <b>Horas de Capacitación:</b>
               </label>
               <label class="form-control" id="horasCapacitacion">
-                {{oferta.horasCapacitacion}}
+                {{selectedOffer.training_hours}}
               </label>
             </div>
           </div>
@@ -420,7 +429,7 @@
                 <b>Actividades:</b>
               </label>
               <label class="form-control text-uppercase" id="actividades" style="overflow: auto;height: 120px">
-                {{oferta.actividades}}
+                {{selectedOffer.activities}}
               </label>
             </div>
             <!-- Informacion Adicional !-->
@@ -430,7 +439,7 @@
               </label>
               <label class="form-control text-uppercase" id="informacionAdicional"
                      style="overflow: auto;height: 120px">
-                {{oferta.informacionAdicional}}
+                {{selectedOffer.aditional_information}}
               </label>
             </div>
           </div>
@@ -439,11 +448,11 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button *ngIf="!aplicada(oferta.id)" class="btn btn-success btn-lg" title="Aplicar" (click)="c('aplicar')">
+    <button class="btn btn-primary btn-lg" title="Aplicar" (click)="c('aplicar')" *ngIf="!validateOffer">
       <i class="fa fa-check" aria-hidden="true"> Aplicar</i>
     </button>
-    <button *ngIf="aplicada(oferta.id)" class="btn btn-success btn-lg" (click)="c('close')">
-      <i class="fa fa-check" aria-hidden="true"> Postulado Satisfactoriamente</i>
+    <button class="btn btn-success btn-lg" (click)="c('close')" *ngIf="validateOffer" disabled>
+      <i class="fa fa-check" aria-hidden="true"> Oferta Aplicada</i>
     </button>
     <button class="btn btn-danger btn-lg" title="Cancelar" (click)="c('close')">
       <i class="fa fa-close" aria-hidden="true"> Cancelar</i>
@@ -560,40 +569,3 @@
     </button>
   </div>
 </ng-template>
-
-<!--<div class="card-footer text-muted">-->
-<!--<div class="row">-->
-<!--<div class="col-lg-6 col-sm-12">-->
-<!--<div class="row">-->
-<!--<div class="col-lg-6 col-sm-6">-->
-<!--<h6 class="text-muted text-uppercase">-->
-<!--<i class="fa fa-user" aria-hidden="true"></i>-->
-<!--{{ofertaActual.contacto}}-->
-<!--</h6>-->
-<!--</div>-->
-<!--<div class="col-lg-6 col-sm-6">-->
-<!--<h6 class="text-muted">-->
-<!--<i class="fa fa-mobile-phone" aria-hidden="true"></i>-->
-<!--{{ofertaActual.telefonoCelular}}-->
-<!--</h6>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="col-lg-6 col-sm-12">-->
-<!--<div class="row">-->
-<!--<div class="col-lg-6 col-sm-6">-->
-<!--<h6 class="text-muted">-->
-<!--<i class="fa fa-phone" aria-hidden="true"></i>-->
-<!--{{ofertaActual.telefonoFijo}}-->
-<!--</h6>-->
-<!--</div>-->
-<!--<div class="col-lg-6 col-sm-6">-->
-<!--<h6 class="text-muted">-->
-<!--<i class="fa fa-envelope" aria-hidden="true"></i>-->
-<!--{{ofertaActual.correoElectronico}}-->
-<!--</h6>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->

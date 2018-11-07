@@ -3,9 +3,6 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {PostulanteService} from './../../../services/postulante.service';
 import {Component, OnInit} from '@angular/core';
 import swal from 'sweetalert2';
-import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
-import {Fortaleza} from '../../../models/fortaleza';
-import {Course} from '../../../models/course';
 import {User} from '../../../models/user';
 import {catalogos} from '../../../../environments/catalogos';
 
@@ -101,11 +98,12 @@ export class ExperienciaProfesionalComponent implements OnInit {
         error => {
           if (error.status === 401) {
             swal({
-              position: 'center',
-              type: 'error',
-              title: 'Oops! no tienes autorización para acceder a este sitio',
-              text: 'Vuelva a intentar',
-              showConfirmButton: true
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
             });
           }
         });

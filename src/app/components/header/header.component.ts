@@ -1,10 +1,7 @@
 import {Router} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from '../../services/auth.service';
 import {FirebaseBDDService} from '../../services/firebase-bdd.service';
-import {Oferta} from '../../models/oferta';
 import swal from 'sweetalert2';
-import {catalogos} from '../../../environments/catalogos';
 import {User} from '../../models/user';
 import {RegisterService} from '../../services/register.service';
 

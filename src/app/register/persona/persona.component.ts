@@ -64,7 +64,6 @@ export class PersonaComponent implements OnInit {
         this.claveConfirmacionValida = false;
       }
     }
-
     return this.claveValida;
   }
 
@@ -103,7 +102,7 @@ export class PersonaComponent implements OnInit {
   validarFormulario(dataUser: User): string {
     let errores = '';
     if (this.password.length < 6 || this.password_confirmation.length < 6) {
-      errores += 'La contraseña debe tener más de 6 caracteres';
+      errores += 'La contraseña debe tener al menos 6 caracteres';
     }
 
     if (!this.validarCorreoElectronico(dataUser.email)) {

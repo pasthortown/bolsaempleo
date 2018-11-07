@@ -6,6 +6,7 @@ export class AcademicFormation {
   professional_degree: string;
   registration_date: Date;
   senescyt_code: string;
+  state: string;
 
   constructor() {
     this.institution = '';

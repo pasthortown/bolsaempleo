@@ -4,7 +4,7 @@ export class ProfessionalReference {
   position: string;
   contact: string;
   phone: string;
-
+  state: string;
   constructor() {
     this.institution = '';
   }

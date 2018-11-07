@@ -6,12 +6,13 @@ export class Professional {
   email: string;
   last_name: string;
   nationality: string;
-  civil_status: string;
+  civil_state: string;
   birthdate: Date;
   gender: string;
   phone: string;
   address: string;
   about_me: string;
+  state: string;
 
   constructor() {
     this.identity = '';
@@ -19,7 +20,7 @@ export class Professional {
     this.last_name = '';
     this.nationality = '';
     this.birthdate = new Date();
-    this.civil_status = '';
+    this.civil_state = '';
     this.gender = '';
     this.phone = '';
     this.address = '';

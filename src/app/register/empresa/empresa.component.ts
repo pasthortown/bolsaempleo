@@ -106,7 +106,7 @@ export class EmpresaComponent implements OnInit {
   validarFormulario(dataUser: User): string {
     let errores = '';
     if (this.password.length < 6 || this.password_confirmation.length < 6) {
-      errores += 'La contraseña debe tener más de 6 caracteres';
+      errores += 'La contraseña debe tener al menos 6 caracteres';
     }
 
     if (!this.validarCorreoElectronico(dataUser.email)) {
@@ -133,7 +133,10 @@ export class EmpresaComponent implements OnInit {
     if (validacion === '') {
       this.company.trade_name = this.company.trade_name.toUpperCase();
       this.company.comercial_activity = this.company.comercial_activity.toUpperCase();
-      if (this.company.web_page != null) {
+      this.company.email = this.user.email.toLowerCase();
+      console.log('this.company.web_page');
+      console.log(this.company.web_page.length);
+      if (this.company.web_page.length !== 0) {
         this.company.web_page = this.company.web_page.toLowerCase();
         this.company.web_page = 'www.' + this.company.web_page;
       }

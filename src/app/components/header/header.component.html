@@ -56,29 +56,31 @@
       <li class="nav-item dropdown " ngbDropdown *ngIf="userLogged.role=='1' || userLogged.role=='2'">
         <a href="javascript:void(0)" class="nav-link text-white" ngbDropdownToggle>
           <i>
-            <img src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/user-id-512.png" class="rounded-circle"
-                 style="width: 80px; height: 80px;">
-          </i> {{userLogged.name}}
+            <img src="https://cdn2.iconfinder.com/data/icons/business-finance-vol-1-53/30/Untitled-1-10-512.png" class="rounded-circle"
+                 style="width: 80px; height: 80px;" *ngIf="userLogged.role=='1'">
+            <img src="https://cdn0.iconfinder.com/data/icons/business-381/500/business-work_11-512.png" class="rounded-circle"
+                 style="width: 80px; height: 80px;" *ngIf="userLogged.role=='2'">
+          </i> Mi Perfil
           <b class="caret"></b>
         </a>
         <div ngbDropdownMenu>
           <a *ngIf="userLogged.role=='1'" class="dropdown-item" [routerLink]="['/postulaciones']"
              [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-book"></i>&nbsp;Mis Postulaciones
+            <i class="fa fa-fw fa-book"></i>&nbsp;Postulaciones
           </a>
           <a *ngIf="userLogged.role=='1'" class="dropdown-item" [routerLink]="['/hoja-vida']"
              [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-address-card"></i>&nbsp;Hoja de Vida
           </a>
-          <a *ngIf="userLogged.role=='1' || userLogged.role=='2'" class="dropdown-item" [routerLink]="['/acount']"
+          <a *ngIf="userLogged.role=='2'" class="dropdown-item" [routerLink]="['/perfil-empresa']"
+             [routerLinkActive]="['router-link-active']">
+            <i class="fa fa-fw fa-address-card"></i>&nbsp;Mi Empresa
+          </a>
+          <div class="dropdown-divider"></div>
+          <a *ngIf="userLogged.role=='1' || userLogged.role=='2'" class="dropdown-item" [routerLink]="['/account']"
              [routerLinkActive]="['router-link-active']">
             <i class="fa fa-fw fa-wrench"></i>&nbsp;Cuenta
           </a>
-          <a *ngIf="userLogged.role=='2'" class="dropdown-item" [routerLink]="['/perfil-empresa']"
-             [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-address-card"></i>&nbsp;Datos Personales
-          </a>
-          <div class="dropdown-divider"></div>
           <a *ngIf="userLogged.role=='2' || userLogged.role=='1'" class="dropdown-item"
              [routerLink]="['/perfil-empresa']" [routerLinkActive]="['router-link-active']" (click)="logout()">
             <i class="fa fa-fw fa-power-off"></i>&nbsp;Cerrar Sesión

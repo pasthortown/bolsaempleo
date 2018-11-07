@@ -92,11 +92,12 @@ export class ReferenciasPersonalesComponent implements OnInit {
         error => {
           if (error.status === 401) {
             swal({
-              position: 'center',
-              type: 'error',
-              title: 'Oops! no tienes autorización para acceder a este sitio',
-              text: 'Vuelva a intentar',
-              showConfirmButton: true
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
             });
           }
         });
@@ -155,7 +156,8 @@ export class ReferenciasPersonalesComponent implements OnInit {
   }
 
   updateProfessionalReference(): void {
-    this.postulanteService.updateProfessionalReference({'professionalReference': this.selectedProfessionalReference}, this.userLogged.api_token)
+    this.postulanteService.updateProfessionalReference(
+      {'professionalReference': this.selectedProfessionalReference}, this.userLogged.api_token)
       .subscribe(
         response => {
           this.getProfessionalReferences();

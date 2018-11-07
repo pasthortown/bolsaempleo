@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6 offset-3">
+      <form name="empresaform" method="post" #formCtrl="ngForm">
+        <div class="card m-5">
+          <div class="card-header">
+            Actualizar Contraseña
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="userName">Usuario:</label>
+              <input type="text" id="userName" name="userName" class="form-control" [(ngModel)]="user.user_name"
+                     disabled>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-6">
+                  <label for="password" class="col-form-label">
+                    <b class="text-danger">*</b> Contraseña:
+                  </label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" name="password" id="password"
+                           [(ngModel)]="password" (keyup)="validarClave()" required>
+                    <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
+                       *ngIf="claveValida"></i>
+                    <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
+                       *ngIf="!claveValida"></i>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <label for="confirmar" class="col-form-label">
+                    <b class="text-danger">*</b> Repetir Contraseña:
+                  </label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" name="confirmar" id="confirmar"
+                           (keyup)="validarClaveConfirmacion()"
+                           [(ngModel)]="password_confirmation" required>
+                    <i class="fa fa-check btn-success btn-sm" aria-hidden="true"
+                       *ngIf="claveConfirmacionValida"></i>
+                    <i class="fa fa-close btn-danger btn-sm" aria-hidden="true"
+                       *ngIf="!claveConfirmacionValida"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <button id="recoverPassword" name="recoverPassword" class="btn btn-link form-control"
+                      (click)="recoverPassword()">
+                <i class="fa fa-key" aria-hidden="true"></i>
+                Recuperar Contraseña
+              </button>
+            </div>
+          </div>
+          <div class="card-footer text-muted  text-center">
+            <h6 class="text-muted">
+              <b class="text-danger">{{messages['requiredFields']['icon']}} </b>
+              {{messages['requiredFields']['text']}}
+            </h6>
+            <button class="btn btn-success" (click)="updatePassword()" [disabled]="formCtrl.form.invalid">
+              <span class="{{messages['saveConfirmationDialog']['iconOk']}}"></span>&nbsp;{{messages['saveConfirmationDialog']['ok']}}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

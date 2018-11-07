@@ -16,14 +16,21 @@ export class PostulanteService {
   ) {
   }
 
-  getAllOffers() {
-    const url = 'http://localhost:8089/offers?limit=10&page=1&field=id&order=ASC';
-    const headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json');
-    headers.set('Api-Token', 'oJhjGsMcXUgIQoggInJOkQ2wFkkzjD45oWHWtx9SuKdbNh0mCzMATWQn8txh');
-    const body = {'id': 1};
-    const options = {headers: headers};
-    return this._http.get(url, options);
+  getAllProfessionals() {
+    const url = environment.apiUrl + 'professionals';
+    return this._http.get(url);
+  }
+
+  getTotalProfessionals() {
+    const url = environment.apiUrl + 'totalProfessionals';
+    return this._http.get(url);
+  }
+
+  getAppliedOffers(actual_page: number, records_per_page: number, user_id: number, api_token: string) {
+    const url = environment.apiUrl + 'professionals/offers?limit=' + records_per_page + '&page=' + actual_page
+      + '&field=id&order=ASC&user_id=' + user_id;
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.get(url, {headers: this.headers});
   }
 
   getAcademicFormations(actual_page: number, records_per_page: number, id: number, api_token: string) {

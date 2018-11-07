@@ -1,18 +1,7 @@
-<div class="row mt-2">
-  <div class="col-12">
-    <button type="button" class="btn btn-success pull-right mr-4"
-            (click)="openOfertaLaboral(modalOfertaLaboral,null,false)">
-      <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>
-      Agregar
-    </button>
-  </div>
-</div>
-<hr>
 <!--Grid Ofertas-->
-<input *ngIf="!offers.length" type="text" value="Oops! no contamos con esta información" class="form-control">
-<div class="row m-2" *ngIf="offers.length">
-  <div class="col-12">
-    <div class="row mt-3">
+<div class="row">
+  <div class="col-lg-12">
+    <div class="row mt-2">
       <div class="col-12">
         <nav>
           <ul class="pagination">
@@ -29,22 +18,26 @@
         </nav>
       </div>
     </div>
-    <div class="row" style="margin-top:15px">
+    <div class="row">
       <div class="col-lg-12">
-        <table class="table table-hover table-bordered">
-          <thead class="thead table-active">
+        <table class="table table-bordered table-hover table-striped">
+          <thead class="thead">
           <tr>
-            <th width="10%">
+            <th width="20%">
               Código
             </th>
-            <th width="20%">
+            <th width="30%">
               Cargo
             </th>
-            <th width="30%">
+            <th width="50%">
               Actividades
             </th>
-            <th width="10%" scope="col" class="text-center">
-              Opciones
+            <th class="text-center">
+              <button type="button" class="btn btn-success"
+                      (click)="openOfertaLaboral(modalOfertaLaboral,null,false)">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Agregar
+              </button>
             </th>
           </tr>
           </thead>
@@ -60,14 +53,20 @@
               {{oferta.activities}}
             </td>
             <td class="text-center">
-              <button class="btn btn-warning btn-sm" (click)="openOfertaLaboral(modalOfertaLaboral,oferta,true)">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              <button class="btn btn-warning btn-sm m-1" (click)="openOfertaLaboral(modalOfertaLaboral,oferta,true)"
+                      title="Editar">
+                <i class="fa fa-edit text-white" aria-hidden="true"></i>
               </button>
-              <button class="btn btn-danger btn-sm ml-1" (click)="deleteOffer(oferta)">
+              <button class="btn btn-danger btn-sm m-1" (click)="deleteOffer(oferta)" title="Eliminar">
                 <i class="fa fa-trash" aria-hidden="true"></i>
               </button>
-              <button class="btn btn-info btn-sm ml-1" (click)="openPostulantes(modalPostulantes,oferta)">
+              <button class="btn btn-info btn-sm m-1" (click)="openPostulantes(modalPostulantes,oferta)"
+                      title="Ver Postulantes">
                 <i class="fa fa-users" aria-hidden="true"></i>
+              </button>
+              <button class="btn btn-secondary btn-sm m-1" (click)="finishOffer(oferta)"
+                      title="Finalizar Oferta">
+                <i class="fa fa-power-off" aria-hidden="true"></i>
               </button>
             </td>
           </tr>
@@ -360,14 +359,21 @@
       </div>
     </div>
     <div class="modal-footer">
+      <h6 class="text-muted">
+        <b class="text-danger">{{messages['requiredFields']['icon']}} </b>
+        {{messages['requiredFields']['text']}}
+      </h6>
       <button type="submit" class="btn btn-success btn-lg" title="Aceptar" (click)="c('save')"
               [disabled]="formCtrl.form.invalid">
-        <i class="fa fa-save" aria-hidden="true"> Guardar</i>
+        <i class="{{messages['saveConfirmationDialog']['iconOk']}} " aria-hidden="true">
+          {{messages['saveConfirmationDialog']['ok']}}
+        </i>
       </button>
       <button class="btn btn-danger btn-lg" title="Cancelar" (click)="c()">
-        <i class="fa fa-close" aria-hidden="true"> Cancelar</i>
+        <i class="{{messages['saveConfirmationDialog']['iconCancel']}}" aria-hidden="true">
+          {{messages['saveConfirmationDialog']['cancel']}}
+        </i>
       </button>
-      <h6 class="text-muted"><b class="text-danger">* </b>Todos los campos son obligatorios</h6>
     </div>
   </form>
 </ng-template>

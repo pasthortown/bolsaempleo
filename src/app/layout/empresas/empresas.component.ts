@@ -7,6 +7,7 @@ import {Empresa} from '../../models/empresa';
 import {EmpresaService} from '../../services/empresa.service';
 import {OfertaService} from '../../services/oferta.service';
 import {catalogos} from '../../../environments/catalogos';
+import {PostulanteService} from '../../services/postulante.service';
 
 @Component({
   selector: 'app-empresas',
@@ -19,7 +20,7 @@ export class EmpresasComponent implements OnInit {
   contadorOfertas: number;
 
   constructor(private modalService: NgbModal, public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService,
-              public ofertaService: OfertaService) {
+              public ofertaService: OfertaService, public postulanteService: PostulanteService) {
   }
 
   ngOnInit() {
@@ -32,24 +33,25 @@ export class EmpresasComponent implements OnInit {
   }
 
   contarEmpresas() {
-    return this.firebaseBDDService.firebaseControllerEmpresas.getAll().snapshotChanges().subscribe(items => {
-      this.contadorEmpresas = items.length;
-    });
-
+    this.empresaService.getTotalCompanies().subscribe(
+      response => {
+        this.contadorEmpresas = response['totalCompanies'];
+      });
   }
 
   contarPostulantes() {
-    return this.firebaseBDDService.firebaseControllerPostulantes.getAll().snapshotChanges().subscribe(items => {
-      this.contadorPostulantes = items.length;
-    });
+    this.postulanteService.getTotalProfessionals().subscribe(
+      response => {
+        this.contadorPostulantes = response['totalProfessionals'];
+      });
 
   }
 
   contarOfertas() {
-    return this.firebaseBDDService.firebaseControllerOfertas.getAll().snapshotChanges().subscribe(items => {
-      this.contadorOfertas = items.length;
-    });
-
+    this.ofertaService.getTotalOffers().subscribe(
+      response => {
+        this.contadorOfertas = response['totalOffers'];
+      });
   }
 
 }

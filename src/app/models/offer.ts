@@ -21,7 +21,7 @@ export class Offer {
   finish_date: Date;
   city: string;
   province: string;
-  status: string;
+  state: string;
 
   constructor() {
     this.code = '';
@@ -44,6 +44,6 @@ export class Offer {
     this.finish_date = new Date();
     this.city = '';
     this.province = '';
-    this.status = '';
+    this.state = '';
   }
 }

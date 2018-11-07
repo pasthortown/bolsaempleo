@@ -10,7 +10,7 @@ export class Company {
   phone: string;
   address: string;
   avatar: string;
-
+  state: string;
 
   constructor() {
     this.identity = '';

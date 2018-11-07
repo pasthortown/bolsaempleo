@@ -13,6 +13,18 @@ export class EmpresaService {
   constructor(public _http: HttpClient) {
   }
 
+  getTotalCompanies() {
+    const url = environment.apiUrl + 'totalCompanies';
+    return this._http.get(url);
+  }
+
+  getAppliedCompanies(actual_page: number, records_per_page: number, user_id: number, api_token: string) {
+    const url = environment.apiUrl + 'companies/professionals?limit=' + records_per_page + '&page=' + actual_page
+      + '&field=id&order=ASC&user_id=' + user_id;
+    this.headers = new HttpHeaders().set('Api-Token', api_token);
+    return this._http.get(url, {headers: this.headers});
+  }
+
   getCompany(id, api_token) {
     const url = environment.apiUrl + 'companies/' + id;
     this.headers = new HttpHeaders().set('Api-Token', api_token);
@@ -53,6 +65,12 @@ export class EmpresaService {
 
   deleteOffer(id: number, api_token: string) {
     const url = environment.apiUrl + 'offers?id=' + id;
+    this.headers.set('Api-Token', api_token);
+    return this._http.delete(url, {headers: this.headers});
+  }
+
+  finishOffer(id: number, api_token: string) {
+    const url = environment.apiUrl + 'offers/finish?id=' + id;
     this.headers.set('Api-Token', api_token);
     return this._http.delete(url, {headers: this.headers});
   }

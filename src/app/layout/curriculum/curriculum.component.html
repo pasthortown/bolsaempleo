@@ -22,7 +22,7 @@
       <table class="table">
         <tr>
           <td rowspan="7">
-            <img src="{{curriculum.fotografia}}" class="rounded-circle" width="150px" height="150px">
+            <img src="{{curriculum.avatar}}" class="rounded-circle" width="150px" height="150px">
           </td>
         </tr>
         <tr>
@@ -30,7 +30,7 @@
             Nombre Completo:
           </th>
           <td width="70%">
-            {{curriculum.nombreCompleto}}
+            {{curriculum.first_name + curriculum.last_name}}
           </td>
         </tr>
         <tr>
@@ -38,7 +38,7 @@
             Identificación:
           </th>
           <td width="70%">
-            {{curriculum.identificacion}}
+            {{curriculum.identity}}
           </td>
         </tr>
         <tr>
@@ -46,8 +46,7 @@
             Fecha de Nacimiento:
           </th>
           <td width="70%">
-            {{curriculum.fechaDeNacimiento.day}} de {{meses[curriculum.fechaDeNacimiento.month-1]}} de
-            {{curriculum.fechaDeNacimiento.year}}
+            {{curriculum.birthdate}}
           </td>
         </tr>
         <tr>
@@ -55,7 +54,7 @@
             Estado Civil:
           </th>
           <td width="70%">
-            {{curriculum.estadoCivil}}
+            {{curriculum.civil_state}}
           </td>
         </tr>
         <tr>
@@ -63,7 +62,7 @@
             Sexo:
           </th>
           <td width="70%">
-            {{curriculum.sexo}}
+            {{curriculum.gender}}
           </td>
         </tr>
       </table>
@@ -77,7 +76,7 @@
             Nacionalidad:
           </th>
           <td>
-            {{curriculum.nacionalidad}}
+            {{curriculum.nationality}}
           </td>
         </tr>
         <tr>
@@ -85,7 +84,7 @@
             Teléfono:
           </th>
           <td width="80%">
-            {{curriculum.telefono}}
+            {{curriculum.phone}}
           </td>
         </tr>
         <tr>
@@ -93,7 +92,7 @@
             Domicilio:
           </th>
           <td>
-            {{curriculum.direccion}}
+            {{curriculum.address}}
           </td>
         </tr>
         <tr>
@@ -101,7 +100,7 @@
             Correo Electrónico:
           </th>
           <td>
-            {{curriculum.correoElectronico}}
+            {{curriculum.email}}
           </td>
         </tr>
         <tr>
@@ -110,7 +109,7 @@
           </th>
           <td width="70%">
             <p class="text-justify">
-              {{curriculum.acercaDeMi}}
+              {{curriculum.about_me}}
             </p>
           </td>
         </tr>
@@ -135,11 +134,11 @@
         <th width="15%">Cód. Reg. SENESCYT</th>
         </thead>
         <tbody>
-        <tr *ngFor="let item of curriculum.estudiosRealizados">
-          <td>{{item.institucion}}</td>
-          <td>{{item.titulo}}</td>
-          <td>{{item.fechaRegistro.year}}/{{item.fechaRegistro.month}}/{{item.fechaRegistro.day}}</td>
-          <td>{{item.codigoRegistroSENESCYT}}</td>
+        <tr *ngFor="let item of academicFormations">
+          <td>{{item.institution}}</td>
+          <td>{{item.professional_degree}}</td>
+          <td>{{item.registration_date}}</td>
+          <td>{{item.senescyt_code}}</td>
         </tr>
         </tbody>
       </table>
@@ -166,15 +165,14 @@
         <th>Horas</th>
         </thead>
         <tbody>
-        <tr *ngFor="let item of curriculum.capacitaciones">
-          <td>{{item.institucion}}</td>
-          <td>{{item.tipoEvento}}</td>
-          <td>{{item.nombreEvento}}</td>
-          <td>{{item.tipoCertificado}}</td>
-          <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
-          <td>{{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
-          </td>
-          <td>{{item.horas}}</td>
+        <tr *ngFor="let item of courses">
+          <td>{{item.institution}}</td>
+          <td>{{item.event_type}}</td>
+          <td>{{item.event_name}}</td>
+          <td>{{item.type_certification}}</td>
+          <td>{{item.start_date}}</td>
+          <td>{{item.finish_date}}</td>
+          <td>{{item.hours}}</td>
         </tr>
         </tbody>
       </table>
@@ -198,11 +196,11 @@
         <th width="20%">Nivel Lectura</th>
         </thead>
         <tbody>
-        <tr *ngFor="let item of curriculum.idiomas">
-          <td>{{item.idioma}}</td>
-          <td>{{item.nivelEscrito}}</td>
-          <td>{{item.nivelHablado}}</td>
-          <td>{{item.nivelLectura}}</td>
+        <tr *ngFor="let item of languages">
+          <td>{{item.description}}</td>
+          <td>{{item.written_level}}</td>
+          <td>{{item.spoken_level}}</td>
+          <td>{{item.reading_level}}</td>
         </tr>
         </tbody>
       </table>
@@ -228,17 +226,17 @@
         <th width="10%">Actual</th>
         </thead>
         <tbody>
-        <tr *ngFor="let item of curriculum.experienciasLaborales">
-          <td>{{item.empleador}}</td>
-          <td>{{item.cargoDesempenado}}</td>
-          <td><p class="text-justify">{{item.descripcionCargo}}</p></td>
-          <td>{{item.fechaInicio.year}}/{{item.fechaInicio.month}}/{{item.fechaInicio.day}}</td>
-          <td *ngIf="item.actualmenteVigente"></td>
-          <td *ngIf="!item.actualmenteVigente">
-            {{item.fechaFinalizacion.year}}/{{item.fechaFinalizacion.month}}/{{item.fechaFinalizacion.day}}
+        <tr *ngFor="let item of professionalExperiences">
+          <td>{{item.employer}}</td>
+          <td>{{item.position}}</td>
+          <td><p class="text-justify">{{item.job_description}}</p></td>
+          <td>{{item.start_date}}</td>
+          <td *ngIf="item.current_work"></td>
+          <td *ngIf="!item.current_work">
+            {{item.finish_date}}
           </td>
           <td>
-            <div class="col-12 text-center" *ngIf="item.actualmenteVigente"><span
+            <div class="col-12 text-center" *ngIf="item.current_work"><span
               class="badge badge-success">Actual</span>
             </div>
           </td>

@@ -14,6 +14,7 @@ const routes: Routes = [
       {path: 'postulaciones', loadChildren: './postulaciones/postulaciones.module#PostulacionesModule'},
       {path: 'perfil-empresa', loadChildren: './perfil-empresa/perfil-empresa.module#PerfilEmpresaModule'},
       {path: 'curriculum', loadChildren: './curriculum/curriculum.module#CurriculumModule'},
+      {path: 'account', loadChildren: './account/account.module#AccountModule'},
       {path: 'about', loadChildren: './about/about.module#AboutModule'}
     ]
   }

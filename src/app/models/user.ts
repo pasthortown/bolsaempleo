@@ -6,4 +6,10 @@ export class User {
   password: string;
   api_token: string;
   role: string;
+  state: string;
+  constructor() {
+    this.role = '0';
+
+  }
+
 }

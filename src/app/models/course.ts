@@ -7,6 +7,7 @@ export class Course {
   finish_date: Date;
   hours: number;
   type_certification: string;
+  state: string;
 
   constructor() {
     this.institution = '';

@@ -7,7 +7,7 @@ export class ProfessionalExperience {
   finish_date: Date;
   reason_leave: string;
   current_work: boolean;
-
+  state: string;
   constructor() {
     this.current_work = false;
   }
