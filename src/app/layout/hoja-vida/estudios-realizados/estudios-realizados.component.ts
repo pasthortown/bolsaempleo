@@ -5,6 +5,7 @@ import {Component, OnInit} from '@angular/core';
 import swal from 'sweetalert2';
 import {User} from '../../../models/user';
 import {AcademicFormation} from '../../../models/academic-formation';
+import {ProfessionalService} from '../../../services/professional.service';
 
 @Component({
   selector: 'app-estudios-realizados',
@@ -24,7 +25,7 @@ export class EstudiosRealizadosComponent implements OnInit {
   tipo_titulo: Array<any>;
   instituciones: Array<any>;
 
-  constructor(private modalService: NgbModal, public postulanteService: PostulanteService) {
+  constructor(private modalService: NgbModal, public postulanteService: ProfessionalService) {
   }
 
   ngOnInit() {

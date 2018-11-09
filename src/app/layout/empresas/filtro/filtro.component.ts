@@ -158,6 +158,7 @@ export class FiltroComponent implements OnInit {
         condition = [];
       }
     }
+    console.log(conditions);
     this.ofertaService.filterOffers({'filters': {'conditions': conditions}}, this.actual_page, this.records_per_page).subscribe(
       response => {
         this.offers = response['offers']['data'];

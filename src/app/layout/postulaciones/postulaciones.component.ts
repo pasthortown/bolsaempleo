@@ -73,7 +73,7 @@ export class PostulacionesComponent implements OnInit {
   }
 
   getCompanies() {
-    this.empresaService.getAppliedCompanies(this.actual_page, this.records_per_page, this.userLogged.id, this.userLogged.api_token)
+    this.postulanteService.getAppliedCompanies(this.actual_page, this.records_per_page, this.userLogged.id, this.userLogged.api_token)
       .subscribe(
         response => {
           this.companies = response['companies']['data'];

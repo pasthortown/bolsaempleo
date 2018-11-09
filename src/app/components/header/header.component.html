@@ -79,7 +79,7 @@
           <div class="dropdown-divider"></div>
           <a *ngIf="userLogged.role=='1' || userLogged.role=='2'" class="dropdown-item" [routerLink]="['/account']"
              [routerLinkActive]="['router-link-active']">
-            <i class="fa fa-fw fa-wrench"></i>&nbsp;Cuenta
+            <i class="fa fa-fw fa-wrench"></i>&nbsp;Cambiar Clave
           </a>
           <a *ngIf="userLogged.role=='2' || userLogged.role=='1'" class="dropdown-item"
              [routerLink]="['/perfil-empresa']" [routerLinkActive]="['router-link-active']" (click)="logout()">

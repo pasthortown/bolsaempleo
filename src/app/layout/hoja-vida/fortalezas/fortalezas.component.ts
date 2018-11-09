@@ -6,6 +6,7 @@ import {catalogos} from '../../../../environments/catalogos';
 import swal from 'sweetalert2';
 import {User} from '../../../models/user';
 import {Ability} from '../../../models/ability';
+import {ProfessionalService} from '../../../services/professional.service';
 
 @Component({
   selector: 'app-fortalezas',
@@ -25,7 +26,7 @@ export class FortalezasComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    public postulanteService: PostulanteService) {
+    public postulanteService: ProfessionalService) {
   }
 
   ngOnInit() {

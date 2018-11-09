@@ -5,6 +5,7 @@ import {catalogos} from '../../../../environments/catalogos';
 import swal from 'sweetalert2';
 import {User} from '../../../models/user';
 import {Language} from '../../../models/language';
+import {ProfessionalService} from '../../../services/professional.service';
 
 @Component({
   selector: 'app-idiomas',
@@ -24,7 +25,7 @@ export class IdiomasComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    public postulanteService: PostulanteService) {
+    public postulanteService: ProfessionalService) {
   }
 
   ngOnInit() {

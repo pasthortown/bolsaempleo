@@ -7,7 +7,8 @@ import {CommonModule} from '@angular/common';
 import {InformacionEmpresaComponent} from './informacion-empresa/informacion-empresa.component';
 import {OfertasLaboralesComponent} from './ofertas-laborales/ofertas-laborales.component';
 import {EmpresaService} from '../../services/empresa.service';
-import {AuthService} from '../../services/auth.service';
+import {ProfesionalesComponent} from './profesionales/profesionales.component';
+
 
 @NgModule({
   imports: [
@@ -16,8 +17,8 @@ import {AuthService} from '../../services/auth.service';
     NgbModule,
     FormsModule
   ],
-  declarations: [PerfilEmpresaComponent, InformacionEmpresaComponent, OfertasLaboralesComponent],
-  providers: [EmpresaService, AuthService]
+  declarations: [PerfilEmpresaComponent, InformacionEmpresaComponent, OfertasLaboralesComponent, ProfesionalesComponent],
+  providers: [EmpresaService]
 })
 export class PerfilEmpresaModule {
 }

@@ -1,5 +1,8 @@
-import { FirebaseBDDService } from './../../services/firebase-bdd.service';
-import { Component, OnInit } from '@angular/core';
+import {FirebaseBDDService} from './../../services/firebase-bdd.service';
+import {Component, OnInit} from '@angular/core';
+import {EmpresaService} from '../../services/empresa.service';
+import {OfertaService} from '../../services/oferta.service';
+import {PostulanteService} from '../../services/postulante.service';
 
 @Component({
   selector: 'app-postulantes',
@@ -7,11 +10,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./postulantes.component.css']
 })
 export class PostulantesComponent implements OnInit {
-  contadorPostulantes: number;
   contadorEmpresas: number;
+  contadorPostulantes: number;
   contadorOfertas: number;
 
-  constructor(private firebaseBDDService: FirebaseBDDService) { }
+  constructor(
+    public empresaService: EmpresaService,
+    public ofertaService: OfertaService,
+    public postulanteService: PostulanteService) {
+  }
 
   ngOnInit() {
     this.contadorEmpresas = 0;
@@ -23,23 +30,25 @@ export class PostulantesComponent implements OnInit {
   }
 
   contarEmpresas() {
-    return this.firebaseBDDService.firebaseControllerEmpresas.getAll().snapshotChanges().subscribe(items => {
-      this.contadorEmpresas = items.length;
-    });
-
+    this.empresaService.getTotalCompanies().subscribe(
+      response => {
+        this.contadorEmpresas = response['totalCompanies'];
+      });
   }
 
   contarPostulantes() {
-    return this.firebaseBDDService.firebaseControllerPostulantes.getAll().snapshotChanges().subscribe(items => {
-      this.contadorPostulantes = items.length;
-    });
+    this.postulanteService.getTotalProfessionals().subscribe(
+      response => {
+        this.contadorPostulantes = response['totalProfessionals'];
+      });
 
   }
 
   contarOfertas() {
-    return this.firebaseBDDService.firebaseControllerOfertas.getAll().snapshotChanges().subscribe(items => {
-      this.contadorOfertas = items.length;
-    });
-
+    this.ofertaService.getTotalOffers().subscribe(
+      response => {
+        this.contadorOfertas = response['totalOffers'];
+      });
   }
+
 }

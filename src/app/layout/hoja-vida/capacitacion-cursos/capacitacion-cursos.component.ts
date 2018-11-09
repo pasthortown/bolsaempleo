@@ -5,6 +5,7 @@ import swal from 'sweetalert2';
 import {Course} from '../../../models/course';
 import {User} from '../../../models/user';
 import {catalogos} from '../../../../environments/catalogos';
+import {ProfessionalService} from '../../../services/professional.service';
 
 @Component({
   selector: 'app-capacitacion-cursos',
@@ -25,7 +26,7 @@ export class CapacitacionCursosComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    public postulanteService: PostulanteService) {
+    public postulanteService: ProfessionalService) {
   }
 
   ngOnInit() {

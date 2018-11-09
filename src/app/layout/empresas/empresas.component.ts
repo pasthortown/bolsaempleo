@@ -19,8 +19,10 @@ export class EmpresasComponent implements OnInit {
   contadorPostulantes: number;
   contadorOfertas: number;
 
-  constructor(private modalService: NgbModal, public empresaService: EmpresaService, private firebaseBDDService: FirebaseBDDService,
-              public ofertaService: OfertaService, public postulanteService: PostulanteService) {
+  constructor(
+    public empresaService: EmpresaService,
+    public ofertaService: OfertaService,
+    public postulanteService: PostulanteService) {
   }
 
   ngOnInit() {

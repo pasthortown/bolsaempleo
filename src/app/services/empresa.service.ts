@@ -18,15 +18,15 @@ export class EmpresaService {
     return this._http.get(url);
   }
 
-  getAppliedCompanies(actual_page: number, records_per_page: number, user_id: number, api_token: string) {
-    const url = environment.apiUrl + 'companies/professionals?limit=' + records_per_page + '&page=' + actual_page
-      + '&field=id&order=ASC&user_id=' + user_id;
+  getCompany(id, api_token) {
+    const url = environment.apiUrl + 'companies/' + id;
     this.headers = new HttpHeaders().set('Api-Token', api_token);
     return this._http.get(url, {headers: this.headers});
   }
 
-  getCompany(id, api_token) {
-    const url = environment.apiUrl + 'companies/' + id;
+  getAppliedProfessionals(actual_page: number, records_per_page: number, user_id: number, api_token: string) {
+    const url = environment.apiUrl + 'companies/professionals?limit=' + records_per_page + '&page=' + actual_page
+      + '&field=id&order=ASC&user_id=' + user_id;
     this.headers = new HttpHeaders().set('Api-Token', api_token);
     return this._http.get(url, {headers: this.headers});
   }
@@ -45,7 +45,7 @@ export class EmpresaService {
   }
 
   getProfessionals(actual_page: number, records_per_page: number, offer_id: number, api_token: string) {
-    const url = environment.apiUrl + 'companies/professionals?limit=' + records_per_page + '&page=' + actual_page
+    const url = environment.apiUrl + 'offers/professionals?limit=' + records_per_page + '&page=' + actual_page
       + '&field=id&order=ASC&offer_id=' + offer_id;
     this.headers.set('Api-Token', api_token);
     return this._http.get(url, {headers: this.headers});

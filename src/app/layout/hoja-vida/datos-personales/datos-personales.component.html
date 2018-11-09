@@ -2,15 +2,15 @@
   <div class="card-body">
     <form name="datosPersnalesform" method="post" #formCtrl="ngForm">
       <div class="row">
-        <div class="col-lg-3 col-sm-12">
+        <div class="col-lg-2 col-sm-12">
           <div class="row">
             <div class="col-lg-12 mt-3 text-center">
               <div class="form-group">
-                <img src="{{professional.avatar}}" title="Haga click"
-                     class="form-control rounded-circle col-lg-5 offset-1 btn text-center"
-                     (click)="fileInput.click()" width="150px" height="120px">
-                <input type="file" class="form-control btn-light" id="foto" #fileInput
-                       (change)="CodificarArchivo($event)" accept="image/*">
+                <!--<img src="{{professional.avatar}}" title="Haga click"-->
+                <!--class="form-control rounded-circle col-lg-5 offset-1 btn text-center"-->
+                <!--(click)="fileInput.click()" width="150px" height="120px">-->
+                <!--<input type="file" class="form-control btn-light" id="foto" #fileInput-->
+                <!--(change)="CodificarArchivo($event)" accept="image/*">-->
               </div>
               <div class="group-form mt-5">
                 <div class="row">
@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-9 col-sm-12">
+        <div class="col-lg-10 col-sm-12">
           <div class="row">
             <div class="col-6">
               <!--Identificacion-->
@@ -59,17 +59,17 @@
                   <label for="nombres">
                     <b class="text-danger">*</b> Nombres:
                   </label>
-                  <input type="text" [(ngModel)]="professional.last_name"
+                  <input type="text" [(ngModel)]="professional.first_name"
                          class="form-control text-uppercase"
-                         id="nombres" name="nombreCompleto" placeholder="Apellidos y Nombres" required>
+                         id="nombres" name="nombres" placeholder="Nombres" required>
                 </div>
                 <div class="col-lg-6">
                   <label for="apellidos">
                     <b class="text-danger">*</b> Apellidos:
                   </label>
-                  <input type="text" [(ngModel)]="professional.first_name"
+                  <input type="text" [(ngModel)]="professional.last_name"
                          class="form-control text-uppercase"
-                         id="apellidos" name="nombreCompleto" placeholder="Apellidos y Nombres" required>
+                         id="apellidos" name="apellidos" placeholder="Apellidos" required>
                 </div>
               </div>
               <!--Nacionalidad-->
@@ -166,9 +166,3 @@
   </div>
 </div>
 
-<!--<div class="form-group" hidden>-->
-<!--<a target="_blank" class="form-control btn btn-primary"-->
-<!--href="curriculum?idPostulante={{this.professional.id}}">-->
-<!--<i class="fa fa-id-badge" aria-hidden="true"> VER CV</i>-->
-<!--</a>-->
-<!--</div>-->

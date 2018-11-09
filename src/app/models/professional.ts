@@ -1,5 +1,7 @@
+import {AcademicFormation} from './academic-formation';
+
 export class Professional {
-  id: string;
+  id: number;
   avatar: string;
   identity: string;
   first_name: string;
@@ -13,6 +15,7 @@ export class Professional {
   address: string;
   about_me: string;
   state: string;
+  academic_formations: AcademicFormation;
 
   constructor() {
     this.identity = '';

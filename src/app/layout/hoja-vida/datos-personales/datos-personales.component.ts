@@ -2,9 +2,9 @@ import {PostulanteService} from './../../../services/postulante.service';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {catalogos} from '../../../../environments/catalogos';
 import swal from 'sweetalert2';
-import {FirebaseBDDService} from '../../../services/firebase-bdd.service';
 import {Professional} from '../../../models/professional';
 import {User} from '../../../models/user';
+import {ProfessionalService} from '../../../services/professional.service';
 
 @Component({
   selector: 'app-datos-personales',
@@ -20,7 +20,7 @@ export class DatosPersonalesComponent implements OnInit {
   professional: Professional;
   userLogged: User;
   messages: any;
-  constructor(public postulanteService: PostulanteService) {
+  constructor(public postulanteService: ProfessionalService) {
   }
 
   ngOnInit() {

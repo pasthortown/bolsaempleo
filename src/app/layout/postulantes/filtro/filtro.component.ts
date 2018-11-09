@@ -1,17 +1,20 @@
-import {AuthService} from './../../../services/auth.service';
 import {catalogos} from './../../../../environments/catalogos';
-import {FirebaseBDDService} from './../../../services/firebase-bdd.service';
-import {Postulante} from './../../../models/postulante';
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
-import * as jsPDF from 'jspdf';
-import * as html2canvas from 'html2canvas';
 import swal from 'sweetalert2';
 import {Router} from '@angular/router';
 import {EmpresaService} from '../../../services/empresa.service';
-import {Empresa} from '../../../models/empresa';
-import {Contactado} from '../../../models/contactado';
 import {PostulanteService} from '../../../services/postulante.service';
+import {Offer} from '../../../models/offer';
+import {User} from '../../../models/user';
+import {OfertaService} from '../../../services/oferta.service';
+import {Professional} from '../../../models/professional';
+import {AcademicFormation} from '../../../models/academic-formation';
+import {Course} from '../../../models/course';
+import {Language} from '../../../models/language';
+import {ProfessionalReference} from '../../../models/professionalReference';
+import {ProfessionalExperience} from '../../../models/professionalExperience';
+import {Ability} from '../../../models/ability';
 
 @Component({
   selector: 'app-filtro',
@@ -19,267 +22,533 @@ import {PostulanteService} from '../../../services/postulante.service';
   styleUrls: ['./filtro.component.css']
 })
 export class FiltroComponent implements OnInit {
-  filtro: Array<any>;
-  criterioBusqueda = '';
+  filters: Array<String>;
+  columns = new Array('code', 'province', 'broad_field', 'position', 'city', 'specific_field');
+  operators = new Array('=', '=', 'like', 'like', 'like', '=');
+  areas: Array<any>;
+  abilities: Array<Ability>;
+  academicFormations: Array<AcademicFormation>;
+  courses: Array<Course>;
+  languages: Array<Language>;
+  professionalReferences: Array<ProfessionalReference>;
+  professionalExperiences: Array<ProfessionalExperience>;
   etiquetaPrincipal: string;
-  tipo_titulo: Array<any>;
-  postulantes: Array<Postulante>;
-  postulanteSeleccionado: Postulante;
-  campo = 'estudiosRealizados/0/tipo_titulo';
-  pagina = 0;
-  registrosPorPagina = 21;
-  totalPaginas = 1;
-  contactado: Contactado;
-  meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-  @ViewChild('encabezadoHojaVida') encabezadoHojaVida: ElementRef;
-  @ViewChild('cuerpoHojaVida') cuerpoHojaVida: ElementRef;
-  @ViewChild('pieHojaVida') pieHojaVida: ElementRef;
+  criterioBusqueda: string;
+  userLogged: User;
+  offers: Array<Offer>;
+  postulants: Array<Professional>;
+  selectedPostulant: Professional;
+  selectedOffer: Offer;
+  actual_page: number;
+  records_per_page: number;
+  total_pages: number;
+  provinces: Array<any>;
+  cantones: Array<any>;
+  enable_city: boolean;
+  camposEspecificos: Array<any>;
+  validatePostulant: boolean;
+  messages: any;
+  filterOption: string;
+  filterColumnSingle: string;
 
-  constructor(private dataService: PostulanteService,
-              public authService: AuthService,
-              private empresaService: EmpresaService,
-              private modalService: NgbModal,
-              private firebaseBDDService: FirebaseBDDService,
-              private router: Router) {
+  constructor(
+    private postulanteService: PostulanteService,
+    public ofertaService: OfertaService,
+    private empresaService: EmpresaService,
+    private modalService: NgbModal,
+    private router: Router) {
   }
 
   ngOnInit() {
-//    this.getAllOffers();
-    this.empresaService.empresa = this.authService.obtenerUsuario() as Empresa;
-    this.contactado = new Contactado();
-    this.postulantes = [];
+    this.validatePostulant = false;
+    this.provinces = catalogos.provincias;
+    this.areas = catalogos.titulos;
+    this.filters = new Array<String>();
+    this.actual_page = 1;
+    this.records_per_page = 20;
+    this.total_pages = 1;
+    this.messages = catalogos.messages;
+    if (sessionStorage.getItem('user_logged')) {
+      this.userLogged = JSON.parse(sessionStorage.getItem('user_logged')) as User;
+    } else {
+      this.userLogged = new User();
+    }
+
+    this.getPostulants();
+    this.criterioBusqueda = '';
     this.paginacion(true);
-    this.getTotalPaginas();
-    this.postulanteSeleccionado = new Postulante();
-    this.postulanteSeleccionado.nombreCompleto = '';
-    this.filtro = catalogos.titulos;
-
-  }
-
-  getTotalPaginas() {
-    const postulantes = [];
-    this.firebaseBDDService.firebaseControllerPostulantes.getAll().snapshotChanges().subscribe(items => {
-      this.totalPaginas = Math.ceil(items.length / this.registrosPorPagina);
-      items.forEach(element => {
-        let itemLeido: Postulante;
-        itemLeido = element.payload.val() as Postulante;
-        postulantes.push(itemLeido);
-      });
-      this.contarOfertasPorCampoAmplio(postulantes);
-      this.contarOfertasPorCampoEspecifico(postulantes);
-    });
+    this.countOffers();
   }
 
   paginacion(siguiente: boolean) {
     if (siguiente) {
-      if (this.pagina === this.totalPaginas) {
+      if (this.actual_page === this.total_pages) {
         return;
       } else {
-        this.pagina++;
+        this.actual_page++;
       }
     } else {
-      if (this.pagina === 1) {
+      if (this.actual_page === 1) {
         return;
       } else {
-        this.pagina--;
+        this.actual_page--;
       }
     }
-    this.firebaseBDDService.firebaseControllerPostulantes.getPagina(this.pagina, this.registrosPorPagina, this.campo)
-      .snapshotChanges().subscribe(items => {
-      this.postulantes = [];
-      let i = (this.pagina - 1) * this.registrosPorPagina;
-      while (i < items.length) {
-        let itemLeido: Postulante;
-        itemLeido = items[i].payload.val() as Postulante;
-        if (itemLeido.estudiosRealizados != null) {
-          this.postulantes.push(itemLeido);
-        }
-        i++;
+    if (this.filters.length === 0 && (this.etiquetaPrincipal == '' || this.etiquetaPrincipal == null)) {
+      this.getPostulants();
+    } else {
+      switch (this.filterOption) {
+        case 'single':
+          break;
+        case 'field':
+          this.filterPostulantsField();
+          break;
+        case 'filter':
+          this.filterPostulants();
+          break;
       }
-    });
+
+    }
+
   }
 
-  mostrarHojaVida(postulanteSeleccionado: Postulante) {
-    this.postulanteSeleccionado = postulanteSeleccionado;
-  }
-
-  aplicarContactado(postulante: Postulante) {
-    this.contactado.idPostulante = this.postulanteSeleccionado.id;
-    this.contactado.idEmpresa = this.empresaService.empresa.id;
-    console.log(this.contactado.idEmpresa);
-    swal({
-      title: '¿Está seguro de Contactar?',
-      text: postulante.nombreCompleto.toUpperCase(),
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: '<i class="fa fa-check" aria-hidden="true"></i>'
-    }).then((result) => {
-      if (result.value) {
-        this.firebaseBDDService.firebaseControllerContactados.insertar(this.contactado);
-        swal({
-          title: 'Profesional Contactado',
-          text: 'Registro existoso!',
-          type: 'success',
-          timer: 2000
-        });
-      }
-    });
-  }
-
-  openPostulante(content, item: Postulante, editar) {
+  openOfertaLaboral(content, item: Professional, editar) {
     const logoutScreenOptions: NgbModalOptions = {
       size: 'lg'
     };
-    this.postulanteSeleccionado = item;
+    this.selectedPostulant = item;
+    this.getAbilities();
+    this.getAcademicFormations();
+    this.getCourses();
+    this.getLanguages();
+    this.getProfessionalExperiences();
+    this.getProfessionalReferences();
+    this.validateAppliedPostulant();
     this.modalService.open(content, logoutScreenOptions)
       .result
       .then((resultAceptar => {
         if (resultAceptar === 'aplicar') {
-          this.aplicarContactado(item);
+          this.applyOffer();
         }
+
       }), (resultCancel => {
 
       }));
   }
 
-  filtrarPorTitulo(areaEspecifica: string) {
-    this.postulantes = [];
-    this.etiquetaPrincipal = areaEspecifica;
-    this.firebaseBDDService.firebaseControllerPostulantes.filtroExacto('estudiosRealizados/0/titulo', areaEspecifica)
-      .snapshotChanges().subscribe(items => {
-      if (items.length === 0) {
-        swal({
-          position: 'center',
-          type: 'info',
-          title: 'No contamos con los profesionales requeridos!',
-          text: '',
-          showConfirmButton: false,
-          timer: 3000
+  getAbilities(): void {
+    this.postulanteService.getAbilities(this.actual_page, this.records_per_page, this.selectedPostulant.id, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          this.abilities = response['abilities']['data'];
+          this.total_pages = response['pagination']['last_page'];
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
+            });
+          }
         });
-      }
-      items.forEach(element => {
-        let itemLeido: Postulante;
-        itemLeido = element.payload.val() as Postulante;
-        this.postulantes.push(itemLeido);
-      });
-    });
   }
 
-  validarSesion() {
-    swal({
-      title: 'Para ver más Información tiene que iniciar sesión como Empresa',
-      text: '',
-      type: 'info',
-      showCloseButton: true,
-      showCancelButton: true,
-      confirmButtonColor: '#28a745',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: '<i class="fa fa-sign-in" aria-hidden="true"> Iniciar Sesión</i>',
-      cancelButtonText: '<i class="fa fa-address-book" aria-hidden="true"> Regístrate</i>'
-    }).then((result) => {
-      if (result.value) {
-        this.router.navigate(['login']);
-      } else if (
-        // Read more about handling dismissals
-        result.dismiss === swal.DismissReason.cancel
-      ) {
-        this.router.navigate(['empresa']);
-      }
-    });
-  }
-
-  borrarFiltro() {
-    this.etiquetaPrincipal = '';
-    this.filtroDirecto();
-  }
-
-  filtroDirecto() {
-    this.postulantes = [];
-    this.firebaseBDDService.firebaseControllerPostulantes
-      .querySimple('estudiosRealizados/0/titulo', this.criterioBusqueda.toUpperCase())
-      .snapshotChanges().subscribe(items => {
-      if (items.length === 0) {
-        swal({
-          position: 'center',
-          type: 'info',
-          title: 'No existen Profesionales con ese título',
-          text: '',
-          showConfirmButton: false,
-          timer: 2000
+  getAcademicFormations(): void {
+    this.postulanteService.getAcademicFormations(this.actual_page, this.records_per_page, this.selectedPostulant.id, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          console.log('academicFormations');
+          console.log(response['academicFormations']);
+          this.academicFormations = response['academicFormations']['data'];
+          this.total_pages = response['pagination']['last_page'];
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
+            });
+          }
         });
-      }
-      items.forEach(element => {
-        let itemLeido: Postulante;
-        itemLeido = element.payload.val() as Postulante;
-        this.postulantes.push(itemLeido);
-      });
-    });
   }
 
-  imprimir2() {
-    html2canvas(this.encabezadoHojaVida.nativeElement).then(canvasEncabezado => {
-      const encabezadoHojaDatosImg = canvasEncabezado.toDataURL('image/png');
-      html2canvas(this.cuerpoHojaVida.nativeElement).then(canvasCuerpo => {
-        const cuerpoHojaDatosImg = canvasCuerpo.toDataURL('image/png');
-        html2canvas(this.pieHojaVida.nativeElement).then(canvasPie => {
-          const pieHojaDatosImg = canvasPie.toDataURL('image/png');
-          const doc = new jsPDF();
-          doc.addImage(encabezadoHojaDatosImg, 'PNG', 10, 10, 190, 7);
-          doc.addImage(cuerpoHojaDatosImg, 'PNG', 30, 17, 160, 265);
-          doc.addImage(pieHojaDatosImg, 'PNG', 10, 288, 190, 7);
-          doc.save('CV_' + this.postulanteSeleccionado.identificacion + '.pdf');
+  getCourses(): void {
+    this.postulanteService.getCourses(this.actual_page, this.records_per_page, this.selectedPostulant.id, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          console.log('Courses');
+          console.log(response['Courses']);
+          this.courses = response['courses']['data'];
+          this.total_pages = response['pagination']['last_page'];
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: 'center',
+              type: 'error',
+              title: 'Oops! no tienes autorización para acceder a este sitio',
+              text: 'Vuelva a intentar',
+              showConfirmButton: true
+            });
+          }
         });
+  }
+
+  getLanguages(): void {
+    this.postulanteService.getLanguages(this.actual_page, this.records_per_page, this.selectedPostulant.id, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          this.languages = response['languages']['data'];
+          this.total_pages = response['pagination']['last_page'];
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
+            });
+          }
+        });
+  }
+
+  getProfessionalReferences(): void {
+    this.postulanteService.getProfessionalReferences(this.actual_page, this.records_per_page, this.selectedPostulant.id, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          this.professionalReferences = response['professionalReferences']['data'];
+          this.total_pages = response['pagination']['last_page'];
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
+            });
+          }
+        });
+  }
+
+  getProfessionalExperiences(): void {
+    this.postulanteService.getProfessionalExperiences(this.actual_page, this.records_per_page, this.selectedPostulant.id, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          console.log('Courses');
+          console.log(response['Courses']);
+          this.professionalExperiences = response['professionalExperiences']['data'];
+          this.total_pages = response['pagination']['last_page'];
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
+            });
+          }
+        });
+  }
+
+  validateAppliedPostulant() {
+    this.postulanteService.validateAppliedPostulant(this.userLogged.id, this.selectedPostulant.id).subscribe(response => {
+      if (response) {
+        this.validatePostulant = true;
+      } else {
+        this.validatePostulant = false;
+      }
+    });
+  }
+
+  openFilter(content, item: Offer, editar) {
+    const logoutScreenOptions: NgbModalOptions = {
+      size: 'lg'
+    };
+    this.selectedOffer = item;
+    this.filters = new Array<String>();
+
+    this.modalService.open(content, logoutScreenOptions)
+      .result
+      .then((resultAceptar => {
+        if (resultAceptar === 'aplicar') {
+          this.etiquetaPrincipal = null;
+          this.filterPostulants();
+        }
+
+      }), (resultCancel => {
+
+      }));
+  }
+
+  filterPostulants() {
+    this.filterOption = 'filter';
+    this.etiquetaPrincipal = null;
+    let condition = [];
+    const conditions = [];
+    for (let i = 0; i < this.filters.length; i++) {
+      if (this.filters[i] != null && this.filters[i] !== '') {
+        condition.push(this.columns[i]);
+        condition.push(this.operators[i]);
+        condition.push(this.filters[i]);
+        conditions.push(condition);
+        condition = [];
+      }
+    }
+    this.postulanteService.filterPostulants({'filters': {'conditions': conditions}}, this.actual_page, this.records_per_page).subscribe(
+      response => {
+        this.postulants = response['postulants']['data'];
+        if (response['pagination']['total'] === 0) {
+          swal({
+            title: 'Oops! No encotramos lo que estás buscando',
+            text: 'Intenta otra vez!',
+            type: 'info',
+            timer: 3500
+          });
+          this.total_pages = 1;
+        } else {
+          this.total_pages = response['pagination']['last_page'];
+        }
       });
-    });
   }
 
-  imprimir() {
-    return xepOnline.Formatter.Format('curriculum', {
-      render: 'download',
-      filename: 'CV - ' + this.postulanteSeleccionado.nombreCompleto.toLocaleUpperCase() + ' (' + this.postulanteSeleccionado.identificacion + ')'
-    });
+  filterPostulantsField() {
+    this.filterOption = 'field';
+    this.postulanteService.filterPostulantsField(this.criterioBusqueda, this.actual_page, this.records_per_page).subscribe(
+      response => {
+        this.postulants = response['postulants']['data'];
+        if (response['pagination']['total'] === 0) {
+          swal({
+            title: 'Oops! No encotramos lo que estás buscando',
+            text: 'Intenta otra vez!',
+            type: 'info',
+            timer: 3500
+          });
+          this.total_pages = 1;
+        } else {
+          this.total_pages = response['pagination']['last_page'];
+        }
+      });
   }
 
-  contarOfertasPorCampoAmplio(postulantes: Array<Postulante>) {
-    this.filtro.forEach(area => {
+  filterPostulantsSingle(column, item) {
+    this.filterOption = 'single';
+    this.etiquetaPrincipal = item;
+    this.filters = null;
+    const condition = [];
+    const conditions = [];
+    condition.push(column);
+    condition.push('like');
+    condition.push(item);
+    conditions.push(condition);
+    this.postulanteService.filterPostulants({'filters': {'conditions': conditions}}, this.actual_page, this.records_per_page).subscribe(
+      response => {
+        this.postulants = response['postulants']['data'];
+        if (response['pagination']['total'] === 0) {
+          swal({
+            title: 'Oops! No encotramos lo que estás buscando',
+            text: 'Intenta otra vez!',
+            type: 'info',
+            timer: 3500
+          });
+          this.total_pages = 1;
+        } else {
+          this.total_pages = response['pagination']['last_page'];
+        }
+      });
+  }
+
+  cleanFilter(filter) {
+    this.filters.splice(this.filters.indexOf(filter), 1);
+    this.etiquetaPrincipal = null;
+    if (this.filters.length === 0) {
+      this.getPostulants();
+    } else {
+      this.filterPostulants();
+    }
+
+  }
+
+  cleanFilterSingle() {
+    this.etiquetaPrincipal = null;
+    this.getPostulants();
+  }
+
+  countOffers() {
+    this.ofertaService.getAllOffers().subscribe(
+      response => {
+        console.log('entro');
+        this.contarOfertasPorCampoAmplio(response['offers']);
+        this.contarOfertasPorCampoEspecifico(response['offers']);
+      });
+  }
+
+  contarOfertasPorCampoAmplio(offers: Array<Offer>) {
+    this.areas.forEach(area => {
       area.total = 0;
     });
-    postulantes.forEach(postulante => {
-      this.filtro.forEach(area => {
-        if (postulante.estudiosRealizados != null) {
-          postulante.estudiosRealizados.forEach(estudiosRealizados => {
-            if (estudiosRealizados.tipo_titulo === area.campo_amplio) {
-              area.total = area.total + 1;
-            }
-          });
+    offers.forEach(offer => {
+      this.areas.forEach(area => {
+        if (offer.broad_field === area.campo_amplio) {
+          area.total = area.total + 1;
         }
       });
     });
   }
 
-  contarOfertasPorCampoEspecifico(postulantes: Array<Postulante>) {
-    this.filtro.forEach(area => {
+  contarOfertasPorCampoEspecifico(offers: Array<Offer>) {
+    this.areas.forEach(area => {
       area.campos_especificos.forEach(areaEspecifica => {
         areaEspecifica.total = 0;
       });
     });
-    postulantes.forEach(postulante => {
-      this.filtro.forEach(area => {
-        if (postulante.estudiosRealizados != null) {
-          postulante.estudiosRealizados.forEach(estudiosRealizados => {
-            area.campos_especificos.forEach(areaEspecifica => {
-              if (estudiosRealizados.titulo === areaEspecifica.nombre) {
-                areaEspecifica.total = areaEspecifica.total + 1;
-              }
-            });
-          });
-        }
+    offers.forEach(oferta => {
+      this.areas.forEach(area => {
+        area.campos_especificos.forEach(areaEspecifica => {
+          if (oferta.specific_field === areaEspecifica.nombre) {
+            areaEspecifica.total = areaEspecifica.total + 1;
+          }
+        });
       });
     });
   }
 
+  validateSession(content, item: Professional, editar) {
+    if (!(this.userLogged == null)) {
+      if (this.userLogged.role.toString() === '2') {
+        this.openOfertaLaboral(content, item, editar);
+      } else {
+        swal({
+          title: 'Para ver más Información tiene que iniciar sesión como Empresa',
+          text: '',
+          type: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#28a745',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: '<i class="fa fa-sign-in" aria-hidden="true"> Iniciar Sesión</i>',
+          cancelButtonText: '<i class="fa fa-address-book" aria-hidden="true"> Regístrate</i>'
+        }).then((result) => {
+          if (result.value) {
+            this.router.navigate(['login']);
+          } else if (
+            // Read more about handling dismissals
+            result.dismiss === swal.DismissReason.cancel
+          ) {
+            this.router.navigate(['persona']);
+          }
+        });
+      }
+    } else {
+      swal({
+        title: 'Para ver más Información tiene que iniciar sesión como Profesional',
+        text: '',
+        type: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: '<i class="fa fa-sign-in" aria-hidden="true"> Iniciar Sesión</i>',
+        cancelButtonText: '<i class="fa fa-address-book" aria-hidden="true"> Regístrate</i>'
+      }).then((result) => {
+        if (result.value) {
+          this.router.navigate(['login']);
+        } else if (
+          // Read more about handling dismissals
+          result.dismiss === swal.DismissReason.cancel
+        ) {
+          this.router.navigate(['persona']);
+        }
+      });
+    }
 
+  }
 
+  getPostulants(): void {
+    this.postulanteService.getPostulants(this.actual_page, this.records_per_page).subscribe(response => {
+      this.postulants = response['postulants']['data'];
+      console.log('this.postulants');
+      console.log(this.postulants);
+      if (response['pagination']['total'] === 0) {
+        this.total_pages = 1;
+      } else {
+        this.total_pages = response['pagination']['last_page'];
+      }
+    });
+  }
+
+  filtrarCantones(item) {
+    this.cantones = [];
+    this.enable_city = true;
+    this.provinces.forEach(value => {
+      if (item === value.provincia) {
+        this.cantones = value.cantones;
+      }
+    });
+  }
+
+  filtrarCamposEspecificos(item) {
+    this.camposEspecificos = [];
+    this.areas.forEach(value => {
+      if (item === value.campo_amplio) {
+        this.camposEspecificos = value.campos_especificos;
+      }
+    });
+  }
+
+  applyOffer(): void {
+    this.postulanteService.applyPostulant(
+      {'user': this.userLogged, 'postulant': this.selectedPostulant}, this.userLogged.api_token)
+      .subscribe(
+        response => {
+          if (response) {
+            swal({
+              position: this.messages['createSuccess']['position'],
+              type: this.messages['createSuccess']['type'],
+              title: this.messages['createSuccess']['title'],
+              text: this.messages['createSuccess']['text'],
+              timer: this.messages['createSuccess']['timer'],
+              showConfirmButton: this.messages['createSuccess']['showConfirmButton'],
+              backdrop: this.messages['createSuccess']['backdrop']
+            });
+          }
+        },
+        error => {
+          if (error.status === 401) {
+            swal({
+              position: this.messages['createError401']['position'],
+              type: this.messages['createError401']['type'],
+              title: this.messages['createError401']['title'],
+              text: this.messages['createError401']['text'],
+              showConfirmButton: this.messages['createError401']['showConfirmButton'],
+              backdrop: this.messages['createError401']['backdrop']
+            });
+          }
+
+          if (error.status === 500) {
+            swal({
+              position: this.messages['createError500']['position'],
+              type: this.messages['createError500']['type'],
+              title: this.messages['createError500']['title'],
+              text: this.messages['createError500']['text'],
+              showConfirmButton: this.messages['createError500']['showConfirmButton'],
+              backdrop: this.messages['createError500']['backdrop']
+            });
+          }
+        });
+  }
 }

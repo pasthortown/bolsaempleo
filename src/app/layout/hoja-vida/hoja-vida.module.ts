@@ -13,6 +13,7 @@ import {ExperienciaProfesionalComponent} from './experiencia-profesional/experie
 import {FortalezasComponent} from './fortalezas/fortalezas.component';
 import {ReferenciasPersonalesComponent} from './referencias-personales/referencias-personales.component';
 import {PdfComponent} from './pdf/pdf.component';
+import {ProfessionalService} from '../../services/professional.service';
 
 @NgModule({
   imports: [
@@ -21,7 +22,7 @@ import {PdfComponent} from './pdf/pdf.component';
     NgbModule,
     FormsModule
   ],
-  providers: [PostulanteService],
+  providers: [ProfessionalService],
   declarations: [
     HojaVidaComponent,
     DatosPersonalesComponent,

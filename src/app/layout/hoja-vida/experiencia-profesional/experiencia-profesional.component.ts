@@ -5,6 +5,7 @@ import {Component, OnInit} from '@angular/core';
 import swal from 'sweetalert2';
 import {User} from '../../../models/user';
 import {catalogos} from '../../../../environments/catalogos';
+import {ProfessionalService} from '../../../services/professional.service';
 
 @Component({
   selector: 'app-experiencia-profesional',
@@ -26,7 +27,7 @@ export class ExperienciaProfesionalComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    public postulanteService: PostulanteService) {
+    public postulanteService: ProfessionalService) {
   }
 
   ngOnInit() {
